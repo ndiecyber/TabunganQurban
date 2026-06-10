@@ -4,59 +4,50 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Compass, ArrowLeft } from 'lucide-react';
+import { FileQuestion, Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-[#faf8f4] flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-[#e8f5ee] rounded-full mix-blend-multiply filter blur-3xl opacity-70" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-64 h-64 bg-[#fdf3e3] rounded-full mix-blend-multiply filter blur-3xl opacity-70" />
-
+    <main className="min-h-screen bg-[#faf8f4] flex flex-col items-center justify-center p-4">
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="relative z-10 flex flex-col items-center text-center max-w-lg"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-md bg-white rounded-3xl border border-[#e0e8df] p-8 text-center shadow-sm"
       >
-        <div className="bg-white px-5 py-3 rounded-2xl shadow-sm border border-[#e0e8df] inline-block mb-8">
+        <div className="flex justify-center mb-8">
           <Image 
             src="/logo-dkm.jpeg" 
             alt="Logo DKM Kassiti" 
-            width={160} 
-            height={45} 
-            className="h-9 w-auto object-contain" 
+            width={140} 
+            height={40} 
+            className="h-8 w-auto object-contain" 
             priority 
           />
         </div>
 
-        <div className="relative mb-6">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
-            className="w-24 h-24 bg-[#fdf3e3] rounded-full flex items-center justify-center border-4 border-white shadow-lg relative z-10 mx-auto"
-          >
-            <Compass size={40} className="text-[#c9873a]" />
-          </motion.div>
-          <h1 className="text-[120px] font-black text-[#e8f5ee] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 tracking-tighter select-none">
-            404
-          </h1>
+        <div className="w-16 h-16 bg-[#e8f5ee] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#1a6b3c]">
+          <FileQuestion size={32} />
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a0e] tracking-tight mb-3">
-          Afwan, Halaman Tidak Ditemukan
+        <h1 className="text-6xl font-black text-[#1a6b3c] tracking-tight mb-2">
+          404
+        </h1>
+        
+        <h2 className="text-xl font-bold text-[#1a1a0e] mb-3">
+          Halaman Tidak Ditemukan
         </h2>
-        <p className="text-[#4a5240] text-sm sm:text-base leading-relaxed mb-8">
-          Sepertinya Anda tersesat. Jalan atau tautan yang Anda tuju tidak tersedia di sistem Tabungan Qurban DKM Kassiti.
+        
+        <p className="text-[#4a5240] text-sm leading-relaxed mb-8 px-2">
+          Afwan, tautan yang Anda tuju salah atau telah dihapus dari sistem sistem Tabungan Qurban DKM Kassiti.
         </p>
 
         <Link href="/" passHref>
           <motion.button 
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-6 py-3.5 bg-[#1a6b3c] hover:bg-[#22884e] text-white rounded-xl font-medium text-sm sm:text-base transition-colors shadow-lg shadow-[#1a6b3c]/20 flex items-center gap-2"
+            whileTap={{ scale: 0.98 }}
+            className="w-full py-3.5 bg-[#1a1a0e] hover:bg-black text-white rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2 shadow-md shadow-[#1a1a0e]/10"
           >
-            <ArrowLeft size={18} />
+            <Home size={16} />
             Kembali ke Beranda
           </motion.button>
         </Link>
