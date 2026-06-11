@@ -1,11 +1,7 @@
 <template>
   <div 
     :class="[
-      { 'dark': store.isDarkMode },
-      'theme-' + store.designSystem.theme,
-      'style-' + store.designSystem.style,
-      'spacing-' + store.designSystem.spacing,
-      'font-' + store.designSystem.font
+      { 'dark': store.isDarkMode }
     ]" 
     class="min-h-screen transition-colors duration-300"
   >
@@ -39,6 +35,9 @@
 
           <!-- Action Buttons / Theme Toggle -->
           <div class="flex items-center space-x-3">
+            <span class="hidden lg:inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700/50 rounded-xl text-xs font-bold text-amber-700 dark:text-amber-400 font-arabic">
+              {{ currentHijriDate }}
+            </span>
             <button 
               @click="store.toggleTheme()" 
               class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer" 
@@ -97,6 +96,9 @@
             </button>
             <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">
               IDUL ADHA 2025
+            </span>
+            <span class="px-2 py-0.5 bg-amber-900/40 border border-amber-700/50 rounded text-[9px] font-black uppercase tracking-wider text-amber-300 font-arabic">
+              {{ currentHijriDate }}
             </span>
           </div>
         </div>
@@ -175,6 +177,14 @@ const navItems = [
   { name: 'Menabung', path: '/menabung', icon: Wallet },
   { name: 'Rekap', path: '/rekap', icon: BarChart3 }
 ]
+
+// Current Islamic Hijri Date Calculation
+const currentHijriDate = new Intl.DateTimeFormat('id-ID', {
+  calendar: 'islamic-umalqura',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(new Date());
 
 const isRouteActive = (path) => {
   if (path === '/') {

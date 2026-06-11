@@ -18,10 +18,12 @@
   --color-emerald-deep: #0b3e2e;
   --color-cream: #f4f3f0;
 
-  --font-family-heading: 'Inter', sans-serif;
+  --font-family-heading: 'Playfair Display', serif;
   --font-family-body: 'Inter', sans-serif;
   --font-family-arabic: 'Amiri', serif;
-  --radius-2.5xl: 1.25rem;
+  
+  /* Matches the mosque's large radius - replacing the oversized 20px/28px */
+  --radius-2.5xl: 1rem;
 }
 
 /* ===== Base Styles ===== */
@@ -46,6 +48,14 @@ body {
   background-color: #0A1118;
 }
 
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--font-family-heading) !important;
+}
+
+.font-arabic {
+  font-family: var(--font-family-arabic) !important;
+}
+
 /* ===== Scrollbar Styling ===== */
 ::-webkit-scrollbar {
   width: 6px;
@@ -62,50 +72,33 @@ body {
 }
 
 /* ===== Islamic Pattern Background ===== */
+/* Light Mode Mozaik - made clearly visible but elegant with increased opacity/stroke */
 .islamic-pattern-bg {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5B198' stroke-width='0.55'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4C4B5' stroke-width='1.5'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .dark .islamic-pattern-bg {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231E3547' stroke-width='0.15'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231E3547' stroke-width='0.8'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* ===== Glass Effect ===== */
+/* ===== Glass & Glow ===== */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .glass-dark {
-  background: rgba(31, 41, 55, 0.85);
+  background: rgba(31, 41, 55, 0.9);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== Gradient Overlays ===== */
-.gradient-overlay {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 118, 110, 0.95) 0%,
-    rgba(15, 118, 110, 0.85) 50%,
-    rgba(4, 47, 46, 0.9) 100%
-  );
-}
+.glow-gold { box-shadow: 0 0 20px rgba(217, 119, 6, 0.2); }
+.glow-primary { box-shadow: 0 0 20px rgba(15, 118, 110, 0.2); }
 
-/* ===== Glow Effects ===== */
-.glow-gold {
-  box-shadow: 0 0 20px rgba(217, 119, 6, 0.2);
-}
-.glow-primary {
-  box-shadow: 0 0 20px rgba(15, 118, 110, 0.2);
-}
-
-/* ===== Text Gradient ===== */
 .text-gradient-gold {
   background: linear-gradient(135deg, #D97706, #F59E0B, #D97706);
   -webkit-background-clip: text;
@@ -113,379 +106,73 @@ body {
   background-clip: text;
 }
 
-/* ===== Card Hover Effect ===== */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.1);
-}
-
-/* ===== Pulse Animation for CTA ===== */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(217, 119, 6, 0);
-  }
-}
-.pulse-glow {
-  animation: pulse-glow 2s infinite;
+/* ===== Card Layout Base Styles (Clean & Minimalist - Option A) ===== */
+.card-item,
+.block-item,
+.recent-payments-list > div > div,
+.shohibul-cards-container > div,
+.details-modal-box,
+.details-modal-info-box {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
 }
 
-/* ===== Float Animation ===== */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-/* ===== Mobile App Container Mock ===== */
-.mobile-view-wrapper {
-  max-width: 480px;
-  margin: 0 auto;
-  min-height: 100vh;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
-  position: relative;
-  background-color: #FAF8F5;
+.groups-widget,
+.progress-widget,
+.recent-payments-list > div {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.dark .mobile-view-wrapper {
-  background-color: #0A1118;
+/* Dark Mode equivalents for standard cards */
+.dark .card-item,
+.dark .block-item,
+.dark .recent-payments-list > div > div,
+.dark .shohibul-cards-container > div,
+.dark .details-modal-box,
+.dark .details-modal-info-box {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Custom Bottom Navigation Safe Area spacing */
-.pb-safe-bottom {
-  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+.dark .groups-widget,
+.dark .progress-widget,
+.dark .recent-payments-list > div {
+  background-color: #1E293B;
+  border: 1px solid #334155;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* ===== Visual Customizer Overrides ===== */
-
-/* 1. Font Overrides */
-.font-jakarta {
-  --font-family-body: 'Plus Jakarta Sans', sans-serif;
-  --font-family-heading: 'Plus Jakarta Sans', sans-serif;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+/* Fix visibility inside progress-widget in light mode */
+.progress-widget {
+  background: linear-gradient(135deg, #0f4d36, #072f20) !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.3) !important;
 }
-.font-inter {
-  --font-family-body: 'Inter', sans-serif;
-  --font-family-heading: 'Inter', sans-serif;
-  font-family: 'Inter', sans-serif;
-}
-.font-outfit {
-  --font-family-body: 'Outfit', sans-serif;
-  --font-family-heading: 'Outfit', sans-serif;
-  font-family: 'Outfit', sans-serif;
-}
-
-/* 2. Theme Overrides (Colors) */
-.theme-emerald {
-  --color-primary: #0b3e2e;
-  --color-primary-light: #165c46;
-  --color-primary-dark: #051b14;
-  --color-secondary: #d97706;
-  --color-secondary-light: #f59e0b;
-}
-.theme-indigo {
-  --color-primary: #1e1b4b;
-  --color-primary-light: #312e81;
-  --color-primary-dark: #0f172a;
-  --color-secondary: #f59e0b;
-  --color-secondary-light: #fbbf24;
-}
-.theme-slate {
-  --color-primary: #0f172a;
-  --color-primary-light: #1e293b;
-  --color-primary-dark: #020617;
-  --color-secondary: #0d9488;
-  --color-secondary-light: #14b8a6;
-}
-
-/* 3. Spacing Overrides */
-.spacing-cozy .card-item,
-.spacing-cozy .block-item,
-.spacing-cozy .recent-payments-list > div,
-.spacing-cozy .groups-widget,
-.spacing-cozy .progress-widget {
-  padding: 1.5rem !important;
-  border-radius: 1.5rem !important;
-}
-.spacing-compact .card-item,
-.spacing-compact .block-item,
-.spacing-compact .recent-payments-list > div,
-.spacing-compact .groups-widget,
-.spacing-compact .progress-widget {
-  padding: 0.85rem !important;
-  border-radius: 1rem !important;
-}
-
-/* 4. Card Style Overrides */
-/* Flat Minimalist */
-.style-flat .card-item,
-.style-flat .block-item,
-.style-flat .groups-widget,
-.style-flat .recent-payments-list > div,
-.style-flat .activity-log > div > div {
-  background-color: #ffffff !important;
-  background-image: none !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: 1px solid #e2e8f0 !important; /* Extremely clean, visible border */
-  box-shadow: 0 4px 12px rgba(11, 62, 46, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03) !important; /* Premium colored shadow */
-}
-.dark .style-flat .card-item,
-.dark .style-flat .block-item,
-.dark .style-flat .groups-widget,
-.dark .style-flat .recent-payments-list > div,
-.dark .style-flat .activity-log > div > div,
-.style-flat .dark .card-item,
-.style-flat .dark .block-item,
-.style-flat .dark .groups-widget,
-.style-flat .dark .recent-payments-list > div,
-.style-flat .dark .activity-log > div > div {
-  background-color: #152232 !important;
-  border: 1px solid #1e293b !important;
-  box-shadow: none !important;
-}
-
-/* Glassmorphism */
-.style-glass .card-item,
-.style-glass .block-item,
-.style-glass .groups-widget,
-.style-glass .recent-payments-list > div,
-.style-glass .activity-log > div > div {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(11, 62, 46, 0.12) !important; /* Subtle theme-colored border */
-  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
-}
-.dark .style-glass .card-item,
-.dark .style-glass .block-item,
-.dark .style-glass .groups-widget,
-.dark .style-glass .recent-payments-list > div,
-.dark .style-glass .activity-log > div > div,
-.style-glass .dark .card-item,
-.style-glass .dark .block-item,
-.style-glass .dark .groups-widget,
-.style-glass .dark .recent-payments-list > div,
-.style-glass .dark .activity-log > div > div {
-  background: rgba(21, 34, 50, 0.85) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* Heavy Frosted Glass */
-.style-frosted .card-item,
-.style-frosted .block-item,
-.style-frosted .groups-widget,
-.style-frosted .recent-payments-list > div,
-.style-frosted .activity-log > div > div {
-  background: rgba(255, 255, 255, 0.75) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border: 1.5px solid rgba(11, 62, 46, 0.16) !important; /* Stronger theme-colored border */
-  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.07), 0 3px 8px rgba(0, 0, 0, 0.03) !important;
-}
-.dark .style-frosted .card-item,
-.dark .style-frosted .block-item,
-.dark .style-frosted .groups-widget,
-.dark .style-frosted .recent-payments-list > div,
-.dark .style-frosted .activity-log > div > div,
-.style-frosted .dark .card-item,
-.style-frosted .dark .block-item,
-.style-frosted .dark .groups-widget,
-.style-frosted .dark .recent-payments-list > div,
-.style-frosted .dark .activity-log > div > div {
-  background: rgba(21, 34, 50, 0.6) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
-}
-
-/* ===== High-Contrast Card Outlines & Stronger Shadows for All Aesthetic Options ===== */
-
-/* Light Mode Overrides (Root div does not have .dark) */
-/* 1. Flat Style */
-div:not(.dark).style-flat .groups-widget,
-div:not(.dark).style-flat .progress-widget,
-div:not(.dark).style-flat .recent-payments-list > div {
-  background-color: #ffffff !important;
-  border: 1.5px solid #cbd5e1 !important;
-  box-shadow: 0 4px 16px rgba(11, 62, 46, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  border-radius: 1.75rem !important; /* Soft, rounded outer boxes */
-}
-div:not(.dark).style-flat .card-item,
-div:not(.dark).style-flat .block-item,
-div:not(.dark).style-flat .recent-payments-list > div > div,
-div:not(.dark).style-flat .shohibul-cards-container > div,
-div:not(.dark).style-flat .details-modal-box,
-div:not(.dark).style-flat .details-modal-info-box {
-  background-color: #ffffff !important;
-  border: 1.5px solid #cbd5e1 !important;
-  box-shadow: 0 4px 12px rgba(11, 62, 46, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  border-radius: 1.25rem !important; /* Beautiful rounded inner cards */
-}
-
-/* 2. Glass Style */
-div:not(.dark).style-glass .groups-widget,
-div:not(.dark).style-glass .progress-widget,
-div:not(.dark).style-glass .recent-payments-list > div {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1.5px solid rgba(11, 62, 46, 0.2) !important;
-  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
-  border-radius: 1.75rem !important;
-}
-div:not(.dark).style-glass .card-item,
-div:not(.dark).style-glass .block-item,
-div:not(.dark).style-glass .recent-payments-list > div > div,
-div:not(.dark).style-glass .shohibul-cards-container > div,
-div:not(.dark).style-glass .details-modal-box,
-div:not(.dark).style-glass .details-modal-info-box {
-  background: rgba(255, 255, 255, 0.94) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1.5px solid rgba(11, 62, 46, 0.2) !important;
-  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
-  border-radius: 1.25rem !important;
-}
-
-/* 3. Frosted Style */
-div:not(.dark).style-frosted .groups-widget,
-div:not(.dark).style-frosted .progress-widget,
-div:not(.dark).style-frosted .recent-payments-list > div {
-  background: rgba(255, 255, 255, 0.78) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border: 2px solid rgba(11, 62, 46, 0.25) !important;
-  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.09), 0 3px 8px rgba(0, 0, 0, 0.04) !important;
-  border-radius: 1.75rem !important;
-}
-div:not(.dark).style-frosted .card-item,
-div:not(.dark).style-frosted .block-item,
-div:not(.dark).style-frosted .recent-payments-list > div > div,
-div:not(.dark).style-frosted .shohibul-cards-container > div,
-div:not(.dark).style-frosted .details-modal-box,
-div:not(.dark).style-frosted .details-modal-info-box {
-  background: rgba(255, 255, 255, 0.78) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border: 2px solid rgba(11, 62, 46, 0.25) !important;
-  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.09), 0 3px 8px rgba(0, 0, 0, 0.04) !important;
-  border-radius: 1.25rem !important;
-}
-
-/* Dark Mode Overrides (Root div or card parent has .dark) */
-/* 1. Flat Style */
-.dark.style-flat .groups-widget,
-.dark.style-flat .progress-widget,
-.dark.style-flat .recent-payments-list > div {
-  background-color: #152232 !important;
-  border: 1.5px solid #2d3f55 !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
-  border-radius: 1.75rem !important;
-}
-.dark.style-flat .card-item,
-.dark.style-flat .block-item,
-.dark.style-flat .recent-payments-list > div > div,
-.dark.style-flat .shohibul-cards-container > div,
-.dark.style-flat .details-modal-box,
-.dark.style-flat .details-modal-info-box {
-  background-color: #152232 !important;
-  border: 1.5px solid #2d3f55 !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
-  border-radius: 1.25rem !important;
-}
-
-/* 2. Glass Style */
-.dark.style-glass .groups-widget,
-.dark.style-glass .progress-widget,
-.dark.style-glass .recent-payments-list > div {
-  background: rgba(21, 34, 50, 0.88) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
-  border-radius: 1.75rem !important;
-}
-.dark.style-glass .card-item,
-.dark.style-glass .block-item,
-.dark.style-glass .recent-payments-list > div > div,
-.dark.style-glass .shohibul-cards-container > div,
-.dark.style-glass .details-modal-box,
-.dark.style-glass .details-modal-info-box {
-  background: rgba(21, 34, 50, 0.88) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
-  border-radius: 1.25rem !important;
-}
-
-/* 3. Frosted Style */
-.dark.style-frosted .groups-widget,
-.dark.style-frosted .progress-widget,
-.dark.style-frosted .recent-payments-list > div {
-  background: rgba(21, 34, 50, 0.65) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border: 2px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
-  border-radius: 1.75rem !important;
-}
-.dark.style-frosted .card-item,
-.dark.style-frosted .block-item,
-.dark.style-frosted .recent-payments-list > div > div,
-.dark.style-frosted .shohibul-cards-container > div,
-.dark.style-frosted .details-modal-box,
-.dark.style-frosted .details-modal-info-box {
-  background: rgba(21, 34, 50, 0.65) !important;
-  backdrop-filter: blur(28px) !important;
-  -webkit-backdrop-filter: blur(28px) !important;
-  border: 2px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
-  border-radius: 1.25rem !important;
+.progress-widget h3 {
+  color: white !important;
 }
 
 /* Enhanced Hover Effects */
 .card-hover:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 12px 24px rgba(11, 62, 46, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: #d1d5db;
 }
 .dark .card-hover:hover {
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: #475569;
 }
 
-/* ===== PRO MAX: Ambient Pulsing Glow (Opsi 2) ===== */
-@keyframes ambient-glow-pulse {
-  0%, 100% {
-    box-shadow: 0 4px 16px rgba(11, 62, 46, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  }
-  50% {
-    box-shadow: 0 12px 32px rgba(11, 62, 46, 0.12), 0 3px 10px rgba(11, 62, 46, 0.06) !important;
-  }
-}
-@keyframes ambient-glow-pulse-dark {
-  0%, 100% {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
-  }
-  50% {
-    box-shadow: 0 16px 48px rgba(16, 185, 129, 0.22) !important;
-  }
-}
-.ambient-glow-pulse {
-  animation: ambient-glow-pulse 4s ease-in-out infinite;
-}
-.dark .ambient-glow-pulse {
-  animation: ambient-glow-pulse-dark 4s ease-in-out infinite;
-}
-
-/* ===== PRO MAX: Fluid SVG Wave Animation (Opsi 1) ===== */
+/* ===== Fluid SVG Wave Animation (Opsi 1) ===== */
 @keyframes wave-flow {
   0% { background-position-x: 0px; }
   100% { background-position-x: 400px; }
@@ -503,34 +190,28 @@ div:not(.dark).style-frosted .details-modal-info-box {
   animation: wave-flow 3.5s linear infinite reverse;
 }
 
-/* ===== Light Mode Contrast Corrections (Masjid Jami Kassiti Theme Alignment) ===== */
-div:not(.dark) .progress-widget {
-  color: #1e293b !important;
+/* ===== Floating Animations ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
-div:not(.dark) .progress-widget h3 {
-  color: #0b3e2e !important;
-}
-div:not(.dark) .progress-widget span.text-emerald-300 {
-  color: #0d745f !important;
-}
-div:not(.dark) .progress-widget span.text-emerald-200\/70 {
-  color: #4b5563 !important;
-}
-div:not(.dark) .progress-widget .text-amber-300 {
-  color: #d97706 !important;
-}
-div:not(.dark) .progress-widget .bg-emerald-950\/80 {
-  background-color: rgba(11, 62, 46, 0.08) !important;
-  border-color: rgba(11, 62, 46, 0.15) !important;
-}
-div:not(.dark) .progress-widget .bg-emerald-950\/40 {
-  background-color: rgba(11, 62, 46, 0.08) !important;
-  color: #0b3e2e !important;
-}
-div:not(.dark) .progress-widget .border-white\/10 {
-  border-top-color: rgba(11, 62, 46, 0.12) !important;
-}
-div:not(.dark) .progress-widget .text-emerald-300 {
-  color: #0f766e !important;
+.animate-float {
+  animation: float 4s ease-in-out infinite;
 }
 
+/* Mobile Wrapper */
+.mobile-view-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+  position: relative;
+  background-color: #FAF8F5;
+}
+.dark .mobile-view-wrapper {
+  background-color: #0A1118;
+}
+
+.pb-safe-bottom {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+}
