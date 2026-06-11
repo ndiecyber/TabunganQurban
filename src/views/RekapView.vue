@@ -29,32 +29,36 @@
     <div class="grid grid-cols-2 gap-4 statistics-split">
       
       <!-- Panel A: Top Tabungan -->
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-sm space-y-3 block-item opacity-0 translate-y-[15px]">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-          <span>🏆</span>
+      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item opacity-0 translate-y-[15px]">
+        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
           <span>Top Tabungan</span>
         </div>
         
         <div class="space-y-3">
           <div v-for="top in topSavers" :key="top.name" class="space-y-1">
             <div class="flex justify-between text-[10px] font-bold">
-              <span class="text-gray-700 dark:text-gray-300 truncate max-w-[80px]">{{ top.name }}</span>
-              <span class="text-gray-800 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }}jt</span>
+              <span class="text-gray-700 dark:text-gray-300 truncate max-w-[85px]">{{ top.name }}</span>
+              <span class="text-gray-800 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }} jt</span>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
               <div 
-                class="h-full bg-emerald-700 rounded-full" 
-                :style="{ width: (top.amount / 14000000) * 100 + '%' }"
+                class="h-full bg-[#10513c] dark:bg-emerald-600 rounded-full transition-all duration-500" 
+                :style="{ width: (top.amount / 12000000) * 100 + '%' }"
               ></div>
             </div>
           </div>
         </div>
       </div>
-
+ 
       <!-- Panel B: Per Hewan -->
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-sm space-y-3 block-item opacity-0 translate-y-[15px]">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
-          <span>📊</span>
+      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item opacity-0 translate-y-[15px]">
+        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
           <span>Per Hewan</span>
         </div>
 
@@ -65,10 +69,10 @@
               <span class="flex items-center">🐄 Sapi ({{ store.sapiCount }})</span>
               <span>{{ store.sapiLunasCount }}/{{ store.sapiCount }}</span>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
               <div 
-                class="h-full bg-emerald-750 rounded-full"
-                :class="store.sapiLunasCount > 0 ? 'bg-emerald-700' : 'bg-gray-300 dark:bg-gray-600'" 
+                class="h-full rounded-full transition-all duration-500"
+                :class="store.sapiLunasCount > 0 ? 'bg-[#10513c] dark:bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'" 
                 :style="{ width: (store.sapiCount > 0 ? (store.sapiLunasCount / store.sapiCount) * 100 : 0) + '%' }"
               ></div>
             </div>
@@ -80,9 +84,10 @@
               <span class="flex items-center">🐐 Kambing ({{ store.kambingCount }})</span>
               <span>{{ store.kambingLunasCount }}/{{ store.kambingCount }}</span>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
               <div 
-                class="h-full bg-emerald-700 rounded-full" 
+                class="h-full rounded-full transition-all duration-500" 
+                :class="store.kambingLunasCount > 0 ? 'bg-[#10513c] dark:bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'"
                 :style="{ width: (store.kambingCount > 0 ? (store.kambingLunasCount / store.kambingCount) * 100 : 0) + '%' }"
               ></div>
             </div>
@@ -217,10 +222,10 @@ const containerRef = ref(null)
 // Pak Tono (12.0jt), H. Budi (10.5jt), Dewi Anggraini (8.0jt), Hendra Kusuma (5.0jt), Hj. Siti (3.5jt)
 const topSavers = [
   { name: 'Pak Tono', amount: 12000000 },
-  { name: 'H. Budi Santoso', amount: 10500000 },
+  { name: 'H. Budi', amount: 10500000 },
   { name: 'Dewi Anggraini', amount: 8000000 },
-  { name: 'Hendra Kusuma', amount: 3500000 }, // Matches store data or 5jt in image
-  { name: 'Hj. Siti Rahayu', amount: 3500000 }
+  { name: 'Hendra Kusuma', amount: 5000000 },
+  { name: 'Hj. Siti', amount: 3500000 }
 ]
 
 const sapiGroupAMembers = computed(() => {

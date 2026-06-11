@@ -7,10 +7,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
           <router-link to="/" class="flex items-center space-x-3">
-            <img src="/logo-dkm.jpeg" alt="Logo DKM" class="w-9 h-9 rounded-full border border-amber-500 shadow-sm" />
-            <div>
-              <span class="text-[10px] uppercase tracking-wider text-amber-500 font-bold block leading-none">DKM Jami Kassiti</span>
-              <h1 class="text-base font-extrabold text-gray-800 dark:text-white leading-tight font-heading">Tabungan Qurban</h1>
+            <img :src="isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
+            <div class="border-l border-gray-200 dark:border-gray-800 pl-3">
+              <span class="sr-only">DKM Jami Kassiti</span>
+              <h1 class="text-base font-extrabold text-[#10513c] dark:text-[#a7f3d0] leading-tight font-heading">Tabungan Qurban</h1>
             </div>
           </router-link>
 
@@ -66,10 +66,10 @@
         <!-- Top Row: Logo, Title, and Year Tag -->
         <div class="flex justify-between items-center relative z-10">
           <div class="flex items-center space-x-2.5">
-            <img src="/logo-dkm.jpeg" alt="DKM Logo" class="w-8.5 h-8.5 rounded-full border border-white/20 shadow-sm" />
-            <div>
-              <h2 class="text-sm font-bold tracking-wide font-heading">Tabungan Qurban</h2>
-              <span class="text-[9px] font-medium text-emerald-200/80">DKM Masjid Jami Kassiti</span>
+            <img src="/logo-kassiti-dark.png" alt="DKM Logo" class="h-8.5 w-auto" />
+            <div class="border-l border-white/20 pl-2">
+              <h2 class="text-xs font-bold tracking-wide font-heading">Tabungan Qurban</h2>
+              <span class="sr-only">DKM Masjid Jami Kassiti</span>
             </div>
           </div>
           <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">

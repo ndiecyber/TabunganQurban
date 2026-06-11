@@ -4,7 +4,7 @@
     <!-- Mobile-only Header App Bar (hidden as it is in App.vue now, kept for fallback) -->
     <div class="hidden items-center justify-between md:hidden pb-2">
       <div class="flex items-center space-x-3">
-        <img src="/logo-dkm.jpeg" alt="Logo" class="w-8 h-8 rounded-full border border-amber-500 shadow-sm" />
+        <img src="/logo-kassiti-icon.png" alt="Logo" class="w-8 h-8 rounded-full border border-amber-500 shadow-sm" />
         <div>
           <h2 class="text-base font-bold text-gray-800 dark:text-white leading-none">Tabungan Qurban</h2>
           <span class="text-xs text-gray-500 dark:text-gray-400">DKM Masjid Jami Kassiti</span>
