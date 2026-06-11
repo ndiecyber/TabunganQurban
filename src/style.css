@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@custom-variant dark (&:is(.dark *));
+@variant dark (.dark &, &.dark);
 
 /* ===== Custom Theme via Tailwind v4 @theme ===== */
 @theme {
@@ -122,8 +122,8 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .shohibul-cards-container > div,
 .details-modal-box,
 .details-modal-info-box {
-  background-color: #ffffff;
-  border: 1px solid #e5e7eb;
+  background-color: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: all 0.3s ease;
@@ -145,8 +145,8 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .dark .shohibul-cards-container > div,
 .dark .details-modal-box,
 .dark .details-modal-info-box {
-  background-color: #1E293B;
-  border: 1px solid #334155;
+  background-color: #1E293B !important;
+  border: 1px solid #334155 !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
