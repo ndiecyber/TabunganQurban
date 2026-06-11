@@ -2,7 +2,7 @@
   <div class="space-y-5" ref="containerRef">
     
     <!-- Header App Bar (Visible on all viewports) -->
-    <div class="flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
+    <div class="flex items-center justify-between page-header">
       <h2 class="text-lg font-black text-gray-800 dark:text-white">Menabung Qurban</h2>
       <span class="text-xs text-amber-500 dark:text-amber-400 font-bold flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Double Tab Toggles (Visible only on Mobile/Tablet) -->
-    <div class="bg-gray-100 dark:bg-gray-800/80 p-1 rounded-2xl flex tab-toggle opacity-0 lg:hidden">
+    <div class="bg-gray-100 dark:bg-gray-800/80 p-1 rounded-2xl flex tab-toggle lg:hidden">
       <button 
         @click="activeTab = 'setor'"
         class="flex-1 py-2.5 text-xs font-bold rounded-xl transition cursor-pointer"
@@ -361,7 +361,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
@@ -371,6 +371,7 @@ const route = useRoute()
 const router = useRouter()
 
 const containerRef = ref(null)
+let ctx
 
 const activeTab = ref('setor')
 
@@ -520,12 +521,16 @@ onMounted(() => {
     form.value.shohibulId = queryShohibulId
   }
 
-  const ctx = gsap.context(() => {
+  ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.to('.page-header', { opacity: 1, y: 0, duration: 0.5 })
-      .to('.tab-toggle', { opacity: 1, duration: 0.4 }, '-=0.2')
+    tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
+      .from('.tab-toggle', { opacity: 0, duration: 0.4 }, '-=0.2')
   }, containerRef.value)
+})
+
+onUnmounted(() => {
+  if (ctx) ctx.revert()
 })
 </script>
 

@@ -56,15 +56,15 @@
       <!-- 2. Quick Stats Cards (Mobile Order 1, Desktop Order 2) -->
       <div class="col-span-1 lg:col-span-5 lg:order-2 space-y-4">
         <div class="grid grid-cols-3 gap-3 stats-grid">
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item opacity-0">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
             <span class="text-2xl font-black text-gray-800 dark:text-white block">{{ store.shohibuls.length }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Shohibul</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item opacity-0">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
             <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block">{{ store.totalLunas }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Lunas</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item opacity-0">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
             <span class="text-2xl font-black text-amber-600 dark:text-amber-400 block">{{ store.totalProses }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Proses</span>
           </div>
@@ -72,7 +72,7 @@
       </div>
 
       <!-- 3. Main Grand Progress Bar Widget (Mobile Order 2, Desktop Order 3) -->
-      <div class="col-span-1 lg:col-span-7 lg:order-3 bg-[#10513c] text-white rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget opacity-0 translate-y-[30px]">
+      <div class="col-span-1 lg:col-span-7 lg:order-3 bg-[#10513c] text-white rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget">
         <div class="flex justify-between items-start">
           <div>
             <span class="text-xs text-emerald-300">Total terkumpul</span>
@@ -112,7 +112,7 @@
       </div>
 
       <!-- 4. Recent Payments List (Mobile Order 3, Desktop Order 4) -->
-      <div class="col-span-1 lg:col-span-5 lg:order-4 space-y-3 recent-payments-list opacity-0 translate-y-[30px]">
+      <div class="col-span-1 lg:col-span-5 lg:order-4 space-y-3 recent-payments-list">
         <div class="flex justify-between items-center">
           <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-primary dark:text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -162,12 +162,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
+let ctx
 
 // Format date to local readable format
 const formatDate = (dateStr) => {
@@ -187,13 +188,17 @@ const getInitials = (name) => {
 
 onMounted(() => {
   // Entrance GSAP animation
-  const ctx = gsap.context(() => {
+  ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.to('.user-welcome-card', { opacity: 1, scale: 1, duration: 0.5 })
-      .to('.card-item', { opacity: 1, stagger: 0.08, duration: 0.4 }, '-=0.3')
-      .to('.progress-widget', { opacity: 1, y: 0, duration: 0.5 }, '-=0.2')
-      .to('.recent-payments-list', { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+    tl.from('.user-welcome-card', { opacity: 0, scale: 0.95, duration: 0.5 })
+      .from('.card-item', { opacity: 0, scale: 0.95, stagger: 0.08, duration: 0.4 }, '-=0.3')
+      .from('.progress-widget', { opacity: 0, y: 30, duration: 0.5 }, '-=0.2')
+      .from('.recent-payments-list', { opacity: 0, y: 30, duration: 0.5 }, '-=0.3')
   }, containerRef.value)
+})
+
+onUnmounted(() => {
+  if (ctx) ctx.revert()
 })
 </script>

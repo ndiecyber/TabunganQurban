@@ -2,13 +2,13 @@
   <div class="space-y-4" ref="containerRef">
     
     <!-- Header App Bar (Visible on all viewports) -->
-    <div class="flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
+    <div class="flex items-center justify-between page-header">
       <h2 class="text-lg font-black text-gray-800 dark:text-white">Daftar Shohibul</h2>
       <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ filteredShohibuls.length }} terdaftar</span>
     </div>
 
     <!-- Search Input -->
-    <div class="relative search-box opacity-0">
+    <div class="relative search-box">
       <input 
         v-model="searchQuery" 
         type="text" 
@@ -23,7 +23,7 @@
     </div>
 
     <!-- Filtering Badges -->
-    <div class="flex space-x-1.5 overflow-x-auto pb-1 -mx-4 px-4 filter-scroll opacity-0 no-scrollbar">
+    <div class="flex space-x-1.5 overflow-x-auto pb-1 -mx-4 px-4 filter-scroll no-scrollbar">
       <button 
         v-for="filter in filters" 
         :key="filter.value"
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Count Indicator -->
-    <div class="text-xs text-gray-400 dark:text-gray-500 px-1 font-semibold count-label opacity-0">
+    <div class="text-xs text-gray-400 dark:text-gray-500 px-1 font-semibold count-label">
       {{ filteredShohibuls.length }} dari {{ store.shohibuls.length }} shohibul
     </div>
 
@@ -49,7 +49,7 @@
         v-for="(shohibul, idx) in filteredShohibuls" 
         :key="shohibul.id"
         @click="openDetails(shohibul)"
-        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition duration-300 flex flex-col justify-between space-y-4 opacity-0 translate-y-[20px]"
+        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition duration-300 flex flex-col justify-between space-y-4"
       >
         <!-- Top Row: Avatar Initials + Name/Address + Progress Mini Bar -->
         <div class="flex justify-between items-start">
@@ -239,7 +239,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
@@ -247,6 +247,7 @@ import gsap from 'gsap'
 const store = useQurbanStore()
 const router = useRouter()
 const containerRef = ref(null)
+let ctx
 
 const searchQuery = ref('')
 const activeFilter = ref('semua')
@@ -335,15 +336,19 @@ const goToDeposit = (shohibulId) => {
 }
 
 onMounted(() => {
-  const ctx = gsap.context(() => {
+  ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.to('.page-header', { opacity: 1, y: 0, duration: 0.5 })
-      .to('.search-box', { opacity: 1, duration: 0.5 }, '-=0.3')
-      .to('.filter-scroll', { opacity: 1, duration: 0.5 }, '-=0.4')
-      .to('.count-label', { opacity: 1, duration: 0.3 }, '-=0.3')
-      .to('.card-item', { opacity: 1, stagger: 0.08, duration: 0.4 }, '-=0.3')
+    tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
+      .from('.search-box', { opacity: 0, duration: 0.5 }, '-=0.3')
+      .from('.filter-scroll', { opacity: 0, duration: 0.5 }, '-=0.4')
+      .from('.count-label', { opacity: 0, duration: 0.3 }, '-=0.3')
+      .from('.card-item', { opacity: 0, y: 20, stagger: 0.08, duration: 0.4 }, '-=0.3')
   }, containerRef.value)
+})
+
+onUnmounted(() => {
+  if (ctx) ctx.revert()
 })
 </script>
 

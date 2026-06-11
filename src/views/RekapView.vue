@@ -2,34 +2,34 @@
   <div class="space-y-5" ref="containerRef">
     
     <!-- Header App Bar (Hidden on Mobile, visible on Desktop) -->
-    <div class="hidden md:flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
+    <div class="hidden md:flex items-center justify-between page-header">
       <h2 class="text-lg font-black text-gray-800 dark:text-white">Rekapitulasi Keuangan</h2>
       <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">Laporan Periode 2025</span>
     </div>
 
     <!-- 1. Three Top Summary Cards (Side by side on mobile and desktop) -->
     <div class="grid grid-cols-3 gap-2.5 summary-cards">
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item opacity-0">
+      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.formatRupiahFull(store.totalCollected) }}</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Terkumpul</span>
       </div>
       
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item opacity-0">
+      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.totalLunas }}/{{ store.shohibuls.length }}</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Lunas</span>
       </div>
       
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item opacity-0">
+      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.averageProgress }}%</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Rata-Rata</span>
       </div>
     </div>
 
     <!-- 2. Dual Side-by-Side Statistics Panels (Top Tabungan & Per Hewan) -->
-    <div class="grid grid-cols-2 gap-4 statistics-split">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 statistics-split">
       
       <!-- Panel A: Top Tabungan -->
-      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item opacity-0 translate-y-[15px]">
+      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item">
         <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -54,7 +54,7 @@
       </div>
  
       <!-- Panel B: Per Hewan -->
-      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item opacity-0 translate-y-[15px]">
+      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item">
         <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -98,7 +98,7 @@
     </div>
 
     <!-- 3. Aktivitas Terbaru Log (List of recent payments/activities) -->
-    <div class="space-y-3 activity-log opacity-0 translate-y-[20px]">
+    <div class="space-y-3 activity-log">
       <h4 class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-wider flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
@@ -132,7 +132,7 @@
     </div>
 
     <!-- 4. Kelompok Sapi (Desktop Only, displayed side-by-side or below on wide screens) -->
-    <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4 groups-widget opacity-0 translate-y-[20px] hidden lg:block">
+    <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4 groups-widget hidden lg:block">
       <div class="flex justify-between items-center">
         <h3 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Kelompok Sapi Qurban</h3>
         <span class="text-[10px] text-primary dark:text-primary-light font-bold">1 share = 1/7 Sapi</span>
@@ -211,12 +211,13 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
+let ctx
 
 // Hardcoded top list from the image:
 // Pak Tono (12.0jt), H. Budi (10.5jt), Dewi Anggraini (8.0jt), Hendra Kusuma (5.0jt), Hj. Siti (3.5jt)
@@ -375,14 +376,19 @@ const barChartOptions = computed(() => {
 })
 
 onMounted(() => {
-  const ctx = gsap.context(() => {
+  ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.to('.page-header', { opacity: 1, y: 0, duration: 0.5 })
-      .to('.summary-cards', { opacity: 1, duration: 0.4 }, '-=0.2')
-      .to('.card-item', { opacity: 1, stagger: 0.08, duration: 0.4 }, '-=0.3')
-      .to('.charts-widget', { opacity: 1, y: 0, duration: 0.5 }, '-=0.2')
-      .to('.activity-log', { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+    tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
+      .from('.summary-cards', { opacity: 0, duration: 0.4 }, '-=0.2')
+      .from('.card-item', { opacity: 0, scale: 0.95, stagger: 0.08, duration: 0.4 }, '-=0.3')
+      .from('.block-item', { opacity: 0, y: 15, stagger: 0.1, duration: 0.5 }, '-=0.2')
+      .from('.activity-log', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
+      .from('.groups-widget', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
   }, containerRef.value)
+})
+
+onUnmounted(() => {
+  if (ctx) ctx.revert()
 })
 </script>
