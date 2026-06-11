@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-5 space-y-5" ref="containerRef">
+  <div class="space-y-5" ref="containerRef">
     
     <!-- Header App Bar -->
     <div class="flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
@@ -12,8 +12,8 @@
       </span>
     </div>
 
-    <!-- Double Tab Toggles -->
-    <div class="bg-gray-100 dark:bg-gray-800/80 p-1 rounded-2xl flex tab-toggle opacity-0">
+    <!-- Double Tab Toggles (Visible only on Mobile/Tablet) -->
+    <div class="bg-gray-100 dark:bg-gray-800/80 p-1 rounded-2xl flex tab-toggle opacity-0 lg:hidden">
       <button 
         @click="activeTab = 'setor'"
         class="flex-1 py-2.5 text-xs font-bold rounded-xl transition cursor-pointer"
@@ -30,204 +30,212 @@
       </button>
     </div>
 
-    <!-- TAB 1: SETORAN TABUNGAN FORM -->
-    <div v-if="activeTab === 'setor'" class="space-y-4 tab-content animate-fade-in">
-      <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4">
-        
-        <!-- Shohibul Selector -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pilih Shohibul</label>
-          <select 
-            v-model="form.shohibulId"
-            class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
-          >
-            <option value="" disabled>-- Pilih Anggota Qurban --</option>
-            <option 
-              v-for="s in store.shohibuls" 
-              :key="s.id" 
-              :value="s.id"
+    <!-- Grid Container -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- COLUMN 1: SETORAN TABUNGAN FORM -->
+      <div 
+        class="lg:col-span-6 space-y-4"
+        :class="{'hidden lg:block': activeTab !== 'setor'}"
+      >
+        <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4">
+          <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading mb-1">Form Setoran Tabungan</h3>
+          
+          <!-- Shohibul Selector -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pilih Shohibul</label>
+            <select 
+              v-model="form.shohibulId"
+              class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
             >
-              {{ s.name }} ({{ s.type === 'sapi' ? 'Sapi' : 'Kambing' }} - {{ s.code }})
-            </option>
-          </select>
-        </div>
+              <option value="" disabled>-- Pilih Anggota Qurban --</option>
+              <option 
+                v-for="s in store.shohibuls" 
+                :key="s.id" 
+                :value="s.id"
+              >
+                {{ s.name }} ({{ s.type === 'sapi' ? 'Sapi' : 'Kambing' }} - {{ s.code }})
+              </option>
+            </select>
+          </div>
 
-        <!-- Selected member status badge preview -->
-        <div v-if="selectedMember" class="bg-primary/5 dark:bg-primary/10 border border-primary/15 rounded-2xl p-3 flex justify-between items-center text-xs">
-          <div>
-            <span class="text-gray-400 dark:text-gray-500 block">Sisa Pembayaran:</span>
-            <span class="font-bold text-gray-800 dark:text-white text-sm">
-              {{ store.formatRupiahFull(Math.max(0, selectedMember.target - selectedMember.collected)) }}
+          <!-- Selected member status badge preview -->
+          <div v-if="selectedMember" class="bg-primary/5 dark:bg-primary/10 border border-primary/15 rounded-2xl p-3 flex justify-between items-center text-xs">
+            <div>
+              <span class="text-gray-400 dark:text-gray-500 block">Sisa Pembayaran:</span>
+              <span class="font-bold text-gray-800 dark:text-white text-sm">
+                {{ store.formatRupiahFull(Math.max(0, selectedMember.target - selectedMember.collected)) }}
+              </span>
+            </div>
+            <span 
+              class="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider"
+              :class="selectedMember.collected >= selectedMember.target ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
+            >
+              {{ selectedMember.collected >= selectedMember.target ? 'Lunas' : 'Belum Lunas' }}
             </span>
           </div>
-          <span 
-            class="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider"
-            :class="selectedMember.collected >= selectedMember.target ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
-          >
-            {{ selectedMember.collected >= selectedMember.target ? 'Lunas' : 'Belum Lunas' }}
-          </span>
-        </div>
 
-        <!-- Amount Input -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Jumlah Setoran</label>
-          <div class="relative">
-            <span class="absolute left-4 top-3.5 text-sm font-bold text-gray-400">Rp</span>
-            <input 
-              v-model.number="form.amount" 
-              type="number" 
-              placeholder="Masukkan nominal setoran..." 
-              class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
-            />
-          </div>
-          
-          <!-- Shortcut Buttons -->
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button 
-              v-for="amt in quickAmounts" 
-              :key="amt"
-              type="button"
-              @click="form.amount = amt"
-              class="py-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition dark:text-gray-300"
-              :class="form.amount === amt ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800'"
-            >
-              +{{ store.formatRupiah(amt) }}
-            </button>
-          </div>
-        </div>
-
-        <!-- Payment Method -->
-        <div class="space-y-2">
-          <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Metode Pembayaran</label>
-          
-          <div class="grid grid-cols-2 gap-3">
-            <!-- QRIS Option -->
-            <div 
-              @click="form.paymentMethod = 'qris'"
-              class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
-              :class="form.paymentMethod === 'qris' 
-                ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
-            >
-              <span class="text-xl">📱</span>
-              <span class="text-xs font-bold dark:text-white block">QRIS Masjid</span>
-              <span class="text-[9px] text-gray-400">Verifikasi Instan</span>
+          <!-- Amount Input -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Jumlah Setoran</label>
+            <div class="relative">
+              <span class="absolute left-4 top-3.5 text-sm font-bold text-gray-400">Rp</span>
+              <input 
+                v-model.number="form.amount" 
+                type="number" 
+                placeholder="Masukkan nominal setoran..." 
+                class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+              />
             </div>
-
-            <!-- VA Option -->
-            <div 
-              @click="form.paymentMethod = 'va'"
-              class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
-              :class="form.paymentMethod === 'va' 
-                ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
-            >
-              <span class="text-xl">🏦</span>
-              <span class="text-xs font-bold dark:text-white block">Transfer Bank</span>
-              <span class="text-[9px] text-gray-400">Simulasi Virtual Account</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Submit Button -->
-        <button 
-          @click="submitDeposit"
-          class="w-full py-4 text-sm font-bold bg-primary text-white rounded-2xl hover:bg-primary-light transition shadow-md glow-primary pulse-glow font-heading"
-        >
-          Lanjutkan Pembayaran
-        </button>
-
-      </div>
-    </div>
-
-    <!-- TAB 2: INTERACTIVE CALCULATOR -->
-    <div v-else class="space-y-4 tab-content animate-fade-in">
-      
-      <!-- Calculator Controls -->
-      <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-5">
-        <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
-        
-        <!-- Target Type -->
-        <div class="space-y-1.5">
-          <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target Qurban</label>
-          <div class="grid grid-cols-3 gap-2">
-            <button 
-              v-for="target in calcTargets" 
-              :key="target.value"
-              @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
-              class="p-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
-              :class="calc.targetValue === target.price ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400'"
-            >
-              <span class="text-lg mb-1">{{ target.icon }}</span>
-              <span class="leading-tight mb-1">{{ target.label }}</span>
-              <span class="text-[9px] text-amber-500">{{ store.formatRupiah(target.price) }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Months Duration Slider -->
-        <div class="space-y-2 pt-2">
-          <div class="flex justify-between items-center text-xs">
-            <span class="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Durasi Tabungan</span>
-            <span class="font-extrabold text-primary dark:text-primary-light">{{ calc.months }} Bulan</span>
-          </div>
-          <input 
-            type="range" 
-            min="1" 
-            max="12" 
-            v-model.number="calc.months" 
-            class="w-full accent-primary bg-gray-100 dark:bg-gray-700 rounded-full h-1.5"
-          />
-          <div class="flex justify-between text-[10px] text-gray-400 dark:text-gray-500">
-            <span>1 Bulan</span>
-            <span>6 Bulan</span>
-            <span>12 Bulan</span>
-          </div>
-        </div>
-
-        <!-- Calculated Result Output Card -->
-        <div class="bg-primary text-white rounded-3xl p-5 text-center shadow-lg relative overflow-hidden">
-          <div class="absolute inset-0 bg-emerald-950/20 pointer-events-none"></div>
-          <span class="text-xs text-teal-200">Estimasi Tabungan Berkala</span>
-          <h4 class="text-2xl font-black mt-1 text-amber-300 font-heading">
-            {{ store.formatRupiahFull(monthlySaving) }} <span class="text-xs text-white/80 font-normal font-sans">/ bulan</span>
-          </h4>
-          <p class="text-[10px] text-teal-100/80 mt-1">
-            Atau setara <span class="font-bold text-white">{{ store.formatRupiahFull(weeklySaving) }}</span> per minggu
-          </p>
-        </div>
-
-        <!-- Create New Shohibul Directly Box -->
-        <div class="border-t border-gray-100 dark:border-gray-700/50 pt-4 space-y-3">
-          <div class="flex justify-between items-center">
-            <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Daftar Shohibul Baru</h4>
-            <span class="px-2 py-0.5 bg-amber-500/10 text-amber-600 rounded text-[9px] font-bold">Simulasi Tambah</span>
-          </div>
-
-          <div class="space-y-2">
-            <input 
-              v-model="newMember.name" 
-              type="text" 
-              placeholder="Nama Lengkap Shohibul" 
-              class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
-            />
-            <input 
-              v-model="newMember.address" 
-              type="text" 
-              placeholder="Alamat / No. Blok (Contoh: B05)" 
-              class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
-            />
             
-            <button 
-              @click="registerNewMember"
-              class="w-full py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-xl text-xs font-bold hover:bg-gray-900 dark:hover:bg-gray-600 transition"
-            >
-              Mulai Menabung dengan Rencana Ini
-            </button>
+            <!-- Shortcut Buttons -->
+            <div class="grid grid-cols-3 gap-2 pt-1">
+              <button 
+                v-for="amt in quickAmounts" 
+                :key="amt"
+                type="button"
+                @click="form.amount = amt"
+                class="py-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition dark:text-gray-300"
+                :class="form.amount === amt ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800'"
+              >
+                +{{ store.formatRupiah(amt) }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Payment Method -->
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Metode Pembayaran</label>
+            
+            <div class="grid grid-cols-2 gap-3">
+              <!-- QRIS Option -->
+              <div 
+                @click="form.paymentMethod = 'qris'"
+                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
+                :class="form.paymentMethod === 'qris' 
+                  ? 'border-primary bg-primary/5 dark:bg-primary/10' 
+                  : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
+              >
+                <span class="text-xl">📱</span>
+                <span class="text-xs font-bold dark:text-white block">QRIS Masjid</span>
+                <span class="text-[9px] text-gray-400">Verifikasi Instan</span>
+              </div>
+
+              <!-- VA Option -->
+              <div 
+                @click="form.paymentMethod = 'va'"
+                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
+                :class="form.paymentMethod === 'va' 
+                  ? 'border-primary bg-primary/5 dark:bg-primary/10' 
+                  : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
+              >
+                <span class="text-xl">🏦</span>
+                <span class="text-xs font-bold dark:text-white block">Transfer Bank</span>
+                <span class="text-[9px] text-gray-400">Simulasi Virtual Account</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button 
+            @click="submitDeposit"
+            class="w-full py-4 text-sm font-bold bg-primary text-white rounded-2xl hover:bg-primary-light transition shadow-md glow-primary pulse-glow font-heading"
+          >
+            Lanjutkan Pembayaran
+          </button>
+        </div>
+      </div>
+
+      <!-- COLUMN 2: INTERACTIVE CALCULATOR -->
+      <div 
+        class="lg:col-span-6 space-y-4"
+        :class="{'hidden lg:block': activeTab !== 'kalkulator'}"
+      >
+        <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-5">
+          <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
+          
+          <!-- Target Type -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Target Qurban</label>
+            <div class="grid grid-cols-3 gap-2">
+              <button 
+                v-for="target in calcTargets" 
+                :key="target.value"
+                @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
+                class="p-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
+                :class="calc.targetValue === target.price ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400'"
+              >
+                <span class="text-lg mb-1">{{ target.icon }}</span>
+                <span class="leading-tight mb-1">{{ target.label }}</span>
+                <span class="text-[9px] text-amber-500">{{ store.formatRupiah(target.price) }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Months Duration Slider -->
+          <div class="space-y-2 pt-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Durasi Tabungan</span>
+              <span class="font-extrabold text-primary dark:text-primary-light">{{ calc.months }} Bulan</span>
+          </div>
+            <input 
+              type="range" 
+              min="1" 
+              max="12" 
+              v-model.number="calc.months" 
+              class="w-full accent-primary bg-gray-100 dark:bg-gray-700 rounded-full h-1.5"
+            />
+            <div class="flex justify-between text-[10px] text-gray-400 dark:text-gray-500">
+              <span>1 Bulan</span>
+              <span>6 Bulan</span>
+              <span>12 Bulan</span>
+            </div>
+          </div>
+
+          <!-- Calculated Result Output Card -->
+          <div class="bg-primary text-white rounded-3xl p-5 text-center shadow-lg relative overflow-hidden">
+            <div class="absolute inset-0 bg-emerald-950/20 pointer-events-none"></div>
+            <span class="text-xs text-teal-200">Estimasi Tabungan Berkala</span>
+            <h4 class="text-2xl font-black mt-1 text-amber-300 font-heading">
+              {{ store.formatRupiahFull(monthlySaving) }} <span class="text-xs text-white/80 font-normal font-sans">/ bulan</span>
+            </h4>
+            <p class="text-[10px] text-teal-100/80 mt-1">
+              Atau setara <span class="font-bold text-white">{{ store.formatRupiahFull(weeklySaving) }}</span> per minggu
+            </p>
+          </div>
+
+          <!-- Create New Shohibul Directly Box -->
+          <div class="border-t border-gray-100 dark:border-gray-700/50 pt-4 space-y-3">
+            <div class="flex justify-between items-center">
+              <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Daftar Shohibul Baru</h4>
+              <span class="px-2 py-0.5 bg-amber-500/10 text-amber-600 rounded text-[9px] font-bold">Simulasi Tambah</span>
+            </div>
+
+            <div class="space-y-2">
+              <input 
+                v-model="newMember.name" 
+                type="text" 
+                placeholder="Nama Lengkap Shohibul" 
+                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+              />
+              <input 
+                v-model="newMember.address" 
+                type="text" 
+                placeholder="Alamat / No. Blok (Contoh: B05)" 
+                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+              />
+              
+              <button 
+                @click="registerNewMember"
+                class="w-full py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-xl text-xs font-bold hover:bg-gray-900 dark:hover:bg-gray-600 transition"
+              >
+                Mulai Menabung dengan Rencana Ini
+              </button>
+            </div>
           </div>
         </div>
-
       </div>
+
     </div>
 
     <!-- QRIS PAYMENT FLOW SCREEN (MODAL SLIDE-UP) -->
@@ -261,11 +269,10 @@
           <!-- Display QRIS Image if selected -->
           <div v-if="form.paymentMethod === 'qris'" class="space-y-3">
             <div class="mx-auto w-[200px] h-[200px] bg-white border border-gray-100 dark:border-gray-800 rounded-3xl overflow-hidden shadow-md p-2 flex items-center justify-center">
-              <!-- Actual image loaded from public/qris-dkm.jpg -->
               <img src="/qris-dkm.jpg" alt="QRIS DKM Masjid Jami Kassiti" class="max-w-full max-h-full object-contain" />
             </div>
             <p class="text-[10px] text-gray-400 max-w-[280px] mx-auto leading-relaxed">
-              Scan QRIS diatas menggunakan M-Banking atau E-Wallet (Gopay, OVO, Dana, LinkAja).
+              Scan QRIS diatas menggunakan M-Banking or E-Wallet (Gopay, OVO, Dana, LinkAja).
             </p>
           </div>
 

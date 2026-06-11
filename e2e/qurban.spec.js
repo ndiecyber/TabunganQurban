@@ -23,7 +23,7 @@ test.describe('Tabungan Qurban Mobile Web App E2E Tests', () => {
     await page.goto('/');
     
     // Click Shohibul navigation tab in the bottom nav specifically
-    await page.click('nav >> text=Shohibul');
+    await page.click('nav.fixed >> text=Shohibul');
     await expect(page).toHaveURL(/\/shohibul/);
     
     // Check header text

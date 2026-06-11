@@ -54,7 +54,7 @@
         <span class="text-[10px] text-primary dark:text-primary-light font-bold">1 share = 1/7 Sapi</span>
       </div>
 
-      <div class="space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Sapi Kelompok A -->
         <div class="border border-gray-100 dark:border-gray-700/50 rounded-2.5xl p-4 space-y-3">
           <div class="flex justify-between items-center">

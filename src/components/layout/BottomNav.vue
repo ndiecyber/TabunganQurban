@@ -1,5 +1,5 @@
 <template>
-  <nav class="absolute bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 border-t border-gray-200/50 dark:border-gray-800/50 px-6 py-2.5 flex justify-between items-center z-40 backdrop-blur-lg shadow-[0_-8px_30px_rgba(0,0,0,0.03)] pb-[calc(10px+env(safe-area-inset-bottom,0px))]">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-gray-900/95 border-t border-gray-200/50 dark:border-gray-800/50 px-6 py-2.5 flex justify-between items-center z-40 backdrop-blur-lg shadow-[0_-8px_30px_rgba(0,0,0,0.03)] pb-[calc(10px+env(safe-area-inset-bottom,0px))]">
     
     <!-- Navigation Item: Dashboard -->
     <router-link 

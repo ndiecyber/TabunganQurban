@@ -38,7 +38,7 @@
     </div>
 
     <!-- Shohibuls Card Grid -->
-    <div class="space-y-3 shohibul-cards-container">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 shohibul-cards-container">
       <div 
         v-for="shohibul in filteredShohibuls" 
         :key="shohibul.id"
