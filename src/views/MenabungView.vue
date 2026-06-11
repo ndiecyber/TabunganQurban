@@ -351,8 +351,9 @@
               </div>
             </div>
             
-            <div v-if="filteredShohibulList.length === 0" class="text-center py-8 text-gray-400">
-              <p class="text-xs font-semibold">Jamaah tidak ditemukan</p>
+            <div v-if="filteredShohibulList.length === 0" class="text-center py-8 px-4 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-dashed border-gray-200 dark:border-white/5">
+              <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1">Jamaah tidak ditemukan</p>
+              <p class="text-[10px] text-gray-400">Jika Anda belum terdaftar sebagai peserta Qurban, silakan hubungi pengurus DKM Masjid terlebih dahulu.</p>
             </div>
           </div>
         </div>

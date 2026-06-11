@@ -146,8 +146,15 @@
       <!-- Empty State -->
       <div v-if="filteredShohibuls.length === 0" class="text-center py-16 text-gray-400 dark:text-gray-600 col-span-full border-2 border-dashed border-gray-200 dark:border-white/5 rounded-[2rem]">
         <UsersIcon class="w-12 h-12 mx-auto mb-3 opacity-30" />
-        <p class="text-sm font-semibold">Tidak ditemukan data jamaah</p>
-        <p class="text-[10px] mt-1">Coba sesuaikan kata kunci pencarian atau filter.</p>
+        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Data jamaah tidak ditemukan</p>
+        <p class="text-[10px] mt-1 mb-4">Coba sesuaikan kata kunci pencarian atau filter.</p>
+        
+        <div class="inline-flex flex-col items-center p-4 bg-primary/5 dark:bg-primary/10 rounded-2xl border border-primary/20">
+          <p class="text-xs font-bold text-primary dark:text-primary-light mb-1">Belum Terdaftar?</p>
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 max-w-[250px] leading-relaxed">
+            Silakan hubungi pengurus DKM Masjid untuk mendaftarkan diri sebagai peserta Qurban tahun ini.
+          </p>
+        </div>
       </div>
     </div>
 
