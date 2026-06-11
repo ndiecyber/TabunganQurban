@@ -97,22 +97,26 @@
             <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">
               IDUL ADHA 2025
             </span>
-            <span class="px-2 py-0.5 bg-amber-900/40 border border-amber-700/50 rounded text-[9px] font-black uppercase tracking-wider text-amber-300 font-arabic">
-              {{ currentHijriDate }}
-            </span>
           </div>
         </div>
 
         <!-- Middle Row: Welcome Budi Santoso -->
-        <div class="mt-4 relative z-10">
-          <span class="text-[10px] text-emerald-200/80">Selamat datang,</span>
-          <h3 class="text-base font-bold mt-0.5">Budi Santoso</h3>
-          <p class="text-[9px] text-emerald-100/60 flex items-center mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            </svg>
-            Rumah A01 - Perumahan Arjamukti Desa Arjasari
-          </p>
+        <div class="mt-4 relative z-10 flex justify-between items-start">
+          <div>
+            <span class="text-[10px] text-emerald-200/80">Selamat datang,</span>
+            <h3 class="text-base font-bold mt-0.5">Budi Santoso</h3>
+            <p class="text-[9px] text-emerald-100/60 flex items-center mt-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-amber-400 shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+              </svg>
+              Rumah A01 - Perumahan Arjamukti
+            </p>
+          </div>
+          <div class="text-right shrink-0 ml-2">
+            <span class="px-2 py-1 bg-amber-900/40 border border-amber-700/50 rounded-lg text-[10px] font-bold uppercase tracking-wider text-amber-300 font-arabic shadow-sm block">
+              {{ currentHijriDate }}
+            </span>
+          </div>
         </div>
 
         <!-- Bottom Row of Header: Last Month Payment status (Iuran Juni 2025 Rp 25.000 Lunas) -->

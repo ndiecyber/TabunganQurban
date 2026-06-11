@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 
 /* ===== Custom Theme via Tailwind v4 @theme ===== */
 @theme {
@@ -98,6 +98,15 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .glow-gold { box-shadow: 0 0 20px rgba(217, 119, 6, 0.2); }
 .glow-primary { box-shadow: 0 0 20px rgba(15, 118, 110, 0.2); }
+
+.gradient-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 118, 110, 0.95) 0%,
+    rgba(15, 118, 110, 0.85) 50%,
+    rgba(4, 47, 46, 0.9) 100%
+  );
+}
 
 .text-gradient-gold {
   background: linear-gradient(135deg, #D97706, #F59E0B, #D97706);
