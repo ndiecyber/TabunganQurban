@@ -48,7 +48,7 @@
       <div 
         v-for="(shohibul, idx) in filteredShohibuls" 
         :key="shohibul.id"
-        @click="openDetails(shohibul)"
+        @click="openDetails(shohibul, $event)"
         class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition-shadow duration-300 flex flex-col justify-between space-y-4"
       >
         <!-- Top Row: Avatar Initials + Name/Address + Progress Mini Bar -->
@@ -57,7 +57,7 @@
             <!-- Distinct Color Avatars based on Index -->
             <div 
               class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
-              :class="getAvatarClass(shohibul.name)"
+              :style="getAvatarStyle(shohibul.name)"
             >
               {{ getInitials(shohibul.name) }}
             </div>
@@ -123,14 +123,14 @@
       </div>
     </div>
 
-    <!-- Shohibul Detail Slide-Up Modal Frame -->
-    <transition name="slide-up">
-      <div v-if="selectedShohibul" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end">
+    <!-- Shohibul Detail Slide-Up Modal Frame (Opsi 3: Morphing Expand) -->
+    <transition :css="false">
+      <div v-if="selectedShohibul" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end modal-backdrop">
         <!-- Close overlay -->
         <div class="flex-1" @click="closeDetails"></div>
         
         <!-- Modal Content Container -->
-        <div class="bg-white dark:bg-gray-950 rounded-t-[32px] p-6 max-h-[85%] overflow-y-auto space-y-6 relative border-t border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))]">
+        <div class="bg-white dark:bg-gray-950 rounded-t-[32px] p-6 max-h-[85%] overflow-y-auto space-y-6 relative border-t border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content">
           <!-- Slide handle -->
           <div class="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full mx-auto -mt-2 mb-4 cursor-pointer" @click="closeDetails"></div>
           
@@ -239,7 +239,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
@@ -295,24 +295,30 @@ const getPercentage = (shohibul) => {
   return Math.min(Math.round((shohibul.collected / shohibul.target) * 100), 100)
 }
 
-// Generate color classes based on name hash
-const getAvatarClass = (name) => {
-  if (!name) return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
-  const colors = [
-    'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
-    'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400',
-    'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400',
-    'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400',
-    'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400',
-    'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-400',
-    'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-400'
+// Generate color style based on name hash (Opsi 5: Gradient Avatars)
+const getAvatarStyle = (name) => {
+  if (!name) return {}
+  const gradients = [
+    { from: '#eab308', to: '#ca8a04', text: '#ffffff' }, // Amber gradient
+    { from: '#10b981', to: '#047857', text: '#ffffff' }, // Emerald gradient
+    { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' }, // Blue gradient
+    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple gradient
+    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink gradient
+    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose gradient
+    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }  // Cyan gradient
   ]
   let hash = 0
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
-  const index = Math.abs(hash) % colors.length
-  return colors[index]
+  const index = Math.abs(hash) % gradients.length
+  const g = gradients[index]
+  return {
+    background: `linear-gradient(135deg, ${g.from} 0%, ${g.to} 100%)`,
+    color: g.text,
+    textShadow: '0 1px 1px rgba(0, 0, 0, 0.15)',
+    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.08)'
+  }
 }
 
 const getInitials = (name) => {
@@ -329,12 +335,82 @@ const formatDate = (dateStr) => {
   return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-const openDetails = (shohibul) => {
+const clickedCardRect = ref(null)
+
+const openDetails = (shohibul, event) => {
+  const card = event.currentTarget
+  clickedCardRect.value = card.getBoundingClientRect()
   selectedShohibul.value = shohibul
+  
+  nextTick(() => {
+    const modalContent = document.querySelector('.details-modal-content')
+    const backdrop = document.querySelector('.modal-backdrop')
+    if (modalContent) {
+      const modalRect = modalContent.getBoundingClientRect()
+      const startX = clickedCardRect.value.left - modalRect.left
+      const startY = clickedCardRect.value.top - modalRect.top
+      
+      // Expand from card position (Opsi 3: Morphing FLIP)
+      gsap.fromTo(modalContent,
+        {
+          x: startX,
+          y: startY,
+          width: clickedCardRect.value.width,
+          height: clickedCardRect.value.height,
+          borderRadius: '1.25rem',
+          opacity: 0.6,
+          transformOrigin: 'top left'
+        },
+        {
+          x: 0,
+          y: 0,
+          width: '100%',
+          height: '100%',
+          borderRadius: '2rem 2rem 0 0',
+          opacity: 1,
+          duration: 0.45,
+          ease: 'power4.out',
+          clearProps: 'x,y,transformOrigin'
+        }
+      )
+    }
+    if (backdrop) {
+      gsap.fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.35 })
+    }
+  })
 }
 
 const closeDetails = () => {
-  selectedShohibul.value = null
+  const modalContent = document.querySelector('.details-modal-content')
+  const backdrop = document.querySelector('.modal-backdrop')
+  
+  if (modalContent && clickedCardRect.value) {
+    const modalRect = modalContent.getBoundingClientRect()
+    const targetX = clickedCardRect.value.left - modalRect.left
+    const targetY = clickedCardRect.value.top - modalRect.top
+    
+    // Shrink back to card position
+    gsap.to(modalContent, {
+      x: targetX,
+      y: targetY,
+      width: clickedCardRect.value.width,
+      height: clickedCardRect.value.height,
+      borderRadius: '1.25rem',
+      opacity: 0,
+      duration: 0.35,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        selectedShohibul.value = null
+        clickedCardRect.value = null
+      }
+    })
+    if (backdrop) {
+      gsap.to(backdrop, { opacity: 0, duration: 0.3 })
+    }
+  } else {
+    selectedShohibul.value = null
+    clickedCardRect.value = null
+  }
 }
 
 const goToDeposit = (shohibulId) => {

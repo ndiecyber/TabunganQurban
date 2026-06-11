@@ -56,41 +56,51 @@
       <!-- 2. Quick Stats Cards (Mobile Order 1, Desktop Order 2) -->
       <div class="col-span-1 lg:col-span-5 lg:order-2 space-y-4">
         <div class="grid grid-cols-3 gap-3 stats-grid">
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
-            <span class="text-2xl font-black text-gray-800 dark:text-white block">{{ store.shohibuls.length }}</span>
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
+            <span class="text-2xl font-black text-gray-800 dark:text-white block">{{ Math.round(animatedStats.shohibuls) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Shohibul</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
-            <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block">{{ store.totalLunas }}</span>
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
+            <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block">{{ Math.round(animatedStats.lunas) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Lunas</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
-            <span class="text-2xl font-black text-amber-600 dark:text-amber-400 block">{{ store.totalProses }}</span>
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
+            <span class="text-2xl font-black text-amber-600 dark:text-amber-400 block">{{ Math.round(animatedStats.proses) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Proses</span>
           </div>
         </div>
       </div>
 
       <!-- 3. Main Grand Progress Bar Widget (Mobile Order 2, Desktop Order 3) -->
-      <div class="col-span-1 lg:col-span-7 lg:order-3 bg-[#10513c] text-white rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget">
+      <div class="col-span-1 lg:col-span-7 lg:order-3 bg-[#10513c] text-white rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget ambient-glow-pulse">
         <div class="flex justify-between items-start">
           <div>
             <span class="text-xs text-emerald-300">Total terkumpul</span>
-            <h3 class="text-2xl font-black text-white mt-1">{{ store.formatRupiahFull(store.totalCollected) }}</h3>
+            <h3 class="text-2xl font-black text-white mt-1">{{ store.formatRupiahFull(Math.round(animatedStats.collected)) }}</h3>
             <span class="text-xs text-emerald-200/70">Target: {{ store.formatRupiahFull(store.targetTotal) }}</span>
           </div>
           <div class="text-3xl font-black text-amber-300 font-heading">
-            {{ store.progressPercentage }}%
+            {{ Math.round(animatedStats.percentage) }}%
           </div>
         </div>
 
-        <!-- Custom Progress Bar -->
+        <!-- Custom Progress Bar (Opsi 1: Fluid wave) -->
         <div class="space-y-1">
-          <div class="w-full h-3 bg-emerald-950 rounded-full overflow-hidden">
+          <div class="w-full h-4.5 bg-emerald-950/80 rounded-full overflow-hidden relative border border-emerald-900/50 shadow-inner">
+            <!-- Back Wave -->
             <div 
-              class="h-full bg-gradient-to-r from-amber-500 to-amber-300 rounded-full transition-all duration-1000 ease-out progress-bar-fill"
-              :style="{ width: store.progressPercentage + '%' }"
+              class="absolute inset-y-0 left-0 wave-fill-back transition-all duration-1000 ease-out"
+              :style="{ width: Math.round(animatedStats.percentage) + '%' }"
             ></div>
+            <!-- Front Wave -->
+            <div 
+              class="absolute inset-y-0 left-0 wave-fill-front transition-all duration-1000 ease-out"
+              :style="{ width: Math.round(animatedStats.percentage) + '%' }"
+            ></div>
+            <!-- Overlay Info -->
+            <span class="absolute inset-0 flex items-center justify-center text-[8px] font-black text-emerald-950 uppercase tracking-widest pointer-events-none select-none opacity-40">
+              Gelombang Tabungan Qurban
+            </span>
           </div>
           <div class="flex justify-between text-[10px] text-emerald-300">
             <span>Rp0</span>
@@ -138,7 +148,7 @@
             <div class="flex items-center space-x-3">
               <div 
                 class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
-                :class="getAvatarClass(tx.name)"
+                :style="getAvatarStyle(tx.name)"
               >
                 {{ getInitials(tx.name) }}
               </div>
@@ -163,7 +173,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
 
@@ -187,27 +197,52 @@ const getInitials = (name) => {
   return name.slice(0, 2).toUpperCase()
 }
 
-// Generate color classes based on name hash
-const getAvatarClass = (name) => {
-  if (!name) return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
-  const colors = [
-    'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
-    'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400',
-    'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400',
-    'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400',
-    'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400',
-    'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-400',
-    'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-400'
+// Generate color style based on name hash (Opsi 5: Gradient Avatars)
+const getAvatarStyle = (name) => {
+  if (!name) return {}
+  const gradients = [
+    { from: '#eab308', to: '#ca8a04', text: '#ffffff' }, // Amber gradient
+    { from: '#10b981', to: '#047857', text: '#ffffff' }, // Emerald gradient
+    { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' }, // Blue gradient
+    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple gradient
+    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink gradient
+    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose gradient
+    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }  // Cyan gradient
   ]
   let hash = 0
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
-  const index = Math.abs(hash) % colors.length
-  return colors[index]
+  const index = Math.abs(hash) % gradients.length
+  const g = gradients[index]
+  return {
+    background: `linear-gradient(135deg, ${g.from} 0%, ${g.to} 100%)`,
+    color: g.text,
+    textShadow: '0 1px 1px rgba(0, 0, 0, 0.15)',
+    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.08)'
+  }
 }
 
+const animatedStats = reactive({
+  shohibuls: 0,
+  lunas: 0,
+  proses: 0,
+  collected: 0,
+  percentage: 0
+})
+
 onMounted(() => {
+  // GSAP Counters (Opsi 4)
+  gsap.to(animatedStats, {
+    shohibuls: store.shohibuls.length,
+    lunas: store.totalLunas,
+    proses: store.totalProses,
+    collected: store.totalCollected,
+    percentage: store.progressPercentage,
+    duration: 1.8,
+    ease: 'power3.out'
+  })
+
   // Entrance GSAP animation
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })

@@ -459,3 +459,46 @@ div:not(.dark).style-frosted .details-modal-info-box {
 .dark .card-hover:hover {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4) !important;
 }
+
+/* ===== PRO MAX: Ambient Pulsing Glow (Opsi 2) ===== */
+@keyframes ambient-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(11, 62, 46, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(11, 62, 46, 0.12), 0 3px 10px rgba(11, 62, 46, 0.06) !important;
+  }
+}
+@keyframes ambient-glow-pulse-dark {
+  0%, 100% {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
+  }
+  50% {
+    box-shadow: 0 16px 48px rgba(16, 185, 129, 0.22) !important;
+  }
+}
+.ambient-glow-pulse {
+  animation: ambient-glow-pulse 4s ease-in-out infinite;
+}
+.dark .ambient-glow-pulse {
+  animation: ambient-glow-pulse-dark 4s ease-in-out infinite;
+}
+
+/* ===== PRO MAX: Fluid SVG Wave Animation (Opsi 1) ===== */
+@keyframes wave-flow {
+  0% { background-position-x: 0px; }
+  100% { background-position-x: 400px; }
+}
+.wave-fill-back {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 20'%3E%3Cpath d='M0 10 Q 200 4, 400 10 T 800 10 L 800 20 L 0 20 Z' fill='%23d97706'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 400px 100%;
+  animation: wave-flow 5s linear infinite;
+}
+.wave-fill-front {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 20'%3E%3Cpath d='M0 10 Q 200 14, 400 10 T 800 10 L 800 20 L 0 20 Z' fill='%23fbbf24'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 400px 100%;
+  animation: wave-flow 3.5s linear infinite reverse;
+}
+
