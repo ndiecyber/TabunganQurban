@@ -263,7 +263,7 @@ const formatDate = (dateStr) => {
 
 // Apex Charts configurations
 const radialChartOptions = computed(() => {
-  const isDark = document.documentElement.classList.contains('dark')
+  const isDark = store.isDarkMode
   return {
     chart: {
       type: 'radialBar',
@@ -313,7 +313,7 @@ const barChartSeries = computed(() => {
 })
 
 const barChartOptions = computed(() => {
-  const isDark = document.documentElement.classList.contains('dark')
+  const isDark = store.isDarkMode
   return {
     chart: {
       type: 'bar',

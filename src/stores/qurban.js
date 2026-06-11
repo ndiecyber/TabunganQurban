@@ -6,6 +6,7 @@ export const useQurbanStore = defineStore('qurban', {
     transactions: [],
     targetTotal: 84000000,
     currentShohibulId: 'shohibul-01', // Logged in user: Budi Santoso
+    isDarkMode: false
   }),
 
   getters: {
@@ -339,6 +340,28 @@ export const useQurbanStore = defineStore('qurban', {
       if (value === undefined || value === null) return 'Rp0'
       // Strictly format as Rp55.700.000 (no space)
       return 'Rp' + value.toLocaleString('id-ID').replace(/,/g, '.')
+    },
+
+    toggleTheme() {
+      this.isDarkMode = !this.isDarkMode
+      if (this.isDarkMode) {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+      }
+    },
+
+    initializeTheme() {
+      const savedTheme = localStorage.getItem('theme')
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        this.isDarkMode = true
+        document.documentElement.classList.add('dark')
+      } else {
+        this.isDarkMode = false
+        document.documentElement.classList.remove('dark')
+      }
     }
   }
 })

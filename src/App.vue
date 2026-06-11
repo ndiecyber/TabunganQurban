@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'dark': isDarkMode }" class="min-h-screen transition-colors duration-300">
+  <div :class="{ 'dark': store.isDarkMode }" class="min-h-screen transition-colors duration-300">
     <div class="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans flex flex-col relative islamic-pattern-bg">
       
       <!-- 1. DESKTOP HEADER (Visible only on desktop/tablet) -->
@@ -7,7 +7,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
           <router-link to="/" class="flex items-center space-x-3">
-            <img :src="isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
+            <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
             <div class="border-l border-gray-200 dark:border-gray-800 pl-3">
               <span class="sr-only">DKM Jami Kassiti</span>
               <h1 class="text-base font-extrabold text-[#10513c] dark:text-[#a7f3d0] leading-tight font-heading">Tabungan Qurban</h1>
@@ -31,11 +31,11 @@
           <!-- Action Buttons / Theme Toggle -->
           <div class="flex items-center space-x-3">
             <button 
-              @click="toggleDarkMode" 
-              class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition" 
+              @click="store.toggleTheme()" 
+              class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer" 
               aria-label="Toggle Dark Mode"
             >
-              <svg v-if="isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
               </svg>
               <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-700" viewBox="0 0 20 20" fill="currentColor">
@@ -72,9 +72,24 @@
               <span class="sr-only">DKM Masjid Jami Kassiti</span>
             </div>
           </div>
-          <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">
-            IDUL ADHA 2025
-          </span>
+          <div class="flex items-center space-x-2">
+            <!-- Mobile Dark Mode Toggle Button -->
+            <button 
+              @click="store.toggleTheme()" 
+              class="p-1.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-700/30 text-emerald-200 transition cursor-pointer"
+              aria-label="Toggle Dark Mode"
+            >
+              <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-200" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+              </svg>
+            </button>
+            <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">
+              IDUL ADHA 2025
+            </span>
+          </div>
         </div>
 
         <!-- Middle Row: Welcome Budi Santoso -->
@@ -140,7 +155,6 @@ import {
   BarChart3 
 } from 'lucide-vue-next'
 
-const isDarkMode = ref(false)
 const route = useRoute()
 const store = useQurbanStore()
 
@@ -158,27 +172,12 @@ const isRouteActive = (path) => {
   return route.path.startsWith(path)
 }
 
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value
-  if (isDarkMode.value) {
-    document.documentElement.classList.add('dark')
-    localStorage.setItem('theme', 'dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-    localStorage.setItem('theme', 'light')
-  }
-}
-
 onMounted(() => {
   // Load mock data on initialization
   store.initializeStore()
 
-  // Theme checking
-  const savedTheme = localStorage.getItem('theme')
-  if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    isDarkMode.value = true
-    document.documentElement.classList.add('dark')
-  }
+  // Initialize theme from store
+  store.initializeTheme()
 })
 </script>
 
