@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardView from '../views/DashboardView.vue'
+import ShohibulView from '../views/ShohibulView.vue'
+import MenabungView from '../views/MenabungView.vue'
+import RekapView from '../views/RekapView.vue'
 
 const routes = [
   {
@@ -10,17 +13,17 @@ const routes = [
   {
     path: '/shohibul',
     name: 'shohibul',
-    component: () => import('../views/ShohibulView.vue')
+    component: ShohibulView
   },
   {
     path: '/menabung',
     name: 'menabung',
-    component: () => import('../views/MenabungView.vue')
+    component: MenabungView
   },
   {
     path: '/rekap',
     name: 'rekap',
-    component: () => import('../views/RekapView.vue')
+    component: RekapView
   },
   {
     path: '/:pathMatch(.*)*',
