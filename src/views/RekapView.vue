@@ -1,51 +1,111 @@
 <template>
-  <div class="space-y-5" ref="containerRef">
+  <div class="space-y-6 sm:space-y-8 pb-8" ref="containerRef">
     
-    <!-- Header App Bar (Hidden on Mobile, visible on Desktop) -->
-    <div class="hidden md:flex items-center justify-between page-header">
-      <h2 class="text-lg font-black text-gray-800 dark:text-white font-heading">Rekapitulasi Keuangan</h2>
-      <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">Laporan Periode 2025</span>
-    </div>
-
-    <!-- 1. Three Top Summary Cards (Side by side on mobile and desktop) -->
-    <div class="grid grid-cols-3 gap-2.5 summary-cards">
-      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
-        <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.formatRupiahFull(store.totalCollected) }}</span>
-        <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Terkumpul</span>
-      </div>
+    <!-- REPORT HERO CARD -->
+    <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-dark via-primary to-teal-800 text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col min-h-[220px]">
+      <!-- Background Elements -->
+      <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
+      <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
       
-      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
-        <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.totalLunas }}/{{ store.shohibuls.length }}</span>
-        <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Lunas</span>
-      </div>
-      
-      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
-        <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.averageProgress }}%</span>
-        <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Rata-Rata</span>
-      </div>
-    </div>
-
-    <!-- 2. Dual Side-by-Side Statistics Panels (Top Tabungan & Per Hewan) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 statistics-split">
-      
-      <!-- Panel A: Top Tabungan -->
-      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 shadow-sm space-y-3 block-item">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-primary dark:text-primary-light uppercase tracking-wider">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-          <span>Top Tabungan</span>
+      <div class="relative z-10 flex flex-col h-full justify-between space-y-6">
+        <div class="flex justify-between items-start">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
+            <span class="text-white/90 text-[10px] font-extrabold tracking-[0.2em] uppercase">Laporan Keuangan</span>
+          </div>
+          <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 shadow-inner">
+            <FileTextIcon class="w-5 h-5 text-secondary" />
+          </div>
         </div>
         
-        <div class="space-y-3">
-          <div v-for="top in topSavers" :key="top.name" class="space-y-1">
-            <div class="flex justify-between text-[10px] font-bold">
-              <span class="text-gray-700 dark:text-gray-300 truncate max-w-[85px]">{{ top.name }}</span>
-              <span class="text-gray-800 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }} jt</span>
+        <div>
+          <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban 2025</p>
+          <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+            {{ store.formatRupiahFull(store.totalCollected) }}
+          </h2>
+          <div class="flex items-center space-x-2 mt-2.5">
+            <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-2.5 py-1 rounded-full font-bold border border-secondary/20 backdrop-blur-sm shadow-sm flex items-center">
+              <TrendingUpIcon class="w-3 h-3 mr-1" />
+              Periode Aktif
+            </span>
+            <p class="text-[10px] sm:text-xs text-teal-200/80 font-medium ml-2">Diperbarui secara real-time</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK STATS (3 Columns) -->
+    <div class="grid grid-cols-3 gap-3 sm:gap-4 quick-stats">
+      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+          <WalletIcon class="w-32 h-32" />
+        </div>
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0 mb-2 sm:mb-0">
+          <WalletIcon class="w-5 h-5 sm:w-6 sm:h-6" />
+        </div>
+        <div class="text-center sm:text-right w-full sm:w-auto">
+          <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Terkumpul</p>
+          <p class="text-sm sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ store.formatRupiah(store.totalCollected) }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+          <CheckCircleIcon class="w-32 h-32" />
+        </div>
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0 mb-2 sm:mb-0">
+          <CheckCircleIcon class="w-5 h-5 sm:w-6 sm:h-6" />
+        </div>
+        <div class="text-center sm:text-right w-full sm:w-auto">
+          <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Lunas</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+          <PieChartIcon class="w-32 h-32" />
+        </div>
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mb-2 sm:mb-0">
+          <PieChartIcon class="w-5 h-5 sm:w-6 sm:h-6" />
+        </div>
+        <div class="text-center sm:text-right w-full sm:w-auto">
+          <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Progress</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DUAL PANELS (Leaderboard & Progress) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 statistics-split">
+      
+      <!-- Top Tabungan (Leaderboard) -->
+      <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-4">
+        <div class="flex justify-between items-center px-1">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
+            <TrophyIcon class="w-4 h-4 mr-2 text-secondary" />
+            Top Tabungan
+          </h4>
+        </div>
+        
+        <div class="space-y-4">
+          <div v-for="(top, index) in topSavers" :key="top.name" class="group">
+            <div class="flex items-center space-x-3 mb-2">
+              <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 shadow-sm"
+                   :class="index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-yellow-500/50' : 
+                           index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white shadow-gray-500/50' :
+                           index === 2 ? 'bg-gradient-to-br from-orange-300 to-orange-700 text-white shadow-orange-500/50' :
+                           'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700'">
+                {{ index + 1 }}
+              </div>
+              <div class="flex-1 flex justify-between items-end">
+                <span class="text-xs font-bold text-gray-700 dark:text-gray-200 truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ top.name }}</span>
+                <span class="text-xs font-black text-gray-900 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }} Jt</span>
+              </div>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
+            <div class="w-full h-2 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner ml-9" style="width: calc(100% - 2.25rem)">
               <div 
-                class="h-full bg-primary dark:bg-primary-light rounded-full transition-all duration-500" 
+                class="h-full rounded-full transition-all duration-1000 ease-out" 
+                :class="index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-[0_0_8px_rgba(234,179,8,0.5)]' : 'bg-gradient-to-r from-primary to-primary-light'"
                 :style="{ width: (top.amount / 12000000) * 100 + '%' }"
               ></div>
             </div>
@@ -53,154 +113,167 @@
         </div>
       </div>
  
-      <!-- Panel B: Per Hewan -->
-      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 shadow-sm space-y-3 block-item">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-primary dark:text-primary-light uppercase tracking-wider">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <span>Per Hewan</span>
+      <!-- Per Hewan Progress -->
+      <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-6">
+        <div class="flex justify-between items-center px-1">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
+            <TargetIcon class="w-4 h-4 mr-2 text-primary dark:text-primary-light" />
+            Target Hewan
+          </h4>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-6">
           <!-- Sapi Progress -->
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center text-[10px] font-bold text-gray-700 dark:text-gray-300">
-              <span class="flex items-center">🐄 Sapi ({{ store.sapiCount }})</span>
-              <span>{{ store.sapiLunasCount }}/{{ store.sapiCount }}</span>
+          <div class="space-y-3 p-4 rounded-[1.5rem] bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 transition-all hover:border-primary/30">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-xl bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-lg">🐄</div>
+                <div>
+                  <span class="block text-xs font-bold text-gray-800 dark:text-white">Sapi Qurban</span>
+                  <span class="block text-[10px] text-gray-500 dark:text-gray-400">Target: {{ store.sapiCount }} Ekor</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="block text-sm font-black text-primary dark:text-primary-light">{{ store.sapiLunasCount }} / {{ store.sapiCount }}</span>
+                <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-wider">Terdanai</span>
+              </div>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
+            <div class="w-full h-2.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
               <div 
-                class="h-full rounded-full transition-all duration-500"
-                :class="store.sapiLunasCount > 0 ? 'bg-primary dark:bg-primary-light' : 'bg-gray-200 dark:bg-white/10'" 
+                class="h-full rounded-full transition-all duration-1000 ease-out"
+                :class="store.sapiLunasCount > 0 ? 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-transparent'" 
                 :style="{ width: (store.sapiCount > 0 ? (store.sapiLunasCount / store.sapiCount) * 100 : 0) + '%' }"
               ></div>
             </div>
           </div>
 
           <!-- Kambing Progress -->
-          <div class="space-y-1.5">
-            <div class="flex justify-between items-center text-[10px] font-bold text-gray-700 dark:text-gray-300">
-              <span class="flex items-center">🐐 Kambing ({{ store.kambingCount }})</span>
-              <span>{{ store.kambingLunasCount }}/{{ store.kambingCount }}</span>
+          <div class="space-y-3 p-4 rounded-[1.5rem] bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 transition-all hover:border-secondary/30">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 rounded-xl bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-lg">🐐</div>
+                <div>
+                  <span class="block text-xs font-bold text-gray-800 dark:text-white">Kambing Qurban</span>
+                  <span class="block text-[10px] text-gray-500 dark:text-gray-400">Target: {{ store.kambingCount }} Ekor</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="block text-sm font-black text-secondary">{{ store.kambingLunasCount }} / {{ store.kambingCount }}</span>
+                <span class="block text-[9px] font-bold text-gray-400 uppercase tracking-wider">Terdanai</span>
+              </div>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+            <div class="w-full h-2.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
               <div 
-                class="h-full rounded-full transition-all duration-500" 
-                :class="store.kambingLunasCount > 0 ? 'bg-primary dark:bg-primary-light' : 'bg-gray-200 dark:bg-white/10'"
+                class="h-full rounded-full transition-all duration-1000 ease-out" 
+                :class="store.kambingLunasCount > 0 ? 'bg-gradient-to-r from-amber-500 to-yellow-400 shadow-[0_0_8px_rgba(245,158,11,0.4)]' : 'bg-transparent'"
                 :style="{ width: (store.kambingCount > 0 ? (store.kambingLunasCount / store.kambingCount) * 100 : 0) + '%' }"
               ></div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
-    <!-- 3. Aktivitas Terbaru Log (List of recent payments/activities) -->
-    <div class="space-y-3 activity-log">
-      <h4 class="text-[10px] font-extrabold text-gray-400 dark:text-gray-500 uppercase tracking-wider flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-        Aktivitas terbaru
-      </h4>
+    <!-- KELOMPOK SAPI (Responsive Horizontal Scroll on Mobile, Grid on Desktop) -->
+    <div class="space-y-4 groups-widget">
+      <div class="flex justify-between items-center px-1">
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Kelompok Sapi Qurban</h4>
+        <span class="px-3 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[10px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
+      </div>
 
-      <!-- List Items -->
-      <div class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+      <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:overflow-visible">
+        
+        <!-- Sapi Groups (Dynamic) -->
         <div 
-          v-for="tx in store.transactions" 
-          :key="tx.id"
-          class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3.5 flex justify-between items-center shadow-sm"
+          v-for="(group, gIdx) in sapiGroups" 
+          :key="group.name"
+          class="min-w-[85vw] sm:min-w-[320px] lg:min-w-0 snap-center bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 shadow-sm space-y-4 shrink-0 transition-all"
+          :class="gIdx % 2 === 0 ? 'hover:border-primary/30' : 'hover:border-secondary/30'"
         >
-          <div class="flex items-center space-x-3">
-            <div class="w-8.5 h-8.5 rounded-full bg-teal-50 dark:bg-teal-950/40 text-primary dark:text-primary-light flex items-center justify-center font-bold text-xs shrink-0">
-              {{ getInitials(tx.name) }}
-            </div>
-            <div>
-              <span class="text-xs font-bold text-gray-800 dark:text-white block leading-tight">{{ tx.name }}</span>
-              <span class="text-[9px] text-gray-400 dark:text-gray-500 flex items-center mt-0.5">
-                {{ formatDate(tx.date) }} • Setoran {{ tx.amount >= 1000000 ? 'rutin' : 'awal' }} • {{ tx.code }}
+          <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-white/5">
+            <span class="text-sm font-black text-gray-800 dark:text-white flex items-center">
+              <span class="mr-2 text-lg">🐄</span> {{ group.name }}
+            </span>
+            <span 
+              class="px-2.5 py-1 rounded-md text-[9px] font-black uppercase tracking-wider"
+              :class="gIdx % 2 === 0 ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
+            >
+              {{ group.members.length }} / 7 Slot
+            </span>
+          </div>
+
+          <div class="space-y-1.5">
+            <div 
+              v-for="(member, idx) in group.members" 
+              :key="member.id"
+              class="flex justify-between items-center text-xs py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
+            >
+              <div class="flex items-center space-x-3">
+                <span class="w-5 h-5 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[9px] font-bold text-gray-500">{{ idx + 1 }}</span>
+                <div class="flex flex-col">
+                  <span class="font-bold text-gray-800 dark:text-gray-200">{{ member.name }}</span>
+                  <span class="text-[9px] text-gray-400 uppercase font-semibold">{{ member.code }}</span>
+                </div>
+              </div>
+              <span 
+                class="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider"
+                :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
+              >
+                {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
               </span>
             </div>
+            
+            <!-- Empty Slots -->
+            <div 
+              v-for="i in Math.max(0, 7 - group.members.length)" 
+              :key="'empty-'+gIdx+'-'+i" 
+              class="flex justify-between items-center text-xs py-2 px-3 rounded-xl border border-dashed border-gray-200 dark:border-white/10 text-gray-400 dark:text-gray-500"
+            >
+              <div class="flex items-center space-x-3">
+                <span class="w-5 h-5 rounded-md border border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center text-[9px] font-bold">{{ group.members.length + i }}</span>
+                <span class="italic font-medium">Slot Kosong</span>
+              </div>
+              <span class="text-[9px] font-bold uppercase bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-md">Tersedia</span>
+            </div>
           </div>
-          <span class="text-xs font-black text-gray-800 dark:text-white">
-            {{ store.formatRupiah(tx.amount) }}
-          </span>
         </div>
       </div>
     </div>
 
-    <!-- 4. Kelompok Sapi (Desktop Only, displayed side-by-side or below on wide screens) -->
-    <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-4 groups-widget hidden lg:block">
-      <div class="flex justify-between items-center">
-        <h3 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Kelompok Sapi Qurban</h3>
-        <span class="text-[10px] text-primary dark:text-primary-light font-bold">1 share = 1/7 Sapi</span>
+    <!-- AKTIVITAS TERBARU (Consistent with Dashboard) -->
+    <div class="space-y-4 recent-payments-list">
+      <div class="flex justify-between items-center px-1">
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Aktivitas Terbaru</h4>
       </div>
 
-      <div class="grid grid-cols-2 gap-6">
-        <!-- Sapi Kelompok A -->
-        <div class="border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-3">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-black text-gray-800 dark:text-white">🐄 Sapi Kelompok A</span>
-            <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/45 text-emerald-700 dark:text-emerald-400 rounded-full text-[9px] font-bold">
-              {{ sapiGroupAMembers.length }} / 7 Slot
-            </span>
-          </div>
-
-          <div class="space-y-2">
-            <div 
-              v-for="member in sapiGroupAMembers" 
-              :key="member.id"
-              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-100 dark:border-white/5 last:border-b-0"
-            >
-              <div class="flex items-center space-x-2">
-                <span class="text-[10px] text-gray-400 font-bold uppercase">{{ member.code }}</span>
-                <span class="font-semibold text-gray-700 dark:text-gray-300">{{ member.name }}</span>
-              </div>
-              <span 
-                class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
-                :class="member.collected >= member.target ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
+      <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-3 sm:p-4 shadow-sm">
+        <div class="space-y-1.5 max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
+          <div 
+            v-for="tx in store.transactions" 
+            :key="tx.id"
+            class="flex justify-between items-center p-3 sm:p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] border border-transparent hover:border-gray-100 dark:hover:border-white/5 transition-all duration-300 cursor-pointer group"
+          >
+            <div class="flex items-center space-x-4">
+              <div 
+                class="w-11 h-11 sm:w-12 sm:h-12 rounded-[1rem] flex items-center justify-center font-bold text-sm shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300"
+                :style="getAvatarStyle(tx.name)"
               >
-                {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
-              </span>
-            </div>
-            <div v-for="i in Math.max(0, 7 - sapiGroupAMembers.length)" :key="'empty-a-lg-'+i" class="flex justify-between items-center text-xs py-1.5 text-gray-300 dark:text-gray-700">
-              <span class="italic">Slot Kosong</span>
-              <span class="text-[8px] border border-dashed border-gray-200 dark:border-gray-700 px-1 rounded">Tersedia</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sapi Kelompok B -->
-        <div class="border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-3">
-          <div class="flex justify-between items-center">
-            <span class="text-xs font-black text-gray-800 dark:text-white">🐄 Sapi Kelompok B</span>
-            <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-950/45 text-amber-700 dark:text-amber-400 rounded-full text-[9px] font-bold">
-              {{ sapiGroupBMembers.length }} / 7 Slot
-            </span>
-          </div>
-
-          <div class="space-y-2">
-            <div 
-              v-for="member in sapiGroupBMembers" 
-              :key="member.id"
-              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-100 dark:border-white/5 last:border-b-0"
-            >
-              <div class="flex items-center space-x-2">
-                <span class="text-[10px] text-gray-400 font-bold uppercase">{{ member.code }}</span>
-                <span class="font-semibold text-gray-700 dark:text-gray-300">{{ member.name }}</span>
+                {{ getInitials(tx.name) }}
               </div>
-              <span 
-                class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
-                :class="member.collected >= member.target ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
-              >
-                {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
-              </span>
+              <div>
+                <h5 class="text-xs sm:text-sm font-extrabold text-gray-800 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
+                <div class="flex items-center mt-1.5 space-x-2">
+                  <span class="text-[9px] sm:text-[10px] font-semibold text-gray-400 dark:text-gray-500">{{ formatDate(tx.date) }}</span>
+                  <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                  <span class="text-[9px] sm:text-[10px] font-bold text-secondary">{{ tx.code }}</span>
+                </div>
+              </div>
             </div>
-            <div v-for="i in Math.max(0, 7 - sapiGroupBMembers.length)" :key="'empty-b-lg-'+i" class="flex justify-between items-center text-xs py-1.5 text-gray-300 dark:text-gray-700">
-              <span class="italic">Slot Kosong</span>
-              <span class="text-[8px] border border-dashed border-gray-200 dark:border-gray-700 px-1 rounded">Tersedia</span>
+            <div class="text-right">
+              <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
+              <span class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">
+                Setoran {{ tx.amount >= 1000000 ? 'Rutin' : 'Awal' }}
+              </span>
             </div>
           </div>
         </div>
@@ -214,13 +287,13 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
+import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
 let ctx
 
 // Hardcoded top list from the image:
-// Pak Tono (12.0jt), H. Budi (10.5jt), Dewi Anggraini (8.0jt), Hendra Kusuma (5.0jt), Hj. Siti (3.5jt)
 const topSavers = [
   { name: 'Pak Tono', amount: 12000000 },
   { name: 'H. Budi', amount: 10500000 },
@@ -229,22 +302,28 @@ const topSavers = [
   { name: 'Hj. Siti', amount: 3500000 }
 ]
 
-const sapiGroupAMembers = computed(() => {
-  return store.shohibuls.filter(item => item.animalGroup === 'Sapi Kelompok A')
+const sapiGroups = computed(() => {
+  const groups = {}
+  store.shohibuls.forEach(member => {
+    if (member.type === 'sapi' && member.animalGroup && member.animalGroup !== 'Belum Ditentukan') {
+      if (!groups[member.animalGroup]) {
+        groups[member.animalGroup] = {
+           name: member.animalGroup,
+           members: []
+        }
+      }
+      groups[member.animalGroup].members.push(member)
+    }
+  })
+  
+  return Object.values(groups).sort((a, b) => a.name.localeCompare(b.name))
 })
 
-const sapiGroupBMembers = computed(() => {
-  return store.shohibuls.filter(item => item.animalGroup === 'Sapi Kelompok B')
-})
-
-// Calculate totals by type
-const sapiTotal = computed(() => {
-  return store.shohibuls.filter(item => item.type === 'sapi').reduce((sum, item) => sum + item.collected, 0)
-})
-
-const kambingTotal = computed(() => {
-  return store.shohibuls.filter(item => item.type === 'kambing').reduce((sum, item) => sum + item.collected, 0)
-})
+// Format date to local readable format
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+}
 
 // Get initials for profile picture replacement
 const getInitials = (name) => {
@@ -256,137 +335,61 @@ const getInitials = (name) => {
   return name.slice(0, 2).toUpperCase()
 }
 
-// Format date to local readable format
-const formatDate = (dateStr) => {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-}
-
-// Apex Charts configurations
-const radialChartOptions = computed(() => {
-  const isDark = store.isDarkMode
-  return {
-    chart: {
-      type: 'radialBar',
-      sparkline: { enabled: true }
-    },
-    plotOptions: {
-      radialBar: {
-        startAngle: -110,
-        endAngle: 110,
-        hollow: { size: '68%' },
-        track: {
-          background: isDark ? '#1F2937' : '#F3F4F6',
-          strokeWidth: '97%',
-        },
-        dataLabels: {
-          name: {
-            show: true,
-            color: isDark ? '#9CA3AF' : '#6B7280',
-            fontSize: '10px',
-            fontWeight: 700,
-            offsetY: -8
-          },
-          value: {
-            offsetY: 4,
-            fontSize: '20px',
-            fontWeight: 800,
-            color: isDark ? '#FFF' : '#111827',
-            formatter: (val) => val + '%'
-          }
-        }
-      }
-    },
-    fill: {
-      colors: ['#0F766E']
-    },
-    labels: ['Rata-Rata']
-  }
-})
-
-const barChartSeries = computed(() => {
-  return [
-    {
-      name: 'Jumlah Dana',
-      data: [sapiTotal.value, kambingTotal.value]
-    }
+// Generate color style based on name hash (Gradient Avatars)
+const getAvatarStyle = (name) => {
+  if (!name) return {}
+  const gradients = [
+    { from: '#eab308', to: '#ca8a04', text: '#ffffff' }, // Amber
+    { from: '#10b981', to: '#047857', text: '#ffffff' }, // Emerald
+    { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' }, // Blue
+    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple
+    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink
+    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose
+    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }  // Cyan
   ]
-})
-
-const barChartOptions = computed(() => {
-  const isDark = store.isDarkMode
-  return {
-    chart: {
-      type: 'bar',
-      toolbar: { show: false },
-      sparkline: { enabled: false }
-    },
-    colors: ['#0F766E', '#D97706'],
-    plotOptions: {
-      bar: {
-        borderRadius: 8,
-        columnWidth: '55%',
-        distributed: true,
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    legend: {
-      show: false
-    },
-    grid: {
-      borderColor: isDark ? '#374151' : '#E5E7EB',
-      strokeDashArray: 3,
-      yaxis: { lines: { show: true } },
-      xaxis: { lines: { show: false } }
-    },
-    xaxis: {
-      categories: ['🐄 Sapi', '🐐 Kambing'],
-      labels: {
-        style: {
-          colors: isDark ? '#9CA3AF' : '#4B5563',
-          fontSize: '11px',
-          fontWeight: 600
-        }
-      },
-      axisBorder: { show: false },
-      axisTicks: { show: false }
-    },
-    yaxis: {
-      labels: {
-        show: true,
-        formatter: (val) => {
-          if (val >= 1000000) return (val / 1000000) + ' jt'
-          return val
-        },
-        style: {
-          colors: isDark ? '#9CA3AF' : '#4B5563',
-          fontSize: '10px'
-        }
-      }
-    },
-    tooltip: {
-      theme: isDark ? 'dark' : 'light',
-      y: {
-        formatter: (val) => 'Rp' + val.toLocaleString('id-ID')
-      }
-    }
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
-})
+  const index = Math.abs(hash) % gradients.length
+  const g = gradients[index]
+  return {
+    background: `linear-gradient(135deg, ${g.from} 0%, ${g.to} 100%)`,
+    color: g.text,
+    textShadow: '0 1px 1px rgba(0, 0, 0, 0.15)',
+    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.08)'
+  }
+}
 
 onMounted(() => {
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
-      .from('.summary-cards', { opacity: 0, duration: 0.4 }, '-=0.2')
-      .from('.activity-log', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
+    tl.from('.hero-card', { opacity: 0, y: -20, duration: 0.6 })
+      // Notice: Not animating individual quick-stats to avoid Tailwind conflict/invisibility bug
+      .from('.statistics-split > div', { opacity: 0, y: 20, stagger: 0.15, duration: 0.5 }, '-=0.3')
       .from('.groups-widget', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
-  }, containerRef.value)
+      .from('.recent-payments-list', { opacity: 0, y: 30, duration: 0.5 }, '-=0.2')
+  })
 })
 
 onUnmounted(() => {
   if (ctx) ctx.revert()
 })
 </script>
+
+<style scoped>
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 4px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+</style>

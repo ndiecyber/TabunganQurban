@@ -194,6 +194,39 @@ export const useQurbanStore = defineStore('qurban', {
           target: 33500000,
           collected: 20000000,
           lastPaymentMonth: 'April 2025'
+        },
+        {
+          id: 'shohibul-13',
+          name: 'Ibu Ningsih',
+          address: 'Jl. Pemuda No 12',
+          code: 'P12',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok C',
+          target: 3000000,
+          collected: 3000000,
+          lastPaymentMonth: 'Mei 2025'
+        },
+        {
+          id: 'shohibul-14',
+          name: 'Pak Rudi Hermawan',
+          address: 'Kavling Hijau - A02',
+          code: 'A02',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok C',
+          target: 3000000,
+          collected: 1000000,
+          lastPaymentMonth: 'April 2025'
+        },
+        {
+          id: 'shohibul-15',
+          name: 'Keluarga Bpk. Santoso',
+          address: 'Perumahan Arjamukti - C10',
+          code: 'C10',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok D',
+          target: 3000000,
+          collected: 0,
+          lastPaymentMonth: 'Belum Ada'
         }
       ]
  
