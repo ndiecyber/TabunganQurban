@@ -18,9 +18,10 @@
   --color-emerald-deep: #0b3e2e;
   --color-cream: #f4f3f0;
 
-  --font-family-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-family-body: 'Plus Jakarta Sans', sans-serif;
+  --font-family-heading: 'Inter', sans-serif;
+  --font-family-body: 'Inter', sans-serif;
   --font-family-arabic: 'Amiri', serif;
+  --radius-2.5xl: 1.25rem;
 }
 
 /* ===== Base Styles ===== */
@@ -500,5 +501,36 @@ div:not(.dark).style-frosted .details-modal-info-box {
   background-repeat: repeat-x;
   background-size: 400px 100%;
   animation: wave-flow 3.5s linear infinite reverse;
+}
+
+/* ===== Light Mode Contrast Corrections (Masjid Jami Kassiti Theme Alignment) ===== */
+div:not(.dark) .progress-widget {
+  color: #1e293b !important;
+}
+div:not(.dark) .progress-widget h3 {
+  color: #0b3e2e !important;
+}
+div:not(.dark) .progress-widget span.text-emerald-300 {
+  color: #0d745f !important;
+}
+div:not(.dark) .progress-widget span.text-emerald-200\/70 {
+  color: #4b5563 !important;
+}
+div:not(.dark) .progress-widget .text-amber-300 {
+  color: #d97706 !important;
+}
+div:not(.dark) .progress-widget .bg-emerald-950\/80 {
+  background-color: rgba(11, 62, 46, 0.08) !important;
+  border-color: rgba(11, 62, 46, 0.15) !important;
+}
+div:not(.dark) .progress-widget .bg-emerald-950\/40 {
+  background-color: rgba(11, 62, 46, 0.08) !important;
+  color: #0b3e2e !important;
+}
+div:not(.dark) .progress-widget .border-white\/10 {
+  border-top-color: rgba(11, 62, 46, 0.12) !important;
+}
+div:not(.dark) .progress-widget .text-emerald-300 {
+  color: #0f766e !important;
 }
 

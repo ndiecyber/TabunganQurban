@@ -47,7 +47,7 @@
           
           <select 
             v-model="form.shohibulId"
-            class="w-full bg-gray-50 dark:bg-gray-950 text-sm border border-gray-200/50 dark:border-gray-800 rounded-2xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+            class="w-full appearance-none bg-gray-50 dark:bg-gray-950 text-sm border border-gray-200/50 dark:border-gray-800 rounded-2xl px-4 py-3.5 pr-10 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2020%2020%22%20fill=%22none%22%3E%3Cpath%20d=%22M7%2010l3%203%203-3%22%20stroke=%22%239ca3af%22%20stroke-width=%221.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3C/svg%3E')] bg-[position:right_12px_center] bg-[size:20px_20px] bg-no-repeat focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
           >
             <option value="" disabled selected>— Pilih nama shohibul —</option>
              <option 
