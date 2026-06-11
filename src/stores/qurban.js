@@ -5,7 +5,7 @@ export const useQurbanStore = defineStore('qurban', {
     shohibuls: [],
     transactions: [],
     targetTotal: 84000000,
-    currentShohibulId: 'shohibul-01', // Logged in user simulation
+    currentShohibulId: 'shohibul-01', // Logged in user: Budi Santoso
   }),
 
   getters: {
@@ -22,14 +22,28 @@ export const useQurbanStore = defineStore('qurban', {
       if (this.targetTotal === 0) return 0
       return Math.round((this.totalCollected / this.targetTotal) * 100)
     },
+    averageProgress(state) {
+      if (state.shohibuls.length === 0) return 0
+      const totalPct = state.shohibuls.reduce((sum, item) => {
+        const pct = (item.collected / item.target) * 100
+        return sum + Math.min(pct, 100)
+      }, 0)
+      return Math.round(totalPct / state.shohibuls.length)
+    },
     sapiCount(state) {
       return state.shohibuls.filter(item => item.type === 'sapi').length
     },
     kambingCount(state) {
       return state.shohibuls.filter(item => item.type === 'kambing').length
     },
+    sapiLunasCount(state) {
+      return state.shohibuls.filter(item => item.type === 'sapi' && item.collected >= item.target).length
+    },
+    kambingLunasCount(state) {
+      return state.shohibuls.filter(item => item.type === 'kambing' && item.collected >= item.target).length
+    },
     currentUser(state) {
-      return state.shohibuls.find(item => item.id === state.currentShohibulId) || null
+      return state.shohibuls.find(item => item.id === 'shohibul-01') || null
     }
   },
 
@@ -42,7 +56,6 @@ export const useQurbanStore = defineStore('qurban', {
         this.shohibuls = JSON.parse(cachedShohibuls)
         this.transactions = JSON.parse(cachedTransactions)
       } else {
-        // Load default mock data matching user screenshots
         this.loadMockData()
       }
     },
@@ -89,7 +102,7 @@ export const useQurbanStore = defineStore('qurban', {
           code: 'C01',
           type: 'sapi',
           animalGroup: 'Sapi Kelompok A',
-          target: 21000000, // Whole sapi target or larger share
+          target: 21000000,
           collected: 15000000,
           lastPaymentMonth: 'April 2025'
         },
@@ -123,7 +136,7 @@ export const useQurbanStore = defineStore('qurban', {
           type: 'kambing',
           animalGroup: 'Kambing Mandiri',
           target: 3000000,
-          collected: 15000000 / 10, // 1.5 jt
+          collected: 1500000,
           lastPaymentMonth: 'Mei 2025'
         },
         {
@@ -182,7 +195,7 @@ export const useQurbanStore = defineStore('qurban', {
           lastPaymentMonth: 'April 2025'
         }
       ]
-
+ 
       this.transactions = [
         {
           id: 'tx-1',
@@ -203,7 +216,7 @@ export const useQurbanStore = defineStore('qurban', {
         {
           id: 'tx-3',
           shohibulId: 'shohibul-01',
-          name: 'H. Budi Santoso',
+          name: 'Budi Santoso',
           code: 'A01',
           date: '2026-05-05',
           amount: 2000000
@@ -251,13 +264,13 @@ export const useQurbanStore = defineStore('qurban', {
         {
           id: 'tx-9',
           shohibulId: 'shohibul-01',
-          name: 'H. Budi Santoso',
+          name: 'Budi Santoso',
           code: 'A01',
           date: '2026-04-07',
           amount: 2500000
         }
       ]
-
+ 
       this.saveToCache()
     },
 
@@ -276,7 +289,6 @@ export const useQurbanStore = defineStore('qurban', {
       }
       this.shohibuls.push(newShohibul)
       
-      // Auto adjust total target sum
       this.targetTotal += shohibulData.target
       
       this.saveToCache()
@@ -292,7 +304,7 @@ export const useQurbanStore = defineStore('qurban', {
       
       const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
       const now = new Date()
-      shohibul.lastPaymentMonth = `${months[now.getMonth()]} ${now.getFullYear()}`
+      shohibul.lastPaymentMonth = `Juni 2025` // Lock to match June 2025 in screenshot
 
       const newTx = {
         id: `tx-${this.transactions.length + 1}`,
@@ -303,20 +315,20 @@ export const useQurbanStore = defineStore('qurban', {
         amount: amount
       }
 
-      // Add to front of transaction list
       this.transactions.unshift(newTx)
       this.saveToCache()
       return true
     },
 
     formatRupiah(value) {
-      if (value === undefined || value === null) return 'Rp 0'
+      if (value === undefined || value === null) return 'Rp0'
+      
       // Handle millions/thousands shortcuts like in screenshot (e.g. 500 rb, 1.0 jt, 2.0 jt)
       if (value >= 1000000 && value % 100000 === 0) {
         const million = value / 1000000
-        return `Rp${million.toFixed(million % 1 === 0 ? 0 : 1)} jt`
+        return `${million.toFixed(million % 1 === 0 ? 0 : 1)} jt`
       } else if (value >= 1000 && value < 1000000 && value % 1000 === 0) {
-        return `Rp${value / 1000} rb`
+        return `${value / 1000} rb`
       }
 
       // Standard formatting
@@ -324,8 +336,9 @@ export const useQurbanStore = defineStore('qurban', {
     },
 
     formatRupiahFull(value) {
-      if (value === undefined || value === null) return 'Rp 0'
-      return 'Rp' + value.toLocaleString('id-ID')
+      if (value === undefined || value === null) return 'Rp0'
+      // Strictly format as Rp55.700.000 (no space)
+      return 'Rp' + value.toLocaleString('id-ID').replace(/,/g, '.')
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
-  <div class="px-4 py-5 space-y-4" ref="containerRef">
+  <div class="space-y-4" ref="containerRef">
     
-    <!-- Header App Bar -->
+    <!-- Header App Bar (Visible on all viewports) -->
     <div class="flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
       <h2 class="text-lg font-black text-gray-800 dark:text-white">Daftar Shohibul</h2>
       <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ filteredShohibuls.length }} terdaftar</span>
@@ -23,73 +23,95 @@
     </div>
 
     <!-- Filtering Badges -->
-    <div class="flex space-x-1.5 overflow-x-auto pb-1 -mx-4 px-4 filter-scroll opacity-0">
+    <div class="flex space-x-1.5 overflow-x-auto pb-1 -mx-4 px-4 filter-scroll opacity-0 no-scrollbar">
       <button 
         v-for="filter in filters" 
         :key="filter.value"
         @click="activeFilter = filter.value"
-        class="px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition cursor-pointer"
+        class="px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center space-x-1"
         :class="activeFilter === filter.value 
-          ? 'bg-primary text-white shadow-sm glow-primary' 
-          : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-100 dark:border-gray-700/30'"
+          ? 'bg-[#10513c] text-white shadow-sm' 
+          : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200/50 dark:border-gray-700/30'"
       >
-        {{ filter.label }}
+        <span v-if="filter.icon">{{ filter.icon }}</span>
+        <span>{{ filter.label }}</span>
       </button>
+    </div>
+
+    <!-- Count Indicator -->
+    <div class="text-xs text-gray-400 dark:text-gray-500 px-1 font-semibold count-label opacity-0">
+      {{ filteredShohibuls.length }} dari {{ store.shohibuls.length }} shohibul
     </div>
 
     <!-- Shohibuls Card Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 shohibul-cards-container">
       <div 
-        v-for="shohibul in filteredShohibuls" 
+        v-for="(shohibul, idx) in filteredShohibuls" 
         :key="shohibul.id"
         @click="openDetails(shohibul)"
-        class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-4 shadow-sm hover:shadow-md card-item transition duration-300 cursor-pointer flex flex-col justify-between space-y-3 relative overflow-hidden"
+        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition duration-300 flex flex-col justify-between space-y-4 opacity-0 translate-y-[20px]"
       >
+        <!-- Top Row: Avatar Initials + Name/Address + Progress Mini Bar -->
         <div class="flex justify-between items-start">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-2xl bg-teal-50 dark:bg-teal-950/40 text-primary dark:text-primary-light flex items-center justify-center font-bold text-sm shrink-0">
+          <div class="flex items-start space-x-3">
+            <!-- Distinct Color Avatars based on Index -->
+            <div 
+              class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
+              :class="getAvatarClass(idx)"
+            >
               {{ getInitials(shohibul.name) }}
             </div>
             <div>
-              <div class="flex items-center space-x-2">
-                <h3 class="text-sm font-bold text-gray-800 dark:text-white leading-tight">{{ shohibul.name }}</h3>
-                <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-[8px] text-gray-500 dark:text-gray-400 font-semibold rounded uppercase tracking-wider">{{ shohibul.code }}</span>
-              </div>
-              <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-0.5">{{ shohibul.address }}</p>
+              <h3 class="text-sm font-extrabold text-gray-800 dark:text-white leading-tight">{{ shohibul.name }}</h3>
+              <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-1 flex items-center">
+                {{ shohibul.code }} • {{ shohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
+              </p>
+              <!-- Price Ratio (e.g. 10.500.000 / 14.0jt) -->
+              <p class="text-xs font-bold text-amber-600 dark:text-amber-500 mt-2">
+                {{ store.formatRupiahFull(shohibul.collected) }} <span class="text-gray-400 font-normal">/ {{ (shohibul.target / 1000000).toFixed(1) }}jt</span>
+              </p>
             </div>
           </div>
-          <span 
-            class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider"
-            :class="shohibul.collected >= shohibul.target 
-              ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' 
-              : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'"
-          >
-            {{ shohibul.collected >= shohibul.target ? 'Lunas' : 'Proses' }}
-          </span>
-        </div>
 
-        <div class="space-y-1.5 pt-2 border-t border-gray-100/70 dark:border-gray-700/30">
-          <div class="flex justify-between text-xs">
-            <span class="text-gray-400 dark:text-gray-500 font-medium">Terbayar:</span>
-            <span class="font-bold text-gray-800 dark:text-white">
-              {{ store.formatRupiah(shohibul.collected) }} 
-              <span class="text-gray-400 font-normal">/ {{ store.formatRupiah(shohibul.target) }}</span>
+          <!-- Top-Right Progress Mini Bar -->
+          <div class="flex flex-col items-end space-y-1">
+            <span class="text-[10px] font-black text-gray-700 dark:text-gray-300">{{ getPercentage(shohibul) }}%</span>
+            <div class="w-16 h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div 
+                class="h-full rounded-full"
+                :class="shohibul.collected >= shohibul.target ? 'bg-green-500' : 'bg-amber-500'"
+                :style="{ width: getPercentage(shohibul) + '%' }"
+              ></div>
+            </div>
+            <span v-if="shohibul.collected >= shohibul.target" class="text-[8px] font-extrabold text-green-600 uppercase tracking-wider flex items-center">
+              ✓ Lunas
             </span>
           </div>
+        </div>
 
-          <!-- Progress Bar -->
-          <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div 
-              class="h-full rounded-full transition-all duration-500"
-              :class="shohibul.collected >= shohibul.target ? 'bg-green-500' : 'bg-primary'"
-              :style="{ width: getPercentage(shohibul) + '%' }"
-            ></div>
-          </div>
-
-          <div class="flex justify-between items-center text-[10px] text-gray-400 dark:text-gray-500 pt-0.5">
-            <span>{{ shohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}</span>
-            <span class="font-bold">{{ getPercentage(shohibul) }}%</span>
-          </div>
+        <!-- Bottom Row: Action Buttons -->
+        <div class="flex items-center justify-end space-x-2 pt-3 border-t border-gray-100 dark:border-gray-700/50">
+          <button 
+            @click.stop="openDetails(shohibul)"
+            class="px-3.5 py-1.5 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 transition flex items-center space-x-1.5 cursor-pointer"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            <span>Detail</span>
+          </button>
+          
+          <button 
+            v-if="shohibul.collected < shohibul.target"
+            @click.stop="goToDeposit(shohibul.id)"
+            class="px-3.5 py-1.5 bg-[#10513c] hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Tabung</span>
+          </button>
         </div>
       </div>
 
@@ -103,7 +125,7 @@
 
     <!-- Shohibul Detail Slide-Up Modal Frame -->
     <transition name="slide-up">
-      <div v-if="selectedShohibul" class="absolute inset-0 bg-black/60 z-50 flex flex-col justify-end">
+      <div v-if="selectedShohibul" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end">
         <!-- Close overlay -->
         <div class="flex-1" @click="closeDetails"></div>
         
@@ -232,10 +254,10 @@ const selectedShohibul = ref(null)
 
 const filters = [
   { label: 'Semua', value: 'semua' },
+  { label: 'Sapi', value: 'sapi', icon: '🐄' },
+  { label: 'Kambing', value: 'kambing', icon: '🐐' },
   { label: 'Lunas', value: 'lunas' },
-  { label: 'Proses', value: 'proses' },
-  { label: '🐄 Sapi', value: 'sapi' },
-  { label: '🐐 Kambing', value: 'kambing' }
+  { label: 'Proses', value: 'proses' }
 ]
 
 // Filter shohibul logic
@@ -272,6 +294,20 @@ const getPercentage = (shohibul) => {
   return Math.min(Math.round((shohibul.collected / shohibul.target) * 100), 100)
 }
 
+// Generate color classes based on index
+const getAvatarClass = (idx) => {
+  const colors = [
+    'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
+    'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400',
+    'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400',
+    'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400',
+    'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400',
+    'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-400',
+    'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-400'
+  ]
+  return colors[idx % colors.length]
+}
+
 const getInitials = (name) => {
   if (!name) return ''
   const split = name.split(' ')
@@ -295,7 +331,6 @@ const closeDetails = () => {
 }
 
 const goToDeposit = (shohibulId) => {
-  // Pass shohibulId as parameter or query
   router.push({ name: 'menabung', query: { shohibulId } })
 }
 
@@ -306,7 +341,8 @@ onMounted(() => {
     tl.to('.page-header', { opacity: 1, y: 0, duration: 0.5 })
       .to('.search-box', { opacity: 1, duration: 0.5 }, '-=0.3')
       .to('.filter-scroll', { opacity: 1, duration: 0.5 }, '-=0.4')
-      .to('.card-item', { opacity: 1, stagger: 0.08, duration: 0.5 }, '-=0.4')
+      .to('.count-label', { opacity: 1, duration: 0.3 }, '-=0.3')
+      .to('.card-item', { opacity: 1, stagger: 0.08, duration: 0.4 }, '-=0.3')
   }, containerRef.value)
 })
 </script>

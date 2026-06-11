@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-5" ref="containerRef">
     
-    <!-- Header App Bar -->
+    <!-- Header App Bar (Visible on all viewports) -->
     <div class="flex items-center justify-between page-header opacity-0 translate-y-[-10px]">
       <h2 class="text-lg font-black text-gray-800 dark:text-white">Menabung Qurban</h2>
       <span class="text-xs text-amber-500 dark:text-amber-400 font-bold flex items-center">
@@ -38,85 +38,97 @@
         class="lg:col-span-6 space-y-4"
         :class="{'hidden lg:block': activeTab !== 'setor'}"
       >
-        <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4">
-          <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading mb-1">Form Setoran Tabungan</h3>
+        <!-- Card 1: Select Shohibul -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3">
+          <div class="flex items-center space-x-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            <span>👤</span>
+            <span>Pilih shohibul qurban</span>
+          </div>
           
-          <!-- Shohibul Selector -->
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pilih Shohibul</label>
-            <select 
-              v-model="form.shohibulId"
-              class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+          <select 
+            v-model="form.shohibulId"
+            class="w-full bg-gray-50 dark:bg-gray-950 text-sm border border-gray-200/50 dark:border-gray-800 rounded-2xl px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+          >
+            <option value="" disabled selected>— Pilih nama shohibul —</option>
+             <option 
+              v-for="s in store.shohibuls" 
+              :key="s.id" 
+              :value="s.id"
             >
-              <option value="" disabled>-- Pilih Anggota Qurban --</option>
-              <option 
-                v-for="s in store.shohibuls" 
-                :key="s.id" 
-                :value="s.id"
-              >
-                {{ s.name }} ({{ s.type === 'sapi' ? 'Sapi' : 'Kambing' }} - {{ s.code }})
-              </option>
-            </select>
+              {{ s.name }} ({{ s.type === 'sapi' ? 'Sapi' : 'Kambing' }} - {{ s.code }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Card 2: Select Nominal -->
+        <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-4">
+          <div class="flex items-center space-x-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+            <span>💵</span>
+            <span>Pilih nominal tabungan</span>
           </div>
 
-          <!-- Selected member status badge preview -->
-          <div v-if="selectedMember" class="bg-primary/5 dark:bg-primary/10 border border-primary/15 rounded-2xl p-3 flex justify-between items-center text-xs">
-            <div>
-              <span class="text-gray-400 dark:text-gray-500 block">Sisa Pembayaran:</span>
-              <span class="font-bold text-gray-800 dark:text-white text-sm">
-                {{ store.formatRupiahFull(Math.max(0, selectedMember.target - selectedMember.collected)) }}
-              </span>
+          <!-- 3x2 Grid for Predefined Nominal Options + Custom Input Option below -->
+          <div class="grid grid-cols-3 gap-3">
+            <button 
+              v-for="preset in nominalPresets" 
+              :key="preset.value"
+              type="button"
+              @click="selectPreset(preset.value)"
+              class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center justify-center space-y-1"
+              :class="form.amount === preset.value && !isCustomAmountSelected
+                ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
+                : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300'"
+            >
+              <span class="text-xs text-amber-500 font-bold">🎖️</span>
+              <span class="text-xs font-extrabold">{{ preset.label }}</span>
+              <span class="text-[9px] text-gray-400 dark:text-gray-500">Rp{{ preset.value.toLocaleString('id-ID') }}</span>
+            </button>
+          </div>
+
+          <!-- Nominal Lain Custom Option Button -->
+          <div 
+            @click="activateCustomAmount"
+            class="border rounded-2.5xl p-3 px-4 cursor-pointer transition select-none flex items-center justify-between"
+            :class="isCustomAmountSelected 
+              ? 'border-primary bg-primary/5 dark:bg-primary/10' 
+              : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900'"
+          >
+            <div class="flex items-center space-x-3 text-left">
+              <span class="text-lg">✏️</span>
+              <div>
+                <span class="text-xs font-extrabold text-gray-800 dark:text-white block">Nominal lain</span>
+                <span class="text-[9px] text-gray-400 dark:text-gray-500">Kelipatan Rp 50.000</span>
+              </div>
             </div>
-            <span 
-              class="px-2 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider"
-              :class="selectedMember.collected >= selectedMember.target ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'"
-            >
-              {{ selectedMember.collected >= selectedMember.target ? 'Lunas' : 'Belum Lunas' }}
-            </span>
+            <div v-if="isCustomAmountSelected" class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-white text-[10px]">✓</div>
           </div>
 
-          <!-- Amount Input -->
-          <div class="space-y-1.5">
-            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Jumlah Setoran</label>
+          <!-- Custom Amount Input Field (Toggled by "Nominal Lain") -->
+          <div v-if="isCustomAmountSelected" class="pt-2 animate-fade-in">
             <div class="relative">
               <span class="absolute left-4 top-3.5 text-sm font-bold text-gray-400">Rp</span>
               <input 
                 v-model.number="form.amount" 
                 type="number" 
-                placeholder="Masukkan nominal setoran..." 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-100 dark:border-gray-800 rounded-2xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+                placeholder="Masukkan nominal kelipatan Rp50.000..." 
+                class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-150 dark:border-gray-800 rounded-2.5xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
               />
-            </div>
-            
-            <!-- Shortcut Buttons -->
-            <div class="grid grid-cols-3 gap-2 pt-1">
-              <button 
-                v-for="amt in quickAmounts" 
-                :key="amt"
-                type="button"
-                @click="form.amount = amt"
-                class="py-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-xs font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition dark:text-gray-300"
-                :class="form.amount === amt ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800'"
-              >
-                +{{ store.formatRupiah(amt) }}
-              </button>
             </div>
           </div>
 
           <!-- Payment Method -->
-          <div class="space-y-2">
-            <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Metode Pembayaran</label>
-            
+          <div class="space-y-2 pt-2 border-t border-gray-100 dark:border-gray-700/50">
+            <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Metode Pembayaran</label>
             <div class="grid grid-cols-2 gap-3">
               <!-- QRIS Option -->
               <div 
                 @click="form.paymentMethod = 'qris'"
-                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
+                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1"
                 :class="form.paymentMethod === 'qris' 
                   ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                  : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
+                  : 'border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-gray-900/50'"
               >
-                <span class="text-xl">📱</span>
+                <span class="text-lg">📱</span>
                 <span class="text-xs font-bold dark:text-white block">QRIS Masjid</span>
                 <span class="text-[9px] text-gray-400">Verifikasi Instan</span>
               </div>
@@ -124,12 +136,12 @@
               <!-- VA Option -->
               <div 
                 @click="form.paymentMethod = 'va'"
-                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1.5"
+                class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1"
                 :class="form.paymentMethod === 'va' 
                   ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                  : 'border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50'"
+                  : 'border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-gray-900/50'"
               >
-                <span class="text-xl">🏦</span>
+                <span class="text-lg">🏦</span>
                 <span class="text-xs font-bold dark:text-white block">Transfer Bank</span>
                 <span class="text-[9px] text-gray-400">Simulasi Virtual Account</span>
               </div>
@@ -137,21 +149,32 @@
           </div>
 
           <!-- Submit Button -->
-          <button 
-            @click="submitDeposit"
-            class="w-full py-4 text-sm font-bold bg-primary text-white rounded-2xl hover:bg-primary-light transition shadow-md glow-primary pulse-glow font-heading"
-          >
-            Lanjutkan Pembayaran
-          </button>
+          <div class="pt-2">
+            <button 
+              v-if="!form.shohibulId"
+              disabled
+              class="w-full py-4 text-sm font-extrabold bg-[#d1e2da] dark:bg-gray-800 text-[#558a74] dark:text-gray-600 rounded-2.5xl cursor-not-allowed flex items-center justify-center space-x-2"
+            >
+              <span>Pilih shohibul dahulu</span>
+            </button>
+            <button 
+              v-else
+              @click="submitDeposit"
+              class="w-full py-4 text-sm font-extrabold bg-[#10513c] hover:bg-emerald-800 text-white rounded-2.5xl transition shadow-md glow-primary font-heading"
+            >
+              Lanjutkan Pembayaran
+            </button>
+          </div>
+
         </div>
       </div>
 
-      <!-- COLUMN 2: INTERACTIVE CALCULATOR -->
+      <!-- COLUMN 2: INTERACTIVE CALCULATOR (Desktop right-panel) -->
       <div 
         class="lg:col-span-6 space-y-4"
         :class="{'hidden lg:block': activeTab !== 'kalkulator'}"
       >
-        <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-5">
+        <div class="bg-white dark:bg-gray-800 border border-gray-155 dark:border-gray-700/50 rounded-3xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-5">
           <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
           
           <!-- Target Type -->
@@ -162,7 +185,7 @@
                 v-for="target in calcTargets" 
                 :key="target.value"
                 @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
-                class="p-2.5 rounded-xl border border-gray-100 dark:border-gray-800 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
+                class="p-2.5 rounded-xl border border-gray-150 dark:border-gray-800 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
                 :class="calc.targetValue === target.price ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400'"
               >
                 <span class="text-lg mb-1">{{ target.icon }}</span>
@@ -177,7 +200,7 @@
             <div class="flex justify-between items-center text-xs">
               <span class="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Durasi Tabungan</span>
               <span class="font-extrabold text-primary dark:text-primary-light">{{ calc.months }} Bulan</span>
-          </div>
+            </div>
             <input 
               type="range" 
               min="1" 
@@ -216,18 +239,18 @@
                 v-model="newMember.name" 
                 type="text" 
                 placeholder="Nama Lengkap Shohibul" 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-150 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
               />
               <input 
                 v-model="newMember.address" 
                 type="text" 
                 placeholder="Alamat / No. Blok (Contoh: B05)" 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-100 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-150 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
               />
               
               <button 
                 @click="registerNewMember"
-                class="w-full py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-xl text-xs font-bold hover:bg-gray-900 dark:hover:bg-gray-600 transition"
+                class="w-full py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-xl text-xs font-bold hover:bg-gray-900 dark:hover:bg-gray-655 transition"
               >
                 Mulai Menabung dengan Rencana Ini
               </button>
@@ -240,7 +263,7 @@
 
     <!-- QRIS PAYMENT FLOW SCREEN (MODAL SLIDE-UP) -->
     <transition name="slide-up">
-      <div v-if="paymentModalVisible" class="absolute inset-0 bg-black/60 z-50 flex flex-col justify-end">
+      <div v-if="paymentModalVisible" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end">
         <div class="flex-1" @click="closePaymentModal"></div>
         
         <div class="bg-white dark:bg-gray-950 rounded-t-[32px] p-6 max-h-[90%] overflow-y-auto space-y-5 text-center relative shadow-2xl pb-[calc(25px+env(safe-area-inset-bottom,0px))]">
@@ -256,7 +279,7 @@
           </div>
 
           <!-- Invoice Details -->
-          <div class="bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl space-y-1.5">
+          <div class="bg-gray-50 dark:bg-gray-900/50 border border-gray-150 dark:border-gray-800 p-4 rounded-3xl space-y-1.5">
             <span class="text-[10px] text-gray-400 uppercase tracking-wide font-medium">Nominal Pembayaran</span>
             <h4 class="text-xl font-black text-primary dark:text-primary-light font-heading">
               {{ store.formatRupiahFull(form.amount) }}
@@ -268,7 +291,7 @@
 
           <!-- Display QRIS Image if selected -->
           <div v-if="form.paymentMethod === 'qris'" class="space-y-3">
-            <div class="mx-auto w-[200px] h-[200px] bg-white border border-gray-100 dark:border-gray-800 rounded-3xl overflow-hidden shadow-md p-2 flex items-center justify-center">
+            <div class="mx-auto w-[200px] h-[200px] bg-white border border-gray-150 dark:border-gray-800 rounded-3xl overflow-hidden shadow-md p-2 flex items-center justify-center">
               <img src="/qris-dkm.jpg" alt="QRIS DKM Masjid Jami Kassiti" class="max-w-full max-h-full object-contain" />
             </div>
             <p class="text-[10px] text-gray-400 max-w-[280px] mx-auto leading-relaxed">
@@ -278,7 +301,7 @@
 
           <!-- Display Bank VA details if selected -->
           <div v-else class="space-y-4 py-2">
-            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-3xl border border-gray-100 dark:border-gray-800 text-left space-y-3">
+            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-3xl border border-gray-150 dark:border-gray-800 text-left space-y-3">
               <div class="flex justify-between items-center">
                 <span class="text-xs text-gray-400 font-bold">BANK SYARIAH INDONESIA (BSI)</span>
                 <span class="text-[10px] text-gray-400">Kassiti Qurban</span>
@@ -297,7 +320,7 @@
           <div class="pt-2">
             <button 
               @click="confirmPaymentSimulation"
-              class="w-full py-4 text-sm font-bold bg-primary text-white rounded-2xl hover:bg-primary-light transition shadow-md glow-primary font-heading"
+              class="w-full py-4 text-sm font-bold bg-[#10513c] hover:bg-emerald-800 text-white rounded-2.5xl transition shadow-md glow-primary font-heading"
             >
               Saya Sudah Membayar (Simulasi)
             </button>
@@ -358,12 +381,23 @@ const form = ref({
   paymentMethod: 'qris'
 })
 
-const quickAmounts = [500000, 1000000, 2000000]
+const quickAmounts = [50000, 100000, 200000, 300000, 500000, 1000000]
+const isCustomAmountSelected = ref(false)
 
 const selectedMember = computed(() => {
   if (!form.value.shohibulId) return null
   return store.shohibuls.find(item => item.id === form.value.shohibulId)
 })
+
+const selectPreset = (val) => {
+  isCustomAmountSelected.value = false
+  form.value.amount = val
+}
+
+const activateCustomAmount = () => {
+  isCustomAmountSelected.value = true
+  form.value.amount = null
+}
 
 // State for tab 2 (Calculator)
 const calc = ref({
@@ -377,6 +411,15 @@ const calcTargets = [
   { label: '🐐 Kambing', price: 3000000, icon: '🐐', type: 'kambing' },
   { label: '🐄 Sapi Share', price: 3000000, icon: '🐄', type: 'sapi' },
   { label: '🐄 Sapi Mandiri', price: 21000000, icon: '👑', type: 'sapi' }
+]
+
+const nominalPresets = [
+  { label: '+Rp50 rb', value: 50000 },
+  { label: '+Rp100 rb', value: 100000 },
+  { label: '+Rp200 rb', value: 200000 },
+  { label: '+Rp300 rb', value: 300000 },
+  { label: '+Rp500 rb', value: 500000 },
+  { label: '+Rp1 jt', value: 1000000 }
 ]
 
 const monthlySaving = computed(() => {
@@ -437,6 +480,7 @@ const closeSuccessScreen = () => {
   successScreenVisible.value = false
   // Reset form
   form.value.amount = null
+  isCustomAmountSelected.value = false
   // Redirect back to dashboard to see updated stats
   router.push('/')
 }
