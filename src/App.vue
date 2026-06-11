@@ -67,7 +67,7 @@
       </header>
 
       <!-- 2. MOBILE PERSISTENT GREEN HEADER (Visible only on mobile/tablet, md:hidden) -->
-      <div class="md:hidden dashboard-header bg-gradient-to-b from-[#10513c] to-[#0a3829] text-white pt-5 pb-4 px-5 rounded-b-[2rem] shadow-lg relative overflow-hidden">
+      <div class="md:hidden dashboard-header sticky top-0 z-30 bg-gradient-to-b from-[#10513c] to-[#0a3829] text-white pt-5 pb-4 px-5 rounded-b-[2rem] shadow-lg overflow-hidden">
         <!-- Background decorative elements to replicate screenshot's circles -->
         <div class="absolute right-[-40px] top-[-30px] w-40 h-40 rounded-full bg-white/5 border border-white/5 pointer-events-none"></div>
         <div class="absolute left-[-20px] bottom-[-20px] w-28 h-28 rounded-full bg-white/5 pointer-events-none"></div>
