@@ -56,15 +56,15 @@
       <!-- 2. Quick Stats Cards (Mobile Order 1, Desktop Order 2) -->
       <div class="col-span-1 lg:col-span-5 lg:order-2 space-y-4">
         <div class="grid grid-cols-3 gap-3 stats-grid">
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
             <span class="text-2xl font-black text-gray-800 dark:text-white block">{{ store.shohibuls.length }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Shohibul</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
             <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block">{{ store.totalLunas }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Lunas</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition card-item">
+          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item">
             <span class="text-2xl font-black text-amber-600 dark:text-amber-400 block">{{ store.totalProses }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Proses</span>
           </div>

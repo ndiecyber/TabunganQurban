@@ -49,7 +49,7 @@
         v-for="(shohibul, idx) in filteredShohibuls" 
         :key="shohibul.id"
         @click="openDetails(shohibul)"
-        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition duration-300 flex flex-col justify-between space-y-4"
+        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition-shadow duration-300 flex flex-col justify-between space-y-4"
       >
         <!-- Top Row: Avatar Initials + Name/Address + Progress Mini Bar -->
         <div class="flex justify-between items-start">
@@ -336,19 +336,35 @@ const goToDeposit = (shohibulId) => {
 }
 
 onMounted(() => {
+  console.log('ShohibulView onMounted called')
   ctx = gsap.context(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+    const tl = gsap.timeline({ 
+      defaults: { ease: 'power3.out' },
+      onStart: () => console.log('GSAP timeline started'),
+      onComplete: () => console.log('GSAP timeline completed')
+    })
     
     tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
       .from('.search-box', { opacity: 0, duration: 0.5 }, '-=0.3')
       .from('.filter-scroll', { opacity: 0, duration: 0.5 }, '-=0.4')
       .from('.count-label', { opacity: 0, duration: 0.3 }, '-=0.3')
-      .from('.card-item', { opacity: 0, y: 20, stagger: 0.08, duration: 0.4 }, '-=0.3')
+      .from('.card-item', { 
+        opacity: 0, 
+        y: 20, 
+        stagger: 0.08, 
+        duration: 0.4,
+        onStart: () => console.log('card-item animation started'),
+        onComplete: () => console.log('card-item animation completed')
+      }, '-=0.3')
   }, containerRef.value)
 })
 
 onUnmounted(() => {
-  if (ctx) ctx.revert()
+  console.log('ShohibulView onUnmounted called')
+  if (ctx) {
+    ctx.revert()
+    console.log('GSAP context reverted')
+  }
 })
 </script>
 

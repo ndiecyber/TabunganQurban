@@ -3,23 +3,23 @@
 
 /* ===== Custom Theme via Tailwind v4 @theme ===== */
 @theme {
-  --color-primary: #0F766E;
-  --color-primary-light: #14B8A6;
-  --color-primary-dark: #042F2E;
-  --color-secondary: #D97706;
-  --color-secondary-light: #F59E0B;
-  --color-accent: #FEF3C7;
-  --color-dark: #111827;
-  --color-dark-light: #1F2937;
-  --color-light: #FFFFFF;
-  --color-light-warm: #F9FAFB;
-  --color-gold: #D97706;
-  --color-gold-light: #F59E0B;
-  --color-emerald-deep: #0F766E;
-  --color-cream: #F3F4F6;
+  --color-primary: #0b3e2e;
+  --color-primary-light: #165c46;
+  --color-primary-dark: #051b14;
+  --color-secondary: #d97706;
+  --color-secondary-light: #f59e0b;
+  --color-accent: #fef3c7;
+  --color-dark: #0a1118;
+  --color-dark-light: #152232;
+  --color-light: #ffffff;
+  --color-light-warm: #fcfbfa;
+  --color-gold: #d97706;
+  --color-gold-light: #f59e0b;
+  --color-emerald-deep: #0b3e2e;
+  --color-cream: #f4f3f0;
 
-  --font-family-heading: 'Playfair Display', serif;
-  --font-family-body: 'Inter', sans-serif;
+  --font-family-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-family-body: 'Plus Jakarta Sans', sans-serif;
   --font-family-arabic: 'Amiri', serif;
 }
 
@@ -62,11 +62,11 @@ body {
 
 /* ===== Islamic Pattern Background ===== */
 .islamic-pattern-bg {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4C4AE' stroke-width='0.5'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4C4AE' stroke-width='0.15'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .dark .islamic-pattern-bg {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231E3547' stroke-width='0.5'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231E3547' stroke-width='0.15'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* ===== Glass Effect ===== */
@@ -160,4 +160,147 @@ body {
 /* Custom Bottom Navigation Safe Area spacing */
 .pb-safe-bottom {
   padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ===== Visual Customizer Overrides ===== */
+
+/* 1. Font Overrides */
+.font-jakarta {
+  --font-family-body: 'Plus Jakarta Sans', sans-serif;
+  --font-family-heading: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.font-inter {
+  --font-family-body: 'Inter', sans-serif;
+  --font-family-heading: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+.font-outfit {
+  --font-family-body: 'Outfit', sans-serif;
+  --font-family-heading: 'Outfit', sans-serif;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* 2. Theme Overrides (Colors) */
+.theme-emerald {
+  --color-primary: #0b3e2e;
+  --color-primary-light: #165c46;
+  --color-primary-dark: #051b14;
+  --color-secondary: #d97706;
+  --color-secondary-light: #f59e0b;
+}
+.theme-indigo {
+  --color-primary: #1e1b4b;
+  --color-primary-light: #312e81;
+  --color-primary-dark: #0f172a;
+  --color-secondary: #f59e0b;
+  --color-secondary-light: #fbbf24;
+}
+.theme-slate {
+  --color-primary: #0f172a;
+  --color-primary-light: #1e293b;
+  --color-primary-dark: #020617;
+  --color-secondary: #0d9488;
+  --color-secondary-light: #14b8a6;
+}
+
+/* 3. Spacing Overrides */
+.spacing-cozy .card-item,
+.spacing-cozy .block-item,
+.spacing-cozy .recent-payments-list > div,
+.spacing-cozy .groups-widget,
+.spacing-cozy .progress-widget {
+  padding: 1.5rem !important;
+  border-radius: 1.5rem !important;
+}
+.spacing-compact .card-item,
+.spacing-compact .block-item,
+.spacing-compact .recent-payments-list > div,
+.spacing-compact .groups-widget,
+.spacing-compact .progress-widget {
+  padding: 0.85rem !important;
+  border-radius: 1rem !important;
+}
+
+/* 4. Card Style Overrides */
+/* Flat Minimalist */
+.style-flat .card-item,
+.style-flat .block-item,
+.style-flat .groups-widget,
+.style-flat .recent-payments-list > div,
+.style-flat .activity-log > div > div {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+.dark .style-flat .card-item,
+.dark .style-flat .block-item,
+.dark .style-flat .groups-widget,
+.dark .style-flat .recent-payments-list > div,
+.dark .style-flat .activity-log > div > div,
+.style-flat .dark .card-item,
+.style-flat .dark .block-item,
+.style-flat .dark .groups-widget,
+.style-flat .dark .recent-payments-list > div,
+.style-flat .dark .activity-log > div > div {
+  background-color: #152232 !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: none !important;
+}
+
+/* Glassmorphism */
+.style-glass .card-item,
+.style-glass .block-item,
+.style-glass .groups-widget,
+.style-glass .recent-payments-list > div,
+.style-glass .activity-log > div > div {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+}
+.dark .style-glass .card-item,
+.dark .style-glass .block-item,
+.dark .style-glass .groups-widget,
+.dark .style-glass .recent-payments-list > div,
+.dark .style-glass .activity-log > div > div,
+.style-glass .dark .card-item,
+.style-glass .dark .block-item,
+.style-glass .dark .groups-widget,
+.style-glass .dark .recent-payments-list > div,
+.style-glass .dark .activity-log > div > div {
+  background: rgba(21, 34, 50, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Heavy Frosted Glass */
+.style-frosted .card-item,
+.style-frosted .block-item,
+.style-frosted .groups-widget,
+.style-frosted .recent-payments-list > div,
+.style-frosted .activity-log > div > div {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
+}
+.dark .style-frosted .card-item,
+.dark .style-frosted .block-item,
+.dark .style-frosted .groups-widget,
+.dark .style-frosted .recent-payments-list > div,
+.dark .style-frosted .activity-log > div > div,
+.style-frosted .dark .card-item,
+.style-frosted .dark .block-item,
+.style-frosted .dark .groups-widget,
+.style-frosted .dark .recent-payments-list > div,
+.style-frosted .dark .activity-log > div > div {
+  background: rgba(21, 34, 50, 0.6) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
 }
