@@ -1,128 +1,108 @@
 <template>
   <div class="space-y-6" ref="containerRef">
-    
-    <!-- Mobile-only Header App Bar (hidden as it is in App.vue now, kept for fallback) -->
-    <div class="hidden items-center justify-between md:hidden pb-2">
-      <div class="flex items-center space-x-3">
-        <img src="/logo-kassiti-icon.png" alt="Logo" class="w-8 h-8 rounded-full border border-amber-500 shadow-sm" />
+
+    <!-- Idul Adha Banner (Moved from header) -->
+    <div class="relative overflow-hidden rounded-2xl lg:rounded-3xl bg-gradient-to-br from-primary via-primary-dark to-dark text-white p-5 sm:p-6 shadow-xl idul-adha-banner">
+      <!-- Background decorative elements -->
+      <div class="absolute right-[-40px] top-[-30px] w-40 h-40 rounded-full bg-white/5 border border-white/5 pointer-events-none"></div>
+      <div class="absolute left-[-20px] bottom-[-20px] w-28 h-28 rounded-full bg-white/5 pointer-events-none"></div>
+      <div class="absolute -right-4 -top-4 w-16 h-16 bg-secondary/20 rounded-full blur-lg pointer-events-none"></div>
+      
+      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 class="text-base font-bold text-gray-800 dark:text-white leading-none">Tabungan Qurban</h2>
-          <span class="text-xs text-gray-500 dark:text-gray-400">DKM Masjid Jami Kassiti</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/15 border border-secondary/30 mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+            <span class="text-secondary text-[10px] font-bold tracking-widest uppercase">Idul Adha 1446 H / 2025</span>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold font-heading leading-tight">
+            Investasi <span class="text-secondary">Akhirat</span>
+          </h2>
+          <p class="text-white/70 text-xs sm:text-sm mt-1.5 max-w-md leading-relaxed">
+            Mulai menabung untuk ibadah qurban Anda. Setiap rupiah adalah langkah menuju keberkahan.
+          </p>
         </div>
+        <router-link 
+          to="/menabung" 
+          class="group inline-flex items-center gap-2 px-5 py-3 bg-secondary text-white font-bold text-sm rounded-full hover:bg-white hover:text-dark transition-all duration-300 shadow-lg shadow-secondary/20 shrink-0 self-start sm:self-center"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Mulai Menabung</span>
+        </router-link>
       </div>
     </div>
-
-    <!-- Responsive Grid Layout using CSS Grid Orders -->
+    
+    <!-- Responsive Grid Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- 1. Active User Welcome Card (Desktop Only, order-1) -->
-      <div 
-        v-if="store.currentUser" 
-        class="hidden lg:block lg:col-span-7 lg:order-1 gradient-overlay rounded-3xl p-6 text-white shadow-xl glow-primary space-y-5 relative overflow-hidden"
-      >
-        <div class="absolute right-[-10px] bottom-[-20px] opacity-10 pointer-events-none">
-          <svg width="150" height="150" viewBox="0 0 100 100" fill="currentColor">
-            <circle cx="50" cy="50" r="40" />
-          </svg>
-        </div>
-
-        <div class="flex items-start justify-between">
-          <div>
-            <span class="text-xs text-teal-200">Selamat datang,</span>
-            <h3 class="text-2xl font-bold mt-1 font-heading">{{ store.currentUser.name }}</h3>
-            <p class="text-xs text-teal-100/80 flex items-center mt-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1.5 text-amber-300" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-              </svg>
-              {{ store.currentUser.address }}
-            </p>
-          </div>
-          <span class="px-3 py-1 bg-white/20 text-white rounded-lg text-xs font-bold uppercase tracking-wider">Shohibul</span>
-        </div>
-
-        <!-- Payment Month Status -->
-        <div class="bg-white/10 rounded-2xl p-4 flex justify-between items-center backdrop-blur-sm">
-          <div>
-            <p class="text-xs text-teal-100">Setoran Terakhir</p>
-            <p class="text-base font-bold text-white">{{ store.currentUser.lastPaymentMonth }}</p>
-          </div>
-          <div class="flex items-center space-x-3">
-            <span class="text-base font-extrabold text-amber-300">Rp25.000</span>
-            <span class="px-3 py-1 bg-green-400 text-teal-900 rounded-full text-xs font-bold">Lunas</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Quick Stats Cards (Mobile Order 1, Desktop Order 2) -->
-      <div class="col-span-1 lg:col-span-5 lg:order-2 space-y-4">
+      <!-- 1. Quick Stats Cards -->
+      <div class="col-span-1 lg:col-span-5 lg:order-1 space-y-4">
         <div class="grid grid-cols-3 gap-3 stats-grid">
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
+          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 card-item">
             <span class="text-2xl font-black text-gray-800 dark:text-white block">{{ Math.round(animatedStats.shohibuls) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Shohibul</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
-            <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block">{{ Math.round(animatedStats.lunas) }}</span>
+          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 card-item">
+            <span class="text-2xl font-black text-primary dark:text-primary-light block">{{ Math.round(animatedStats.lunas) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Lunas</span>
           </div>
-          <div class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-md transition-shadow duration-300 card-item ambient-glow-pulse">
-            <span class="text-2xl font-black text-amber-600 dark:text-amber-400 block">{{ Math.round(animatedStats.proses) }}</span>
+          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3.5 text-center shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 card-item">
+            <span class="text-2xl font-black text-secondary dark:text-secondary-light block">{{ Math.round(animatedStats.proses) }}</span>
             <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Proses</span>
           </div>
         </div>
       </div>
 
-      <!-- 3. Main Grand Progress Bar Widget (Mobile Order 2, Desktop Order 3) -->
-      <div class="col-span-1 lg:col-span-7 lg:order-3 bg-[#10513c] text-white rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget ambient-glow-pulse">
+      <!-- 2. Main Grand Progress Bar Widget -->
+      <div class="col-span-1 lg:col-span-7 lg:order-2 bg-primary text-white rounded-2xl lg:rounded-3xl p-5 shadow-xl glow-primary space-y-4 progress-widget">
         <div class="flex justify-between items-start">
           <div>
-            <span class="text-xs text-emerald-300">Total terkumpul</span>
-            <h3 class="text-2xl font-black text-white mt-1">{{ store.formatRupiahFull(Math.round(animatedStats.collected)) }}</h3>
-            <span class="text-xs text-emerald-200/70">Target: {{ store.formatRupiahFull(store.targetTotal) }}</span>
+            <span class="text-xs text-teal-200">Total terkumpul</span>
+            <h3 class="text-2xl font-black text-white mt-1 font-heading">{{ store.formatRupiahFull(Math.round(animatedStats.collected)) }}</h3>
+            <span class="text-xs text-teal-200/70">Target: {{ store.formatRupiahFull(store.targetTotal) }}</span>
           </div>
-          <div class="text-3xl font-black text-amber-300 font-heading">
+          <div class="text-3xl font-black text-secondary font-heading">
             {{ Math.round(animatedStats.percentage) }}%
           </div>
         </div>
 
-        <!-- Custom Progress Bar (Opsi 1: Fluid wave) -->
+        <!-- Custom Progress Bar -->
         <div class="space-y-1">
-          <div class="w-full h-4.5 bg-emerald-950/80 rounded-full overflow-hidden relative border border-emerald-900/50 shadow-inner">
-            <!-- Back Wave -->
+          <div class="w-full h-4.5 bg-primary-dark/50 rounded-full overflow-hidden relative border border-white/10 shadow-inner">
             <div 
               class="absolute inset-y-0 left-0 wave-fill-back transition-all duration-1000 ease-out"
               :style="{ width: Math.round(animatedStats.percentage) + '%' }"
             ></div>
-            <!-- Front Wave -->
             <div 
               class="absolute inset-y-0 left-0 wave-fill-front transition-all duration-1000 ease-out"
               :style="{ width: Math.round(animatedStats.percentage) + '%' }"
             ></div>
-            <!-- Overlay Info -->
-            <span class="absolute inset-0 flex items-center justify-center text-[8px] font-black text-emerald-950 uppercase tracking-widest pointer-events-none select-none opacity-40">
+            <span class="absolute inset-0 flex items-center justify-center text-[8px] font-black text-white/30 uppercase tracking-widest pointer-events-none select-none">
               Gelombang Tabungan Qurban
             </span>
           </div>
-          <div class="flex justify-between text-[10px] text-emerald-300">
+          <div class="flex justify-between text-[10px] text-teal-200">
             <span>Rp0</span>
-            <span>84.0jt</span>
+            <span>{{ (store.targetTotal / 1000000).toFixed(1) }}jt</span>
           </div>
         </div>
 
         <!-- Mini Badges for Animal Targets -->
         <div class="pt-3 border-t border-white/10 flex space-x-3">
-          <div class="flex items-center space-x-2 bg-emerald-950/40 px-3 py-1.5 rounded-xl text-xs">
+          <div class="flex items-center space-x-2 bg-primary-dark/40 px-3 py-1.5 rounded-xl text-xs">
             <span>🐄 Sapi</span>
-            <span class="font-bold text-amber-300">{{ store.sapiCount }} ekor</span>
+            <span class="font-bold text-secondary">{{ store.sapiCount }} ekor</span>
           </div>
-          <div class="flex items-center space-x-2 bg-emerald-950/40 px-3 py-1.5 rounded-xl text-xs">
+          <div class="flex items-center space-x-2 bg-primary-dark/40 px-3 py-1.5 rounded-xl text-xs">
             <span>🐐 Kambing</span>
-            <span class="font-bold text-amber-300">{{ store.kambingCount }} ekor</span>
+            <span class="font-bold text-secondary">{{ store.kambingCount }} ekor</span>
           </div>
         </div>
       </div>
 
-      <!-- 4. Recent Payments List (Mobile Order 3, Desktop Order 4) -->
-      <div class="col-span-1 lg:col-span-5 lg:order-4 space-y-3 recent-payments-list">
+      <!-- 3. Recent Payments List -->
+      <div class="col-span-1 lg:col-span-5 lg:order-3 space-y-3 recent-payments-list">
         <div class="flex justify-between items-center">
           <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5 text-primary dark:text-primary-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -130,7 +110,7 @@
             </svg>
             Setoran terbaru
           </h4>
-          <router-link to="/shohibul" class="text-xs font-semibold text-primary dark:text-primary-light hover:underline flex items-center">
+          <router-link to="/shohibul" class="text-xs font-semibold text-primary dark:text-secondary hover:underline flex items-center">
             Lihat semua
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -143,7 +123,7 @@
           <div 
             v-for="tx in store.transactions.slice(0, 4)" 
             :key="tx.id"
-            class="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700/50 rounded-2.5xl p-3 flex justify-between items-center shadow-sm hover:shadow-md transition"
+            class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3 flex justify-between items-center shadow-sm hover:shadow-md transition-all duration-300"
           >
             <div class="flex items-center space-x-3">
               <div 
@@ -155,7 +135,7 @@
               <div>
                 <div class="flex items-center space-x-2">
                   <span class="text-xs font-bold text-gray-800 dark:text-white leading-tight block">{{ tx.name }}</span>
-                  <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-[8px] text-gray-500 dark:text-gray-400 font-semibold rounded uppercase tracking-wider">{{ tx.code }}</span>
+                  <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-white/5 text-[8px] text-gray-500 dark:text-gray-400 font-semibold rounded uppercase tracking-wider">{{ tx.code }}</span>
                 </div>
                 <span class="text-[9px] text-gray-400 dark:text-gray-500">{{ formatDate(tx.date) }}</span>
               </div>
@@ -197,7 +177,7 @@ const getInitials = (name) => {
   return name.slice(0, 2).toUpperCase()
 }
 
-// Generate color style based on name hash (Opsi 5: Gradient Avatars)
+// Generate color style based on name hash (Gradient Avatars)
 const getAvatarStyle = (name) => {
   if (!name) return {}
   const gradients = [
@@ -232,7 +212,7 @@ const animatedStats = reactive({
 })
 
 onMounted(() => {
-  // GSAP Counters (Opsi 4)
+  // GSAP Counters
   gsap.to(animatedStats, {
     shohibuls: store.shohibuls.length,
     lunas: store.totalLunas,
@@ -247,9 +227,8 @@ onMounted(() => {
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
-    tl.from('.user-welcome-card', { opacity: 0, scale: 0.95, duration: 0.5 })
-      .from('.card-item', { opacity: 0, scale: 0.95, stagger: 0.08, duration: 0.4 }, '-=0.3')
-      .from('.progress-widget', { opacity: 0, y: 30, duration: 0.5 }, '-=0.2')
+    tl.from('.idul-adha-banner', { opacity: 0, y: -20, duration: 0.6 })
+      .from('.progress-widget', { opacity: 0, y: 30, duration: 0.5 }, '-=0.4')
       .from('.recent-payments-list', { opacity: 0, y: 30, duration: 0.5 }, '-=0.3')
   }, containerRef.value)
 })

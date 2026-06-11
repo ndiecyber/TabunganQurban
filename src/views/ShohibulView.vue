@@ -1,9 +1,9 @@
 <template>
   <div class="space-y-4" ref="containerRef">
     
-    <!-- Header App Bar (Visible on all viewports) -->
+    <!-- Header App Bar -->
     <div class="flex items-center justify-between page-header">
-      <h2 class="text-lg font-black text-gray-800 dark:text-white">Daftar Shohibul</h2>
+      <h2 class="text-lg font-black text-gray-800 dark:text-white font-heading">Daftar Shohibul</h2>
       <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">{{ filteredShohibuls.length }} terdaftar</span>
     </div>
 
@@ -13,7 +13,7 @@
         v-model="searchQuery" 
         type="text" 
         placeholder="Cari nama atau alamat shohibul..." 
-        class="w-full bg-white dark:bg-gray-800 text-sm border border-gray-100 dark:border-gray-700/50 rounded-2xl pl-10 pr-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+        class="w-full bg-white dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-2xl pl-10 pr-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
       />
       <div class="absolute left-3.5 top-3.5 text-gray-400">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,8 +30,8 @@
         @click="activeFilter = filter.value"
         class="px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition cursor-pointer flex items-center space-x-1"
         :class="activeFilter === filter.value 
-          ? 'bg-[#10513c] text-white shadow-sm' 
-          : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200/50 dark:border-gray-700/30'"
+          ? 'bg-primary text-white shadow-sm' 
+          : 'bg-white dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 border border-gray-200/50 dark:border-white/10'"
       >
         <span v-if="filter.icon">{{ filter.icon }}</span>
         <span>{{ filter.label }}</span>
@@ -49,12 +49,11 @@
         v-for="(shohibul, idx) in filteredShohibuls" 
         :key="shohibul.id"
         @click="openDetails(shohibul, $event)"
-        class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] card-item cursor-pointer hover:shadow-md transition-shadow duration-300 flex flex-col justify-between space-y-4"
+        class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 shadow-sm card-item cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between space-y-4"
       >
         <!-- Top Row: Avatar Initials + Name/Address + Progress Mini Bar -->
         <div class="flex justify-between items-start">
           <div class="flex items-start space-x-3">
-            <!-- Distinct Color Avatars based on Index -->
             <div 
               class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
               :style="getAvatarStyle(shohibul.name)"
@@ -66,8 +65,7 @@
               <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-1 flex items-center">
                 {{ shohibul.code }} • {{ shohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
               </p>
-              <!-- Price Ratio (e.g. 10.500.000 / 14.0jt) -->
-              <p class="text-xs font-bold text-amber-600 dark:text-amber-500 mt-2">
+              <p class="text-xs font-bold text-secondary dark:text-secondary-light mt-2">
                 {{ store.formatRupiahFull(shohibul.collected) }} <span class="text-gray-400 font-normal">/ {{ (shohibul.target / 1000000).toFixed(1) }}jt</span>
               </p>
             </div>
@@ -76,24 +74,24 @@
           <!-- Top-Right Progress Mini Bar -->
           <div class="flex flex-col items-end space-y-1">
             <span class="text-[10px] font-black text-gray-700 dark:text-gray-300">{{ getPercentage(shohibul) }}%</span>
-            <div class="w-16 h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="w-16 h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
               <div 
-                class="h-full rounded-full"
-                :class="shohibul.collected >= shohibul.target ? 'bg-green-500' : 'bg-amber-500'"
+                class="h-full rounded-full transition-all duration-500"
+                :class="shohibul.collected >= shohibul.target ? 'bg-green-500' : 'bg-secondary'"
                 :style="{ width: getPercentage(shohibul) + '%' }"
               ></div>
             </div>
-            <span v-if="shohibul.collected >= shohibul.target" class="text-[8px] font-extrabold text-green-600 uppercase tracking-wider flex items-center">
+            <span v-if="shohibul.collected >= shohibul.target" class="text-[8px] font-extrabold text-green-600 dark:text-green-400 uppercase tracking-wider flex items-center">
               ✓ Lunas
             </span>
           </div>
         </div>
 
         <!-- Bottom Row: Action Buttons -->
-        <div class="flex items-center justify-end space-x-2 pt-3 border-t border-gray-100 dark:border-gray-700/50">
+        <div class="flex items-center justify-end space-x-2 pt-3 border-t border-gray-100 dark:border-white/5">
           <button 
-            @click.stop="openDetails(shohibul)"
-            class="px-3.5 py-1.5 border border-gray-200 dark:border-gray-700 rounded-xl text-xs font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 transition flex items-center space-x-1.5 cursor-pointer"
+            @click.stop="openDetails(shohibul, $event)"
+            class="px-3.5 py-1.5 border border-gray-200 dark:border-white/10 rounded-xl text-xs font-bold text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition flex items-center space-x-1.5 cursor-pointer"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -105,7 +103,7 @@
           <button 
             v-if="shohibul.collected < shohibul.target"
             @click.stop="goToDeposit(shohibul.id)"
-            class="px-3.5 py-1.5 bg-[#10513c] hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
+            class="px-3.5 py-1.5 bg-primary hover:bg-primary-light text-white rounded-xl text-xs font-bold transition flex items-center space-x-1.5 cursor-pointer shadow-sm"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -115,7 +113,7 @@
         </div>
       </div>
 
-      <div v-if="filteredShohibuls.length === 0" class="text-center py-12 text-gray-400 dark:text-gray-600">
+      <div v-if="filteredShohibuls.length === 0" class="text-center py-12 text-gray-400 dark:text-gray-600 col-span-full">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -123,26 +121,23 @@
       </div>
     </div>
 
-    <!-- Shohibul Detail Slide-Up Modal Frame (Opsi 3: Morphing Expand) -->
+    <!-- Shohibul Detail Slide-Up Modal -->
     <transition :css="false">
       <div v-if="selectedShohibul" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end modal-backdrop">
-        <!-- Close overlay -->
         <div class="flex-1" @click="closeDetails"></div>
         
-        <!-- Modal Content Container -->
-        <div class="bg-white dark:bg-gray-950 rounded-t-[32px] p-6 max-h-[85%] overflow-y-auto space-y-6 relative border-t border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content">
-          <!-- Slide handle -->
-          <div class="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full mx-auto -mt-2 mb-4 cursor-pointer" @click="closeDetails"></div>
+        <div class="bg-white dark:bg-dark rounded-t-[32px] p-6 max-h-[85%] overflow-y-auto space-y-6 relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content">
+          <div class="w-12 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto -mt-2 mb-4 cursor-pointer" @click="closeDetails"></div>
           
           <div class="flex justify-between items-start">
             <div>
               <div class="flex items-center space-x-2">
-                <h3 class="text-lg font-black text-gray-800 dark:text-white">{{ selectedShohibul.name }}</h3>
-                <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-[8px] text-gray-500 dark:text-gray-400 font-bold rounded uppercase tracking-wider">{{ selectedShohibul.code }}</span>
+                <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">{{ selectedShohibul.name }}</h3>
+                <span class="px-1.5 py-0.5 bg-gray-100 dark:bg-white/5 text-[8px] text-gray-500 dark:text-gray-400 font-bold rounded uppercase tracking-wider">{{ selectedShohibul.code }}</span>
               </div>
               <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ selectedShohibul.address }}</p>
             </div>
-            <button @click="closeDetails" class="p-1 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+            <button @click="closeDetails" class="p-1 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -151,7 +146,7 @@
 
           <!-- Quick Information Boxes -->
           <div class="grid grid-cols-2 gap-4">
-            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1 details-modal-info-box">
+            <div class="bg-cream dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-center space-y-1">
               <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Hewan Target</span>
               <span class="text-sm font-black text-gray-800 dark:text-white block">
                 {{ selectedShohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
@@ -159,7 +154,7 @@
               <span class="text-[9px] text-gray-400 block">{{ selectedShohibul.animalGroup }}</span>
             </div>
             
-            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1 details-modal-info-box">
+            <div class="bg-cream dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl text-center space-y-1">
               <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Status Tabungan</span>
               <span 
                 class="text-xs font-black block py-0.5 px-2 rounded-full w-fit mx-auto"
@@ -174,20 +169,20 @@
           </div>
 
           <!-- Target Metrics -->
-          <div class="space-y-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl details-modal-info-box">
+          <div class="space-y-3 bg-cream dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl">
             <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Perkembangan Dana</h4>
             <div class="space-y-2">
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-400 dark:text-gray-500">Telah Terbayar</span>
-                <span class="font-extrabold text-emerald-600 dark:text-emerald-400">{{ store.formatRupiahFull(selectedShohibul.collected) }}</span>
+                <span class="font-extrabold text-primary dark:text-primary-light">{{ store.formatRupiahFull(selectedShohibul.collected) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-400 dark:text-gray-500">Target Qurban</span>
                 <span class="font-extrabold text-gray-800 dark:text-white">{{ store.formatRupiahFull(selectedShohibul.target) }}</span>
               </div>
-              <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-sm pt-2 border-t border-gray-200/50 dark:border-gray-800">
+              <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-sm pt-2 border-t border-gray-200/50 dark:border-white/5">
                 <span class="text-gray-400 dark:text-gray-500 font-semibold">Kekurangan</span>
-                <span class="font-extrabold text-amber-500">{{ store.formatRupiahFull(selectedShohibul.target - selectedShohibul.collected) }}</span>
+                <span class="font-extrabold text-secondary">{{ store.formatRupiahFull(selectedShohibul.target - selectedShohibul.collected) }}</span>
               </div>
             </div>
           </div>
@@ -199,13 +194,13 @@
               <div 
                 v-for="tx in memberTransactions" 
                 :key="tx.id"
-                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 p-3 rounded-2xl flex justify-between items-center details-modal-box"
+                class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl flex justify-between items-center"
               >
                 <div>
                   <span class="text-xs font-bold text-gray-800 dark:text-white block">Setoran Tabungan</span>
                   <span class="text-[9px] text-gray-400">{{ formatDate(tx.date) }}</span>
                 </div>
-                <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">{{ store.formatRupiah(tx.amount) }}</span>
+                <span class="text-sm font-bold text-primary dark:text-primary-light">{{ store.formatRupiah(tx.amount) }}</span>
               </div>
               
               <div v-if="memberTransactions.length === 0" class="text-center py-6 text-gray-400 text-xs">
@@ -218,7 +213,7 @@
           <div class="pt-2 flex space-x-3">
             <button 
               @click="closeDetails" 
-              class="flex-1 py-3 text-sm font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-2xl hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              class="flex-1 py-3 text-sm font-bold bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 rounded-2xl hover:bg-gray-200 dark:hover:bg-white/10 transition"
             >
               Kembali
             </button>
@@ -295,17 +290,17 @@ const getPercentage = (shohibul) => {
   return Math.min(Math.round((shohibul.collected / shohibul.target) * 100), 100)
 }
 
-// Generate color style based on name hash (Opsi 5: Gradient Avatars)
+// Generate color style based on name hash (Gradient Avatars)
 const getAvatarStyle = (name) => {
   if (!name) return {}
   const gradients = [
-    { from: '#eab308', to: '#ca8a04', text: '#ffffff' }, // Amber gradient
-    { from: '#10b981', to: '#047857', text: '#ffffff' }, // Emerald gradient
-    { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' }, // Blue gradient
-    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple gradient
-    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink gradient
-    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose gradient
-    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }  // Cyan gradient
+    { from: '#eab308', to: '#ca8a04', text: '#ffffff' },
+    { from: '#10b981', to: '#047857', text: '#ffffff' },
+    { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' },
+    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' },
+    { from: '#ec4899', to: '#be185d', text: '#ffffff' },
+    { from: '#f43f5e', to: '#be123c', text: '#ffffff' },
+    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }
   ]
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -350,14 +345,13 @@ const openDetails = (shohibul, event) => {
       const startX = clickedCardRect.value.left - modalRect.left
       const startY = clickedCardRect.value.top - modalRect.top
       
-      // Expand from card position (Opsi 3: Morphing FLIP)
       gsap.fromTo(modalContent,
         {
           x: startX,
           y: startY,
           width: clickedCardRect.value.width,
           height: clickedCardRect.value.height,
-          borderRadius: '1.25rem',
+          borderRadius: '1rem',
           opacity: 0.6,
           transformOrigin: 'top left'
         },
@@ -389,13 +383,12 @@ const closeDetails = () => {
     const targetX = clickedCardRect.value.left - modalRect.left
     const targetY = clickedCardRect.value.top - modalRect.top
     
-    // Shrink back to card position
     gsap.to(modalContent, {
       x: targetX,
       y: targetY,
       width: clickedCardRect.value.width,
       height: clickedCardRect.value.height,
-      borderRadius: '1.25rem',
+      borderRadius: '1rem',
       opacity: 0,
       duration: 0.35,
       ease: 'power3.inOut',
@@ -418,59 +411,17 @@ const goToDeposit = (shohibulId) => {
 }
 
 onMounted(() => {
-  console.log('ShohibulView onMounted called')
   ctx = gsap.context(() => {
-    const tl = gsap.timeline({ 
-      defaults: { ease: 'power3.out' },
-      onStart: () => console.log('GSAP timeline started'),
-      onComplete: () => console.log('GSAP timeline completed')
-    })
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     
     tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
       .from('.search-box', { opacity: 0, duration: 0.5 }, '-=0.3')
       .from('.filter-scroll', { opacity: 0, duration: 0.5 }, '-=0.4')
       .from('.count-label', { opacity: 0, duration: 0.3 }, '-=0.3')
-      .from('.card-item', { 
-        opacity: 0, 
-        y: 20, 
-        stagger: 0.08, 
-        duration: 0.4,
-        onStart: () => console.log('card-item animation started'),
-        onComplete: () => console.log('card-item animation completed')
-      }, '-=0.3')
   }, containerRef.value)
 })
 
 onUnmounted(() => {
-  console.log('ShohibulView onUnmounted called')
-  if (ctx) {
-    ctx.revert()
-    console.log('GSAP context reverted')
-  }
+  if (ctx) ctx.revert()
 })
 </script>
-
-<style scoped>
-/* Slide-Up transition for detail modal */
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.slide-up-enter-from,
-.slide-up-leave-to {
-  opacity: 0;
-}
-
-.slide-up-enter-from > div:last-child {
-  transform: translateY(100%);
-}
-
-.slide-up-leave-to > div:last-child {
-  transform: translateY(100%);
-}
-
-.slide-up-enter-to > div:last-child {
-  transform: translateY(0);
-}
-</style>

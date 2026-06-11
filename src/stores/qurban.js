@@ -6,13 +6,7 @@ export const useQurbanStore = defineStore('qurban', {
     transactions: [],
     targetTotal: 84000000,
     currentShohibulId: 'shohibul-01', // Logged in user: Budi Santoso
-    isDarkMode: false,
-    designSystem: {
-      theme: 'emerald', // 'emerald', 'indigo', 'slate'
-      style: 'glass',   // 'flat', 'glass', 'frosted'
-      font: 'jakarta',  // 'jakarta', 'inter', 'outfit'
-      spacing: 'compact' // 'cozy', 'compact'
-    }
+    isDarkMode: false
   }),
 
   getters: {
@@ -58,17 +52,12 @@ export const useQurbanStore = defineStore('qurban', {
     initializeStore() {
       const cachedShohibuls = localStorage.getItem('qurban_shohibuls')
       const cachedTransactions = localStorage.getItem('qurban_transactions')
-      const cachedDesign = localStorage.getItem('qurban_design_system')
 
       if (cachedShohibuls && cachedTransactions) {
         this.shohibuls = JSON.parse(cachedShohibuls)
         this.transactions = JSON.parse(cachedTransactions)
       } else {
         this.loadMockData()
-      }
-
-      if (cachedDesign) {
-        this.designSystem = { ...this.designSystem, ...JSON.parse(cachedDesign) }
       }
     },
 
@@ -373,11 +362,6 @@ export const useQurbanStore = defineStore('qurban', {
         this.isDarkMode = false
         document.documentElement.classList.remove('dark')
       }
-    },
-
-    updateDesign(key, value) {
-      this.designSystem[key] = value
-      localStorage.setItem('qurban_design_system', JSON.stringify(this.designSystem))
     }
   }
 })

@@ -3,7 +3,7 @@
     
     <!-- Header App Bar (Visible on all viewports) -->
     <div class="flex items-center justify-between page-header">
-      <h2 class="text-lg font-black text-gray-800 dark:text-white">Menabung Qurban</h2>
+      <h2 class="text-lg font-black text-gray-800 dark:text-white font-heading">Menabung Qurban</h2>
       <span class="text-xs text-amber-500 dark:text-amber-400 font-bold flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -13,7 +13,7 @@
     </div>
 
     <!-- Double Tab Toggles (Visible only on Mobile/Tablet) -->
-    <div class="bg-gray-100 dark:bg-gray-800/80 p-1 rounded-2xl flex tab-toggle lg:hidden">
+    <div class="bg-gray-200/50 dark:bg-white/5 p-1 rounded-2xl flex tab-toggle lg:hidden border border-gray-200/30 dark:border-white/5">
       <button 
         @click="activeTab = 'setor'"
         class="flex-1 py-2.5 text-xs font-bold rounded-xl transition cursor-pointer"
@@ -39,7 +39,7 @@
         :class="{'hidden lg:block': activeTab !== 'setor'}"
       >
         <!-- Card 1: Select Shohibul -->
-        <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3">
+        <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-3">
           <div class="flex items-center space-x-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
             <span>👤</span>
             <span>Pilih shohibul qurban</span>
@@ -61,7 +61,7 @@
         </div>
 
         <!-- Card 2: Select Nominal -->
-        <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-4">
+        <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-4">
           <div class="flex items-center space-x-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
             <span>💵</span>
             <span>Pilih nominal tabungan</span>
@@ -77,7 +77,7 @@
               class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center justify-center space-y-1"
               :class="form.amount === preset.value && !isCustomAmountSelected
                 ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
-                : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300'"
+                : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.03] text-gray-700 dark:text-gray-300'"
             >
               <span class="text-xs text-amber-500 font-bold">🎖️</span>
               <span class="text-xs font-extrabold">{{ preset.label }}</span>
@@ -88,10 +88,10 @@
           <!-- Nominal Lain Custom Option Button -->
           <div 
             @click="activateCustomAmount"
-            class="border rounded-2.5xl p-3 px-4 cursor-pointer transition select-none flex items-center justify-between"
+            class="border rounded-2xl p-3 px-4 cursor-pointer transition select-none flex items-center justify-between"
             :class="isCustomAmountSelected 
               ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-              : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900'"
+              : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.03]'"
           >
             <div class="flex items-center space-x-3 text-left">
               <span class="text-lg">✏️</span>
@@ -111,13 +111,13 @@
                 v-model.number="form.amount" 
                 type="number" 
                 placeholder="Masukkan nominal kelipatan Rp50.000..." 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-sm border border-gray-150 dark:border-gray-800 rounded-2.5xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-2xl pl-10 pr-4 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition"
               />
             </div>
           </div>
 
           <!-- Payment Method -->
-          <div class="space-y-2 pt-2 border-t border-gray-100 dark:border-gray-700/50">
+          <div class="space-y-2 pt-2 border-t border-gray-200/50 dark:border-white/5">
             <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Metode Pembayaran</label>
             <div class="grid grid-cols-2 gap-3">
               <!-- QRIS Option -->
@@ -126,7 +126,7 @@
                 class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1"
                 :class="form.paymentMethod === 'qris' 
                   ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                  : 'border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-gray-900/50'"
+                  : 'border-gray-200/50 dark:border-white/10 bg-gray-50/50 dark:bg-white/[0.02]'"
               >
                 <span class="text-lg">📱</span>
                 <span class="text-xs font-bold dark:text-white block">QRIS Masjid</span>
@@ -139,7 +139,7 @@
                 class="border rounded-2xl p-3 text-center cursor-pointer transition select-none flex flex-col items-center space-y-1"
                 :class="form.paymentMethod === 'va' 
                   ? 'border-primary bg-primary/5 dark:bg-primary/10' 
-                  : 'border-gray-150 dark:border-gray-850 bg-gray-50/50 dark:bg-gray-900/50'"
+                  : 'border-gray-200/50 dark:border-white/10 bg-gray-50/50 dark:bg-white/[0.02]'"
               >
                 <span class="text-lg">🏦</span>
                 <span class="text-xs font-bold dark:text-white block">Transfer Bank</span>
@@ -153,14 +153,14 @@
             <button 
               v-if="!form.shohibulId"
               disabled
-              class="w-full py-4 text-sm font-extrabold bg-[#d1e2da] dark:bg-gray-800 text-[#558a74] dark:text-gray-600 rounded-2.5xl cursor-not-allowed flex items-center justify-center space-x-2"
+              class="w-full py-4 text-sm font-extrabold bg-primary/10 dark:bg-white/5 text-primary/50 dark:text-gray-600 rounded-2xl cursor-not-allowed flex items-center justify-center space-x-2"
             >
               <span>Pilih shohibul dahulu</span>
             </button>
             <button 
               v-else
               @click="submitDeposit"
-              class="w-full py-4 text-sm font-extrabold bg-[#10513c] hover:bg-emerald-800 text-white rounded-2.5xl transition shadow-md glow-primary font-heading"
+              class="w-full py-4 text-sm font-extrabold bg-primary hover:bg-primary-light text-white rounded-2xl transition shadow-md glow-primary font-heading"
             >
               Lanjutkan Pembayaran
             </button>
@@ -174,7 +174,7 @@
         class="lg:col-span-6 space-y-4"
         :class="{'hidden lg:block': activeTab !== 'kalkulator'}"
       >
-        <div class="bg-white dark:bg-gray-800 border border-gray-155 dark:border-gray-700/50 rounded-3xl p-5 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-5">
+        <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-5">
           <h3 class="text-sm font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
           
           <!-- Target Type -->
@@ -185,8 +185,8 @@
                 v-for="target in calcTargets" 
                 :key="target.value"
                 @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
-                class="p-2.5 rounded-xl border border-gray-150 dark:border-gray-800 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
-                :class="calc.targetValue === target.price ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400'"
+                class="p-2.5 rounded-xl border border-gray-200/50 dark:border-white/10 text-[10px] font-bold text-center transition flex flex-col justify-between items-center"
+                :class="calc.targetValue === target.price ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light' : 'bg-white dark:bg-white/[0.03] text-gray-500 dark:text-gray-400'"
               >
                 <span class="text-lg mb-1">{{ target.icon }}</span>
                 <span class="leading-tight mb-1">{{ target.label }}</span>
@@ -216,7 +216,7 @@
           </div>
 
           <!-- Calculated Result Output Card -->
-          <div class="bg-primary text-white rounded-3xl p-5 text-center shadow-lg relative overflow-hidden">
+          <div class="bg-primary text-white rounded-2xl p-5 text-center shadow-lg relative overflow-hidden">
             <div class="absolute inset-0 bg-emerald-950/20 pointer-events-none"></div>
             <span class="text-xs text-teal-200">Estimasi Tabungan Berkala</span>
             <h4 class="text-2xl font-black mt-1 text-amber-300 font-heading">
@@ -228,7 +228,7 @@
           </div>
 
           <!-- Create New Shohibul Directly Box -->
-          <div class="border-t border-gray-100 dark:border-gray-700/50 pt-4 space-y-3">
+          <div class="border-t border-gray-200/50 dark:border-white/5 pt-4 space-y-3">
             <div class="flex justify-between items-center">
               <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Daftar Shohibul Baru</h4>
               <span class="px-2 py-0.5 bg-amber-500/10 text-amber-600 rounded text-[9px] font-bold">Simulasi Tambah</span>
@@ -239,18 +239,18 @@
                 v-model="newMember.name" 
                 type="text" 
                 placeholder="Nama Lengkap Shohibul" 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-150 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-xs border border-gray-200/50 dark:border-white/10 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
               />
               <input 
                 v-model="newMember.address" 
                 type="text" 
                 placeholder="Alamat / No. Blok (Contoh: B05)" 
-                class="w-full bg-gray-50 dark:bg-gray-900 text-xs border border-gray-150 dark:border-gray-800 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-xs border border-gray-200/50 dark:border-white/10 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-1 focus:ring-primary focus:border-transparent dark:text-white"
               />
               
               <button 
                 @click="registerNewMember"
-                class="w-full py-2.5 bg-gray-800 dark:bg-gray-700 text-white rounded-xl text-xs font-bold hover:bg-gray-900 dark:hover:bg-gray-655 transition"
+                class="w-full py-2.5 bg-primary dark:bg-primary text-white rounded-xl text-xs font-bold hover:bg-primary-light transition"
               >
                 Mulai Menabung dengan Rencana Ini
               </button>
@@ -266,12 +266,12 @@
       <div v-if="paymentModalVisible" class="absolute inset-0 bg-black/60 z-55 flex flex-col justify-end">
         <div class="flex-1" @click="closePaymentModal"></div>
         
-        <div class="bg-white dark:bg-gray-950 rounded-t-[32px] p-6 max-h-[90%] overflow-y-auto space-y-5 text-center relative shadow-2xl pb-[calc(25px+env(safe-area-inset-bottom,0px))]">
+        <div class="bg-white dark:bg-dark rounded-t-[32px] p-6 max-h-[90%] overflow-y-auto space-y-5 text-center relative shadow-2xl pb-[calc(25px+env(safe-area-inset-bottom,0px))]">
           <div class="w-12 h-1.5 bg-gray-200 dark:bg-gray-800 rounded-full mx-auto -mt-2 mb-2"></div>
           
           <div class="flex justify-between items-center px-2">
             <h3 class="text-sm font-bold text-gray-800 dark:text-white">Pembayaran {{ form.paymentMethod === 'qris' ? 'QRIS DKM Masjid' : 'Transfer Bank (VA)' }}</h3>
-            <button @click="closePaymentModal" class="p-1 rounded-full bg-gray-100 dark:bg-gray-800">
+            <button @click="closePaymentModal" class="p-1 rounded-full bg-gray-100 dark:bg-white/5">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -279,7 +279,7 @@
           </div>
 
           <!-- Invoice Details -->
-          <div class="bg-gray-50 dark:bg-gray-900/50 border border-gray-150 dark:border-gray-800 p-4 rounded-3xl space-y-1.5">
+          <div class="bg-cream dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 p-4 rounded-2xl space-y-1.5">
             <span class="text-[10px] text-gray-400 uppercase tracking-wide font-medium">Nominal Pembayaran</span>
             <h4 class="text-xl font-black text-primary dark:text-primary-light font-heading">
               {{ store.formatRupiahFull(form.amount) }}
@@ -291,7 +291,7 @@
 
           <!-- Display QRIS Image if selected -->
           <div v-if="form.paymentMethod === 'qris'" class="space-y-3">
-            <div class="mx-auto w-[200px] h-[200px] bg-white border border-gray-150 dark:border-gray-800 rounded-3xl overflow-hidden shadow-md p-2 flex items-center justify-center">
+            <div class="mx-auto w-[200px] h-[200px] bg-white border border-gray-200/50 dark:border-white/10 rounded-2xl overflow-hidden shadow-md p-2 flex items-center justify-center">
               <img src="/qris-dkm.jpg" alt="QRIS DKM Masjid Jami Kassiti" class="max-w-full max-h-full object-contain" />
             </div>
             <p class="text-[10px] text-gray-400 max-w-[280px] mx-auto leading-relaxed">
@@ -301,7 +301,7 @@
 
           <!-- Display Bank VA details if selected -->
           <div v-else class="space-y-4 py-2">
-            <div class="bg-gray-50 dark:bg-gray-900 p-4 rounded-3xl border border-gray-150 dark:border-gray-800 text-left space-y-3">
+            <div class="bg-cream dark:bg-white/[0.03] p-4 rounded-2xl border border-gray-200/50 dark:border-white/10 text-left space-y-3">
               <div class="flex justify-between items-center">
                 <span class="text-xs text-gray-400 font-bold">BANK SYARIAH INDONESIA (BSI)</span>
                 <span class="text-[10px] text-gray-400">Kassiti Qurban</span>
@@ -320,7 +320,7 @@
           <div class="pt-2">
             <button 
               @click="confirmPaymentSimulation"
-              class="w-full py-4 text-sm font-bold bg-[#10513c] hover:bg-emerald-800 text-white rounded-2.5xl transition shadow-md glow-primary font-heading"
+              class="w-full py-4 text-sm font-bold bg-primary hover:bg-primary-light text-white rounded-2xl transition shadow-md glow-primary font-heading"
             >
               Saya Sudah Membayar (Simulasi)
             </button>
@@ -331,7 +331,7 @@
 
     <!-- PAYMENT SUCCESS CELEBRATION MODAL (CONFIRMATION STAMP) -->
     <transition name="fade">
-      <div v-if="successScreenVisible" class="absolute inset-0 bg-white/95 dark:bg-gray-950/95 z-55 flex flex-col items-center justify-center p-6 text-center space-y-5">
+      <div v-if="successScreenVisible" class="absolute inset-0 bg-white/95 dark:bg-dark/95 z-55 flex flex-col items-center justify-center p-6 text-center space-y-5">
         <!-- Success Animation Circle Elements -->
         <div class="success-circle w-20 h-20 bg-green-100 dark:bg-green-950/40 border-2 border-green-500 rounded-full flex items-center justify-center opacity-0 scale-50">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-green-600 dark:text-green-400 success-check" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">

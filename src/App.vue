@@ -1,25 +1,19 @@
 <template>
   <div 
-    :class="[
-      { 'dark': store.isDarkMode },
-      'theme-' + store.designSystem.theme,
-      'style-' + store.designSystem.style,
-      'spacing-' + store.designSystem.spacing,
-      'font-' + store.designSystem.font
-    ]" 
+    :class="{ 'dark': store.isDarkMode }" 
     class="min-h-screen transition-colors duration-300"
   >
-    <div class="min-h-screen bg-light-warm dark:bg-dark text-gray-900 dark:text-gray-100 font-sans flex flex-col relative islamic-pattern-bg transition-all duration-300">
+    <div class="min-h-screen bg-light-warm dark:bg-dark text-gray-900 dark:text-gray-100 font-sans flex flex-col relative islamic-pattern-bg transition-all duration-500">
       
-      <!-- 1. DESKTOP HEADER (Visible only on desktop/tablet) -->
-      <header class="hidden md:block sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 border-b border-gray-200/50 dark:border-gray-800/50 backdrop-blur-lg shadow-sm">
+      <!-- ========== DESKTOP HEADER (Hidden on mobile) ========== -->
+      <header class="hidden md:block sticky top-0 z-40 bg-white/98 dark:bg-dark/98 border-b border-gray-200 dark:border-white/5 backdrop-blur-lg shadow-sm transition-all duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
-          <router-link to="/" class="flex items-center space-x-3">
+          <router-link to="/" class="flex items-center space-x-3 group">
             <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
-            <div class="border-l border-gray-200 dark:border-gray-800 pl-3">
+            <div class="border-l border-gray-200 dark:border-gray-700 pl-3">
               <span class="sr-only">DKM Jami Kassiti</span>
-              <h1 class="text-base font-extrabold text-[#10513c] dark:text-[#a7f3d0] leading-tight font-heading">Tabungan Qurban</h1>
+              <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight font-heading">Tabungan Qurban</h1>
             </div>
           </router-link>
 
@@ -29,35 +23,58 @@
               v-for="item in navItems" 
               :key="item.path" 
               :to="item.path"
-              class="px-4 py-2 text-sm font-semibold rounded-xl transition duration-150 relative"
-              :class="isRouteActive(item.path) ? 'text-primary dark:text-primary-light bg-primary/5 dark:bg-primary/10' : 'text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white'"
+              class="px-4 py-2 text-sm font-semibold rounded-xl transition duration-300 relative group"
+              :class="isRouteActive(item.path) 
+                ? 'text-primary dark:text-secondary bg-primary/5 dark:bg-primary/10' 
+                : 'text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white'"
             >
               {{ item.name }}
-              <span v-if="isRouteActive(item.path)" class="absolute bottom-0 left-4 right-4 h-0.5 bg-primary dark:bg-primary-light rounded-full"></span>
+              <!-- Animated underline matching WebDKM -->
+              <span 
+                class="absolute bottom-1 left-4 right-4 h-[2px] rounded-full transition-transform duration-300 origin-center"
+                :class="[
+                  isRouteActive(item.path) ? 'bg-primary dark:bg-secondary scale-x-100' : 'bg-primary dark:bg-secondary scale-x-0 group-hover:scale-x-50'
+                ]"
+              ></span>
             </router-link>
           </nav>
 
           <!-- Action Buttons / Theme Toggle -->
           <div class="flex items-center space-x-3">
+            <!-- Dark Mode Toggle (WebDKM-style slider) -->
             <button 
               @click="store.toggleTheme()" 
-              class="p-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer" 
+              class="relative flex items-center h-8 w-[5.5rem] rounded-full p-1 transition-all duration-300 overflow-hidden shrink-0 border cursor-pointer"
+              :class="store.isDarkMode ? 'bg-dark-light border-white/10' : 'bg-gray-200 border-gray-300'"
               aria-label="Toggle Dark Mode"
             >
-              <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
-              </svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-700" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
+              <span 
+                class="absolute left-2 text-[7px] font-bold tracking-wider transition-opacity duration-300"
+                :class="store.isDarkMode ? 'opacity-0' : 'opacity-100 text-gray-700'"
+              >TERANG</span>
+              <span 
+                class="absolute right-2 text-[7px] font-bold tracking-wider transition-opacity duration-300"
+                :class="store.isDarkMode ? 'opacity-100 text-white' : 'opacity-0'"
+              >GELAP</span>
+              <div 
+                class="absolute w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-md transition-all duration-300 z-10"
+                :class="store.isDarkMode ? 'left-1' : 'left-[52px]'"
+              >
+                <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-900" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-gray-900" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
+                </svg>
+              </div>
             </button>
             
             <a 
               href="https://masjidkassiti.id" 
               target="_blank" 
-              class="inline-flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-primary hover:bg-primary-light text-white transition shadow-sm glow-primary"
+              class="inline-flex items-center space-x-1.5 px-5 py-2.5 rounded-full text-xs font-bold bg-secondary hover:bg-white hover:text-dark text-white transition-all duration-300 shadow-lg shadow-secondary/20"
             >
-              <span>Kembali Ke Masjid</span>
+              <span>Masjid Kassiti</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -66,88 +83,64 @@
         </div>
       </header>
 
-      <!-- 2. MOBILE PERSISTENT GREEN HEADER (Visible only on mobile/tablet, md:hidden) -->
-      <div class="md:hidden dashboard-header sticky top-0 z-30 bg-gradient-to-b from-[#10513c] to-[#0a3829] text-white pt-5 pb-4 px-5 rounded-b-[2rem] shadow-lg overflow-hidden">
-        <!-- Background decorative elements to replicate screenshot's circles -->
-        <div class="absolute right-[-40px] top-[-30px] w-40 h-40 rounded-full bg-white/5 border border-white/5 pointer-events-none"></div>
-        <div class="absolute left-[-20px] bottom-[-20px] w-28 h-28 rounded-full bg-white/5 pointer-events-none"></div>
-
-        <!-- Top Row: Logo, Title, and Year Tag -->
-        <div class="flex justify-between items-center relative z-10">
-          <div class="flex items-center space-x-2.5">
-            <img src="/logo-kassiti-dark.png" alt="DKM Logo" class="h-8.5 w-auto" />
-            <div class="border-l border-white/20 pl-2">
-              <h2 class="text-xs font-bold tracking-wide font-heading">Tabungan Qurban</h2>
-              <span class="sr-only">DKM Masjid Jami Kassiti</span>
+      <!-- ========== MOBILE HEADER (Visible on mobile only) ========== -->
+      <div class="md:hidden sticky top-0 z-40">
+        <!-- Top Bar: Logo + Actions -->
+        <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
+          <div class="flex justify-between items-center">
+            <router-link to="/" class="flex items-center space-x-2.5">
+              <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Logo" class="h-9 w-auto" />
+              <div class="border-l border-gray-200 dark:border-gray-700 pl-2.5">
+                <h2 class="text-sm font-bold text-primary dark:text-primary-light font-heading leading-tight">Tabungan Qurban</h2>
+                <span class="text-[9px] text-gray-400 dark:text-gray-500 font-medium">DKM Masjid Jami Kassiti</span>
+              </div>
+            </router-link>
+            <div class="flex items-center space-x-2">
+              <!-- Mobile Dark Mode Toggle -->
+              <button 
+                @click="store.toggleTheme()" 
+                class="p-2 rounded-xl transition cursor-pointer"
+                :class="store.isDarkMode 
+                  ? 'bg-white/5 border border-white/10 text-white hover:bg-white/10' 
+                  : 'bg-gray-100 border border-gray-200 text-gray-600 hover:bg-gray-200'"
+                aria-label="Toggle Dark Mode"
+              >
+                <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+              </button>
             </div>
           </div>
-          <div class="flex items-center space-x-2">
-            <!-- Mobile Dark Mode Toggle Button -->
-            <button 
-              @click="store.toggleTheme()" 
-              class="p-1.5 rounded-lg bg-emerald-950/40 hover:bg-emerald-900/50 border border-emerald-700/30 text-emerald-200 transition cursor-pointer"
-              aria-label="Toggle Dark Mode"
+        </div>
+
+        <!-- Navigation Tab Bar -->
+        <div class="bg-white/90 dark:bg-dark/90 backdrop-blur-xl border-b border-gray-200/30 dark:border-white/5 px-2 shadow-sm">
+          <div class="flex items-center justify-around">
+            <router-link 
+              v-for="item in navItems" 
+              :key="item.path" 
+              :to="item.path"
+              class="flex flex-col items-center justify-center py-2 px-3 text-[10px] font-semibold transition duration-200 relative"
+              :class="isRouteActive(item.path) 
+                ? 'text-primary dark:text-secondary font-bold' 
+                : 'text-gray-400 dark:text-gray-500 hover:text-gray-600'"
             >
-              <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.46 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
-              </svg>
-              <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-emerald-200" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-              </svg>
-            </button>
-            <span class="px-2 py-0.5 bg-emerald-950/40 border border-emerald-700/50 rounded text-[9px] font-black uppercase tracking-wider text-emerald-300">
-              IDUL ADHA 2025
-            </span>
+              <component :is="item.icon" class="w-4.5 h-4.5 mb-0.5" />
+              <span>{{ item.name }}</span>
+              <span 
+                v-if="isRouteActive(item.path)" 
+                class="absolute bottom-0 left-2 right-2 h-[2px] bg-primary dark:bg-secondary rounded-full"
+              ></span>
+            </router-link>
           </div>
-        </div>
-
-        <!-- Middle Row: Compact Premium CTA -->
-        <div class="mt-4 relative z-10">
-          <router-link 
-            to="/menabung" 
-            class="group relative flex items-center justify-between p-3.5 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg overflow-hidden"
-          >
-            <!-- Decorative element -->
-            <div class="absolute -right-4 -top-4 w-16 h-16 bg-amber-400/20 rounded-full blur-lg pointer-events-none"></div>
-            
-            <div class="flex flex-col relative z-10">
-              <h3 class="text-[13px] font-extrabold text-white flex items-center gap-1.5">
-                Investasi Akhirat
-                <span class="flex h-1.5 w-1.5 relative">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
-                </span>
-              </h3>
-              <span class="text-[10px] text-emerald-100/90 mt-0.5">Mulai menabung qurban Anda</span>
-            </div>
-
-            <div class="relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#10513c] shadow-md group-hover:scale-105 transition-transform shrink-0">
-              <span class="text-[10px] font-bold">Mulai</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-              </svg>
-            </div>
-          </router-link>
-        </div>
-
-        <!-- Embedded Navigation Tabs (Exactly matching the screenshot green bar) -->
-        <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-center relative z-10">
-          <router-link 
-            v-for="item in navItems" 
-            :key="item.path" 
-            :to="item.path"
-            class="flex flex-col items-center justify-center space-y-1.5 flex-1 py-1 text-[10px] font-bold transition duration-200"
-            :class="isRouteActive(item.path) ? 'text-white scale-105 font-extrabold relative' : 'text-emerald-200/60 hover:text-white'"
-          >
-            <component :is="item.icon" class="w-4 h-4" />
-            <span>{{ item.name }}</span>
-            <span v-if="isRouteActive(item.path)" class="absolute bottom-[-8px] left-1/4 right-1/4 h-[3px] bg-white rounded-full"></span>
-          </router-link>
         </div>
       </div>
 
       <!-- Main Layout Body -->
-      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 pb-24 md:pb-8">
+      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 pb-8">
         <!-- Main Router view with transitions -->
         <router-view v-slot="{ Component }">
           <transition name="fade-slide" mode="out-in">
@@ -156,7 +149,14 @@
         </router-view>
       </main>
 
-      <!-- Bottom Nav Removed as per request -->
+      <!-- Footer -->
+      <footer class="border-t border-gray-200/50 dark:border-white/5 py-6 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+          <p class="text-xs text-gray-400 dark:text-gray-600">
+            © 2025 DKM Masjid Jami Kassiti — Tabungan Qurban
+          </p>
+        </div>
+      </footer>
     </div>
   </div>
 </template>
@@ -175,6 +175,9 @@ import {
 
 const route = useRoute()
 const store = useQurbanStore()
+const errorMsg = ref("")
+window.addEventListener("error", (e) => errorMsg.value += e.message + " | ")
+window.addEventListener("unhandledrejection", (e) => errorMsg.value += e.reason + " | ")
 
 
 const navItems = [

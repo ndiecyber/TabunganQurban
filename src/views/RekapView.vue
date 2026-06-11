@@ -3,23 +3,23 @@
     
     <!-- Header App Bar (Hidden on Mobile, visible on Desktop) -->
     <div class="hidden md:flex items-center justify-between page-header">
-      <h2 class="text-lg font-black text-gray-800 dark:text-white">Rekapitulasi Keuangan</h2>
+      <h2 class="text-lg font-black text-gray-800 dark:text-white font-heading">Rekapitulasi Keuangan</h2>
       <span class="text-xs text-gray-400 dark:text-gray-500 font-semibold">Laporan Periode 2025</span>
     </div>
 
     <!-- 1. Three Top Summary Cards (Side by side on mobile and desktop) -->
     <div class="grid grid-cols-3 gap-2.5 summary-cards">
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
+      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.formatRupiahFull(store.totalCollected) }}</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Terkumpul</span>
       </div>
       
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
+      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.totalLunas }}/{{ store.shohibuls.length }}</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Lunas</span>
       </div>
       
-      <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 p-3 rounded-2xl text-center shadow-[0_2px_8px_rgba(0,0,0,0.01)] card-item">
+      <div class="bg-white dark:bg-gray-800 border border-gray-200/50 dark:border-white/10 p-3 rounded-2xl text-center shadow-sm card-item">
         <span class="text-xs font-black text-gray-800 dark:text-white block">{{ store.averageProgress }}%</span>
         <span class="text-[8px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Rata-Rata</span>
       </div>
@@ -29,8 +29,8 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 statistics-split">
       
       <!-- Panel A: Top Tabungan -->
-      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
+      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 shadow-sm space-y-3 block-item">
+        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-primary dark:text-primary-light uppercase tracking-wider">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
@@ -43,9 +43,9 @@
               <span class="text-gray-700 dark:text-gray-300 truncate max-w-[85px]">{{ top.name }}</span>
               <span class="text-gray-800 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }} jt</span>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+            <div class="w-full h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
               <div 
-                class="h-full bg-[#10513c] dark:bg-emerald-600 rounded-full transition-all duration-500" 
+                class="h-full bg-primary dark:bg-primary-light rounded-full transition-all duration-500" 
                 :style="{ width: (top.amount / 12000000) * 100 + '%' }"
               ></div>
             </div>
@@ -54,8 +54,8 @@
       </div>
  
       <!-- Panel B: Per Hewan -->
-      <div class="bg-white dark:bg-gray-900 border border-gray-150 dark:border-gray-800 rounded-2.5xl p-4 shadow-[0_4px_12px_rgba(0,0,0,0.02)] space-y-3 block-item">
-        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-[#10513c] dark:text-primary-light uppercase tracking-wider">
+      <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 shadow-sm space-y-3 block-item">
+        <div class="flex items-center space-x-1.5 text-[10px] font-extrabold text-primary dark:text-primary-light uppercase tracking-wider">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -69,10 +69,10 @@
               <span class="flex items-center">🐄 Sapi ({{ store.sapiCount }})</span>
               <span>{{ store.sapiLunasCount }}/{{ store.sapiCount }}</span>
             </div>
-            <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+            <div class="w-full h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
               <div 
                 class="h-full rounded-full transition-all duration-500"
-                :class="store.sapiLunasCount > 0 ? 'bg-[#10513c] dark:bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'" 
+                :class="store.sapiLunasCount > 0 ? 'bg-primary dark:bg-primary-light' : 'bg-gray-200 dark:bg-white/10'" 
                 :style="{ width: (store.sapiCount > 0 ? (store.sapiLunasCount / store.sapiCount) * 100 : 0) + '%' }"
               ></div>
             </div>
@@ -87,7 +87,7 @@
             <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
               <div 
                 class="h-full rounded-full transition-all duration-500" 
-                :class="store.kambingLunasCount > 0 ? 'bg-[#10513c] dark:bg-emerald-600' : 'bg-gray-200 dark:bg-gray-700'"
+                :class="store.kambingLunasCount > 0 ? 'bg-primary dark:bg-primary-light' : 'bg-gray-200 dark:bg-white/10'"
                 :style="{ width: (store.kambingCount > 0 ? (store.kambingLunasCount / store.kambingCount) * 100 : 0) + '%' }"
               ></div>
             </div>
@@ -111,7 +111,7 @@
         <div 
           v-for="tx in store.transactions" 
           :key="tx.id"
-          class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-2.5xl p-3.5 flex justify-between items-center shadow-[0_2px_8px_rgba(0,0,0,0.01)]"
+          class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-3.5 flex justify-between items-center shadow-sm"
         >
           <div class="flex items-center space-x-3">
             <div class="w-8.5 h-8.5 rounded-full bg-teal-50 dark:bg-teal-950/40 text-primary dark:text-primary-light flex items-center justify-center font-bold text-xs shrink-0">
@@ -132,7 +132,7 @@
     </div>
 
     <!-- 4. Kelompok Sapi (Desktop Only, displayed side-by-side or below on wide screens) -->
-    <div class="bg-white dark:bg-gray-800 border border-gray-150 dark:border-gray-700/50 rounded-3xl p-5 shadow-sm space-y-4 groups-widget hidden lg:block">
+    <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-2xl p-5 shadow-sm space-y-4 groups-widget hidden lg:block">
       <div class="flex justify-between items-center">
         <h3 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Kelompok Sapi Qurban</h3>
         <span class="text-[10px] text-primary dark:text-primary-light font-bold">1 share = 1/7 Sapi</span>
@@ -140,7 +140,7 @@
 
       <div class="grid grid-cols-2 gap-6">
         <!-- Sapi Kelompok A -->
-        <div class="border border-gray-100 dark:border-gray-700/50 rounded-2.5xl p-4 space-y-3">
+        <div class="border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-3">
           <div class="flex justify-between items-center">
             <span class="text-xs font-black text-gray-800 dark:text-white">🐄 Sapi Kelompok A</span>
             <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/45 text-emerald-700 dark:text-emerald-400 rounded-full text-[9px] font-bold">
@@ -152,7 +152,7 @@
             <div 
               v-for="member in sapiGroupAMembers" 
               :key="member.id"
-              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-50 dark:border-gray-800/80 last:border-b-0"
+              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-100 dark:border-white/5 last:border-b-0"
             >
               <div class="flex items-center space-x-2">
                 <span class="text-[10px] text-gray-400 font-bold uppercase">{{ member.code }}</span>
@@ -173,7 +173,7 @@
         </div>
 
         <!-- Sapi Kelompok B -->
-        <div class="border border-gray-100 dark:border-gray-700/50 rounded-2.5xl p-4 space-y-3">
+        <div class="border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-3">
           <div class="flex justify-between items-center">
             <span class="text-xs font-black text-gray-800 dark:text-white">🐄 Sapi Kelompok B</span>
             <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-950/45 text-amber-700 dark:text-amber-400 rounded-full text-[9px] font-bold">
@@ -185,7 +185,7 @@
             <div 
               v-for="member in sapiGroupBMembers" 
               :key="member.id"
-              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-50 dark:border-gray-800/80 last:border-b-0"
+              class="flex justify-between items-center text-xs py-1.5 border-b border-gray-100 dark:border-white/5 last:border-b-0"
             >
               <div class="flex items-center space-x-2">
                 <span class="text-[10px] text-gray-400 font-bold uppercase">{{ member.code }}</span>
@@ -381,8 +381,6 @@ onMounted(() => {
     
     tl.from('.page-header', { opacity: 0, y: -10, duration: 0.5 })
       .from('.summary-cards', { opacity: 0, duration: 0.4 }, '-=0.2')
-      .from('.card-item', { opacity: 0, scale: 0.95, stagger: 0.08, duration: 0.4 }, '-=0.3')
-      .from('.block-item', { opacity: 0, y: 15, stagger: 0.1, duration: 0.5 }, '-=0.2')
       .from('.activity-log', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
       .from('.groups-widget', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
   }, containerRef.value)
