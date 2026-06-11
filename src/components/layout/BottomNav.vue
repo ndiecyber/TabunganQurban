@@ -5,7 +5,7 @@
     <router-link 
       to="/" 
       class="flex flex-col items-center justify-center space-y-1 flex-1 relative py-1 text-xs font-semibold transition-all duration-300"
-      :class="isRouteActive('/') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'"
+      :class="isRouteActive('/') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
     >
       <LayoutDashboard class="w-5.5 h-5.5 transition-transform duration-300" />
       <span>Dashboard</span>
@@ -17,7 +17,7 @@
     <router-link 
       to="/shohibul" 
       class="flex flex-col items-center justify-center space-y-1 flex-1 relative py-1 text-xs font-semibold transition-all duration-300"
-      :class="isRouteActive('/shohibul') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'"
+      :class="isRouteActive('/shohibul') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
     >
       <Users class="w-5.5 h-5.5 transition-transform duration-300" />
       <span>Shohibul</span>
@@ -28,7 +28,7 @@
     <router-link 
       to="/menabung" 
       class="flex flex-col items-center justify-center space-y-1 flex-1 relative py-1 text-xs font-semibold transition-all duration-300"
-      :class="isRouteActive('/menabung') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'"
+      :class="isRouteActive('/menabung') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
     >
       <Wallet class="w-5.5 h-5.5 transition-transform duration-300" />
       <span>Menabung</span>
@@ -39,7 +39,7 @@
     <router-link 
       to="/rekap" 
       class="flex flex-col items-center justify-center space-y-1 flex-1 relative py-1 text-xs font-semibold transition-all duration-300"
-      :class="isRouteActive('/rekap') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'"
+      :class="isRouteActive('/rekap') ? 'text-primary dark:text-primary-light scale-105' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
     >
       <BarChart3 class="w-5.5 h-5.5 transition-transform duration-300" />
       <span>Rekap</span>

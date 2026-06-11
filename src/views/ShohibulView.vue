@@ -57,7 +57,7 @@
             <!-- Distinct Color Avatars based on Index -->
             <div 
               class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
-              :class="getAvatarClass(idx)"
+              :class="getAvatarClass(shohibul.name)"
             >
               {{ getInitials(shohibul.name) }}
             </div>
@@ -151,7 +151,7 @@
 
           <!-- Quick Information Boxes -->
           <div class="grid grid-cols-2 gap-4">
-            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1">
+            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1 details-modal-info-box">
               <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Hewan Target</span>
               <span class="text-sm font-black text-gray-800 dark:text-white block">
                 {{ selectedShohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
@@ -159,7 +159,7 @@
               <span class="text-[9px] text-gray-400 block">{{ selectedShohibul.animalGroup }}</span>
             </div>
             
-            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1">
+            <div class="bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl text-center space-y-1 details-modal-info-box">
               <span class="text-[10px] font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Status Tabungan</span>
               <span 
                 class="text-xs font-black block py-0.5 px-2 rounded-full w-fit mx-auto"
@@ -174,7 +174,7 @@
           </div>
 
           <!-- Target Metrics -->
-          <div class="space-y-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl">
+          <div class="space-y-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 p-4 rounded-3xl details-modal-info-box">
             <h4 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Perkembangan Dana</h4>
             <div class="space-y-2">
               <div class="flex justify-between items-center text-sm">
@@ -199,7 +199,7 @@
               <div 
                 v-for="tx in memberTransactions" 
                 :key="tx.id"
-                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 p-3 rounded-2xl flex justify-between items-center"
+                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800/80 p-3 rounded-2xl flex justify-between items-center details-modal-box"
               >
                 <div>
                   <span class="text-xs font-bold text-gray-800 dark:text-white block">Setoran Tabungan</span>
@@ -295,8 +295,9 @@ const getPercentage = (shohibul) => {
   return Math.min(Math.round((shohibul.collected / shohibul.target) * 100), 100)
 }
 
-// Generate color classes based on index
-const getAvatarClass = (idx) => {
+// Generate color classes based on name hash
+const getAvatarClass = (name) => {
+  if (!name) return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
   const colors = [
     'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
     'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400',
@@ -306,7 +307,12 @@ const getAvatarClass = (idx) => {
     'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-400',
     'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-400'
   ]
-  return colors[idx % colors.length]
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const index = Math.abs(hash) % colors.length
+  return colors[index]
 }
 
 const getInitials = (name) => {

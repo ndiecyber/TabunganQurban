@@ -137,7 +137,8 @@
           >
             <div class="flex items-center space-x-3">
               <div 
-                class="w-9 h-9 rounded-full bg-teal-50 dark:bg-teal-950/40 text-primary dark:text-primary-light flex items-center justify-center font-bold text-xs shrink-0"
+                class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0"
+                :class="getAvatarClass(tx.name)"
               >
                 {{ getInitials(tx.name) }}
               </div>
@@ -184,6 +185,26 @@ const getInitials = (name) => {
     return (split[0][0] + split[1][0]).toUpperCase()
   }
   return name.slice(0, 2).toUpperCase()
+}
+
+// Generate color classes based on name hash
+const getAvatarClass = (name) => {
+  if (!name) return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
+  const colors = [
+    'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400',
+    'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400',
+    'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400',
+    'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400',
+    'bg-purple-100 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400',
+    'bg-pink-100 text-pink-700 dark:bg-pink-950/40 dark:text-pink-400',
+    'bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-400'
+  ]
+  let hash = 0
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  }
+  const index = Math.abs(hash) % colors.length
+  return colors[index]
 }
 
 onMounted(() => {

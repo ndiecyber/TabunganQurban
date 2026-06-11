@@ -62,7 +62,7 @@ body {
 
 /* ===== Islamic Pattern Background ===== */
 .islamic-pattern-bg {
-  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4C4AE' stroke-width='0.15'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5B198' stroke-width='0.55'%3E%3Crect x='0' y='0' width='120' height='120'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cpolygon points='60,0 120,60 60,120 0,60'/%3E%3Cline x1='0' y1='0' x2='60' y2='60'/%3E%3Cline x1='60' y1='0' x2='0' y2='60'/%3E%3Ccircle cx='30' cy='30' r='21'/%3E%3Ccircle cx='30' cy='30' r='14' stroke-dasharray='3,3'/%3E%3Cline x1='60' y1='0' x2='120' y2='60'/%3E%3Cline x1='120' y1='0' x2='60' y2='60'/%3E%3Crect x='78' y='18' width='24' height='24'/%3E%3Crect x='78' y='18' width='24' height='24' transform='rotate%2845 90 30%29'/%3E%3Ccircle cx='90' cy='30' r='6'/%3E%3Ccircle cx='90' cy='30' r='1.5'/%3E%3Crect x='72' y='12' width='36' height='36'/%3E%3Cline x1='0' y1='60' x2='60' y2='120'/%3E%3Cline x1='60' y1='60' x2='0' y2='120'/%3E%3Crect x='18' y='78' width='24' height='24'/%3E%3Crect x='18' y='78' width='24' height='24' transform='rotate%2845 30 90%29'/%3E%3Ccircle cx='30' cy='90' r='6'/%3E%3Ccircle cx='30' cy='90' r='1.5'/%3E%3Crect x='12' y='72' width='36' height='36'/%3E%3Cline x1='60' y1='60' x2='120' y2='120'/%3E%3Cline x1='120' y1='60' x2='60' y2='120'/%3E%3Ccircle cx='90' cy='90' r='21'/%3E%3Ccircle cx='90' cy='90' r='14' stroke-dasharray='3,3'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .dark .islamic-pattern-bg {
@@ -233,8 +233,8 @@ body {
   background-image: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  border: 1px solid #e5e7eb !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid #e2e8f0 !important; /* Extremely clean, visible border */
+  box-shadow: 0 4px 12px rgba(11, 62, 46, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03) !important; /* Premium colored shadow */
 }
 .dark .style-flat .card-item,
 .dark .style-flat .block-item,
@@ -257,11 +257,11 @@ body {
 .style-glass .groups-widget,
 .style-glass .recent-payments-list > div,
 .style-glass .activity-log > div > div {
-  background: rgba(255, 255, 255, 0.85) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(11, 62, 46, 0.12) !important; /* Subtle theme-colored border */
+  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02) !important;
 }
 .dark .style-glass .card-item,
 .dark .style-glass .block-item,
@@ -284,11 +284,11 @@ body {
 .style-frosted .groups-widget,
 .style-frosted .recent-payments-list > div,
 .style-frosted .activity-log > div > div {
-  background: rgba(255, 255, 255, 0.6) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1.5px solid rgba(11, 62, 46, 0.16) !important; /* Stronger theme-colored border */
+  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.07), 0 3px 8px rgba(0, 0, 0, 0.03) !important;
 }
 .dark .style-frosted .card-item,
 .dark .style-frosted .block-item,
@@ -303,4 +303,159 @@ body {
   background: rgba(21, 34, 50, 0.6) !important;
   border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ===== High-Contrast Card Outlines & Stronger Shadows for All Aesthetic Options ===== */
+
+/* Light Mode Overrides (Root div does not have .dark) */
+/* 1. Flat Style */
+div:not(.dark).style-flat .groups-widget,
+div:not(.dark).style-flat .progress-widget,
+div:not(.dark).style-flat .recent-payments-list > div {
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 4px 16px rgba(11, 62, 46, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 1.75rem !important; /* Soft, rounded outer boxes */
+}
+div:not(.dark).style-flat .card-item,
+div:not(.dark).style-flat .block-item,
+div:not(.dark).style-flat .recent-payments-list > div > div,
+div:not(.dark).style-flat .shohibul-cards-container > div,
+div:not(.dark).style-flat .details-modal-box,
+div:not(.dark).style-flat .details-modal-info-box {
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(11, 62, 46, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 1.25rem !important; /* Beautiful rounded inner cards */
+}
+
+/* 2. Glass Style */
+div:not(.dark).style-glass .groups-widget,
+div:not(.dark).style-glass .progress-widget,
+div:not(.dark).style-glass .recent-payments-list > div {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(11, 62, 46, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 1.75rem !important;
+}
+div:not(.dark).style-glass .card-item,
+div:not(.dark).style-glass .block-item,
+div:not(.dark).style-glass .recent-payments-list > div > div,
+div:not(.dark).style-glass .shohibul-cards-container > div,
+div:not(.dark).style-glass .details-modal-box,
+div:not(.dark).style-glass .details-modal-info-box {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(11, 62, 46, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(11, 62, 46, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 1.25rem !important;
+}
+
+/* 3. Frosted Style */
+div:not(.dark).style-frosted .groups-widget,
+div:not(.dark).style-frosted .progress-widget,
+div:not(.dark).style-frosted .recent-payments-list > div {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 2px solid rgba(11, 62, 46, 0.25) !important;
+  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.09), 0 3px 8px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 1.75rem !important;
+}
+div:not(.dark).style-frosted .card-item,
+div:not(.dark).style-frosted .block-item,
+div:not(.dark).style-frosted .recent-payments-list > div > div,
+div:not(.dark).style-frosted .shohibul-cards-container > div,
+div:not(.dark).style-frosted .details-modal-box,
+div:not(.dark).style-frosted .details-modal-info-box {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 2px solid rgba(11, 62, 46, 0.25) !important;
+  box-shadow: 0 10px 30px rgba(11, 62, 46, 0.09), 0 3px 8px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 1.25rem !important;
+}
+
+/* Dark Mode Overrides (Root div or card parent has .dark) */
+/* 1. Flat Style */
+.dark.style-flat .groups-widget,
+.dark.style-flat .progress-widget,
+.dark.style-flat .recent-payments-list > div {
+  background-color: #152232 !important;
+  border: 1.5px solid #2d3f55 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 1.75rem !important;
+}
+.dark.style-flat .card-item,
+.dark.style-flat .block-item,
+.dark.style-flat .recent-payments-list > div > div,
+.dark.style-flat .shohibul-cards-container > div,
+.dark.style-flat .details-modal-box,
+.dark.style-flat .details-modal-info-box {
+  background-color: #152232 !important;
+  border: 1.5px solid #2d3f55 !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 1.25rem !important;
+}
+
+/* 2. Glass Style */
+.dark.style-glass .groups-widget,
+.dark.style-glass .progress-widget,
+.dark.style-glass .recent-payments-list > div {
+  background: rgba(21, 34, 50, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  border-radius: 1.75rem !important;
+}
+.dark.style-glass .card-item,
+.dark.style-glass .block-item,
+.dark.style-glass .recent-payments-list > div > div,
+.dark.style-glass .shohibul-cards-container > div,
+.dark.style-glass .details-modal-box,
+.dark.style-glass .details-modal-info-box {
+  background: rgba(21, 34, 50, 0.88) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  border-radius: 1.25rem !important;
+}
+
+/* 3. Frosted Style */
+.dark.style-frosted .groups-widget,
+.dark.style-frosted .progress-widget,
+.dark.style-frosted .recent-payments-list > div {
+  background: rgba(21, 34, 50, 0.65) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 1.75rem !important;
+}
+.dark.style-frosted .card-item,
+.dark.style-frosted .block-item,
+.dark.style-frosted .recent-payments-list > div > div,
+.dark.style-frosted .shohibul-cards-container > div,
+.dark.style-frosted .details-modal-box,
+.dark.style-frosted .details-modal-info-box {
+  background: rgba(21, 34, 50, 0.65) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 2px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 1.25rem !important;
+}
+
+/* Enhanced Hover Effects */
+.card-hover:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 24px rgba(11, 62, 46, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05) !important;
+}
+.dark .card-hover:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4) !important;
 }

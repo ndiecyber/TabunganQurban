@@ -149,124 +149,6 @@
       <!-- Bottom Nav (Visible only on mobile/tablet) -->
       <BottomNav class="md:hidden" />
 
-      <!-- Floating Design Customizer Toggle Button -->
-      <button 
-        @click="isCustomizerOpen = true" 
-        class="fixed bottom-24 right-5 md:bottom-6 md:right-6 z-40 w-11 h-11 rounded-full bg-primary hover:bg-primary-light text-white flex items-center justify-center shadow-lg hover:scale-105 transition cursor-pointer pulse-glow"
-        aria-label="Open Customizer"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
-        </svg>
-      </button>
-
-      <!-- Customizer Drawer Panel (Slide-out from Right) -->
-      <transition name="slide-right">
-        <div v-if="isCustomizerOpen" class="fixed inset-0 z-50 overflow-hidden flex justify-end">
-          <!-- Backdrop overlay -->
-          <div @click="isCustomizerOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
-
-          <!-- Drawer panel content -->
-          <div class="relative w-full max-w-xs bg-white dark:bg-gray-950 shadow-2xl h-full flex flex-col z-10 border-l border-gray-150 dark:border-gray-800">
-            <!-- Header -->
-            <div class="px-5 py-4 border-b border-gray-150 dark:border-gray-800 flex justify-between items-center bg-gray-50/50 dark:bg-gray-900/40">
-              <div>
-                <h3 class="text-sm font-extrabold text-gray-800 dark:text-white">Pengaturan Visual</h3>
-                <p class="text-[10px] text-gray-400">Kustomisasi layout & visual</p>
-              </div>
-              <button @click="isCustomizerOpen = false" class="p-1 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <!-- Options Content -->
-            <div class="flex-1 overflow-y-auto p-5 space-y-5">
-              <!-- 1. Color Themes -->
-              <div class="space-y-2.5">
-                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Tema Warna</span>
-                <div class="grid grid-cols-3 gap-2">
-                  <button 
-                    v-for="t in themes" 
-                    :key="t.value"
-                    @click="store.updateDesign('theme', t.value)"
-                    class="border rounded-xl p-2.5 text-center cursor-pointer transition flex flex-col items-center justify-center space-y-1.5"
-                    :class="store.designSystem.theme === t.value 
-                      ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
-                      : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-400'"
-                  >
-                    <span class="w-5.5 h-5.5 rounded-full border border-black/5" :style="{ backgroundColor: t.color }"></span>
-                    <span class="text-[9px] leading-tight">{{ t.label }}</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 2. Card Styles -->
-              <div class="space-y-2.5">
-                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Aesthetics Card</span>
-                <div class="grid grid-cols-3 gap-2">
-                  <button 
-                    v-for="s in styles" 
-                    :key="s.value"
-                    @click="store.updateDesign('style', s.value)"
-                    class="border rounded-xl p-2.5 text-[9px] font-bold text-center cursor-pointer transition flex flex-col justify-between items-center min-h-[56px]"
-                    :class="store.designSystem.style === s.value 
-                      ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
-                      : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400'"
-                  >
-                    <span class="text-base">{{ s.icon }}</span>
-                    <span>{{ s.label }}</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 3. Font Style -->
-              <div class="space-y-2.5">
-                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Gaya Huruf</span>
-                <div class="grid grid-cols-3 gap-2">
-                  <button 
-                    v-for="f in fonts" 
-                    :key="f.value"
-                    @click="store.updateDesign('font', f.value)"
-                    class="border rounded-xl p-2.5 text-center cursor-pointer transition flex flex-col items-center justify-center space-y-1"
-                    :class="store.designSystem.font === f.value 
-                      ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
-                      : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-655 dark:text-gray-400'"
-                  >
-                    <span class="text-xs font-black" :style="{ fontFamily: f.family }">Aa</span>
-                    <span class="text-[9px] leading-tight">{{ f.label }}</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 4. Layout Density -->
-              <div class="space-y-2.5">
-                <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block">Kepadatan Layout</span>
-                <div class="grid grid-cols-2 gap-2">
-                  <button 
-                    v-for="sp in spacingOptions" 
-                    :key="sp.value"
-                    @click="store.updateDesign('spacing', sp.value)"
-                    class="border rounded-xl p-2.5 text-[9px] font-bold text-center cursor-pointer transition flex items-center justify-center space-x-1.5"
-                    :class="store.designSystem.spacing === sp.value 
-                      ? 'border-primary bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light font-bold' 
-                      : 'border-gray-150 dark:border-gray-800 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400'"
-                  >
-                    <span class="text-sm">{{ sp.icon }}</span>
-                    <span>{{ sp.label }}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Footer info -->
-            <div class="p-4 bg-gray-50 dark:bg-gray-900/40 border-t border-gray-150 dark:border-gray-850 text-center text-[8px] text-gray-400 dark:text-gray-500">
-              Visual Customizer v1.0 • Pilihan Instan & Responsif
-            </div>
-          </div>
-        </div>
-      </transition>
     </div>
   </div>
 </template>
@@ -286,26 +168,6 @@ import {
 const route = useRoute()
 const store = useQurbanStore()
 
-const isCustomizerOpen = ref(false)
-const themes = [
-  { label: 'Emerald', value: 'emerald', color: '#0b3e2e' },
-  { label: 'Indigo', value: 'indigo', color: '#1e1b4b' },
-  { label: 'Slate', value: 'slate', color: '#0f172a' }
-]
-const styles = [
-  { label: 'Flat', value: 'flat', icon: '⬜' },
-  { label: 'Glass', value: 'glass', icon: '✨' },
-  { label: 'Frosted', value: 'frosted', icon: '❄️' }
-]
-const fonts = [
-  { label: 'Jakarta', value: 'jakarta', family: "'Plus Jakarta Sans', sans-serif" },
-  { label: 'Inter', value: 'inter', family: "Inter, sans-serif" },
-  { label: 'Outfit', value: 'outfit', family: "Outfit, sans-serif" }
-]
-const spacingOptions = [
-  { label: 'Cozy (Spacious)', value: 'cozy', icon: '📱' },
-  { label: 'Compact (Optimized)', value: 'compact', icon: '⚡' }
-]
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
@@ -349,28 +211,6 @@ onMounted(() => {
   transform: translateY(-10px);
 }
 
-/* Slide-Right transition for design customizer drawer */
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.slide-right-enter-from,
-.slide-right-leave-to {
-  opacity: 0;
-}
-
-.slide-right-enter-from > div:last-child {
-  transform: translateX(100%);
-}
-
-.slide-right-leave-to > div:last-child {
-  transform: translateX(100%);
-}
-
-.slide-right-enter-to > div:last-child {
-  transform: translateX(0);
-}
 
 /* Custom CSS animations */
 @keyframes fadeIn {
