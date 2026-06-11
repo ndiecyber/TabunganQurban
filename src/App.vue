@@ -101,23 +101,33 @@
           </div>
         </div>
 
-        <!-- Middle Row: Welcome Budi Santoso -->
+        <!-- Middle Row: Compact Premium CTA -->
         <div class="mt-4 relative z-10">
-          <span class="text-[10px] text-emerald-200/80">Selamat datang,</span>
-          <h3 class="text-base font-bold mt-0.5">Budi Santoso</h3>
-          <p class="text-[9px] text-emerald-100/60 flex items-center mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
-            </svg>
-            Rumah A01 - Perumahan Arjamukti Desa Arjasari
-          </p>
-        </div>
+          <router-link 
+            to="/menabung" 
+            class="group relative flex items-center justify-between p-3.5 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg overflow-hidden"
+          >
+            <!-- Decorative element -->
+            <div class="absolute -right-4 -top-4 w-16 h-16 bg-amber-400/20 rounded-full blur-lg pointer-events-none"></div>
+            
+            <div class="flex flex-col relative z-10">
+              <h3 class="text-[13px] font-extrabold text-white flex items-center gap-1.5">
+                Investasi Akhirat
+                <span class="flex h-1.5 w-1.5 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                </span>
+              </h3>
+              <span class="text-[10px] text-emerald-100/90 mt-0.5">Mulai menabung qurban Anda</span>
+            </div>
 
-        <!-- Bottom Row of Header: Last Month Payment status (Iuran Juni 2025 Rp 25.000 Lunas) -->
-        <div class="mt-3 bg-white/10 rounded-2xl p-2.5 flex justify-between items-center text-xs backdrop-blur-sm relative z-10">
-          <span class="text-[10px] text-emerald-100">Iuran Juni 2025</span>
-          <span class="font-extrabold text-white">Rp 25.000</span>
-          <span class="px-2.5 py-0.5 bg-white text-emerald-900 rounded-full text-[9px] font-black uppercase">Lunas</span>
+            <div class="relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[#10513c] shadow-md group-hover:scale-105 transition-transform shrink-0">
+              <span class="text-[10px] font-bold">Mulai</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+          </router-link>
         </div>
 
         <!-- Embedded Navigation Tabs (Exactly matching the screenshot green bar) -->
@@ -146,9 +156,7 @@
         </router-view>
       </main>
 
-      <!-- Bottom Nav (Visible only on mobile/tablet) -->
-      <BottomNav class="md:hidden" />
-
+      <!-- Bottom Nav Removed as per request -->
     </div>
   </div>
 </template>
@@ -157,7 +165,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
-import BottomNav from '@/components/layout/BottomNav.vue'
+
 import { 
   LayoutDashboard, 
   Users, 
