@@ -32,7 +32,7 @@
     </div>
 
     <!-- Main Form Mode Toggles (Centered) -->
-    <div class="bg-gray-200/50 dark:bg-white/5 p-1.5 rounded-[1.2rem] flex tab-toggle max-w-md mx-auto border border-gray-200/30 dark:border-white/5 relative shadow-inner">
+    <div class="bg-gray-200/50 dark:bg-white/5 p-1.5 rounded-[1.2rem] flex tab-toggle w-full border border-gray-200/30 dark:border-white/5 relative shadow-inner">
       <button 
         @click="formMode = 'setor'"
         class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Form Container (Centered on Desktop) -->
-    <div class="max-w-2xl mx-auto form-panels space-y-5">
+    <div class="w-full form-panels space-y-5">
       
       <!-- MAIN FORM -->
       <div class="space-y-5">
