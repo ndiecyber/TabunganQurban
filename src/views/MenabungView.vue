@@ -49,8 +49,8 @@
       </button>
       <!-- Animated Indicator -->
       <div 
-        class="absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
-        :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-[calc(100%+0.375rem)]'"
+        class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
+        :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-full'"
       ></div>
     </div>
 
