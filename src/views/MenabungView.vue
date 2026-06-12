@@ -31,67 +31,116 @@
       </div>
     </div>
 
-    <!-- Double Tab Toggles (Visible only on Mobile/Tablet) -->
-    <div class="bg-gray-200/50 dark:bg-white/5 p-1.5 rounded-[1.2rem] flex tab-toggle lg:hidden border border-gray-200/30 dark:border-white/5 relative">
+    <!-- Main Form Mode Toggles (Centered) -->
+    <div class="bg-gray-200/50 dark:bg-white/5 p-1.5 rounded-[1.2rem] flex tab-toggle max-w-md mx-auto border border-gray-200/30 dark:border-white/5 relative shadow-inner">
       <button 
-        @click="activeTab = 'setor'"
-        class="flex-1 py-3 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
-        :class="activeTab === 'setor' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+        @click="formMode = 'setor'"
+        class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
+        :class="formMode === 'setor' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Setoran Tabungan
+        Setoran Jamaah
       </button>
       <button 
-        @click="activeTab = 'kalkulator'"
-        class="flex-1 py-3 text-xs font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
-        :class="activeTab === 'kalkulator' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
+        @click="formMode = 'register'"
+        class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
+        :class="formMode === 'register' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Kalkulator Target
+        Daftar Qurban Baru
       </button>
       <!-- Animated Indicator -->
       <div 
         class="absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
-        :class="activeTab === 'setor' ? 'translate-x-0' : 'translate-x-[calc(100%+0.375rem)]'"
+        :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-[calc(100%+0.375rem)]'"
       ></div>
     </div>
 
-    <!-- Grid Container -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 form-panels">
+    <!-- Form Container (Centered on Desktop) -->
+    <div class="max-w-2xl mx-auto form-panels space-y-5">
       
-      <!-- COLUMN 1: SETORAN TABUNGAN FORM -->
-      <div 
-        class="lg:col-span-6 space-y-5"
-        :class="{'hidden lg:block': activeTab !== 'setor'}"
-      >
-        <!-- Card 1: Select Shohibul -->
-        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-4">
-          <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+      <!-- MAIN FORM -->
+      <div class="space-y-5">
+        <!-- Card 1: Select Shohibul OR Register -->
+        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-4 relative overflow-hidden">
+          
+          <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
             <UserIcon class="w-4 h-4 text-primary dark:text-primary-light" />
-            <span>Pilih Jamaah Qurban</span>
+            <span>Data Jamaah</span>
           </div>
           
-          <!-- Custom Shohibul Selector Button -->
-          <div 
-            @click="openShohibulModal"
-            class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] px-5 py-4 font-bold text-gray-800 dark:text-white transition-all hover:border-gray-300 dark:hover:border-white/20 cursor-pointer flex justify-between items-center group"
-          >
-            <div class="flex items-center space-x-3 truncate">
-              <div v-if="selectedShohibulData" class="flex flex-col">
-                <span class="truncate">{{ selectedShohibulData.name }}</span>
-                <span class="text-[10px] text-gray-400 font-semibold mt-0.5 uppercase tracking-wider">{{ selectedShohibulData.type === 'sapi' ? 'Sapi' : 'Kambing' }} • {{ selectedShohibulData.code }}</span>
+          <!-- SETOR MODE -->
+          <transition mode="out-in" enter-active-class="transition duration-300 ease-out" enter-from-class="opacity-0 translate-x-4" enter-to-class="opacity-100 translate-x-0" leave-active-class="transition duration-200 ease-in" leave-from-class="opacity-100 translate-x-0" leave-to-class="opacity-0 -translate-x-4">
+            <div v-if="formMode === 'setor'" class="space-y-4">
+              <!-- Custom Shohibul Selector Button -->
+              <div 
+                @click="openShohibulModal"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] px-5 py-4 font-bold text-gray-800 dark:text-white transition-all hover:border-gray-300 dark:hover:border-white/20 cursor-pointer flex justify-between items-center group"
+              >
+                <div class="flex items-center space-x-3 truncate">
+                  <div v-if="selectedShohibulData" class="flex flex-col">
+                    <span class="truncate">{{ selectedShohibulData.name }}</span>
+                    <span class="text-[10px] text-gray-400 font-semibold mt-0.5 uppercase tracking-wider">{{ selectedShohibulData.type === 'sapi' ? 'Sapi' : 'Kambing' }} • {{ selectedShohibulData.code }}</span>
+                  </div>
+                  <span v-else class="text-gray-400">— Pilih jamaah yang terdaftar —</span>
+                </div>
+                <div class="text-gray-400 pointer-events-none group-hover:text-primary transition-colors">
+                  <ChevronDownIcon class="w-5 h-5" />
+                </div>
               </div>
-              <span v-else class="text-gray-400">— Pilih jamaah yang terdaftar —</span>
             </div>
-            <div class="text-gray-400 pointer-events-none group-hover:text-primary transition-colors">
-              <ChevronDownIcon class="w-5 h-5" />
+            
+            <!-- REGISTER MODE -->
+            <div v-else class="space-y-3">
+              <input 
+                v-model="registerForm.name" 
+                type="text" 
+                placeholder="Nama Lengkap" 
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all"
+              />
+              <input 
+                v-model="registerForm.address" 
+                type="text" 
+                placeholder="Alamat / Blok Perumahan" 
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all"
+              />
+              
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <div 
+                  @click="registerForm.type = 'sapi'" 
+                  class="border rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
+                  :class="registerForm.type === 'sapi' ? 'border-primary bg-primary/10 text-primary dark:text-primary-light shadow-inner' : 'border-gray-200/50 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'"
+                >
+                  <span class="text-lg mr-1 block sm:inline">🐄</span> Sapi
+                </div>
+                <div 
+                  @click="registerForm.type = 'kambing'" 
+                  class="border rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
+                  :class="registerForm.type === 'kambing' ? 'border-primary bg-primary/10 text-primary dark:text-primary-light shadow-inner' : 'border-gray-200/50 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'"
+                >
+                  <span class="text-lg mr-1 block sm:inline">🐐</span> Kambing
+                </div>
+              </div>
+              
+              <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mt-2">
+                <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+                <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
+                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-black">Rp 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
+                </p>
+              </div>
             </div>
-          </div>
+          </transition>
         </div>
 
-        <!-- Card 2: Select Nominal -->
         <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-6">
-          <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
-            <CoinsIcon class="w-4 h-4 text-secondary" />
-            <span>Pilih Nominal Tabungan</span>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+              <CoinsIcon class="w-4 h-4 text-secondary" />
+              <span>Pilih Nominal Tabungan</span>
+            </div>
+            
+            <button type="button" @click.prevent="isCalculatorModalOpen = true" class="text-[10px] sm:text-xs font-bold text-primary dark:text-primary-light flex items-center bg-primary/10 px-2.5 py-1.5 rounded-lg hover:bg-primary/20 transition-colors shadow-sm">
+              <CalculatorIcon class="w-3.5 h-3.5 mr-1.5" />
+              Simulasi Kalkulator
+            </button>
           </div>
 
           <!-- 3x2 Grid for Predefined Nominal Options -->
@@ -199,7 +248,7 @@
           <!-- Submit Button -->
           <div class="pt-4">
             <button 
-              v-if="!form.shohibulId"
+              v-if="formMode === 'setor' && !form.shohibulId"
               disabled
               class="w-full py-4.5 text-sm font-black bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
             >
@@ -210,23 +259,38 @@
               @click="submitDeposit"
               class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
             >
-              <span>Lanjutkan Pembayaran</span>
+              <span>{{ formMode === 'register' ? 'Daftar & Lanjutkan Pembayaran' : 'Lanjutkan Pembayaran' }}</span>
               <ArrowRightIcon class="w-4 h-4 ml-1" />
             </button>
           </div>
 
         </div>
       </div>
+    </div>
 
-      <!-- COLUMN 2: INTERACTIVE CALCULATOR (Desktop right-panel) -->
-      <div 
-        class="lg:col-span-6 space-y-5"
-        :class="{'hidden lg:block': activeTab !== 'kalkulator'}"
-      >
-        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-6 sticky top-6">
-          <div class="flex items-center space-x-2 pb-2 border-b border-gray-100 dark:border-white/5">
-            <CalculatorIcon class="w-5 h-5 text-secondary" />
-            <h3 class="text-base font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
+    <!-- CALCULATOR MODAL -->
+    <transition
+      enter-active-class="transition duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition duration-200 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="isCalculatorModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm" @click="isCalculatorModalOpen = false"></div>
+        
+        <!-- Modal Content -->
+        <div class="bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl relative w-full max-w-md max-h-[90vh] overflow-y-auto z-10 transform transition-all space-y-6">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
+            <div class="flex items-center space-x-2">
+              <CalculatorIcon class="w-5 h-5 text-secondary" />
+              <h3 class="text-base font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
+            </div>
+            <button @click="isCalculatorModalOpen = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100 dark:bg-white/5 p-1.5 rounded-full transition-colors">
+              <XIcon class="w-5 h-5" />
+            </button>
           </div>
           
           <!-- Target Type -->
@@ -235,16 +299,16 @@
             <div class="grid grid-cols-3 gap-3">
               <button 
                 v-for="target in calcTargets" 
-                :key="target.value"
+                :key="target.label"
                 @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
                 class="p-3 rounded-[1.2rem] border transition-all duration-300 flex flex-col justify-between items-center text-center space-y-1.5"
-                :class="calc.targetValue === target.price 
+                :class="calc.targetName === target.label 
                   ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light shadow-inner' 
                   : 'bg-white dark:bg-white/[0.03] border-gray-200/50 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-gray-300 dark:hover:border-white/20'"
               >
                 <span class="text-2xl">{{ target.icon }}</span>
                 <span class="text-[10px] font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
-                <span class="text-[9px] font-black" :class="calc.targetValue === target.price ? 'text-secondary' : 'text-gray-400'">{{ store.formatRupiah(target.price) }}</span>
+                <span class="text-[9px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ store.formatRupiah(target.price) }}</span>
               </button>
             </div>
           </div>
@@ -301,8 +365,7 @@
           </div>
         </div>
       </div>
-
-    </div>
+    </transition>
 
     <!-- Shohibul Selection Modal -->
     <transition :css="false">
@@ -351,9 +414,13 @@
               </div>
             </div>
             
-            <div v-if="filteredShohibulList.length === 0" class="text-center py-8 px-4 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-dashed border-gray-200 dark:border-white/5">
+            <div v-if="filteredShohibulList.length === 0" class="text-center py-8 px-4 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-dashed border-gray-200 dark:border-white/5 mx-2 mt-2">
               <p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1">Jamaah tidak ditemukan</p>
-              <p class="text-[10px] text-gray-400">Jika Anda belum terdaftar sebagai peserta Qurban, silakan hubungi pengurus DKM Masjid terlebih dahulu.</p>
+              <p class="text-[10px] text-gray-400 mb-4">Jika Anda belum terdaftar sebagai peserta Qurban, silakan daftar sekarang.</p>
+              
+              <button @click="switchToRegisterMode" class="px-5 py-2.5 bg-primary text-white font-bold text-xs rounded-xl shadow-md shadow-primary/20 hover:bg-primary-light transition-colors">
+                Daftar Peserta Baru
+              </button>
             </div>
           </div>
         </div>
@@ -381,15 +448,22 @@ const containerRef = ref(null)
 let ctx
 
 // State
-const activeTab = ref('setor') // 'setor' | 'kalkulator'
+const formMode = ref('setor') // 'setor' | 'register'
 const isCustomAmountSelected = ref(false)
 const isShohibulModalOpen = ref(false)
+const isCalculatorModalOpen = ref(false)
 const shohibulSearchQuery = ref('')
 
 const form = ref({
   shohibulId: '',
   amount: null,
   paymentMethod: 'qris'
+})
+
+const registerForm = ref({
+  name: '',
+  address: '',
+  type: 'sapi'
 })
 
 const calc = ref({
@@ -476,7 +550,7 @@ const activateCustomAmount = () => {
 const applyCalcToForm = () => {
   form.value.amount = monthlyInstallment.value
   isCustomAmountSelected.value = true
-  activeTab.value = 'setor'
+  isCalculatorModalOpen.value = false
   
   // Optional: Auto-select a shohibul if they match the target type, but for now just switch tabs
   if (window.innerWidth < 1024) {
@@ -484,23 +558,89 @@ const applyCalcToForm = () => {
   }
 }
 
+const switchToRegisterMode = () => {
+  closeShohibulModal()
+  formMode.value = 'register'
+}
+
 const submitDeposit = () => {
-  if (!form.value.shohibulId || !form.value.amount || form.value.amount <= 0) {
-    alert('Mohon lengkapi data shohibul dan pastikan nominal valid.')
-    return
+  // Validation for Registration Mode
+  if (formMode.value === 'register') {
+    if (!registerForm.value.name.trim() || !registerForm.value.address.trim()) {
+      alert('Mohon lengkapi Nama dan Alamat pendaftar.')
+      return
+    }
+    
+    // Duplicate Name Validation
+    const isDuplicate = store.shohibuls.find(s => s.name.toLowerCase() === registerForm.value.name.trim().toLowerCase())
+    if (isDuplicate) {
+      alert('Pemberitahuan: Nama Anda sudah terdaftar di sistem kami. Kami akan mengalihkan Anda ke formulir Setoran untuk melanjutkan pembayaran.')
+      formMode.value = 'setor'
+      form.value.shohibulId = isDuplicate.id
+      return
+    }
+    
+    // Initial amount validation
+    if (!form.value.amount || form.value.amount < 50000) {
+      alert('Pendaftaran baru mewajibkan setoran awal minimal Rp 50.000.')
+      return
+    }
+  } else {
+    // Validation for Setor Mode
+    if (!form.value.shohibulId || !form.value.amount || form.value.amount <= 0) {
+      alert('Mohon lengkapi data jamaah dan pastikan nominal valid.')
+      return
+    }
   }
 
   // Animation effect on button click
   const btn = event.currentTarget
   gsap.to(btn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 })
 
-  // In a real app, this would hit an API.
+  // Process Registration OR Deposit
   setTimeout(() => {
-    alert(`Berhasil membuat tagihan sebesar ${store.formatRupiahFull(form.value.amount)} via ${form.value.paymentMethod.toUpperCase()}.\nSilakan selesaikan pembayaran.`)
+    let message = ''
     
-    // Clear form
+    if (formMode.value === 'register') {
+      store.registerNewShohibul({
+        name: registerForm.value.name.trim(),
+        address: registerForm.value.address.trim(),
+        type: registerForm.value.type,
+        target: registerForm.value.type === 'sapi' ? 3000000 : 2500000,
+        initialAmount: form.value.amount,
+        paymentMethod: form.value.paymentMethod
+      })
+      message = `Pendaftaran berhasil! Tagihan setoran awal sebesar ${store.formatRupiahFull(form.value.amount)} via ${form.value.paymentMethod.toUpperCase()} telah dibuat.\nSilakan selesaikan pembayaran untuk mengamankan slot Anda.`
+    } else {
+      // Simulate adding transaction to existing shohibul
+      store.transactions.unshift({
+        id: 'tx-' + Math.random().toString(36).substr(2, 9),
+        shohibulId: form.value.shohibulId,
+        name: selectedShohibulData.value.name,
+        code: selectedShohibulData.value.code,
+        amount: form.value.amount,
+        date: new Date().toISOString(),
+        paymentMethod: form.value.paymentMethod
+      })
+      
+      const shohibulIndex = store.shohibuls.findIndex(s => s.id === form.value.shohibulId)
+      if (shohibulIndex !== -1) {
+        store.shohibuls[shohibulIndex].collected += form.value.amount
+      }
+      
+      store.saveToCache()
+      message = `Berhasil membuat tagihan sebesar ${store.formatRupiahFull(form.value.amount)} via ${form.value.paymentMethod.toUpperCase()}.\nSilakan selesaikan pembayaran.`
+    }
+    
+    alert(message)
+    
+    // Clear forms
     form.value.amount = null
+    form.value.shohibulId = ''
+    registerForm.value.name = ''
+    registerForm.value.address = ''
     isCustomAmountSelected.value = false
+    formMode.value = 'setor'
     
     // Redirect to dashboard
     router.push({ name: 'dashboard' })
@@ -508,10 +648,18 @@ const submitDeposit = () => {
 }
 
 // Watchers and Hooks
+watch(() => route.query.mode, (newMode) => {
+  if (newMode === 'register') {
+    formMode.value = 'register'
+  } else if (newMode === 'kalkulator') {
+    isCalculatorModalOpen.value = true
+  }
+}, { immediate: true })
+
 watch(() => route.query.shohibulId, (newId) => {
   if (newId && store.shohibuls.some(s => s.id === newId)) {
     form.value.shohibulId = newId
-    activeTab.value = 'setor'
+    formMode.value = 'setor'
   }
 }, { immediate: true })
 

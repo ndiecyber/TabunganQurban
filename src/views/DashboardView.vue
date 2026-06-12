@@ -1,14 +1,11 @@
 <template>
   <div class="space-y-6 sm:space-y-8" ref="containerRef">
     
-    <!-- Top Section: Hero + Quick Actions (Left) & Quick Stats (Right) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
-      
-      <!-- LEFT COLUMN (Hero + Actions) -->
-      <div class="lg:col-span-8 flex flex-col space-y-6 sm:space-y-8">
+    <!-- Content Wrapper -->
+    <div class="flex flex-col gap-6 sm:gap-8">
         
         <!-- HERO SUMMARY CARD (Merged Banner & Progress) -->
-        <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary-dark to-dark text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col justify-between min-h-[240px]">
+        <div class="order-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary-dark to-dark text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col justify-between min-h-[240px]">
           <!-- Background Elements -->
           <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
           <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
@@ -60,8 +57,8 @@
                 <router-link to="/menabung" class="flex-1 bg-secondary hover:bg-secondary-light text-white text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center transition-all shadow-lg shadow-secondary/20">
                   Mulai Menabung
                 </router-link>
-                <router-link to="/shohibul" class="flex-1 bg-white/10 hover:bg-white/20 text-white border border-white/10 text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center backdrop-blur-md transition-all">
-                  Daftar Shohibul
+                <router-link to="/menabung?mode=register" class="flex-1 bg-white/10 hover:bg-white/20 text-white border border-white/10 text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center backdrop-blur-md transition-all shadow-lg">
+                  Daftar Qurban
                 </router-link>
               </div>
             </div>
@@ -69,12 +66,12 @@
         </div>
 
         <!-- QUICK ACTIONS ROW -->
-        <div class="grid grid-cols-4 gap-3 sm:gap-6 quick-actions">
+        <div class="order-2 grid grid-cols-4 gap-3 sm:gap-6 quick-actions">
           <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer">
             <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-primary/30 transition-all duration-300 text-primary dark:text-primary-light">
               <WalletIcon class="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
-            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-primary dark:group-hover:text-primary-light">Setor</span>
+            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-primary dark:group-hover:text-primary-light">Setor / Daftar</span>
           </router-link>
 
           <router-link to="/shohibul" class="flex flex-col items-center group cursor-pointer">
@@ -84,7 +81,7 @@
             <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-secondary">Shohibul</span>
           </router-link>
 
-          <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer">
+          <router-link to="/menabung?mode=kalkulator" class="flex flex-col items-center group cursor-pointer">
             <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-emerald-500/30 transition-all duration-300 text-emerald-600 dark:text-emerald-400">
               <CalculatorIcon class="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
@@ -98,50 +95,9 @@
             <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">Laporan</span>
           </router-link>
         </div>
-        <!-- RECENT TRANSACTIONS (Moved inside left column) -->
-        <div class="space-y-4 recent-payments-list pt-2 sm:pt-4">
-          <div class="flex justify-between items-center px-1">
-            <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Setoran Terbaru</h4>
-            <router-link to="/shohibul" class="text-xs font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-4 py-2 rounded-full">
-              Lihat Semua
-            </router-link>
-          </div>
 
-          <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-3 sm:p-4 shadow-sm">
-            <div class="space-y-1.5">
-              <div 
-                v-for="tx in store.transactions.slice(0, 4)" 
-                :key="tx.id"
-                class="flex justify-between items-center p-3 sm:p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] border border-transparent hover:border-gray-100 dark:hover:border-white/5 transition-all duration-300 cursor-pointer group"
-              >
-                <div class="flex items-center space-x-4">
-                  <div 
-                    class="w-11 h-11 sm:w-12 sm:h-12 rounded-[1rem] flex items-center justify-center font-bold text-sm shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300"
-                    :style="getAvatarStyle(tx.name)"
-                  >
-                    {{ getInitials(tx.name) }}
-                  </div>
-                  <div>
-                    <h5 class="text-xs sm:text-sm font-extrabold text-gray-800 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
-                    <div class="flex items-center mt-1.5 space-x-2">
-                      <span class="text-[9px] sm:text-[10px] font-semibold text-gray-400 dark:text-gray-500">{{ formatDate(tx.date) }}</span>
-                      <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-                      <span class="text-[9px] sm:text-[10px] font-bold text-secondary">{{ tx.code }}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
-                  <span class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">Sukses</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN (QUICK STATS) -->
-      <div class="lg:col-span-4 flex flex-col gap-3 sm:gap-4 quick-stats h-full">
+        <!-- QUICK STATS (Horizontal on Desktop, bottom on Mobile) -->
+        <div class="order-4 sm:order-3 flex flex-col sm:grid sm:grid-cols-3 gap-3 sm:gap-4 quick-stats">
         <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-3xl p-5 flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex-1 relative overflow-hidden group">
           <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
             <UsersIcon class="w-32 h-32" />
@@ -178,6 +134,47 @@
           </div>
           <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
             <ClockIcon class="w-6 h-6" />
+          </div>
+        </div>
+      </div>
+
+      <!-- RECENT TRANSACTIONS (Above Stats on Mobile) -->
+      <div class="order-3 sm:order-4 space-y-4 recent-payments-list pt-2 sm:pt-4">
+        <div class="flex justify-between items-center px-1">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Setoran Terbaru</h4>
+          <router-link to="/shohibul" class="text-xs font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-4 py-2 rounded-full">
+            Lihat Semua
+          </router-link>
+        </div>
+
+        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-3 sm:p-4 shadow-sm">
+          <div class="space-y-1.5">
+            <div 
+              v-for="tx in store.transactions.slice(0, 4)" 
+              :key="tx.id"
+              class="flex justify-between items-center p-3 sm:p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] border border-transparent hover:border-gray-100 dark:hover:border-white/5 transition-all duration-300 cursor-pointer group"
+            >
+              <div class="flex items-center space-x-4">
+                <div 
+                  class="w-11 h-11 sm:w-12 sm:h-12 rounded-[1rem] flex items-center justify-center font-bold text-sm shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-300"
+                  :style="getAvatarStyle(tx.name)"
+                >
+                  {{ getInitials(tx.name) }}
+                </div>
+                <div>
+                  <h5 class="text-xs sm:text-sm font-extrabold text-gray-800 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
+                  <div class="flex items-center mt-1.5 space-x-2">
+                    <span class="text-[9px] sm:text-[10px] font-semibold text-gray-400 dark:text-gray-500">{{ formatDate(tx.date) }}</span>
+                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-secondary">{{ tx.code }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
+                <span class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">Sukses</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

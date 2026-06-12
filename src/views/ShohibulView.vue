@@ -21,10 +21,13 @@
           <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
             Data Shohibul
           </h2>
-          <div class="flex items-center space-x-2 mt-2">
-            <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-2.5 py-1 rounded-full font-bold border border-secondary/20 backdrop-blur-sm shadow-sm">
+          <div class="flex items-center space-x-3 mt-2">
+            <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-2.5 py-1.5 rounded-full font-bold border border-secondary/20 backdrop-blur-sm shadow-sm">
               {{ store.shohibuls.length }} Terdaftar
             </span>
+            <router-link to="/menabung?mode=register" class="text-[10px] sm:text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-full font-bold border border-white/10 backdrop-blur-sm shadow-sm transition-colors flex items-center">
+              Daftar Qurban Baru
+            </router-link>
           </div>
         </div>
       </div>
@@ -149,11 +152,14 @@
         <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Data jamaah tidak ditemukan</p>
         <p class="text-[10px] mt-1 mb-4">Coba sesuaikan kata kunci pencarian atau filter.</p>
         
-        <div class="inline-flex flex-col items-center p-4 bg-primary/5 dark:bg-primary/10 rounded-2xl border border-primary/20">
+        <div class="inline-flex flex-col items-center p-5 bg-primary/5 dark:bg-primary/10 rounded-[1.5rem] border border-primary/20">
           <p class="text-xs font-bold text-primary dark:text-primary-light mb-1">Belum Terdaftar?</p>
-          <p class="text-[10px] text-gray-500 dark:text-gray-400 max-w-[250px] leading-relaxed">
-            Silakan hubungi pengurus DKM Masjid untuk mendaftarkan diri sebagai peserta Qurban tahun ini.
+          <p class="text-[10px] text-gray-500 dark:text-gray-400 max-w-[250px] leading-relaxed mb-4">
+            Daftar sekarang untuk mengamankan slot hewan Qurban Anda tahun ini.
           </p>
+          <router-link to="/menabung?mode=register" class="px-5 py-2.5 bg-primary text-white font-bold text-xs rounded-xl shadow-md shadow-primary/20 hover:bg-primary-light transition-colors">
+            Daftar Peserta Baru
+          </router-link>
         </div>
       </div>
     </div>

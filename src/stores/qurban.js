@@ -395,6 +395,46 @@ export const useQurbanStore = defineStore('qurban', {
         this.isDarkMode = false
         document.documentElement.classList.remove('dark')
       }
+    },
+
+    registerNewShohibul(payload) {
+      // payload: { name, address, type, animalGroup (optional), target, initialAmount, paymentMethod }
+      
+      const newId = 'shohibul-' + Math.random().toString(36).substr(2, 9)
+      
+      // Generate code based on type (e.g. S-XYZ or K-XYZ)
+      const prefix = payload.type === 'sapi' ? 'S' : 'K'
+      const codeSuffix = Math.floor(100 + Math.random() * 900).toString()
+      const code = `${prefix}${codeSuffix}`
+      
+      const newShohibul = {
+        id: newId,
+        name: payload.name,
+        address: payload.address,
+        code: code,
+        type: payload.type,
+        animalGroup: payload.animalGroup || (payload.type === 'sapi' ? 'Sapi Kelompok (Pending)' : 'Kambing Mandiri'),
+        target: payload.target,
+        collected: payload.initialAmount,
+        lastPaymentMonth: new Date().toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })
+      }
+      
+      this.shohibuls.push(newShohibul)
+      
+      // Create initial transaction
+      const newTx = {
+        id: 'tx-' + Math.random().toString(36).substr(2, 9),
+        shohibulId: newId,
+        name: newShohibul.name,
+        code: newShohibul.code,
+        amount: payload.initialAmount,
+        date: new Date().toISOString(),
+        paymentMethod: payload.paymentMethod
+      }
+      this.transactions.unshift(newTx)
+      
+      this.saveToCache()
+      return newShohibul
     }
   }
 })

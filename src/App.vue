@@ -9,13 +9,13 @@
       <header class="hidden md:block sticky top-0 z-40 bg-white/98 dark:bg-dark/98 border-b border-gray-200 dark:border-white/5 backdrop-blur-lg shadow-sm transition-all duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
-          <router-link to="/" class="flex items-center space-x-3 group">
+          <a href="https://masjidkassiti.id" class="flex items-center space-x-3 group">
             <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
             <div class="border-l border-gray-200 dark:border-gray-700 pl-3">
               <span class="sr-only">DKM Jami Kassiti</span>
               <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight font-heading">Tabungan Qurban</h1>
             </div>
-          </router-link>
+          </a>
 
           <!-- Desktop Navigation Links -->
           <nav class="flex items-center space-x-1">
@@ -88,13 +88,13 @@
         <!-- Top Bar: Logo + Actions -->
         <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
           <div class="flex justify-between items-center">
-            <router-link to="/" class="flex items-center space-x-2.5">
+            <a href="https://masjidkassiti.id" class="flex items-center space-x-2.5">
               <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Logo" class="h-9 w-auto" />
               <div class="border-l border-gray-200 dark:border-gray-700 pl-2.5">
                 <h2 class="text-sm font-bold text-primary dark:text-primary-light font-heading leading-tight">Tabungan Qurban</h2>
                 <span class="text-[9px] text-gray-400 dark:text-gray-500 font-medium">DKM Masjid Jami Kassiti</span>
               </div>
-            </router-link>
+            </a>
             <div class="flex items-center space-x-2">
               <!-- Mobile Dark Mode Toggle -->
               <button 
