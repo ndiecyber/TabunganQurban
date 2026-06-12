@@ -6,13 +6,7 @@ export const useQurbanStore = defineStore('qurban', {
     transactions: [],
     targetTotal: 84000000,
     currentShohibulId: 'shohibul-01', // Logged in user: Budi Santoso
-    isDarkMode: false,
-    designSystem: {
-      theme: 'emerald', // 'emerald', 'indigo', 'slate'
-      style: 'glass',   // 'flat', 'glass', 'frosted'
-      font: 'jakarta',  // 'jakarta', 'inter', 'outfit'
-      spacing: 'compact' // 'cozy', 'compact'
-    }
+    isDarkMode: false
   }),
 
   getters: {
@@ -58,17 +52,12 @@ export const useQurbanStore = defineStore('qurban', {
     initializeStore() {
       const cachedShohibuls = localStorage.getItem('qurban_shohibuls')
       const cachedTransactions = localStorage.getItem('qurban_transactions')
-      const cachedDesign = localStorage.getItem('qurban_design_system')
 
       if (cachedShohibuls && cachedTransactions) {
         this.shohibuls = JSON.parse(cachedShohibuls)
         this.transactions = JSON.parse(cachedTransactions)
       } else {
         this.loadMockData()
-      }
-
-      if (cachedDesign) {
-        this.designSystem = { ...this.designSystem, ...JSON.parse(cachedDesign) }
       }
     },
 
@@ -205,6 +194,39 @@ export const useQurbanStore = defineStore('qurban', {
           target: 33500000,
           collected: 20000000,
           lastPaymentMonth: 'April 2025'
+        },
+        {
+          id: 'shohibul-13',
+          name: 'Ibu Ningsih',
+          address: 'Jl. Pemuda No 12',
+          code: 'P12',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok C',
+          target: 3000000,
+          collected: 3000000,
+          lastPaymentMonth: 'Mei 2025'
+        },
+        {
+          id: 'shohibul-14',
+          name: 'Pak Rudi Hermawan',
+          address: 'Kavling Hijau - A02',
+          code: 'A02',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok C',
+          target: 3000000,
+          collected: 1000000,
+          lastPaymentMonth: 'April 2025'
+        },
+        {
+          id: 'shohibul-15',
+          name: 'Keluarga Bpk. Santoso',
+          address: 'Perumahan Arjamukti - C10',
+          code: 'C10',
+          type: 'sapi',
+          animalGroup: 'Sapi Kelompok D',
+          target: 3000000,
+          collected: 0,
+          lastPaymentMonth: 'Belum Ada'
         }
       ]
  
@@ -215,7 +237,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Rina Tanjung',
           code: 'C04',
           date: '2026-05-22',
-          amount: 500000
+          amount: 500000,
+          status: 'success'
         },
         {
           id: 'tx-2',
@@ -223,7 +246,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Hendra Kusuma',
           code: 'B02',
           date: '2026-05-12',
-          amount: 1000000
+          amount: 1000000,
+          status: 'success'
         },
         {
           id: 'tx-3',
@@ -231,7 +255,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Budi Santoso',
           code: 'A01',
           date: '2026-05-05',
-          amount: 2000000
+          amount: 2000000,
+          status: 'success'
         },
         {
           id: 'tx-4',
@@ -239,7 +264,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Rina Tanjung',
           code: 'C04',
           date: '2026-04-22',
-          amount: 500000
+          amount: 500000,
+          status: 'success'
         },
         {
           id: 'tx-5',
@@ -247,7 +273,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-04-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-6',
@@ -255,7 +282,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-03-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-7',
@@ -263,7 +291,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-02-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-8',
@@ -271,7 +300,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-01-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-9',
@@ -279,7 +309,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Budi Santoso',
           code: 'A01',
           date: '2026-04-07',
-          amount: 2500000
+          amount: 2500000,
+          status: 'success'
         }
       ]
  
@@ -375,9 +406,63 @@ export const useQurbanStore = defineStore('qurban', {
       }
     },
 
-    updateDesign(key, value) {
-      this.designSystem[key] = value
-      localStorage.setItem('qurban_design_system', JSON.stringify(this.designSystem))
+    registerNewShohibul(payload) {
+      // payload: { name, address, type, animalGroup (optional), target, initialAmount, paymentMethod }
+      
+      const newId = 'shohibul-' + Math.random().toString(36).substr(2, 9)
+      
+      // Generate code based on type (e.g. S-XYZ or K-XYZ)
+      const prefix = payload.type === 'sapi' ? 'S' : 'K'
+      const codeSuffix = Math.floor(100 + Math.random() * 900).toString()
+      const code = `${prefix}${codeSuffix}`
+      
+      const newShohibul = {
+        id: newId,
+        name: payload.name,
+        address: payload.address,
+        code: code,
+        type: payload.type,
+        animalGroup: payload.animalGroup || (payload.type === 'sapi' ? 'Sapi Kelompok (Pending)' : 'Kambing Mandiri'),
+        target: payload.target,
+        collected: 0,
+        lastPaymentMonth: '-'
+      }
+      
+      this.shohibuls.push(newShohibul)
+      
+      // Create initial transaction
+      const newTx = {
+        id: 'tx-' + Math.random().toString(36).substr(2, 9),
+        shohibulId: newId,
+        name: newShohibul.name,
+        code: newShohibul.code,
+        amount: payload.initialAmount,
+        date: new Date().toISOString(),
+        paymentMethod: payload.paymentMethod,
+        status: 'pending'
+      }
+      this.transactions.unshift(newTx)
+      
+      this.saveToCache()
+      return newShohibul
+    },
+
+    markTransactionSuccess(txId) {
+      const txIndex = this.transactions.findIndex(t => t.id === txId)
+      if (txIndex === -1) return false
+      
+      if (this.transactions[txIndex].status === 'success') return false
+      
+      this.transactions[txIndex].status = 'success'
+      
+      const shohibulIndex = this.shohibuls.findIndex(s => s.id === this.transactions[txIndex].shohibulId)
+      if (shohibulIndex !== -1) {
+        this.shohibuls[shohibulIndex].collected += this.transactions[txIndex].amount
+        this.shohibuls[shohibulIndex].lastPaymentMonth = new Date().toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })
+      }
+      
+      this.saveToCache()
+      return true
     }
   }
 })
