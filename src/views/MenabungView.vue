@@ -38,14 +38,14 @@
         class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
         :class="formMode === 'setor' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Setoran Jamaah
+        Setoran Shohibul
       </button>
       <button 
         @click="formMode = 'register'"
         class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
         :class="formMode === 'register' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Daftar Qurban Baru
+        Daftar Shohibul Baru
       </button>
       <!-- Animated Indicator -->
       <div 
@@ -64,7 +64,7 @@
           
           <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
             <UserIcon class="w-4 h-4 text-primary dark:text-primary-light" />
-            <span>Data Jamaah</span>
+            <span>Data Shohibul</span>
           </div>
           
           <!-- SETOR MODE -->
@@ -80,7 +80,7 @@
                     <span class="truncate">{{ selectedShohibulData.name }}</span>
                     <span class="text-[10px] text-gray-400 font-semibold mt-0.5 uppercase tracking-wider">{{ selectedShohibulData.type === 'sapi' ? 'Sapi' : 'Kambing' }} • {{ selectedShohibulData.code }}</span>
                   </div>
-                  <span v-else class="text-gray-400">— Pilih jamaah yang terdaftar —</span>
+                  <span v-else class="text-gray-400">— Pilih shohibul yang terdaftar —</span>
                 </div>
                 <div class="text-gray-400 pointer-events-none group-hover:text-primary transition-colors">
                   <ChevronDownIcon class="w-5 h-5" />
@@ -264,11 +264,11 @@
           <!-- Submit Button -->
           <div class="pt-4">
             <button 
-              v-if="formMode === 'setor' && !form.shohibulId"
+              v-if="!isFormValid"
               disabled
               class="w-full py-4.5 text-sm font-black bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
             >
-              <span>Pilih Jamaah Terlebih Dahulu</span>
+              <span>{{ validationMessage }}</span>
             </button>
             <button 
               v-else
@@ -391,7 +391,7 @@
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeShohibulModal"></div>
           
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">Pilih Jamaah Qurban</h3>
+            <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">Pilih Shohibul Qurban</h3>
             <button @click="closeShohibulModal" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
               <XIcon class="w-5 h-5" />
             </button>
@@ -606,6 +606,27 @@ const amountErrorMessage = computed(() => {
   return ''
 })
 
+const validationMessage = computed(() => {
+  if (formMode.value === 'setor') {
+    if (!form.value.shohibulId) return 'Pilih Shohibul Terlebih Dahulu'
+    if (!form.value.amount) return 'Masukkan Nominal Setoran'
+    if (amountErrorMessage.value) return 'Perbaiki Nominal Setoran'
+    if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
+    return ''
+  } else {
+    if (!registerForm.value.name.trim()) return 'Masukkan Nama Shohibul'
+    if (!registerForm.value.address.trim()) return 'Masukkan Alamat'
+    if (!form.value.amount) return 'Masukkan Nominal Setoran'
+    if (amountErrorMessage.value) return 'Perbaiki Nominal Setoran'
+    if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
+    return ''
+  }
+})
+
+const isFormValid = computed(() => {
+  return validationMessage.value === ''
+})
+
 const selectedShohibulData = computed(() => {
   if (!form.value.shohibulId) return null
   return store.shohibuls.find(s => s.id === form.value.shohibulId)
@@ -728,7 +749,7 @@ const submitDeposit = () => {
   } else {
     // Validation for Setor Mode
     if (!form.value.shohibulId) {
-      alert('Mohon pilih jamaah terlebih dahulu.')
+      alert('Mohon pilih shohibul terlebih dahulu.')
       return
     }
     if (!form.value.amount || form.value.amount < 50000) {

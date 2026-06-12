@@ -58,7 +58,7 @@
                   Mulai Menabung
                 </router-link>
                 <router-link to="/menabung?mode=register" class="flex-1 bg-white/10 hover:bg-white/20 text-white border border-white/10 text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center backdrop-blur-md transition-all shadow-lg">
-                  Daftar Qurban
+                  Daftar Shohibul
                 </router-link>
               </div>
             </div>
@@ -214,7 +214,7 @@
               </div>
               <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
               <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Jamaah</span>
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
                 <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">

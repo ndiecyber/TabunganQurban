@@ -26,7 +26,7 @@
               {{ store.shohibuls.length }} Terdaftar
             </span>
             <router-link to="/menabung?mode=register" class="text-[10px] sm:text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-full font-bold border border-white/10 backdrop-blur-sm shadow-sm transition-colors flex items-center">
-              Daftar Qurban Baru
+              Daftar Shohibul Baru
             </router-link>
           </div>
         </div>
@@ -155,7 +155,7 @@
       <!-- Empty State -->
       <div v-if="filteredShohibuls.length === 0" class="text-center py-16 text-gray-400 dark:text-gray-600 col-span-full border-2 border-dashed border-gray-200 dark:border-white/5 rounded-[2rem]">
         <UsersIcon class="w-12 h-12 mx-auto mb-3 opacity-30" />
-        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Data jamaah tidak ditemukan</p>
+        <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Data shohibul tidak ditemukan</p>
         <p class="text-[10px] mt-1 mb-4">Coba sesuaikan kata kunci pencarian atau filter.</p>
         
         <div class="inline-flex flex-col items-center p-5 bg-primary/5 dark:bg-primary/10 rounded-[1.5rem] border border-primary/20">
@@ -341,7 +341,7 @@
             </div>
             <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
             <div class="flex justify-between items-center text-sm">
-              <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Jamaah</span>
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
               <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
             </div>
             <div class="flex justify-between items-center text-sm">
