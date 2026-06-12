@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@variant dark (.dark &, &.dark);
 
 /* ===== Custom Theme via Tailwind v4 @theme ===== */
 /* Aligned with WebDKM landing page design tokens */
@@ -52,15 +52,18 @@ body {
   height: 12px;
   background-color: #F9FAFB;
 }
+
 ::-webkit-scrollbar-track {
   background-color: #F9FAFB;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #D1D5DB;
   border-radius: 10px;
   border: 4px solid #F9FAFB;
   background-clip: padding-box;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #9CA3AF;
   border: 2px solid #F9FAFB;
@@ -71,19 +74,23 @@ body {
 .dark ::-webkit-scrollbar {
   background-color: #111827;
 }
+
 .dark ::-webkit-scrollbar-track {
   background-color: #111827;
 }
+
 .dark ::-webkit-scrollbar-thumb {
   background-color: #4B5563;
   border: 4px solid #111827;
 }
+
 .dark ::-webkit-scrollbar-thumb:hover {
   background-color: #6B7280;
   border: 2px solid #111827;
 }
 
 /* ===== Islamic Pattern Background ===== */
+/* Light Mode Mozaik - made clearly visible but elegant with increased opacity/stroke */
 .islamic-pattern-bg {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C5A55A' stroke-width='0.5' opacity='0.15'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Cpath d='M40 10L70 40L40 70L10 40Z'/%3E%3Cpath d='M40 20L60 40L40 60L20 40Z'/%3E%3Ccircle cx='40' cy='40' r='15'/%3E%3Ccircle cx='40' cy='40' r='8'/%3E%3C/g%3E%3C/svg%3E");
 }
@@ -111,18 +118,17 @@ body {
 
 /* ===== Gradient Overlays ===== */
 .gradient-overlay {
-  background: linear-gradient(
-    135deg,
-    rgba(15, 118, 110, 0.88) 0%,
-    rgba(17, 24, 39, 0.75) 50%,
-    rgba(15, 118, 110, 0.6) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(15, 118, 110, 0.88) 0%,
+      rgba(17, 24, 39, 0.75) 50%,
+      rgba(15, 118, 110, 0.6) 100%);
 }
 
 /* ===== Glow Effects ===== */
 .glow-gold {
   box-shadow: 0 0 30px rgba(217, 119, 6, 0.3);
 }
+
 .glow-primary {
   box-shadow: 0 0 30px rgba(15, 118, 110, 0.3);
 }
@@ -140,6 +146,7 @@ body {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
+
 .card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -155,37 +162,56 @@ body {
 
 /* ===== Pulse Animation for CTA ===== */
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(197, 165, 90, 0.4);
   }
+
   50% {
     box-shadow: 0 0 0 15px rgba(197, 165, 90, 0);
   }
 }
+
 .pulse-glow {
   animation: pulse-glow 2s infinite;
 }
 
 /* ===== Float Animation ===== */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
 /* ===== Fluid SVG Wave Animation (Progress Bars) ===== */
 @keyframes wave-flow {
-  0% { background-position-x: 0px; }
-  100% { background-position-x: 400px; }
+  0% {
+    background-position-x: 0px;
+  }
+
+  100% {
+    background-position-x: 400px;
+  }
 }
+
 .wave-fill-back {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 20'%3E%3Cpath d='M0 10 Q 200 4, 400 10 T 800 10 L 800 20 L 0 20 Z' fill='%23d97706'/%3E%3C/svg%3E");
   background-repeat: repeat-x;
   background-size: 400px 100%;
   animation: wave-flow 5s linear infinite;
 }
+
 .wave-fill-front {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 20'%3E%3Cpath d='M0 10 Q 200 14, 400 10 T 800 10 L 800 20 L 0 20 Z' fill='%23fbbf24'/%3E%3C/svg%3E");
   background-repeat: repeat-x;

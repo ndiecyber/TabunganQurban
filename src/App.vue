@@ -176,6 +176,14 @@ const navItems = [
   { name: 'Rekap', path: '/rekap', icon: BarChart3 }
 ]
 
+// Current Islamic Hijri Date Calculation
+const currentHijriDate = new Intl.DateTimeFormat('id-ID', {
+  calendar: 'islamic-umalqura',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(new Date());
+
 const isRouteActive = (path) => {
   if (path === '/') {
     return route.path === '/'
