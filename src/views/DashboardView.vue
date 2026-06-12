@@ -152,6 +152,7 @@
             <div 
               v-for="tx in store.transactions.slice(0, 4)" 
               :key="tx.id"
+              @click="openReceiptModal(tx)"
               class="flex justify-between items-center p-3 sm:p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] border border-transparent hover:border-gray-100 dark:hover:border-white/5 transition-all duration-300 cursor-pointer group"
             >
               <div class="flex items-center space-x-4">
@@ -172,18 +173,75 @@
               </div>
               <div class="text-right">
                 <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
-                <span class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">Sukses</span>
+                <span v-if="tx.status === 'success'" class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">Sukses</span>
+                <span v-else class="inline-block px-2 py-0.5 mt-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-bold rounded-md uppercase tracking-wider">Pending</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- E-Wallet Receipt Modal -->
+      <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+        <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
+        
+        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
+          <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
+          
+          <div v-if="selectedTx" class="flex flex-col items-center w-full">
+            <!-- Status Icon -->
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
+              <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
+              <ClockIcon v-else class="w-8 h-8" />
+            </div>
+            
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
+            <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
+
+            <div class="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
+                <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.id }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Metode</span>
+                <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.paymentMethod || 'Tunai/Transfer' }}</span>
+              </div>
+              <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Jamaah</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Kode Hewan</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.code }}</span>
+              </div>
+            </div>
+
+            <div class="w-full space-y-3">
+              <button v-if="selectedTx.status === 'pending'" @click="simulateSuccess" class="w-full py-3.5 bg-primary hover:bg-primary-light text-white rounded-xl font-bold transition-colors shadow-lg shadow-primary/20 text-sm">
+                Simulasikan Pembayaran Berhasil
+              </button>
+              
+              <button @click="closeReceiptModal" class="w-full py-3.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors text-sm">
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
 import { UsersIcon, WalletIcon, CalculatorIcon, FileTextIcon, CheckCircleIcon, ClockIcon } from 'lucide-vue-next'
@@ -240,6 +298,49 @@ const animatedStats = reactive({
   proses: 0,
   collected: 0,
   percentage: 0
+})
+
+const isReceiptModalOpen = ref(false)
+const selectedTx = ref(null)
+
+const openReceiptModal = (tx) => {
+  selectedTx.value = tx
+  isReceiptModalOpen.value = true
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.receipt-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+    })
+  })
+}
+
+const closeReceiptModal = () => {
+  gsap.to('.receipt-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    isReceiptModalOpen.value = false
+    setTimeout(() => { selectedTx.value = null }, 300)
+    document.body.style.overflow = ''
+  }})
+}
+
+const simulateSuccess = () => {
+  if (selectedTx.value && selectedTx.value.id) {
+    store.markTransactionSuccess(selectedTx.value.id)
+    alert('Simulasi: Status pembayaran berhasil diperbarui menjadi Sukses!')
+  }
+}
+
+watch(() => store.totalCollected, (newVal) => {
+  gsap.to(animatedStats, {
+    shohibuls: store.shohibuls.length,
+    lunas: store.totalLunas,
+    proses: store.totalProses,
+    collected: newVal,
+    percentage: store.progressPercentage,
+    duration: 1.2,
+    ease: 'power3.out'
+  })
 })
 
 onMounted(() => {

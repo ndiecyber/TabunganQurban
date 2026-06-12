@@ -237,7 +237,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Rina Tanjung',
           code: 'C04',
           date: '2026-05-22',
-          amount: 500000
+          amount: 500000,
+          status: 'success'
         },
         {
           id: 'tx-2',
@@ -245,7 +246,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Hendra Kusuma',
           code: 'B02',
           date: '2026-05-12',
-          amount: 1000000
+          amount: 1000000,
+          status: 'success'
         },
         {
           id: 'tx-3',
@@ -253,7 +255,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Budi Santoso',
           code: 'A01',
           date: '2026-05-05',
-          amount: 2000000
+          amount: 2000000,
+          status: 'success'
         },
         {
           id: 'tx-4',
@@ -261,7 +264,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Rina Tanjung',
           code: 'C04',
           date: '2026-04-22',
-          amount: 500000
+          amount: 500000,
+          status: 'success'
         },
         {
           id: 'tx-5',
@@ -269,7 +273,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-04-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-6',
@@ -277,7 +282,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-03-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-7',
@@ -285,7 +291,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-02-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-8',
@@ -293,7 +300,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Pak Tono',
           code: 'C01',
           date: '2026-01-03',
-          amount: 3000000
+          amount: 3000000,
+          status: 'success'
         },
         {
           id: 'tx-9',
@@ -301,7 +309,8 @@ export const useQurbanStore = defineStore('qurban', {
           name: 'Budi Santoso',
           code: 'A01',
           date: '2026-04-07',
-          amount: 2500000
+          amount: 2500000,
+          status: 'success'
         }
       ]
  
@@ -415,8 +424,8 @@ export const useQurbanStore = defineStore('qurban', {
         type: payload.type,
         animalGroup: payload.animalGroup || (payload.type === 'sapi' ? 'Sapi Kelompok (Pending)' : 'Kambing Mandiri'),
         target: payload.target,
-        collected: payload.initialAmount,
-        lastPaymentMonth: new Date().toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })
+        collected: 0,
+        lastPaymentMonth: '-'
       }
       
       this.shohibuls.push(newShohibul)
@@ -429,12 +438,31 @@ export const useQurbanStore = defineStore('qurban', {
         code: newShohibul.code,
         amount: payload.initialAmount,
         date: new Date().toISOString(),
-        paymentMethod: payload.paymentMethod
+        paymentMethod: payload.paymentMethod,
+        status: 'pending'
       }
       this.transactions.unshift(newTx)
       
       this.saveToCache()
       return newShohibul
+    },
+
+    markTransactionSuccess(txId) {
+      const txIndex = this.transactions.findIndex(t => t.id === txId)
+      if (txIndex === -1) return false
+      
+      if (this.transactions[txIndex].status === 'success') return false
+      
+      this.transactions[txIndex].status = 'success'
+      
+      const shohibulIndex = this.shohibuls.findIndex(s => s.id === this.transactions[txIndex].shohibulId)
+      if (shohibulIndex !== -1) {
+        this.shohibuls[shohibulIndex].collected += this.transactions[txIndex].amount
+        this.shohibuls[shohibulIndex].lastPaymentMonth = new Date().toLocaleDateString('id-ID', { month: 'long', year: 'numeric' })
+      }
+      
+      this.saveToCache()
+      return true
     }
   }
 })

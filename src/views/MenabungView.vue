@@ -384,7 +384,6 @@
     </transition>
 
     <!-- Shohibul Selection Modal -->
-    <transition :css="false">
       <div v-if="isShohibulModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeShohibulModal"></div>
         
@@ -441,7 +440,76 @@
           </div>
         </div>
       </div>
-    </transition>
+
+    <!-- Payment Modal -->
+      <div v-if="isPaymentModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+        <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closePaymentModal(false)"></div>
+        
+        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] payment-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
+          <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closePaymentModal(false)"></div>
+          
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+              <ClockIcon class="w-8 h-8 text-primary" />
+            </div>
+            <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum besok pukul 23:59 WIB</p>
+          </div>
+
+          <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] p-5 mb-6 text-center space-y-2">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Tagihan</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white">{{ store.formatRupiahFull(paymentDetails.amount) }}</p>
+          </div>
+
+          <!-- VA Instructions -->
+          <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
+            <div class="flex items-center space-x-3 mb-2">
+              <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                <span class="font-black text-orange-600 dark:text-orange-400 text-[10px]">BSI</span>
+              </div>
+              <div class="text-left">
+                <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
+                <p class="text-[10px] text-gray-500">Virtual Account</p>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-white/[0.05] border border-gray-200/50 dark:border-white/10 rounded-xl p-4 flex justify-between items-center group">
+              <div class="text-left">
+                <p class="text-[10px] font-bold text-gray-400 mb-1">Nomor VA</p>
+                <p class="text-lg sm:text-xl font-black tracking-wider text-gray-800 dark:text-white">{{ paymentDetails.vaNumber }}</p>
+              </div>
+              <button class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
+                <CopyIcon class="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <!-- QRIS Instructions -->
+          <div v-if="paymentDetails.paymentMethod === 'qris'" class="space-y-4 mb-8 text-center flex flex-col items-center">
+            <div class="inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
+              <!-- Using standard SVG for QR Code dummy -->
+              <QrCodeIcon class="w-40 h-40 text-gray-800" />
+            </div>
+            <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Scan QRIS ini menggunakan aplikasi M-Banking atau E-Wallet Anda (GoPay, OVO, Dana, LinkAja).</p>
+          </div>
+
+          <div class="space-y-3 mt-auto">
+            <button 
+              @click="confirmPayment"
+              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-[1.5rem] font-black transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2"
+            >
+              <CheckCircleIcon class="w-5 h-5" />
+              <span>Simpan Instruksi Pembayaran</span>
+            </button>
+            <button 
+              @click="closePaymentModal(true)"
+              class="w-full py-4 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 rounded-[1.5rem] font-bold transition-colors text-sm"
+            >
+              Bayar Nanti
+            </button>
+          </div>
+        </div>
+      </div>
 
   </div>
 </template>
@@ -454,7 +522,7 @@ import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
   Edit3Icon, CheckIcon, QrCodeIcon, LandmarkIcon, ArrowRightIcon,
-  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon
+  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
@@ -468,7 +536,14 @@ const formMode = ref('setor') // 'setor' | 'register'
 const isCustomAmountSelected = ref(false)
 const isShohibulModalOpen = ref(false)
 const isCalculatorModalOpen = ref(false)
+const isPaymentModalOpen = ref(false)
 const shohibulSearchQuery = ref('')
+
+const paymentDetails = ref({
+  amount: 0,
+  paymentMethod: '',
+  vaNumber: ''
+})
 
 const form = ref({
   shohibulId: '',
@@ -597,6 +672,33 @@ const switchToRegisterMode = () => {
   formMode.value = 'register'
 }
 
+const openPaymentModal = () => {
+  isPaymentModalOpen.value = true
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.payment-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+    })
+  })
+}
+
+const closePaymentModal = (redirectToDashboard = false) => {
+  gsap.to('.payment-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    isPaymentModalOpen.value = false
+    document.body.style.overflow = ''
+    if (redirectToDashboard) {
+      router.push({ name: 'dashboard' })
+    }
+  }})
+}
+
+const confirmPayment = () => {
+  alert('Instruksi/Kode bayar berhasil disimpan ke galeri perangkat Anda.')
+  closePaymentModal(true)
+}
+
 const submitDeposit = () => {
   // Validation for Registration Mode
   if (formMode.value === 'register') {
@@ -645,8 +747,6 @@ const submitDeposit = () => {
 
   // Process Registration OR Deposit
   setTimeout(() => {
-    let message = ''
-    
     if (formMode.value === 'register') {
       store.registerNewShohibul({
         name: registerForm.value.name.trim(),
@@ -656,7 +756,6 @@ const submitDeposit = () => {
         initialAmount: form.value.amount,
         paymentMethod: form.value.paymentMethod
       })
-      message = `Pendaftaran berhasil! Tagihan setoran awal sebesar ${store.formatRupiahFull(form.value.amount)} via ${form.value.paymentMethod.toUpperCase()} telah dibuat.\nSilakan selesaikan pembayaran untuk mengamankan slot Anda.`
     } else {
       // Simulate adding transaction to existing shohibul
       store.transactions.unshift({
@@ -666,19 +765,22 @@ const submitDeposit = () => {
         code: selectedShohibulData.value.code,
         amount: form.value.amount,
         date: new Date().toISOString(),
-        paymentMethod: form.value.paymentMethod
+        paymentMethod: form.value.paymentMethod,
+        status: 'pending'
       })
       
-      const shohibulIndex = store.shohibuls.findIndex(s => s.id === form.value.shohibulId)
-      if (shohibulIndex !== -1) {
-        store.shohibuls[shohibulIndex].collected += form.value.amount
-      }
-      
       store.saveToCache()
-      message = `Berhasil membuat tagihan sebesar ${store.formatRupiahFull(form.value.amount)} via ${form.value.paymentMethod.toUpperCase()}.\nSilakan selesaikan pembayaran.`
     }
     
-    alert(message)
+    // Set payment details
+    paymentDetails.value = {
+      amount: form.value.amount,
+      paymentMethod: form.value.paymentMethod,
+      vaNumber: '900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()
+    }
+    
+    // Open payment modal
+    openPaymentModal()
     
     // Clear forms
     form.value.amount = null
@@ -688,8 +790,6 @@ const submitDeposit = () => {
     isCustomAmountSelected.value = false
     formMode.value = 'setor'
     
-    // Redirect to dashboard
-    router.push({ name: 'dashboard' })
   }, 400)
 }
 

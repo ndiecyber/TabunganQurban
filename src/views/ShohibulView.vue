@@ -101,9 +101,15 @@
           <div class="flex justify-between items-end">
             <div>
               <p class="text-[10px] text-gray-400 dark:text-gray-500 font-semibold mb-0.5">Terkumpul</p>
-              <p class="text-sm font-black text-gray-800 dark:text-white">
-                {{ store.formatRupiahFull(shohibul.collected) }}
-              </p>
+              <div class="flex items-center flex-wrap gap-1.5">
+                <p class="text-sm font-black text-gray-800 dark:text-white">
+                  {{ store.formatRupiahFull(shohibul.collected) }}
+                </p>
+                <span v-if="getPendingAmount(shohibul.id) > 0" class="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/40 px-1.5 py-0.5 rounded-md flex items-center">
+                  <ClockIcon class="w-2.5 h-2.5 mr-0.5" />
+                  +{{ store.formatRupiah(getPendingAmount(shohibul.id)) }}
+                </span>
+              </div>
             </div>
             <div class="text-right">
               <span 
@@ -165,7 +171,6 @@
     </div>
 
     <!-- Shohibul Detail Slide-Up Modal -->
-    <transition :css="false">
       <div v-if="selectedShohibul" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeDetails"></div>
         
@@ -256,18 +261,25 @@
               <div 
                 v-for="tx in memberTransactions" 
                 :key="tx.id"
-                class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 p-4 rounded-[1.5rem] flex justify-between items-center shadow-sm hover:border-gray-300 dark:hover:border-white/10 transition-colors"
+                @click="openReceiptModal(tx)"
+                class="bg-white dark:bg-white/[0.02] border p-4 rounded-[1.5rem] flex justify-between items-center shadow-sm transition-colors cursor-pointer"
+                :class="tx.status === 'pending' ? 'border-amber-200 dark:border-amber-900/50 hover:border-amber-400/50' : 'border-gray-200/50 dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10'"
               >
                 <div class="flex items-center space-x-3">
-                  <div class="w-10 h-10 rounded-xl bg-gray-50 dark:bg-white/5 flex items-center justify-center text-primary dark:text-primary-light">
-                    <WalletIcon class="w-5 h-5" />
+                  <div class="w-10 h-10 rounded-xl flex items-center justify-center" :class="tx.status === 'pending' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-500' : 'bg-gray-50 dark:bg-white/5 text-primary dark:text-primary-light'">
+                    <ClockIcon v-if="tx.status === 'pending'" class="w-5 h-5" />
+                    <WalletIcon v-else class="w-5 h-5" />
                   </div>
                   <div>
-                    <span class="text-xs font-bold text-gray-800 dark:text-white block">Setoran Masuk</span>
+                    <span class="text-xs font-bold block" :class="tx.status === 'pending' ? 'text-amber-700 dark:text-amber-400' : 'text-gray-800 dark:text-white'">
+                      {{ tx.status === 'pending' ? 'Menunggu Pembayaran' : 'Setoran Masuk' }}
+                    </span>
                     <span class="text-[9px] text-gray-400 dark:text-gray-500 font-semibold">{{ formatDate(tx.date) }}</span>
                   </div>
                 </div>
-                <span class="text-sm font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
+                <span class="text-sm font-black" :class="tx.status === 'pending' ? 'text-amber-700 dark:text-amber-400' : 'text-gray-800 dark:text-white'">
+                  {{ store.formatRupiah(tx.amount) }}
+                </span>
               </div>
             </div>
             
@@ -294,9 +306,63 @@
               <span>Tabungan Sudah Lunas</span>
             </button>
           </div>
+      </div>
+    </div>
+
+    <!-- E-Wallet Receipt Modal (for Shohibul Detail) -->
+    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end receipt-backdrop" style="margin: 0; padding: 0;">
+      <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
+      
+      <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
+        
+        <div v-if="selectedTx" class="flex flex-col items-center w-full">
+          <!-- Status Icon -->
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
+            <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
+            <ClockIcon v-else class="w-8 h-8" />
+          </div>
+          
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
+          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
+
+          <div class="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6">
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
+              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.id }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Metode</span>
+              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.paymentMethod || 'Tunai/Transfer' }}</span>
+            </div>
+            <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Jamaah</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Kode Hewan</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.code }}</span>
+            </div>
+          </div>
+
+          <div class="w-full space-y-3">
+            <button v-if="selectedTx.status === 'pending'" @click="simulateSuccess" class="w-full py-3.5 bg-primary hover:bg-primary-light text-white rounded-xl font-bold transition-colors shadow-lg shadow-primary/20 text-sm">
+              Simulasikan Pembayaran Berhasil
+            </button>
+            
+            <button @click="closeReceiptModal" class="w-full py-3.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors text-sm">
+              Tutup
+            </button>
+          </div>
         </div>
       </div>
-    </transition>
+    </div>
+
   </div>
 </template>
 
@@ -305,7 +371,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { UsersIcon, SearchIcon, InfoIcon, WalletIcon, XIcon, ActivityIcon, HistoryIcon, CheckCircleIcon } from 'lucide-vue-next'
+import { UsersIcon, SearchIcon, InfoIcon, WalletIcon, XIcon, ActivityIcon, HistoryIcon, CheckCircleIcon, ClockIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const router = useRouter()
@@ -344,6 +410,12 @@ const getPercentage = (shohibul) => {
   if (shohibul.target === 0) return 0
   const pct = (shohibul.collected / shohibul.target) * 100
   return Math.min(Math.round(pct), 100)
+}
+
+const getPendingAmount = (id) => {
+  return store.transactions
+    .filter(tx => tx.shohibulId === id && tx.status === 'pending')
+    .reduce((sum, tx) => sum + tx.amount, 0)
 }
 
 const formatDate = (dateStr) => {
@@ -422,6 +494,40 @@ const goToDeposit = (id) => {
   }
   // Navigate to menabung tab with query param
   router.push({ name: 'menabung', query: { shohibulId: id } })
+}
+
+const isReceiptModalOpen = ref(false)
+const selectedTx = ref(null)
+
+const openReceiptModal = (tx) => {
+  selectedTx.value = tx
+  isReceiptModalOpen.value = true
+  nextTick(() => {
+    gsap.fromTo('.receipt-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+    gsap.fromTo('.receipt-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+  })
+}
+
+const closeReceiptModal = () => {
+  gsap.to('.receipt-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.receipt-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    isReceiptModalOpen.value = false
+    setTimeout(() => { selectedTx.value = null }, 300)
+  }})
+}
+
+const simulateSuccess = () => {
+  if (selectedTx.value && selectedTx.value.id) {
+    store.markTransactionSuccess(selectedTx.value.id)
+    alert('Simulasi: Status pembayaran berhasil diperbarui menjadi Sukses!')
+    
+    if (selectedShohibul.value) {
+      const updatedShohibul = store.shohibuls.find(s => s.id === selectedShohibul.value.id)
+      if (updatedShohibul) {
+        selectedShohibul.value = updatedShohibul
+      }
+    }
+  }
 }
 
 onMounted(() => {
