@@ -196,14 +196,30 @@
           >
             <div v-if="isCustomAmountSelected" class="pt-2">
               <div class="relative">
-                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400">Rp</span>
+                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-sm font-bold transition-colors" :class="amountErrorMessage ? 'text-red-400' : 'text-gray-400'">Rp</span>
                 <input 
                   v-model.number="form.amount" 
                   type="number" 
                   placeholder="Masukkan nominal..." 
-                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] pl-12 pr-5 py-4 font-black focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-inner"
+                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border rounded-[1.5rem] pl-12 pr-5 py-4 font-black focus:outline-none focus:ring-2 transition-all shadow-inner dark:text-white"
+                  :class="amountErrorMessage 
+                    ? 'border-red-400 dark:border-red-500/50 focus:ring-red-500/50 focus:border-red-500 text-red-600 dark:text-red-400' 
+                    : 'border-gray-200/50 dark:border-white/10 focus:ring-primary focus:border-transparent'"
                 />
               </div>
+              <transition
+                enter-active-class="transition duration-300 ease-out"
+                enter-from-class="opacity-0 -translate-y-2"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition duration-200 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-2"
+              >
+                <p v-if="amountErrorMessage" class="text-[10px] sm:text-xs font-bold text-red-500 mt-2 ml-4 flex items-center">
+                  <AlertCircleIcon class="w-3.5 h-3.5 mr-1" />
+                  {{ amountErrorMessage }}
+                </p>
+              </transition>
             </div>
           </transition>
 
@@ -438,7 +454,7 @@ import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
   Edit3Icon, CheckIcon, QrCodeIcon, LandmarkIcon, ArrowRightIcon,
-  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon
+  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
@@ -494,7 +510,25 @@ const calcTargets = [
 
 // Computed
 const monthlyInstallment = computed(() => {
-  return Math.ceil(calc.value.targetValue / calc.value.durationMonths)
+  const exactAmount = calc.value.targetValue / calc.value.durationMonths
+  return Math.ceil(exactAmount / 50000) * 50000
+})
+
+const amountErrorMessage = computed(() => {
+  if (!isCustomAmountSelected.value || !form.value.amount) return ''
+  
+  const isLessThanMin = form.value.amount < 50000
+  const isNotMultiple = form.value.amount % 50000 !== 0
+  
+  if (isLessThanMin && isNotMultiple) {
+    return 'Nominal minimal Rp 50.000 dan harus kelipatan Rp 50.000'
+  } else if (isLessThanMin) {
+    return 'Minimal setoran adalah Rp 50.000'
+  } else if (isNotMultiple) {
+    return 'Nominal harus kelipatan Rp 50.000'
+  }
+  
+  return ''
 })
 
 const selectedShohibulData = computed(() => {
@@ -585,10 +619,22 @@ const submitDeposit = () => {
       alert('Pendaftaran baru mewajibkan setoran awal minimal Rp 50.000.')
       return
     }
+    if (form.value.amount % 50000 !== 0) {
+      alert('Nominal setoran awal harus kelipatan Rp 50.000.')
+      return
+    }
   } else {
     // Validation for Setor Mode
-    if (!form.value.shohibulId || !form.value.amount || form.value.amount <= 0) {
-      alert('Mohon lengkapi data jamaah dan pastikan nominal valid.')
+    if (!form.value.shohibulId) {
+      alert('Mohon pilih jamaah terlebih dahulu.')
+      return
+    }
+    if (!form.value.amount || form.value.amount < 50000) {
+      alert('Minimal setoran adalah Rp 50.000.')
+      return
+    }
+    if (form.value.amount % 50000 !== 0) {
+      alert('Nominal setoran harus kelipatan Rp 50.000.')
       return
     }
   }
