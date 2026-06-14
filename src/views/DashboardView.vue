@@ -3,45 +3,34 @@
     
     <div class="flex flex-col gap-3 sm:gap-4">
         
-        <!-- UNIFIED DASHBOARD CARD -->
         <div class="order-1 bg-white dark:bg-white/[0.03] border-2 border-gray-300 dark:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-lg overflow-hidden flex flex-col relative z-10">
           
-          <!-- Hero Section (Saldo) -->
           <div class="relative overflow-hidden bg-gradient-to-br from-[#022c22] via-[#064e3b] to-[#0f766e] text-white p-5 sm:p-6 hero-card flex flex-col justify-between group">
             
-            <!-- 1. Modern Grid Base -->
             <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-60"></div>
             
-            <!-- 2. Dynamic Glowing Ambient Orbs -->
             <div class="absolute top-0 right-0 w-[70%] h-[70%] bg-teal-400/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 6s;"></div>
             <div class="absolute bottom-0 left-0 w-[60%] h-[60%] bg-emerald-500/15 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 8s; animation-delay: 1s;"></div>
             <div class="absolute top-1/2 left-[40%] w-[50%] h-[50%] bg-amber-400/10 rounded-full blur-3xl -translate-y-1/2 pointer-events-none"></div>
             
-            <!-- 3. Giant Frosted Glass Geometric Rings -->
             <div class="absolute -right-16 -top-16 w-64 h-64 border border-white/20 rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm pointer-events-none transform rotate-45"></div>
             <div class="absolute -left-20 -bottom-20 w-80 h-80 border border-white/10 rounded-full bg-gradient-to-tr from-white/5 to-transparent backdrop-blur-md pointer-events-none"></div>
             
-            <!-- 4. Floating Particles & Stars -->
             <div class="absolute top-8 left-1/4 w-1.5 h-1.5 bg-amber-300 rounded-full animate-ping pointer-events-none" style="animation-duration: 3s"></div>
             <div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-teal-300 rounded-full animate-pulse pointer-events-none" style="animation-duration: 4s"></div>
             <div class="absolute top-[40%] left-6 text-white/20 text-xs animate-bounce pointer-events-none" style="animation-duration: 5s">✦</div>
             <div class="absolute top-1/4 right-12 text-amber-400/30 text-lg animate-pulse pointer-events-none" style="animation-duration: 6s">✧</div>
 
-            <!-- 5. Glass Overlay Shine -->
             <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.07] to-white/0 opacity-60 pointer-events-none transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
 
-            <!-- 6. Islamic Subtle Pattern Overlay -->
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M36 34v-4h-4v-4h4v-4h4v4h4v4h-4v4h-4zm-8 8v-4h-4v-4h4v-4h4v4h-4v4h-4zm-8 0v-4h-4v-4h4v-4h4v4h-4v4h-4zm16 8v-4h-4v-4h4v-4h4v4h-4v4h-4z\' fill=\'%23ffffff\' fill-opacity=\'0.04\'/%3E%3C/g%3E%3C/svg%3E')] opacity-70 pointer-events-none mix-blend-overlay"></div>
             
-            <!-- 7. Giant Geometric Rub el Hizb (Islamic Star) Watermark -->
             <div class="absolute -right-24 -bottom-24 w-96 h-96 opacity-20 pointer-events-none animate-[spin_60s_linear_infinite]">
               <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)]"></div>
               <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)] transform rotate-45"></div>
-              <!-- Inner Glowing Ring -->
               <div class="absolute inset-16 border border-teal-300/30 rounded-full"></div>
             </div>
 
-            <!-- 8. Sweeping Modern Light Beams -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden">
               <div class="absolute top-[-50%] right-[20%] w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/30 to-transparent transform rotate-[35deg] opacity-70"></div>
               <div class="absolute top-[-50%] right-[30%] w-[2px] h-[200%] bg-gradient-to-b from-transparent via-white/10 to-transparent transform rotate-[35deg] opacity-50 blur-[1px]"></div>
@@ -109,10 +98,8 @@
             </div>
           </div>
 
-          <!-- Divider -->
           <div class="h-px w-full bg-gray-300 dark:bg-white/10"></div>
 
-          <!-- Quick Actions Section -->
           <div class="py-5 px-3 sm:px-6 flex justify-around items-start w-full quick-actions bg-white dark:bg-transparent">
             <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer flex-1">
               <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[2px] border-gray-300 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] shadow-md dark:shadow-none group-hover:bg-primary/10 dark:group-hover:bg-primary/10 flex items-center justify-center text-primary dark:text-primary-light transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 mb-2">
@@ -143,10 +130,8 @@
             </router-link>
           </div>
 
-          <!-- Divider -->
           <div class="h-px w-full bg-gray-300 dark:bg-white/10"></div>
 
-          <!-- Quick Stats Section -->
           <div class="p-4 sm:p-5 grid grid-cols-3 divide-x divide-gray-300 dark:divide-white/10 quick-stats bg-gray-50 dark:bg-transparent">
             <div class="flex flex-col items-center justify-center text-center px-1 group">
               <div class="w-7 h-7 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light mb-1.5 group-hover:scale-110 transition-transform">
@@ -177,43 +162,42 @@
       <div class="order-3 sm:order-4 space-y-2 recent-payments-list sm:pt-2">
         <div class="flex justify-between items-center px-1">
           <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Setoran Terbaru</h4>
-          <router-link to="/shohibul" class="text-xs font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-4 py-2 rounded-full">
+          <router-link to="/shohibul" class="text-[10px] font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-3 py-1.5 rounded-full">
             Lihat Semua
           </router-link>
         </div>
 
-        <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[2rem] p-2 shadow-md">
+        <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-md">
           <div class="flex flex-col">
             <template v-for="(tx, index) in store.transactions.slice(0, 4)" :key="tx.id">
               <div 
                 @click="openReceiptModal(tx)"
-                class="flex justify-between items-center p-3 sm:p-4 rounded-[1.5rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group"
+                class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group"
               >
-                <div class="flex items-center space-x-3 sm:space-x-4">
+                <div class="flex items-center space-x-3">
                   <div 
-                    class="w-11 h-11 sm:w-12 sm:h-12 rounded-[1.2rem] flex items-center justify-center font-bold text-sm shrink-0 shadow-inner group-hover:scale-110 group-hover:shadow-md transition-all duration-300"
+                    class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
                     :style="getAvatarStyle(tx.name)"
                   >
                     {{ getInitials(tx.name) }}
                   </div>
-                  <div>
-                    <h5 class="text-xs sm:text-sm font-extrabold text-gray-800 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
-                    <div class="flex items-center mt-1.5 space-x-2">
-                      <span class="text-[9px] sm:text-[10px] font-semibold text-gray-400 dark:text-gray-500">{{ formatDate(tx.date) }}</span>
-                      <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-                      <span class="text-[9px] sm:text-[10px] font-bold text-secondary">{{ tx.code }}</span>
+                  <div class="flex flex-col justify-center">
+                    <h5 class="text-xs font-extrabold text-gray-800 dark:text-white leading-none mb-1 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
+                    <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
+                      <span>{{ formatDate(tx.date) }}</span>
+                      <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
+                      <span class="text-secondary font-bold">Rumah {{ tx.code }}</span>
                     </div>
                   </div>
                 </div>
                 <div class="text-right">
-                  <span class="block text-sm sm:text-[15px] font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
-                  <span v-if="tx.status === 'success'" class="inline-block px-2.5 py-1 mt-1.5 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 text-[8px] font-bold rounded border border-green-200/60 dark:border-green-800/50 uppercase tracking-widest">Sukses</span>
-                  <span v-else class="inline-block px-2.5 py-1 mt-1.5 bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-[8px] font-bold rounded border border-amber-200/60 dark:border-amber-800/50 uppercase tracking-widest">Pending</span>
+                  <span class="block text-sm font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
+                  <span v-if="tx.status === 'success'" class="inline-block px-2 py-0.5 mt-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-green-200/50 dark:border-green-800/30">Sukses</span>
+                  <span v-else class="inline-block px-2 py-0.5 mt-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-amber-200/50 dark:border-amber-800/30">Pending</span>
                 </div>
               </div>
               
-              <!-- Refined Thick Divider for Light Mode -->
-              <div v-if="index !== store.transactions.slice(0, 4).length - 1" class="h-[2px] mx-4 bg-gray-300 dark:bg-white/5 my-0.5"></div>
+              <div v-if="index !== store.transactions.slice(0, 4).length - 1" class="h-[1px] mx-3 bg-gray-200 dark:bg-white/5 my-0.5"></div>
             </template>
           </div>
         </div>
@@ -254,8 +238,8 @@
                 <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-500 dark:text-gray-400 font-medium">Kode Hewan</span>
-                <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.code }}</span>
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Kode</span>
+                <span class="font-bold text-gray-800 dark:text-white">Rumah {{ selectedTx.code }}</span>
               </div>
             </div>
 
@@ -299,19 +283,18 @@ const currentHijriDate = computed(() => {
   }
 })
 
-// Fungsi lokal agar angka memakai Rp. 100.000 
+// Fungsi lokal format Rp.
 const formatRp = (val) => {
   if (!val) return 'Rp. 0'
   return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
 }
 
-// Format date to local readable format
+// Format date
 const formatDate = (dateStr) => {
   const date = new Date(dateStr)
   return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-// Get initials for profile picture replacement
 const getInitials = (name) => {
   if (!name) return ''
   const split = name.split(' ')
@@ -321,17 +304,14 @@ const getInitials = (name) => {
   return name.slice(0, 2).toUpperCase()
 }
 
-// Generate color style based on name hash (Gradient Avatars)
 const getAvatarStyle = (name) => {
   if (!name) return {}
   const gradients = [
-    { from: '#eab308', to: '#ca8a04', text: '#ffffff' }, // Amber
+    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple
+    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose
+    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink
     { from: '#10b981', to: '#047857', text: '#ffffff' }, // Emerald
     { from: '#3b82f6', to: '#1d4ed8', text: '#ffffff' }, // Blue
-    { from: '#8b5cf6', to: '#6d28d9', text: '#ffffff' }, // Purple
-    { from: '#ec4899', to: '#be185d', text: '#ffffff' }, // Pink
-    { from: '#f43f5e', to: '#be123c', text: '#ffffff' }, // Rose
-    { from: '#06b6d4', to: '#0891b2', text: '#ffffff' }  // Cyan
   ]
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -341,9 +321,7 @@ const getAvatarStyle = (name) => {
   const g = gradients[index]
   return {
     background: `linear-gradient(135deg, ${g.from} 0%, ${g.to} 100%)`,
-    color: g.text,
-    textShadow: '0 1px 1px rgba(0, 0, 0, 0.15)',
-    boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.08)'
+    color: g.text
   }
 }
 
@@ -399,7 +377,6 @@ watch(() => store.totalCollected, (newVal) => {
 })
 
 onMounted(() => {
-  // GSAP Counters
   gsap.to(animatedStats, {
     shohibuls: store.shohibuls.length,
     lunas: store.totalLunas,
@@ -410,7 +387,6 @@ onMounted(() => {
     ease: 'power3.out'
   })
 
-  // Entrance GSAP animation
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     

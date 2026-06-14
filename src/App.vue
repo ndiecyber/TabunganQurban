@@ -5,11 +5,9 @@
   >
     <div class="min-h-screen bg-light-warm dark:bg-dark text-gray-900 dark:text-gray-100 font-sans flex flex-col relative islamic-pattern-bg transition-all duration-500">
       
-      <!-- ========== DESKTOP HEADER (Hidden on mobile) ========== -->
       <header class="hidden md:block sticky top-0 z-40 bg-white/98 dark:bg-dark/98 border-b border-gray-300 dark:border-white/5 backdrop-blur-lg shadow-sm transition-all duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <!-- Logo & Title -->
-            <div class="flex items-center group cursor-default">
+          <div class="flex items-center group cursor-default">
             <svg viewBox="0 0 100 90" class="h-14 w-14 transition-transform duration-300 group-hover:scale-105 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.4)] mr-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <mask id="goat-mask-desktop">
@@ -18,22 +16,17 @@
                 </mask>
               </defs>
 
-              <!-- Outer pointed arch frame -->
               <path d="M 18 85 L 12 85 L 12 45 C 12 20, 25 15, 50 2 C 75 15, 88 20, 88 45 L 88 85 L 82 85" fill="none" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
 
-              <!-- Inner solid green Kufic Dome with goat cutout -->
               <path d="M 24 60 L 24 80 L 30 80 L 30 70 L 34 70 L 34 80 L 66 80 L 66 70 L 70 70 L 70 80 L 76 80 L 76 60 C 76 45, 65 40, 50 35 C 35 40, 24 45, 24 60 Z" fill="currentColor" class="text-primary dark:text-emerald-400" mask="url(#goat-mask-desktop)"/>
 
-              <!-- Kufic Dots -->
               <rect x="30" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
               <rect x="33" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
               <rect x="65" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
               <rect x="68" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
 
-              <!-- Yellow Crescent Moon -->
               <path d="M 42 12 A 9 9 0 1 0 52 25 A 11 11 0 1 1 42 12 Z" fill="#FBBF24"/>
               
-              <!-- Yellow 5-Pointed Star -->
               <path d="M 58 13 L 59 16.5 L 62.5 17 L 59.5 19.5 L 60.5 23 L 57.5 21 L 54.5 23 L 55.5 19.5 L 52.5 17 L 56 16.5 Z" fill="#FBBF24"/>
             </svg>
             <div class="flex flex-col justify-center">
@@ -43,7 +36,6 @@
             </div>
           </div>
 
-          <!-- Desktop Navigation Links -->
           <nav class="flex items-center space-x-1">
             <router-link 
               v-for="item in navItems" 
@@ -55,7 +47,6 @@
                 : 'text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white'"
             >
               {{ item.name }}
-              <!-- Animated underline matching WebDKM -->
               <span 
                 class="absolute bottom-1 left-4 right-4 h-[2px] rounded-full transition-transform duration-300 origin-center"
                 :class="[
@@ -65,9 +56,7 @@
             </router-link>
           </nav>
 
-          <!-- Action Buttons / Theme Toggle -->
           <div class="flex items-center space-x-3">
-            <!-- Dark Mode Toggle -->
             <button 
               @click="store.toggleTheme()" 
               class="p-2.5 rounded-xl transition cursor-pointer flex items-center justify-center"
@@ -98,9 +87,7 @@
         </div>
       </header>
 
-      <!-- ========== MOBILE HEADER (Visible on mobile only) ========== -->
       <div class="md:hidden sticky top-0 z-40">
-        <!-- Top Bar: Logo + Actions -->
         <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[1.5px] border-gray-300 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
           <div class="flex justify-between items-center">
             <div class="flex items-center group cursor-default">
@@ -111,23 +98,13 @@
                     <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="black" transform="translate(1, -2) scale(1)"/>
                   </mask>
                 </defs>
-
-                <!-- Outer pointed arch frame -->
                 <path d="M 18 85 L 12 85 L 12 45 C 12 20, 25 15, 50 2 C 75 15, 88 20, 88 45 L 88 85 L 82 85" fill="none" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-
-                <!-- Inner solid green Kufic Dome with goat cutout -->
                 <path d="M 24 60 L 24 80 L 30 80 L 30 70 L 34 70 L 34 80 L 66 80 L 66 70 L 70 70 L 70 80 L 76 80 L 76 60 C 76 45, 65 40, 50 35 C 35 40, 24 45, 24 60 Z" fill="currentColor" class="text-primary dark:text-emerald-400" mask="url(#goat-mask-mobile)"/>
-
-                <!-- Kufic Dots -->
                 <rect x="30" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
                 <rect x="33" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
                 <rect x="65" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
                 <rect x="68" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
-
-                <!-- Yellow Crescent Moon -->
                 <path d="M 42 12 A 9 9 0 1 0 52 25 A 11 11 0 1 1 42 12 Z" fill="#FBBF24"/>
-                
-                <!-- Yellow 5-Pointed Star -->
                 <path d="M 58 13 L 59 16.5 L 62.5 17 L 59.5 19.5 L 60.5 23 L 57.5 21 L 54.5 23 L 55.5 19.5 L 52.5 17 L 56 16.5 Z" fill="#FBBF24"/>
               </svg>
               <div class="flex flex-col justify-center">
@@ -137,7 +114,6 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <!-- Back to Home / Main Site Button -->
               <a 
                 href="https://masjidkassiti.id" 
                 class="p-2 rounded-xl transition cursor-pointer flex items-center justify-center bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm dark:bg-white/5 dark:border-[1px] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
@@ -148,7 +124,6 @@
                 </svg>
               </a>
               
-              <!-- Mobile Dark Mode Toggle -->
               <button 
                 @click="store.toggleTheme()" 
                 class="p-2 rounded-xl transition cursor-pointer"
@@ -168,7 +143,6 @@
           </div>
         </div>
 
-        <!-- Navigation Tab Bar -->
         <div class="bg-white/90 dark:bg-dark/90 backdrop-blur-xl border-b border-gray-300 dark:border-white/5 px-2 shadow-sm">
           <div class="flex items-center justify-around">
             <router-link 
@@ -180,7 +154,7 @@
                 ? 'text-primary dark:text-secondary font-bold' 
                 : 'text-gray-400 dark:text-gray-500 hover:text-gray-600'"
             >
-              <component :is="item.icon" class="w-4.5 h-4.5 mb-0.5" />
+              <component :is="item.icon" class="w-5 h-5 mb-0.5" />
               <span>{{ item.name }}</span>
               <span 
                 v-if="isRouteActive(item.path)" 
@@ -191,9 +165,7 @@
         </div>
       </div>
 
-      <!-- Main Layout Body -->
-      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
-        <!-- Main Router view with transitions -->
+      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-28">
         <router-view v-slot="{ Component }">
           <transition name="fade-slide" mode="out-in">
             <component :is="Component" :key="route.path" />
@@ -201,8 +173,9 @@
         </router-view>
       </main>
 
-      <!-- Footer -->
-      <footer class="border-t border-gray-300 dark:border-white/5 py-2 mt-0 text-center">
+      <BottomNav class="md:hidden" />
+
+      <footer class="hidden md:block border-t border-gray-300 dark:border-white/5 py-2 mt-0 text-center">
         <div class="max-w-7xl mx-auto px-4">
           <p class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-600 font-medium tracking-wide">
             © 2026 DKM Masjid Jami Kassiti — Tabungan Qurban
@@ -217,10 +190,12 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
+import BottomNav from '@/components/layout/BottomNav.vue' // Import komponen BottomNav
 
+// Import icon Lucide sesuai desain
 import { 
   LayoutDashboard, 
-  Users, 
+  UserCircle2Icon, // Menggunakan UserCircle agar lebih mirip desain
   Wallet, 
   BarChart3 
 } from 'lucide-vue-next'
@@ -231,10 +206,10 @@ const errorMsg = ref("")
 window.addEventListener("error", (e) => errorMsg.value += e.message + " | ")
 window.addEventListener("unhandledrejection", (e) => errorMsg.value += e.reason + " | ")
 
-
+// List Navigasi
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
-  { name: 'Shohibul', path: '/shohibul', icon: Users },
+  { name: 'Shohibul', path: '/shohibul', icon: UserCircle2Icon },
   { name: 'Menabung', path: '/menabung', icon: Wallet },
   { name: 'Rekap', path: '/rekap', icon: BarChart3 }
 ]
@@ -281,7 +256,6 @@ onMounted(() => {
   opacity: 0;
   transform: translateY(-10px);
 }
-
 
 /* Custom CSS animations */
 @keyframes fadeIn {

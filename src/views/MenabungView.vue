@@ -2,41 +2,33 @@
   <div class="space-y-4 sm:space-y-5 pb-2" ref="containerRef">
     
     <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#022c22] via-[#064e3b] to-[#0f766e] text-white p-6 sm:p-8 shadow-[0_15px_40px_-10px_rgba(2,44,34,0.7)] border border-white/10 hero-card flex flex-col min-h-[180px] group">
-      <!-- 1. Modern Grid Base -->
       <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-60"></div>
       
-      <!-- 2. Dynamic Glowing Ambient Orbs -->
       <div class="absolute top-0 right-0 w-[80%] h-[80%] bg-emerald-400/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 7s;"></div>
       <div class="absolute bottom-0 left-0 w-[60%] h-[60%] bg-teal-500/15 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 9s; animation-delay: 1s;"></div>
       <div class="absolute top-1/2 left-[30%] w-[50%] h-[50%] bg-secondary/15 rounded-full blur-3xl -translate-y-1/2 pointer-events-none"></div>
 
-      <!-- 3. Giant Frosted Glass Geometric Rings -->
       <div class="absolute -right-20 -bottom-20 w-72 h-72 border border-white/20 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm pointer-events-none transform rotate-12"></div>
       <div class="absolute -left-16 -top-16 w-64 h-64 border border-white/10 rounded-full bg-gradient-to-tr from-white/5 to-transparent backdrop-blur-md pointer-events-none"></div>
       
-      <!-- 4. Islamic Subtle Pattern Overlay -->
       <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M36 34v-4h-4v-4h4v-4h4v4h4v4h-4v4h-4zm-8 8v-4h-4v-4h4v-4h4v4h-4v4h-4zm-8 0v-4h-4v-4h4v-4h4v4h-4v4h-4zm16 8v-4h-4v-4h4v-4h4v4h-4v4h-4z\' fill=\'%23ffffff\' fill-opacity=\'0.04\'/%3E%3C/g%3E%3C/svg%3E')] opacity-80 pointer-events-none mix-blend-overlay"></div>
 
-      <!-- 5. Floating Particles & Stars -->
       <div class="absolute top-8 left-1/4 w-1.5 h-1.5 bg-amber-300 rounded-full animate-ping pointer-events-none" style="animation-duration: 3s"></div>
       <div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-teal-300 rounded-full animate-pulse pointer-events-none" style="animation-duration: 4s"></div>
       <div class="absolute top-[40%] left-6 text-white/20 text-[10px] animate-bounce pointer-events-none" style="animation-duration: 5s">✦</div>
       <div class="absolute top-1/4 right-12 text-amber-400/30 text-sm animate-pulse pointer-events-none" style="animation-duration: 6s">✧</div>
 
-      <!-- 6. Giant Geometric Rub el Hizb (Islamic Star) Watermark -->
       <div class="absolute -right-24 -bottom-24 w-80 h-80 opacity-20 pointer-events-none animate-[spin_60s_linear_infinite]">
         <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)]"></div>
         <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)] transform rotate-45"></div>
         <div class="absolute inset-16 border border-teal-300/30 rounded-full"></div>
       </div>
 
-      <!-- 7. Sweeping Modern Light Beams -->
       <div class="absolute inset-0 pointer-events-none overflow-hidden">
         <div class="absolute top-[-50%] left-[20%] w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/30 to-transparent transform rotate-[35deg] opacity-70"></div>
         <div class="absolute top-[-50%] left-[30%] w-[2px] h-[200%] bg-gradient-to-b from-transparent via-white/10 to-transparent transform rotate-[35deg] opacity-50 blur-[1px]"></div>
       </div>
 
-      <!-- 8. Glass Overlay Shine -->
       <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.07] to-white/0 opacity-60 pointer-events-none transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
       
       <div class="relative z-10 flex flex-col h-full justify-between space-y-6">
@@ -96,6 +88,7 @@
           </div>
           
           <transition mode="out-in" enter-active-class="transition duration-300 ease-out" enter-from-class="opacity-0 translate-x-4" enter-to-class="opacity-100 translate-x-0" leave-active-class="transition duration-200 ease-in" leave-from-class="opacity-100 translate-x-0" leave-to-class="opacity-0 -translate-x-4">
+            
             <div v-if="formMode === 'setor'" class="space-y-4">
               <div 
                 @click="openShohibulModal"
@@ -103,8 +96,8 @@
               >
                 <div class="flex items-center space-x-3 truncate">
                   <div v-if="selectedShohibulData" class="flex flex-col">
-                    <span class="truncate">{{ selectedShohibulData.name }}</span>
-                    <span class="text-[10px] text-gray-400 font-semibold mt-0.5 uppercase tracking-wider">{{ selectedShohibulData.type === 'sapi' ? 'Sapi' : 'Kambing' }} • {{ selectedShohibulData.code }}</span>
+                    <span class="truncate font-extrabold">{{ selectedShohibulData.name }}</span>
+                    <span class="text-[10px] text-gray-500 font-semibold mt-0.5">Rumah {{ selectedShohibulData.code }} - {{ selectedShohibulData.address || 'Alamat tidak diketahui' }}</span>
                   </div>
                   <span v-else class="text-gray-400">— Pilih shohibul yang terdaftar —</span>
                 </div>
@@ -119,6 +112,12 @@
                 v-model="registerForm.name" 
                 type="text" 
                 placeholder="Nama Lengkap" 
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
+              />
+              <input 
+                v-model="registerForm.phone" 
+                type="tel" 
+                placeholder="Nomor HP / WhatsApp" 
                 class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
               />
               <input 
@@ -270,14 +269,10 @@
                   ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
                   : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
-                <div class="relative w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20">
-                  <div class="absolute inset-1 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
-                  <div class="absolute inset-0 rounded-full border border-teal-500/10 dark:border-teal-400/10 -rotate-12 scale-110"></div>
-                  <!-- BSI Star -->
-                  <svg class="absolute top-2.5 right-1.5 w-3 h-3 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
-                    <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
-                  </svg>
-                  <span class="font-black text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+                <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
+                
+                <div class="w-16 h-16 bg-orange-50 dark:bg-orange-900/20 rounded-full flex items-center justify-center border border-orange-200 dark:border-orange-800 shadow-sm">
+                  <span class="font-black text-orange-500 dark:text-orange-400 text-xl tracking-wider">BSI</span>
                 </div>
                 
                 <div>
@@ -334,19 +329,19 @@
           
           <div class="space-y-3">
             <label class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest block">Target Qurban</label>
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-2 gap-4">
               <button 
                 v-for="target in calcTargets" 
                 :key="target.label"
                 @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
-                class="p-3 rounded-[1.2rem] transition-all duration-300 flex flex-col justify-between items-center text-center space-y-1.5"
+                class="p-4 rounded-[1.2rem] transition-all duration-300 flex flex-col justify-between items-center text-center space-y-2"
                 :class="calc.targetName === target.label 
                   ? 'bg-primary/5 border-[2px] border-primary text-primary dark:bg-primary/20 dark:text-primary-light shadow-md scale-[1.02]' 
                   : 'bg-white dark:bg-white/[0.03] border-[1.5px] border-gray-300 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
-                <span class="text-2xl">{{ target.icon }}</span>
-                <span class="text-[10px] font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
-                <span class="text-[9px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ formatRp(target.price) }}</span>
+                <span class="text-4xl mb-1">{{ target.icon }}</span>
+                <span class="text-xs font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
+                <span class="text-[10px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ formatRp(target.price) }}</span>
               </button>
             </div>
           </div>
@@ -437,10 +432,9 @@
               :class="form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm hover:shadow-md'"
             >
               <div>
-                <h4 class="text-sm font-bold text-gray-800 dark:text-white" :class="{'text-primary dark:text-primary-light': form.shohibulId === s.id}">{{ s.name }}</h4>
+                <h4 class="text-sm font-extrabold text-gray-800 dark:text-white" :class="{'text-primary dark:text-primary-light': form.shohibulId === s.id}">{{ s.name }}</h4>
                 <div class="flex items-center space-x-2 mt-1">
-                  <span class="text-[9px] font-semibold text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded uppercase">{{ s.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}</span>
-                  <span class="text-[9px] font-bold text-gray-400">{{ s.code }}</span>
+                  <span class="text-[10px] text-gray-500 font-semibold">Rumah {{ s.code }} - {{ s.address || 'Alamat tidak diketahui' }}</span>
                 </div>
               </div>
               <div v-if="form.shohibulId === s.id" class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
@@ -481,12 +475,8 @@
 
           <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
-              <div class="relative w-10 h-10 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
-                <div class="absolute inset-0.5 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
-                <svg class="absolute top-[6px] right-[4px] w-2 h-2 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
-                  <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
-                </svg>
-                <span class="font-black text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+              <div class="w-10 h-10 bg-orange-50 dark:bg-orange-900/20 rounded-full flex items-center justify-center border border-orange-200 dark:border-orange-800 shrink-0">
+                <span class="font-black text-orange-500 dark:text-orange-400 text-sm tracking-wider">BSI</span>
               </div>
               <div class="text-left">
                 <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
@@ -570,8 +560,10 @@ const form = ref({
   paymentMethod: 'qris'
 })
 
+// Revisi: Tambah form phone
 const registerForm = ref({
   name: '',
+  phone: '',
   address: '',
   type: 'sapi'
 })
@@ -583,13 +575,11 @@ const calc = ref({
   durationMonths: 10
 })
 
-// Fungsi lokal agar angka memakai Rp. 100.000 
 const formatRp = (val) => {
   if (!val) return 'Rp. 0'
   return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
 }
 
-// Data (Revisi: Ganti nama paket menjadi angka langsung)
 const nominalPresets = [
   { label: '100 Ribu', value: 100000 },
   { label: '300 Ribu', value: 300000 },
@@ -609,16 +599,12 @@ const getPresetIcon = (value) => {
   return CoinsIcon
 }
 
+// Revisi: Hapus 4 Opsi tidak relevan, sisa Kambing & Sapi Kelompok
 const calcTargets = [
-  { label: 'Kambing Reguler', price: 2500000, type: 'kambing', icon: '🐐' },
-  { label: 'Kambing Super', price: 3000000, type: 'kambing', icon: '🐐✨' },
-  { label: 'Sapi Kelompok', price: 3000000, type: 'sapi', icon: '🐄👥' },
-  { label: 'Sapi Utuh Reg', price: 21000000, type: 'sapi', icon: '🐄' },
-  { label: 'Sapi Utuh Super', price: 25000000, type: 'sapi', icon: '🐄✨' },
-  { label: 'Sapi Jumbo', price: 35000000, type: 'sapi', icon: '🐃' }
+  { label: 'Kambing', price: 2500000, type: 'kambing', icon: '🐐' },
+  { label: 'Sapi Kelompok', price: 3000000, type: 'sapi', icon: '🐄👥' }
 ]
 
-// Computed
 const monthlyInstallment = computed(() => {
   const exactAmount = calc.value.targetValue / calc.value.durationMonths
   return Math.ceil(exactAmount / 50000) * 50000
@@ -650,6 +636,7 @@ const validationMessage = computed(() => {
     return ''
   } else {
     if (!registerForm.value.name.trim()) return 'Masukkan Nama Shohibul'
+    if (!registerForm.value.phone.trim()) return 'Masukkan Nomor HP'
     if (!registerForm.value.address.trim()) return 'Masukkan Alamat'
     if (!form.value.amount) return 'Masukkan Nominal Setoran'
     if (amountErrorMessage.value) return 'Perbaiki Nominal Setoran'
@@ -671,7 +658,7 @@ const filteredShohibulList = computed(() => {
   if (!shohibulSearchQuery.value) return store.shohibuls
   const q = shohibulSearchQuery.value.toLowerCase()
   return store.shohibuls.filter(s => 
-    s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q)
+    s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
   )
 })
 
@@ -717,7 +704,6 @@ const applyCalcToForm = () => {
   isCustomAmountSelected.value = true
   isCalculatorModalOpen.value = false
   
-  // Optional: Auto-select a shohibul if they match the target type, but for now just switch tabs
   if (window.innerWidth < 1024) {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -756,23 +742,20 @@ const confirmPayment = () => {
 }
 
 const submitDeposit = () => {
-  // Validation for Registration Mode
   if (formMode.value === 'register') {
-    if (!registerForm.value.name.trim() || !registerForm.value.address.trim()) {
-      alert('Mohon lengkapi Nama dan Alamat pendaftar.')
+    if (!registerForm.value.name.trim() || !registerForm.value.address.trim() || !registerForm.value.phone.trim()) {
+      alert('Mohon lengkapi Nama, Nomor HP, dan Alamat pendaftar.')
       return
     }
     
-    // Duplicate Name Validation
     const isDuplicate = store.shohibuls.find(s => s.name.toLowerCase() === registerForm.value.name.trim().toLowerCase())
     if (isDuplicate) {
-      alert('Pemberitahuan: Nama Anda sudah terdaftar di sistem kami. Kami akan mengalihkan Anda ke formulir Setoran untuk melanjutkan pembayaran.')
+      alert('Pemberitahuan: Nama Anda sudah terdaftar. Kami akan mengalihkan Anda ke formulir Setoran.')
       formMode.value = 'setor'
       form.value.shohibulId = isDuplicate.id
       return
     }
     
-    // Initial amount validation
     if (!form.value.amount || form.value.amount < 50000) {
       alert('Pendaftaran baru mewajibkan setoran awal minimal Rp. 50.000.')
       return
@@ -782,7 +765,6 @@ const submitDeposit = () => {
       return
     }
   } else {
-    // Validation for Setor Mode
     if (!form.value.shohibulId) {
       alert('Mohon pilih shohibul terlebih dahulu.')
       return
@@ -797,15 +779,14 @@ const submitDeposit = () => {
     }
   }
 
-  // Animation effect on button click
   const btn = event.currentTarget
   gsap.to(btn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 })
 
-  // Process Registration OR Deposit
   setTimeout(() => {
     if (formMode.value === 'register') {
       store.registerNewShohibul({
         name: registerForm.value.name.trim(),
+        phone: registerForm.value.phone.trim(), // Revisi: Simpan No HP
         address: registerForm.value.address.trim(),
         type: registerForm.value.type,
         target: registerForm.value.type === 'sapi' ? 3000000 : 2500000,
@@ -813,7 +794,6 @@ const submitDeposit = () => {
         paymentMethod: form.value.paymentMethod
       })
     } else {
-      // Simulate adding transaction to existing shohibul
       store.transactions.unshift({
         id: 'tx-' + Math.random().toString(36).substr(2, 9),
         shohibulId: form.value.shohibulId,
@@ -828,20 +808,18 @@ const submitDeposit = () => {
       store.saveToCache()
     }
     
-    // Set payment details
     paymentDetails.value = {
       amount: form.value.amount,
       paymentMethod: form.value.paymentMethod,
       vaNumber: '900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()
     }
     
-    // Open payment modal
     openPaymentModal()
     
-    // Clear forms
     form.value.amount = null
     form.value.shohibulId = ''
     registerForm.value.name = ''
+    registerForm.value.phone = ''
     registerForm.value.address = ''
     isCustomAmountSelected.value = false
     formMode.value = 'setor'
@@ -849,7 +827,6 @@ const submitDeposit = () => {
   }, 400)
 }
 
-// Watchers and Hooks
 watch(() => route.query.mode, (newMode) => {
   if (newMode === 'register') {
     formMode.value = 'register'
@@ -890,7 +867,6 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* Custom Range Slider Styling */
 input[type=range] {
   -webkit-appearance: none;
 }
