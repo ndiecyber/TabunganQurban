@@ -6,46 +6,42 @@
     <div class="min-h-screen bg-light-warm dark:bg-dark text-gray-900 dark:text-gray-100 font-sans flex flex-col relative islamic-pattern-bg transition-all duration-500">
       
       <!-- ========== DESKTOP HEADER (Hidden on mobile) ========== -->
-      <header class="hidden md:block sticky top-0 z-40 bg-white/98 dark:bg-dark/98 border-b border-gray-200 dark:border-white/5 backdrop-blur-lg shadow-sm transition-all duration-500">
+      <header class="hidden md:block sticky top-0 z-40 bg-white/98 dark:bg-dark/98 border-b border-gray-300 dark:border-white/5 backdrop-blur-lg shadow-sm transition-all duration-500">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
-          <a href="https://masjidkassiti.id" class="flex items-center space-x-3.5 group">
-            <svg viewBox="0 0 100 100" class="h-11 w-11 transition-transform duration-300 group-hover:scale-105 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Column Bases -->
-              <path d="M 18 85 L 32 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              <path d="M 68 85 L 82 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              
-              <!-- Columns (Pillars) -->
-              <path d="M 25 85 L 25 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              <path d="M 75 85 L 75 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              
-              <!-- Column Capitals (Caps) -->
-              <path d="M 20 55 L 30 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              <path d="M 70 55 L 80 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-              
-              <!-- Ogee Arch (Perfectly Centered Onion Dome) -->
-              <path d="M 25 55 C 25 35, 12 30, 50 5 C 88 30, 75 35, 75 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-              
-              <!-- KASSITI Stylized Kufic Base -->
-              <path d="M 36 85 L 36 78 M 41 85 L 41 73 M 46 85 L 46 68 M 54 85 L 54 68 M 59 85 L 59 73 M 64 85 L 64 78" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="3" stroke-linecap="square"/>
-              <path d="M 32 85 L 68 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="3" stroke-linecap="square"/>
+            <div class="flex items-center group cursor-default">
+            <svg viewBox="0 0 100 90" class="h-14 w-14 transition-transform duration-300 group-hover:scale-105 drop-shadow-sm dark:drop-shadow-[0_0_12px_rgba(16,185,129,0.4)] mr-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <mask id="goat-mask-desktop">
+                  <rect x="0" y="0" width="100" height="100" fill="white" />
+                  <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="black" transform="translate(1, -2) scale(1)"/>
+                </mask>
+              </defs>
 
-              <!-- Centered Yellow Crescent Moon -->
-              <path d="M 45 28 A 8 8 0 1 0 54 39 A 10 10 0 1 1 45 28 Z" fill="#FBBF24"/>
+              <!-- Outer pointed arch frame -->
+              <path d="M 18 85 L 12 85 L 12 45 C 12 20, 25 15, 50 2 C 75 15, 88 20, 88 45 L 88 85 L 82 85" fill="none" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <!-- Inner solid green Kufic Dome with goat cutout -->
+              <path d="M 24 60 L 24 80 L 30 80 L 30 70 L 34 70 L 34 80 L 66 80 L 66 70 L 70 70 L 70 80 L 76 80 L 76 60 C 76 45, 65 40, 50 35 C 35 40, 24 45, 24 60 Z" fill="currentColor" class="text-primary dark:text-emerald-400" mask="url(#goat-mask-desktop)"/>
+
+              <!-- Kufic Dots -->
+              <rect x="30" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+              <rect x="33" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+              <rect x="65" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+              <rect x="68" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+
+              <!-- Yellow Crescent Moon -->
+              <path d="M 42 12 A 9 9 0 1 0 52 25 A 11 11 0 1 1 42 12 Z" fill="#FBBF24"/>
               
-              <!-- Centered Yellow 5-Pointed Star -->
-              <path d="M 58 24 L 59.2 27 L 62 27.5 L 59.8 29.5 L 60.5 32 L 58 30.5 L 55.5 32 L 56.2 29.5 L 54 27.5 L 56.8 27 Z" fill="#FBBF24"/>
-              
-              <!-- Centered Solid Goat Silhouette -->
-              <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="currentColor" class="text-primary dark:text-emerald-400" transform="translate(4, -3) scale(1.05)"/>
-              <path d="M 43 56 C 44 57, 44.5 59, 44 60 C 43.2 60, 42.2 58, 43 56" fill="#F9FAFB" class="dark:fill-gray-900" transform="translate(4, -3) scale(1.05)"/>
+              <!-- Yellow 5-Pointed Star -->
+              <path d="M 58 13 L 59 16.5 L 62.5 17 L 59.5 19.5 L 60.5 23 L 57.5 21 L 54.5 23 L 55.5 19.5 L 52.5 17 L 56 16.5 Z" fill="#FBBF24"/>
             </svg>
             <div class="flex flex-col justify-center">
-              <h1 class="text-[22px] font-black text-primary dark:text-primary-light leading-none font-heading tracking-tight mb-1 transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400">Tabungan Qurban</h1>
-              <span class="text-[13px] font-bold text-gray-500 dark:text-gray-400 leading-none mb-0.5">DKM Masjid Jami Kassiti</span>
-              <span class="text-[11px] font-medium text-gray-400/80 dark:text-gray-500/80 leading-none">Qurban Bersama Untuk Sesama</span>
+              <h1 class="text-[24px] font-black text-primary dark:text-primary-light leading-none font-heading tracking-tight transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 drop-shadow-sm mb-1.5">Tabungan Qurban</h1>
+              <span class="text-[13px] font-extrabold text-gray-600 dark:text-gray-300 leading-none tracking-wide mb-1">DKM Masjid Jami Kassiti</span>
+              <span class="text-[11px] italic font-medium text-gray-400 dark:text-gray-500 leading-none">"Qurban Bersama Untuk Sesama"</span>
             </div>
-          </a>
+          </div>
 
           <!-- Desktop Navigation Links -->
           <nav class="flex items-center space-x-1">
@@ -77,7 +73,7 @@
               class="p-2.5 rounded-xl transition cursor-pointer flex items-center justify-center"
               :class="store.isDarkMode 
                 ? 'bg-white/5 border border-white/10 text-white hover:bg-white/10' 
-                : 'bg-gray-100 border border-gray-200 text-gray-600 hover:bg-gray-200'"
+                : 'bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm'"
               aria-label="Toggle Dark Mode"
             >
               <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
@@ -105,53 +101,60 @@
       <!-- ========== MOBILE HEADER (Visible on mobile only) ========== -->
       <div class="md:hidden sticky top-0 z-40">
         <!-- Top Bar: Logo + Actions -->
-        <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
+        <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[1.5px] border-gray-300 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
           <div class="flex justify-between items-center">
-            <a href="https://masjidkassiti.id" class="flex items-center space-x-2.5 group">
-              <svg viewBox="0 0 100 100" class="h-10 w-10 drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Column Bases -->
-                <path d="M 18 85 L 32 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                <path d="M 68 85 L 82 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                
-                <!-- Columns (Pillars) -->
-                <path d="M 25 85 L 25 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                <path d="M 75 85 L 75 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                
-                <!-- Column Capitals (Caps) -->
-                <path d="M 20 55 L 30 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                <path d="M 70 55 L 80 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4" stroke-linecap="round"/>
-                
-                <!-- Ogee Arch (Perfectly Centered Onion Dome) -->
-                <path d="M 25 55 C 25 35, 12 30, 50 5 C 88 30, 75 35, 75 55" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-                
-                <!-- KASSITI Stylized Kufic Base -->
-                <path d="M 36 85 L 36 78 M 41 85 L 41 73 M 46 85 L 46 68 M 54 85 L 54 68 M 59 85 L 59 73 M 64 85 L 64 78" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="3" stroke-linecap="square"/>
-                <path d="M 32 85 L 68 85" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="3" stroke-linecap="square"/>
+            <div class="flex items-center group cursor-default">
+              <svg viewBox="0 0 100 90" class="h-[52px] w-[52px] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <mask id="goat-mask-mobile">
+                    <rect x="0" y="0" width="100" height="100" fill="white" />
+                    <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="black" transform="translate(1, -2) scale(1)"/>
+                  </mask>
+                </defs>
 
-                <!-- Centered Yellow Crescent Moon -->
-                <path d="M 45 28 A 8 8 0 1 0 54 39 A 10 10 0 1 1 45 28 Z" fill="#FBBF24"/>
+                <!-- Outer pointed arch frame -->
+                <path d="M 18 85 L 12 85 L 12 45 C 12 20, 25 15, 50 2 C 75 15, 88 20, 88 45 L 88 85 L 82 85" fill="none" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+                <!-- Inner solid green Kufic Dome with goat cutout -->
+                <path d="M 24 60 L 24 80 L 30 80 L 30 70 L 34 70 L 34 80 L 66 80 L 66 70 L 70 70 L 70 80 L 76 80 L 76 60 C 76 45, 65 40, 50 35 C 35 40, 24 45, 24 60 Z" fill="currentColor" class="text-primary dark:text-emerald-400" mask="url(#goat-mask-mobile)"/>
+
+                <!-- Kufic Dots -->
+                <rect x="30" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="33" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="65" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="68" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+
+                <!-- Yellow Crescent Moon -->
+                <path d="M 42 12 A 9 9 0 1 0 52 25 A 11 11 0 1 1 42 12 Z" fill="#FBBF24"/>
                 
-                <!-- Centered Yellow 5-Pointed Star -->
-                <path d="M 58 24 L 59.2 27 L 62 27.5 L 59.8 29.5 L 60.5 32 L 58 30.5 L 55.5 32 L 56.2 29.5 L 54 27.5 L 56.8 27 Z" fill="#FBBF24"/>
-                
-                <!-- Centered Solid Goat Silhouette -->
-                <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="currentColor" class="text-primary dark:text-emerald-400" transform="translate(4, -3) scale(1.05)"/>
-                <path d="M 43 56 C 44 57, 44.5 59, 44 60 C 43.2 60, 42.2 58, 43 56" fill="#F9FAFB" class="dark:fill-gray-900" transform="translate(4, -3) scale(1.05)"/>
+                <!-- Yellow 5-Pointed Star -->
+                <path d="M 58 13 L 59 16.5 L 62.5 17 L 59.5 19.5 L 60.5 23 L 57.5 21 L 54.5 23 L 55.5 19.5 L 52.5 17 L 56 16.5 Z" fill="#FBBF24"/>
               </svg>
               <div class="flex flex-col justify-center">
-                <h2 class="text-lg font-black text-primary dark:text-primary-light font-heading leading-none tracking-tight mb-1 transition-colors">Tabungan Qurban</h2>
-                <span class="text-[11px] font-bold text-gray-500 dark:text-gray-400 leading-none mb-0.5">DKM Masjid Jami Kassiti</span>
-                <span class="text-[9px] font-medium text-gray-400/80 dark:text-gray-500/80 leading-none">Qurban Bersama Untuk Sesama</span>
+                <h2 class="text-[19px] font-black text-primary dark:text-primary-light font-heading leading-none tracking-tight drop-shadow-sm mb-1.5 transition-colors">Tabungan Qurban</h2>
+                <span class="text-[11px] font-extrabold text-gray-600 dark:text-gray-300 leading-none tracking-wide mb-1">DKM Masjid Jami Kassiti</span>
+                <span class="text-[9px] italic font-medium text-gray-400 dark:text-gray-500 leading-none">"Qurban Bersama Untuk Sesama"</span>
               </div>
-            </a>
+            </div>
             <div class="flex items-center space-x-2">
+              <!-- Back to Home / Main Site Button -->
+              <a 
+                href="https://masjidkassiti.id" 
+                class="p-2 rounded-xl transition cursor-pointer flex items-center justify-center bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm dark:bg-white/5 dark:border-[1px] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
+                aria-label="Kembali ke Web Utama"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </a>
+              
               <!-- Mobile Dark Mode Toggle -->
               <button 
                 @click="store.toggleTheme()" 
                 class="p-2 rounded-xl transition cursor-pointer"
                 :class="store.isDarkMode 
                   ? 'bg-white/5 border border-white/10 text-white hover:bg-white/10' 
-                  : 'bg-gray-100 border border-gray-200 text-gray-600 hover:bg-gray-200'"
+                  : 'bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm'"
                 aria-label="Toggle Dark Mode"
               >
                 <svg v-if="store.isDarkMode" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
@@ -166,7 +169,7 @@
         </div>
 
         <!-- Navigation Tab Bar -->
-        <div class="bg-white/90 dark:bg-dark/90 backdrop-blur-xl border-b border-gray-200/30 dark:border-white/5 px-2 shadow-sm">
+        <div class="bg-white/90 dark:bg-dark/90 backdrop-blur-xl border-b border-gray-300 dark:border-white/5 px-2 shadow-sm">
           <div class="flex items-center justify-around">
             <router-link 
               v-for="item in navItems" 
@@ -199,9 +202,9 @@
       </main>
 
       <!-- Footer -->
-      <footer class="border-t border-gray-200/50 dark:border-white/5 py-3 mt-2 text-center">
+      <footer class="border-t border-gray-300 dark:border-white/5 py-2 mt-0 text-center">
         <div class="max-w-7xl mx-auto px-4">
-          <p class="text-xs text-gray-400 dark:text-gray-600">
+          <p class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-600 font-medium tracking-wide">
             © 2026 DKM Masjid Jami Kassiti — Tabungan Qurban
           </p>
         </div>

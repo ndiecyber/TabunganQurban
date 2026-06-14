@@ -1,17 +1,52 @@
 <template>
-  <div class="space-y-6 sm:space-y-8 pb-8" ref="containerRef">
+  <div class="space-y-4 sm:space-y-5 pb-2" ref="containerRef">
     
-    <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-dark via-primary to-emerald-800 text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col min-h-[180px]">
-      <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
-      <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
+    <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#022c22] via-[#064e3b] to-[#0f766e] text-white p-6 sm:p-8 shadow-[0_15px_40px_-10px_rgba(2,44,34,0.7)] border border-white/10 hero-card flex flex-col min-h-[180px] group">
+      <!-- 1. Modern Grid Base -->
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-60"></div>
+      
+      <!-- 2. Dynamic Glowing Ambient Orbs -->
+      <div class="absolute top-0 right-0 w-[80%] h-[80%] bg-emerald-400/15 rounded-full blur-3xl translate-x-1/3 -translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 7s;"></div>
+      <div class="absolute bottom-0 left-0 w-[60%] h-[60%] bg-teal-500/15 rounded-full blur-3xl -translate-x-1/4 translate-y-1/4 pointer-events-none animate-float" style="animation-duration: 9s; animation-delay: 1s;"></div>
+      <div class="absolute top-1/2 left-[30%] w-[50%] h-[50%] bg-secondary/15 rounded-full blur-3xl -translate-y-1/2 pointer-events-none"></div>
+
+      <!-- 3. Giant Frosted Glass Geometric Rings -->
+      <div class="absolute -right-20 -bottom-20 w-72 h-72 border border-white/20 rounded-[3rem] bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm pointer-events-none transform rotate-12"></div>
+      <div class="absolute -left-16 -top-16 w-64 h-64 border border-white/10 rounded-full bg-gradient-to-tr from-white/5 to-transparent backdrop-blur-md pointer-events-none"></div>
+      
+      <!-- 4. Islamic Subtle Pattern Overlay -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cpath d=\'M36 34v-4h-4v-4h4v-4h4v4h4v4h-4v4h-4zm-8 8v-4h-4v-4h4v-4h4v4h-4v4h-4zm-8 0v-4h-4v-4h4v-4h4v4h-4v4h-4zm16 8v-4h-4v-4h4v-4h4v4h-4v4h-4z\' fill=\'%23ffffff\' fill-opacity=\'0.04\'/%3E%3C/g%3E%3C/svg%3E')] opacity-80 pointer-events-none mix-blend-overlay"></div>
+
+      <!-- 5. Floating Particles & Stars -->
+      <div class="absolute top-8 left-1/4 w-1.5 h-1.5 bg-amber-300 rounded-full animate-ping pointer-events-none" style="animation-duration: 3s"></div>
+      <div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-teal-300 rounded-full animate-pulse pointer-events-none" style="animation-duration: 4s"></div>
+      <div class="absolute top-[40%] left-6 text-white/20 text-[10px] animate-bounce pointer-events-none" style="animation-duration: 5s">✦</div>
+      <div class="absolute top-1/4 right-12 text-amber-400/30 text-sm animate-pulse pointer-events-none" style="animation-duration: 6s">✧</div>
+
+      <!-- 6. Giant Geometric Rub el Hizb (Islamic Star) Watermark -->
+      <div class="absolute -right-24 -bottom-24 w-80 h-80 opacity-20 pointer-events-none animate-[spin_60s_linear_infinite]">
+        <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)]"></div>
+        <div class="absolute inset-10 border-[1.5px] border-amber-300/40 rounded-3xl shadow-[0_0_30px_rgba(251,191,36,0.1)] transform rotate-45"></div>
+        <div class="absolute inset-16 border border-teal-300/30 rounded-full"></div>
+      </div>
+
+      <!-- 7. Sweeping Modern Light Beams -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-50%] left-[20%] w-[1px] h-[200%] bg-gradient-to-b from-transparent via-white/30 to-transparent transform rotate-[35deg] opacity-70"></div>
+        <div class="absolute top-[-50%] left-[30%] w-[2px] h-[200%] bg-gradient-to-b from-transparent via-white/10 to-transparent transform rotate-[35deg] opacity-50 blur-[1px]"></div>
+      </div>
+
+      <!-- 8. Glass Overlay Shine -->
+      <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.07] to-white/0 opacity-60 pointer-events-none transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
       
       <div class="relative z-10 flex flex-col h-full justify-between space-y-6">
         <div class="flex justify-between items-start">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
-            <span class="text-white/90 text-[10px] font-extrabold tracking-[0.2em] uppercase">Pembayaran</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
+            <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
+            <span class="text-white/90 text-[10px] font-black tracking-[0.2em] uppercase">Pembayaran</span>
           </div>
-          <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 shadow-inner">
-            <WalletIcon class="w-5 h-5 text-secondary" />
+          <div class="w-11 h-11 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-xl border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-transform duration-500">
+            <WalletIcon class="w-5 h-5 text-secondary drop-shadow-md" />
           </div>
         </div>
         
@@ -19,9 +54,9 @@
           <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
             Menabung Qurban
           </h2>
-          <div class="flex items-center space-x-2 mt-2">
-            <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-2.5 py-1 rounded-full font-bold border border-secondary/20 backdrop-blur-sm shadow-sm flex items-center">
-              <ZapIcon class="w-3 h-3 mr-1" />
+          <div class="flex items-center space-x-2 mt-4">
+            <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-3 py-1.5 rounded-full font-extrabold border border-secondary/30 backdrop-blur-md shadow-sm flex items-center">
+              <ZapIcon class="w-3.5 h-3.5 mr-1.5 opacity-90" />
               Instan & Mudah
             </span>
           </div>
@@ -45,15 +80,15 @@
         Daftar Shohibul Baru
       </button>
       <div 
-        class="absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
+        class="absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 border-[2px] border-gray-300 dark:border-white/10 rounded-xl shadow-md transition-transform duration-300 ease-out"
         :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-[calc(100%+0.375rem)]'"
       ></div>
     </div>
 
-    <div class="w-full form-panels space-y-5">
+    <div class="w-full form-panels space-y-3">
       
-      <div class="space-y-5">
-        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-4 relative overflow-hidden">
+      <div class="space-y-3">
+        <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-md space-y-3 relative overflow-hidden">
           
           <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
             <UserIcon class="w-4 h-4 text-primary dark:text-primary-light" />
@@ -64,7 +99,7 @@
             <div v-if="formMode === 'setor'" class="space-y-4">
               <div 
                 @click="openShohibulModal"
-                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] px-5 py-4 font-bold text-gray-800 dark:text-white transition-all hover:border-gray-300 dark:hover:border-white/20 cursor-pointer flex justify-between items-center group"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] px-5 py-4 font-bold text-gray-800 dark:text-white transition-all hover:border-primary/50 dark:hover:border-white/20 cursor-pointer flex justify-between items-center group shadow-sm hover:shadow-md"
               >
                 <div class="flex items-center space-x-3 truncate">
                   <div v-if="selectedShohibulData" class="flex flex-col">
@@ -84,27 +119,27 @@
                 v-model="registerForm.name" 
                 type="text" 
                 placeholder="Nama Lengkap" 
-                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
               />
               <input 
                 v-model="registerForm.address" 
                 type="text" 
                 placeholder="Alamat / Blok Perumahan" 
-                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all"
+                class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
               />
               
               <div class="grid grid-cols-2 gap-3 pt-1">
                 <div 
                   @click="registerForm.type = 'sapi'" 
-                  class="border rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
-                  :class="registerForm.type === 'sapi' ? 'border-primary bg-primary/10 text-primary dark:text-primary-light shadow-inner' : 'border-gray-200/50 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'"
+                  class="rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
+                  :class="registerForm.type === 'sapi' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
                 >
                   <span class="text-lg mr-1 block sm:inline">🐄</span> Sapi
                 </div>
                 <div 
                   @click="registerForm.type = 'kambing'" 
-                  class="border rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
-                  :class="registerForm.type === 'kambing' ? 'border-primary bg-primary/10 text-primary dark:text-primary-light shadow-inner' : 'border-gray-200/50 dark:border-white/10 text-gray-500 hover:bg-gray-50 dark:hover:bg-white/5'"
+                  class="rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
+                  :class="registerForm.type === 'kambing' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
                 >
                   <span class="text-lg mr-1 block sm:inline">🐐</span> Kambing
                 </div>
@@ -120,7 +155,7 @@
           </transition>
         </div>
 
-        <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-6">
+        <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-md space-y-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
               <CoinsIcon class="w-4 h-4 text-secondary" />
@@ -133,30 +168,30 @@
             </button>
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
             <button 
               v-for="preset in nominalPresets" 
               :key="preset.value"
               type="button"
               @click="selectPreset(preset.value)"
-              class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center justify-center space-y-1.5"
+              class="rounded-[1.2rem] p-3 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center justify-center space-y-1.5 group"
               :class="form.amount === preset.value && !isCustomAmountSelected
-                ? 'border-primary bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light font-black shadow-inner' 
-                : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-gray-300 dark:hover:border-white/20 font-bold'"
+                ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light font-black shadow-lg scale-[1.03]' 
+                : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 font-bold shadow-md hover:shadow-lg'"
             >
-              <span class="text-xs sm:text-sm font-extrabold">{{ preset.label }}</span>
-              <span class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500">{{ formatRp(preset.value) }}</span>
+              <component :is="getPresetIcon(preset.value)" class="w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300 group-hover:scale-110" />
+              <span class="text-[11px] sm:text-xs text-gray-700 dark:text-gray-300 font-bold tracking-widest">{{ formatRp(preset.value) }}</span>
             </button>
           </div>
 
           <div 
             @click="activateCustomAmount"
-            class="border rounded-[1.2rem] p-4 cursor-pointer transition-all duration-300 select-none flex items-center justify-between"
+            class="rounded-[1.2rem] p-3 sm:p-3.5 mt-2.5 cursor-pointer transition-all duration-300 select-none flex items-center justify-between"
             :class="isCustomAmountSelected 
-              ? 'border-primary bg-primary/10 dark:bg-primary/20 shadow-inner' 
-              : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
+              ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-lg scale-[1.02]' 
+              : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] shadow-md hover:shadow-lg hover:border-primary/50'"
           >
-            <div class="flex items-center space-x-4 text-left">
+            <div class="flex items-center space-x-3 text-left">
               <div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-gray-500 dark:text-gray-400">
                 <Edit3Icon class="w-5 h-5" />
               </div>
@@ -217,8 +252,8 @@
                 @click="form.paymentMethod = 'qris'"
                 class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
                 :class="form.paymentMethod === 'qris' 
-                  ? 'border-primary bg-primary/10 dark:bg-primary/20 shadow-inner' 
-                  : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
+                  ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                  : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
                 <div v-if="form.paymentMethod === 'qris'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
                 <QrCodeIcon class="w-8 h-8 text-primary dark:text-primary-light" />
@@ -232,13 +267,17 @@
                 @click="form.paymentMethod = 'va'"
                 class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
                 :class="form.paymentMethod === 'va' 
-                  ? 'border-primary bg-primary/10 dark:bg-primary/20 shadow-inner' 
-                  : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
+                  ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                  : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
-                <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
-                
-                <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center shadow-inner border border-orange-200">
-                  <span class="font-black text-orange-600 dark:text-orange-400 text-sm tracking-wider">BSI</span>
+                <div class="relative w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20">
+                  <div class="absolute inset-1 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
+                  <div class="absolute inset-0 rounded-full border border-teal-500/10 dark:border-teal-400/10 -rotate-12 scale-110"></div>
+                  <!-- BSI Star -->
+                  <svg class="absolute top-2.5 right-1.5 w-3 h-3 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
+                    <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
+                  </svg>
+                  <span class="font-black text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
                 </div>
                 
                 <div>
@@ -300,10 +339,10 @@
                 v-for="target in calcTargets" 
                 :key="target.label"
                 @click="calc.targetValue = target.price; calc.targetName = target.label; calc.targetType = target.type"
-                class="p-3 rounded-[1.2rem] border transition-all duration-300 flex flex-col justify-between items-center text-center space-y-1.5"
+                class="p-3 rounded-[1.2rem] transition-all duration-300 flex flex-col justify-between items-center text-center space-y-1.5"
                 :class="calc.targetName === target.label 
-                  ? 'bg-primary/10 border-primary text-primary dark:bg-primary/20 dark:text-primary-light shadow-inner' 
-                  : 'bg-white dark:bg-white/[0.03] border-gray-200/50 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-gray-300 dark:hover:border-white/20'"
+                  ? 'bg-primary/5 border-[2px] border-primary text-primary dark:bg-primary/20 dark:text-primary-light shadow-md scale-[1.02]' 
+                  : 'bg-white dark:bg-white/[0.03] border-[1.5px] border-gray-300 dark:border-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
                 <span class="text-2xl">{{ target.icon }}</span>
                 <span class="text-[10px] font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
@@ -334,7 +373,7 @@
             </div>
           </div>
 
-          <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.05] dark:to-white/[0.02] border border-gray-200/50 dark:border-white/10 p-5 rounded-[1.5rem] mt-2 relative overflow-hidden group">
+          <div class="bg-gray-50 dark:bg-white/[0.03] border-[1.5px] border-gray-300 dark:border-white/10 p-5 rounded-[1.5rem] mt-2 relative overflow-hidden group shadow-md">
             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
             
             <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Setoran</p>
@@ -382,20 +421,20 @@
               v-model="shohibulSearchQuery" 
               type="text" 
               placeholder="Cari nama atau kode jamaah..." 
-              class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all"
+              class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-xl pl-10 pr-4 py-3 font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
             />
             <div class="absolute left-3 top-3.5 text-gray-400">
               <SearchIcon class="w-4 h-4" />
             </div>
           </div>
 
-          <div class="overflow-y-auto custom-scrollbar flex-1 -mx-2 px-2 pb-4 space-y-2">
+          <div class="overflow-y-auto custom-scrollbar flex-1 -mx-4 px-4 pb-4 space-y-3">
             <div 
               v-for="s in filteredShohibulList" 
               :key="s.id"
               @click="selectShohibul(s.id)"
-              class="p-4 rounded-[1.2rem] border transition-all duration-200 cursor-pointer flex justify-between items-center"
-              :class="form.shohibulId === s.id ? 'border-primary bg-primary/5 dark:bg-primary/10' : 'border-gray-100 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/[0.02]'"
+              class="p-4 rounded-[1.2rem] transition-all duration-200 cursor-pointer flex justify-between items-center"
+              :class="form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm hover:shadow-md'"
             >
               <div>
                 <h4 class="text-sm font-bold text-gray-800 dark:text-white" :class="{'text-primary dark:text-primary-light': form.shohibulId === s.id}">{{ s.name }}</h4>
@@ -442,8 +481,12 @@
 
           <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
-              <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                <span class="font-black text-orange-600 dark:text-orange-400 text-[10px]">BSI</span>
+              <div class="relative w-10 h-10 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                <div class="absolute inset-0.5 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
+                <svg class="absolute top-[6px] right-[4px] w-2 h-2 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
+                  <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
+                </svg>
+                <span class="font-black text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
               </div>
               <div class="text-left">
                 <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
@@ -498,7 +541,7 @@ import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
   Edit3Icon, CheckIcon, QrCodeIcon, LandmarkIcon, ArrowRightIcon,
-  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon
+  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon, CreditCardIcon
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
@@ -555,6 +598,16 @@ const nominalPresets = [
   { label: '4 Juta', value: 4000000 },
   { label: 'Lunas 1 Slot', value: 3000000 }
 ]
+
+const getPresetIcon = (value) => {
+  if (value === 100000) return CoinsIcon
+  if (value === 300000) return CoinsIcon
+  if (value === 500000) return WalletIcon
+  if (value === 1000000) return CreditCardIcon
+  if (value === 3000000) return CheckCircleIcon // Lunas
+  if (value === 4000000) return LandmarkIcon
+  return CoinsIcon
+}
 
 const calcTargets = [
   { label: 'Kambing Reguler', price: 2500000, type: 'kambing', icon: '🐐' },
