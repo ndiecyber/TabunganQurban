@@ -3,142 +3,141 @@
     
     <div class="flex flex-col gap-4 sm:gap-6">
         
-        <div class="order-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary-dark to-dark text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col justify-between min-h-[240px]">
-          <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
-          <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
-          <div class="absolute right-[20%] bottom-[-10%] w-32 h-32 rounded-full bg-primary-light/10 blur-2xl pointer-events-none"></div>
+        <!-- UNIFIED DASHBOARD CARD -->
+        <div class="order-1 bg-white dark:bg-white/[0.03] border-2 border-gray-300 dark:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-lg overflow-hidden flex flex-col relative z-10">
           
-          <div class="relative z-10 flex flex-col h-full justify-between space-y-8">
+          <!-- Hero Section (Saldo) -->
+          <div class="relative overflow-hidden bg-gradient-to-br from-primary via-primary-dark to-dark text-white p-5 sm:p-6 hero-card flex flex-col justify-between">
+            <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
+            <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
             
-            <div class="flex justify-between items-start">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
-                <span class="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
-                <span class="text-white/90 text-[10px] font-extrabold tracking-[0.2em] uppercase">Target Qurban 2027 (1448 H)</span>
-              </div>
-              
-              <div class="bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10 shadow-sm text-right flex items-center gap-2">
-                <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                  <span class="text-xs">🕋</span> 
+            <div class="relative z-10 flex flex-col h-full space-y-4 sm:space-y-5">
+              <div class="flex justify-between items-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
+                  <span class="text-white/90 text-[8px] sm:text-[9px] font-bold tracking-widest uppercase flex flex-col leading-tight">
+                    <span>TARGET QURBAN</span>
+                    <span>2027 (1448 H)</span>
+                  </span>
                 </div>
-                <div>
-                  <span class="text-white font-black text-[10px] uppercase tracking-wider block leading-none">Tabungan Qurban</span>
-                  <span class="text-teal-200 font-bold text-[8px] uppercase tracking-widest block mt-0.5">DKM Masjid</span>
-                </div>
-              </div>
-            </div>
-            
-            <div>
-              <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Tabungan Qurban</p>
-              <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
-                {{ formatRp(Math.round(animatedStats.collected)) }}
-              </h2>
-              <div class="flex items-center space-x-2 mt-2.5">
-                <p class="text-xs text-teal-200/80 font-medium">Target: {{ formatRp(store.targetTotal) }}</p>
-                <span class="text-[9px] bg-secondary/20 text-secondary-light px-2 py-0.5 rounded-full font-bold border border-secondary/20 backdrop-blur-sm">{{ Math.round(animatedStats.percentage) }}% Tercapai</span>
-              </div>
-              <p class="text-[8px] text-teal-200/60 mt-1 italic">*Pencapaian target tidak bersifat mengikat dan mengikuti harga pasar tahun depan.</p>
-            </div>
-
-            <div class="space-y-4 pt-2">
-              <div class="space-y-2">
-                <div class="w-full h-1.5 sm:h-2 bg-black/20 rounded-full overflow-hidden backdrop-blur-sm">
-                  <div 
-                    class="h-full bg-gradient-to-r from-secondary to-amber-300 rounded-full transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(217,119,6,0.6)]"
-                    :style="{ width: Math.round(animatedStats.percentage) + '%' }"
-                  ></div>
-                </div>
-                <div class="flex justify-between items-center text-[10px] text-teal-100/60 font-semibold">
-                  <div class="flex space-x-3">
-                    <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ store.sapiCount }} Sapi</span>
-                    <span class="flex items-center"><span class="mr-1 opacity-80">🐐</span> {{ store.kambingCount }} Kambing</span>
+                
+                <div class="bg-white/10 px-2.5 py-1.5 rounded-full backdrop-blur-md border border-white/10 text-right flex items-center gap-2 shadow-sm">
+                  <div class="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                    <span class="text-[10px]">🕋</span> 
                   </div>
-                  <span>{{ (store.targetTotal / 1000000).toFixed(1) }} Juta</span>
+                  <div class="flex flex-col text-left">
+                    <span class="text-white font-black text-[9px] uppercase tracking-wider block leading-tight">TABUNGAN QURBAN</span>
+                    <span class="text-teal-100 font-bold text-[7.5px] uppercase tracking-widest block leading-none">DKM MASJID</span>
+                  </div>
                 </div>
               </div>
               
-              <div class="flex gap-3 pt-2">
-                <router-link to="/menabung" class="flex-1 bg-secondary hover:bg-secondary-light text-white text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center transition-all shadow-lg shadow-secondary/20">
-                  Mulai Menabung
-                </router-link>
-                <router-link to="/menabung?mode=register" class="flex-1 bg-white/10 hover:bg-white/20 text-white border border-white/10 text-xs sm:text-sm font-bold py-3.5 rounded-2xl text-center backdrop-blur-md transition-all shadow-lg">
-                  Daftar Shohibul
-                </router-link>
+              <div class="pt-1">
+                <p class="text-[10px] sm:text-[11px] text-teal-100/80 font-bold tracking-widest uppercase mb-0.5">Total Tabungan Qurban</p>
+                <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight leading-none mb-2">
+                  {{ formatRp(Math.round(animatedStats.collected)) }}
+                </h2>
+                <div class="flex items-center space-x-2">
+                  <p class="text-[10px] sm:text-xs text-teal-200/90 font-semibold">Target: {{ formatRp(store.targetTotal) }}</p>
+                  <span class="text-[8px] bg-secondary/20 text-secondary-light px-1.5 py-0.5 rounded-full font-bold border border-secondary/20">{{ Math.round(animatedStats.percentage) }}% Tercapai</span>
+                </div>
+                <p class="text-[7.5px] sm:text-[8px] text-teal-100/60 italic mt-1.5 font-medium leading-snug">
+                  *Pencapaian target tidak bersifat mengikat dan mengikuti harga pasar tahun depan.
+                </p>
+              </div>
+
+              <div class="space-y-3 pt-1">
+                <div class="space-y-1.5">
+                  <div class="w-full h-1.5 bg-black/30 rounded-full overflow-hidden backdrop-blur-sm">
+                    <div 
+                      class="h-full bg-gradient-to-r from-secondary to-amber-300 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(217,119,6,0.6)]"
+                      :style="{ width: Math.round(animatedStats.percentage) + '%' }"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-teal-100/80 font-semibold px-0.5">
+                    <div class="flex space-x-3">
+                      <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ store.sapiCount }} Sapi</span>
+                      <span class="flex items-center"><span class="mr-1 opacity-80">🐐</span> {{ store.kambingCount }} Kambing</span>
+                    </div>
+                    <span>{{ (store.targetTotal / 1000000).toFixed(1) }} Juta</span>
+                  </div>
+                </div>
+                
+                <div class="flex gap-3 pt-1">
+                  <router-link to="/menabung" class="flex-1 bg-secondary hover:bg-secondary-light text-white text-[11px] sm:text-xs font-bold py-2.5 rounded-xl text-center transition-all shadow-md shadow-secondary/20">
+                    Mulai Menabung
+                  </router-link>
+                  <router-link to="/menabung?mode=register" class="flex-1 bg-white/10 hover:bg-white/20 text-white border border-white/10 text-[11px] sm:text-xs font-bold py-2.5 rounded-xl text-center backdrop-blur-md transition-all shadow-sm">
+                    Daftar Shohibul
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="order-2 grid grid-cols-4 gap-3 sm:gap-4 quick-actions">
-          <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-primary/30 transition-all duration-300 text-primary dark:text-primary-light">
-              <WalletIcon class="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-primary dark:group-hover:text-primary-light">Setor / Daftar</span>
-          </router-link>
+          <!-- Divider -->
+          <div class="h-px w-full bg-gray-200 dark:bg-white/10"></div>
 
-          <router-link to="/shohibul" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-secondary/30 transition-all duration-300 text-secondary">
-              <UsersIcon class="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-secondary">Shohibul</span>
-          </router-link>
+          <!-- Quick Actions Section -->
+          <div class="py-5 px-3 sm:px-6 flex justify-around items-start w-full quick-actions bg-white dark:bg-transparent">
+            <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer flex-1">
+              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[1.5px] border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] shadow-[0_2px_10px_rgba(0,0,0,0.02)] group-hover:bg-primary/5 dark:group-hover:bg-primary/10 flex items-center justify-center text-primary dark:text-primary-light transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 mb-2">
+                <WalletIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
+              </div>
+              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-primary dark:group-hover:text-primary-light leading-tight">Setor</span>
+            </router-link>
 
-          <router-link to="/menabung?mode=kalkulator" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-emerald-500/30 transition-all duration-300 text-emerald-600 dark:text-emerald-400">
-              <CalculatorIcon class="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400">Kalkulator</span>
-          </router-link>
+            <router-link to="/shohibul" class="flex flex-col items-center group cursor-pointer flex-1">
+              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[1.5px] border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] shadow-[0_2px_10px_rgba(0,0,0,0.02)] group-hover:bg-secondary/5 dark:group-hover:bg-secondary/10 flex items-center justify-center text-secondary transition-all duration-300 group-hover:-translate-y-1 group-hover:border-secondary/40 mb-2">
+                <UsersIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
+              </div>
+              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-secondary leading-tight">Shohibul</span>
+            </router-link>
 
-          <router-link to="/rekap" class="flex flex-col items-center group cursor-pointer">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:-translate-y-1 group-hover:border-blue-500/30 transition-all duration-300 text-blue-600 dark:text-blue-400">
-              <FileTextIcon class="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <span class="text-[10px] sm:text-xs font-bold text-gray-600 dark:text-gray-400 mt-2.5 text-center transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">Laporan</span>
-          </router-link>
-        </div>
+            <router-link to="/menabung?mode=kalkulator" class="flex flex-col items-center group cursor-pointer flex-1">
+              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[1.5px] border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] shadow-[0_2px_10px_rgba(0,0,0,0.02)] group-hover:bg-emerald-500/5 dark:group-hover:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-emerald-500/40 mb-2">
+                <CalculatorIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
+              </div>
+              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 leading-tight">Hitung</span>
+            </router-link>
 
-        <div class="order-4 sm:order-3 flex flex-col sm:grid sm:grid-cols-3 gap-3 sm:gap-4 quick-stats">
-          
-          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] sm:rounded-3xl p-4 flex items-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-              <UsersIcon class="w-32 h-32" />
-            </div>
-            <div class="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0 mr-3">
-              <UsersIcon class="w-5 h-5" />
-            </div>
-            <div class="flex-1">
-              <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">Total Shohibul</p>
-              <p class="text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.shohibuls) }}</p>
-            </div>
+            <router-link to="/rekap" class="flex flex-col items-center group cursor-pointer flex-1">
+              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[1.5px] border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] shadow-[0_2px_10px_rgba(0,0,0,0.02)] group-hover:bg-blue-500/5 dark:group-hover:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-blue-500/40 mb-2">
+                <FileTextIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
+              </div>
+              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400 leading-tight">Laporan</span>
+            </router-link>
           </div>
 
-          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] sm:rounded-3xl p-4 flex items-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-              <CheckCircleIcon class="w-32 h-32" />
+          <!-- Divider -->
+          <div class="h-px w-full bg-gray-200 dark:bg-white/10"></div>
+
+          <!-- Quick Stats Section -->
+          <div class="p-4 sm:p-5 grid grid-cols-3 divide-x divide-gray-200 dark:divide-white/10 quick-stats bg-gray-50/80 dark:bg-transparent">
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-7 h-7 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light mb-1.5 group-hover:scale-110 transition-transform">
+                <UsersIcon class="w-4 h-4" />
+              </div>
+              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.shohibuls) }}</p>
+              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Shohibul</p>
             </div>
-            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0 mr-3">
-              <CheckCircleIcon class="w-5 h-5" />
+
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-1.5 group-hover:scale-110 transition-transform">
+                <CheckCircleIcon class="w-4 h-4" />
+              </div>
+              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.lunas) }}</p>
+              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Lunas</p>
             </div>
-            <div class="flex-1">
-              <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">Sudah Lunas</p>
-              <p class="text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.lunas) }}</p>
+
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-1.5 group-hover:scale-110 transition-transform">
+                <ClockIcon class="w-4 h-4" />
+              </div>
+              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
+              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Proses</p>
             </div>
           </div>
-
-          <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.25rem] sm:rounded-3xl p-4 flex items-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-              <ClockIcon class="w-32 h-32" />
-            </div>
-            <div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mr-3">
-              <ClockIcon class="w-5 h-5" />
-            </div>
-            <div class="flex-1">
-              <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5">Dalam Proses</p>
-              <p class="text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.proses) }}</p>
-            </div>
-          </div>
-
         </div>
 
       <div class="order-3 sm:order-4 space-y-4 recent-payments-list pt-2 sm:pt-4">
