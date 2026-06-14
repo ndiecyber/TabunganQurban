@@ -10,10 +10,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <!-- Logo & Title -->
           <a href="https://masjidkassiti.id" class="flex items-center space-x-3 group">
-            <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
-            <div class="border-l border-gray-200 dark:border-gray-700 pl-3">
-              <span class="sr-only">DKM Jami Kassiti</span>
-              <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight ">Tabungan Qurban</h1>
+            <div>
+              <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight">Tabungan Qurban</h1>
+              <span class="block text-[11px] text-gray-400 dark:text-gray-500 font-medium mt-0.5">DKM Masjid Jami Kassiti</span>
+              <span class="block text-[10px] text-gray-400 dark:text-gray-500 font-medium mt-0.5">Qurban Bersama Untuk Sesama</span>
             </div>
           </a>
 
@@ -77,11 +77,11 @@
         <!-- Top Bar: Logo + Actions -->
         <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
           <div class="flex justify-between items-center">
-            <a href="https://masjidkassiti.id" class="flex items-center space-x-2.5">
-              <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Logo" class="h-9 w-auto" />
-              <div class="border-l border-gray-200 dark:border-gray-700 pl-2.5">
-                <h2 class="text-sm font-bold text-primary dark:text-primary-light  leading-tight">Tabungan Qurban</h2>
-                <span class="text-[9px] text-gray-400 dark:text-gray-500 font-medium">DKM Masjid Jami Kassiti</span>
+            <a href="https://masjidkassiti.id" class="flex items-center space-x-3">
+              <div>
+                <h2 class="text-sm font-bold text-primary dark:text-primary-light leading-tight">Tabungan Qurban</h2>
+                <span class="block text-[10px] text-gray-400 dark:text-gray-500 font-medium mt-0.5">DKM Masjid Jami Kassiti</span>
+                <span class="block text-[9px] text-gray-400 dark:text-gray-500 font-bold tracking-wide mt-0.5">Qurban Bersama Untuk Sesama</span>
               </div>
             </a>
             <div class="flex items-center space-x-2">
