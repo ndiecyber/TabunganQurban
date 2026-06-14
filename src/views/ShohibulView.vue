@@ -18,7 +18,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-black text-white  drop-shadow-lg tracking-tight">
             Data Shohibul
           </h2>
           <div class="flex items-center space-x-3 mt-2">
@@ -187,7 +187,7 @@
               </div>
               <div>
                 <div class="flex items-center space-x-2">
-                  <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">{{ selectedShohibul.name }}</h3>
+                  <h3 class="text-xl font-black text-gray-800 dark:text-white ">{{ selectedShohibul.name }}</h3>
                   <span class="px-2 py-0.5 bg-gray-100 dark:bg-white/5 text-[9px] text-gray-500 dark:text-gray-400 font-bold rounded uppercase tracking-widest border border-gray-200 dark:border-white/10">{{ selectedShohibul.code }}</span>
                 </div>
                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 font-medium">{{ selectedShohibul.address }}</p>
@@ -324,7 +324,7 @@
           </div>
           
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
+          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-sans">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
 
           <div class="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6">
             <div class="flex justify-between items-center text-sm">

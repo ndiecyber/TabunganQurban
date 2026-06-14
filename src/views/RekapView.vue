@@ -19,7 +19,7 @@
         
         <div>
           <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban 2025</p>
-          <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-4xl sm:text-5xl font-black text-white font-sans drop-shadow-lg tracking-tight">
             {{ store.formatRupiahFull(store.totalCollected) }}
           </h2>
           <div class="flex items-center space-x-2 mt-2.5">
@@ -44,7 +44,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Terkumpul</p>
-          <p class="text-sm sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ store.formatRupiah(store.totalCollected) }}</p>
+          <p class="text-sm sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans truncate">{{ store.formatRupiah(store.totalCollected) }}</p>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Lunas</p>
-          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
         </div>
       </div>
 
@@ -70,7 +70,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Progress</p>
-          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ store.averageProgress }}%</p>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
       <!-- Top Tabungan (Leaderboard) -->
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-4">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white  flex items-center">
             <TrophyIcon class="w-4 h-4 mr-2 text-secondary" />
             Top Tabungan
           </h4>
@@ -116,7 +116,7 @@
       <!-- Per Hewan Progress -->
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-6">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white  flex items-center">
             <TargetIcon class="w-4 h-4 mr-2 text-primary dark:text-primary-light" />
             Target Hewan
           </h4>
@@ -177,7 +177,7 @@
     <!-- KELOMPOK SAPI (Responsive Horizontal Scroll on Mobile, Grid on Desktop) -->
     <div class="space-y-4 groups-widget">
       <div class="flex justify-between items-center px-1">
-        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Kelompok Sapi Qurban</h4>
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white ">Kelompok Sapi Qurban</h4>
         <span class="px-3 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[10px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
       </div>
 
@@ -243,7 +243,7 @@
     <!-- AKTIVITAS TERBARU (Consistent with Dashboard) -->
     <div class="space-y-4 recent-payments-list">
       <div class="flex justify-between items-center px-1">
-        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Aktivitas Terbaru</h4>
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white ">Aktivitas Terbaru</h4>
       </div>
 
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-3 sm:p-4 shadow-sm">

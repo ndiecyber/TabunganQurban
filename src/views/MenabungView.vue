@@ -18,7 +18,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-black text-white  drop-shadow-lg tracking-tight">
             Menabung Qurban
           </h2>
           <div class="flex items-center space-x-2 mt-2">
@@ -273,7 +273,7 @@
             <button 
               v-else
               @click="submitDeposit"
-              class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
+              class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2  tracking-wide"
             >
               <span>{{ formMode === 'register' ? 'Daftar & Lanjutkan Pembayaran' : 'Lanjutkan Pembayaran' }}</span>
               <ArrowRightIcon class="w-4 h-4 ml-1" />
@@ -302,7 +302,7 @@
           <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
             <div class="flex items-center space-x-2">
               <CalculatorIcon class="w-5 h-5 text-secondary" />
-              <h3 class="text-base font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
+              <h3 class="text-base font-black text-gray-800 dark:text-white ">Simulasi Rencana Qurban</h3>
             </div>
             <button @click="isCalculatorModalOpen = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100 dark:bg-white/5 p-1.5 rounded-full transition-colors">
               <XIcon class="w-5 h-5" />
@@ -358,7 +358,7 @@
             
             <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Setoran</p>
             <div class="flex items-end space-x-2 relative z-10">
-              <span class="text-3xl font-black text-gray-800 dark:text-white font-heading tracking-tight">{{ store.formatRupiahFull(monthlyInstallment) }}</span>
+              <span class="text-3xl font-black text-gray-800 dark:text-white font-sans tracking-tight">{{ store.formatRupiahFull(monthlyInstallment) }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1.5">/ bulan</span>
             </div>
             
@@ -391,7 +391,7 @@
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeShohibulModal"></div>
           
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">Pilih Shohibul Qurban</h3>
+            <h3 class="text-lg font-black text-gray-800 dark:text-white ">Pilih Shohibul Qurban</h3>
             <button @click="closeShohibulModal" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
               <XIcon class="w-5 h-5" />
             </button>
@@ -452,7 +452,7 @@
             <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <ClockIcon class="w-8 h-8 text-primary" />
             </div>
-            <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
+            <h3 class="text-xl font-black text-gray-800 dark:text-white ">Menunggu Pembayaran</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum besok pukul 23:59 WIB</p>
           </div>
 

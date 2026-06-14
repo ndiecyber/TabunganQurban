@@ -13,7 +13,7 @@
             <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Jami Kassiti" class="h-10 w-auto" />
             <div class="border-l border-gray-200 dark:border-gray-700 pl-3">
               <span class="sr-only">DKM Jami Kassiti</span>
-              <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight font-heading">Tabungan Qurban</h1>
+              <h1 class="text-base font-bold text-primary dark:text-primary-light leading-tight ">Tabungan Qurban</h1>
             </div>
           </a>
 
@@ -80,7 +80,7 @@
             <a href="https://masjidkassiti.id" class="flex items-center space-x-2.5">
               <img :src="store.isDarkMode ? '/logo-kassiti-dark.png' : '/logo-kassiti-light.png'" alt="DKM Logo" class="h-9 w-auto" />
               <div class="border-l border-gray-200 dark:border-gray-700 pl-2.5">
-                <h2 class="text-sm font-bold text-primary dark:text-primary-light font-heading leading-tight">Tabungan Qurban</h2>
+                <h2 class="text-sm font-bold text-primary dark:text-primary-light  leading-tight">Tabungan Qurban</h2>
                 <span class="text-[9px] text-gray-400 dark:text-gray-500 font-medium">DKM Masjid Jami Kassiti</span>
               </div>
             </a>

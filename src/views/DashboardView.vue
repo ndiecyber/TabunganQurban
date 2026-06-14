@@ -26,7 +26,7 @@
             
             <div>
               <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Tabungan Qurban</p>
-              <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+              <h2 class="text-4xl sm:text-5xl font-black text-white font-sans drop-shadow-lg tracking-tight">
                 {{ store.formatRupiahFull(Math.round(animatedStats.collected)) }}
               </h2>
               <div class="flex items-center space-x-2 mt-2.5">
@@ -104,7 +104,7 @@
           </div>
           <div>
             <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Total Shohibul</p>
-            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.shohibuls) }}</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ Math.round(animatedStats.shohibuls) }}</p>
           </div>
           <div class="w-12 h-12 rounded-2xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0">
             <UsersIcon class="w-6 h-6" />
@@ -117,7 +117,7 @@
           </div>
           <div>
             <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Sudah Lunas</p>
-            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.lunas) }}</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ Math.round(animatedStats.lunas) }}</p>
           </div>
           <div class="w-12 h-12 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0">
             <CheckCircleIcon class="w-6 h-6" />
@@ -130,7 +130,7 @@
           </div>
           <div>
             <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Dalam Proses</p>
-            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.proses) }}</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ Math.round(animatedStats.proses) }}</p>
           </div>
           <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
             <ClockIcon class="w-6 h-6" />
@@ -141,7 +141,7 @@
       <!-- RECENT TRANSACTIONS (Above Stats on Mobile) -->
       <div class="order-3 sm:order-4 space-y-4 recent-payments-list pt-2 sm:pt-4">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Setoran Terbaru</h4>
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white ">Setoran Terbaru</h4>
           <router-link to="/shohibul" class="text-xs font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-4 py-2 rounded-full">
             Lihat Semua
           </router-link>
@@ -197,7 +197,7 @@
             </div>
             
             <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-            <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-sans">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
 
             <div class="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6">
               <div class="flex justify-between items-center text-sm">
