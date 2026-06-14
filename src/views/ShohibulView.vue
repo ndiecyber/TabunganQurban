@@ -1,9 +1,7 @@
 <template>
   <div class="space-y-6 sm:space-y-8 pb-8" ref="containerRef">
     
-    <!-- HERO CARD -->
     <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-dark via-primary to-teal-800 text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col min-h-[180px]">
-      <!-- Background Elements -->
       <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
       <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
       
@@ -18,7 +16,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white  drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
             Data Shohibul
           </h2>
           <div class="flex items-center space-x-3 mt-2">
@@ -33,7 +31,6 @@
       </div>
     </div>
 
-    <!-- Search Input -->
     <div class="relative search-box">
       <input 
         v-model="searchQuery" 
@@ -46,7 +43,6 @@
       </div>
     </div>
 
-    <!-- Filtering Badges -->
     <div class="flex space-x-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 custom-scrollbar filter-scroll">
       <button 
         v-for="filter in filters" 
@@ -62,20 +58,17 @@
       </button>
     </div>
 
-    <!-- Count Indicator -->
     <div class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 px-1 font-bold tracking-wide uppercase count-label">
       Menampilkan {{ filteredShohibuls.length }} dari {{ store.shohibuls.length }} shohibul
     </div>
 
-    <!-- Shohibuls Card Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 shohibul-cards-container">
       <div 
         v-for="shohibul in filteredShohibuls" 
         :key="shohibul.id"
         @click="openDetails(shohibul, $event)"
-        class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col justify-between space-y-5 group"
+        class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 shadow-sm cursor-pointer hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col justify-between space-y-3 group"
       >
-        <!-- Top Row: Avatar Initials + Name/Address + Code -->
         <div class="flex justify-between items-start">
           <div class="flex items-center space-x-4">
             <div 
@@ -86,28 +79,35 @@
             </div>
             <div>
               <h3 class="text-sm font-extrabold text-gray-800 dark:text-white leading-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ shohibul.name }}</h3>
-              <p class="text-[10px] text-gray-400 dark:text-gray-500 mt-1 font-semibold">
-                {{ shohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
-              </p>
+              <div class="text-[10px] text-gray-500 mt-1 space-y-0.5 font-medium">
+                 <p class="flex items-center"><MapPinIcon class="w-2.5 h-2.5 mr-1 text-gray-400" /> {{ shohibul.address || 'Belum ada alamat' }}</p>
+                 <p class="flex items-center"><PhoneIcon class="w-2.5 h-2.5 mr-1 text-gray-400" /> {{ shohibul.phone || '08XX-XXXX-XXXX' }}</p>
+              </div>
             </div>
           </div>
-          <span class="px-2 py-1 bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 rounded-md text-[9px] font-bold uppercase tracking-widest">
-            {{ shohibul.code }}
-          </span>
+          <button @click.stop="openDetails(shohibul, $event)" class="px-3 py-1.5 bg-primary/10 text-primary dark:text-primary-light rounded-lg text-[9px] font-bold uppercase tracking-widest flex items-center hover:bg-primary/20 transition-colors">
+            Detail
+          </button>
         </div>
 
-        <!-- Progress Bar Section -->
+        <div class="flex justify-between items-center bg-gray-50 dark:bg-white/[0.02] p-2 rounded-xl mt-2 mb-1">
+          <span class="text-[10px] font-bold text-gray-600 dark:text-gray-300">
+            {{ shohibul.type === 'sapi' ? '🐄 Sapi' : '🐐 Kambing' }}
+          </span>
+          <span class="text-[10px] font-black text-primary dark:text-primary-light uppercase tracking-widest">{{ shohibul.code }}</span>
+        </div>
+
         <div class="space-y-2">
           <div class="flex justify-between items-end">
             <div>
               <p class="text-[10px] text-gray-400 dark:text-gray-500 font-semibold mb-0.5">Terkumpul</p>
               <div class="flex items-center flex-wrap gap-1.5">
                 <p class="text-sm font-black text-gray-800 dark:text-white">
-                  {{ store.formatRupiahFull(shohibul.collected) }}
+                  {{ formatRp(shohibul.collected) }}
                 </p>
                 <span v-if="getPendingAmount(shohibul.id) > 0" class="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/40 px-1.5 py-0.5 rounded-md flex items-center">
                   <ClockIcon class="w-2.5 h-2.5 mr-0.5" />
-                  +{{ store.formatRupiah(getPendingAmount(shohibul.id)) }}
+                  +{{ formatRp(getPendingAmount(shohibul.id)) }}
                 </span>
               </div>
             </div>
@@ -131,28 +131,18 @@
           </div>
         </div>
 
-        <!-- Bottom Row: Action Buttons -->
-        <div class="flex items-center justify-end space-x-3 pt-4 border-t border-gray-100 dark:border-white/5">
-          <button 
-            @click.stop="openDetails(shohibul, $event)"
-            class="px-4 py-2 border border-gray-200 dark:border-white/10 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-all flex items-center space-x-1.5"
-          >
-            <InfoIcon class="w-4 h-4" />
-            <span>Detail</span>
-          </button>
-          
+        <div class="pt-3 border-t border-gray-100 dark:border-white/5">
           <button 
             v-if="shohibul.collected < shohibul.target"
             @click.stop="goToDeposit(shohibul.id)"
-            class="px-5 py-2 bg-primary hover:bg-primary-light text-white rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 shadow-md shadow-primary/20"
+            class="w-full py-2.5 bg-primary hover:bg-primary-light text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 shadow-md shadow-primary/20"
           >
             <WalletIcon class="w-4 h-4" />
-            <span>Tabung</span>
+            <span>Tabung Sekarang</span>
           </button>
         </div>
       </div>
 
-      <!-- Empty State -->
       <div v-if="filteredShohibuls.length === 0" class="text-center py-16 text-gray-400 dark:text-gray-600 col-span-full border-2 border-dashed border-gray-200 dark:border-white/5 rounded-[2rem]">
         <UsersIcon class="w-12 h-12 mx-auto mb-3 opacity-30" />
         <p class="text-sm font-semibold text-gray-500 dark:text-gray-400">Data shohibul tidak ditemukan</p>
@@ -170,11 +160,10 @@
       </div>
     </div>
 
-    <!-- Shohibul Detail Slide-Up Modal -->
-      <div v-if="selectedShohibul" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="selectedShohibul" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeDetails"></div>
         
-        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 sm:p-8 max-h-[90%] overflow-y-auto space-y-6 relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10">
+        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 sm:p-8 max-h-[90%] overflow-y-auto space-y-6 relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10 custom-scrollbar">
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 sm:-mt-4 mb-4 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeDetails"></div>
           
           <div class="flex justify-between items-start">
@@ -187,10 +176,13 @@
               </div>
               <div>
                 <div class="flex items-center space-x-2">
-                  <h3 class="text-xl font-black text-gray-800 dark:text-white ">{{ selectedShohibul.name }}</h3>
+                  <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">{{ selectedShohibul.name }}</h3>
                   <span class="px-2 py-0.5 bg-gray-100 dark:bg-white/5 text-[9px] text-gray-500 dark:text-gray-400 font-bold rounded uppercase tracking-widest border border-gray-200 dark:border-white/10">{{ selectedShohibul.code }}</span>
                 </div>
-                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 font-medium">{{ selectedShohibul.address }}</p>
+                <div class="text-xs text-gray-400 dark:text-gray-500 mt-1 font-medium space-y-0.5">
+                  <p class="flex items-center"><MapPinIcon class="w-3 h-3 mr-1" /> {{ selectedShohibul.address || 'Belum ada alamat' }}</p>
+                  <p class="flex items-center"><PhoneIcon class="w-3 h-3 mr-1" /> {{ selectedShohibul.phone || '08XX-XXXX-XXXX' }}</p>
+                </div>
               </div>
             </div>
             <button @click="closeDetails" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
@@ -198,7 +190,6 @@
             </button>
           </div>
 
-          <!-- Quick Information Boxes -->
           <div class="grid grid-cols-2 gap-4">
             <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2">
               <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Hewan Target</span>
@@ -212,7 +203,7 @@
             <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2">
               <span class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest">Status Tabungan</span>
               <span 
-                class="text-xs font-black block py-1.5 px-3 rounded-lg w-fit mx-auto uppercase tracking-wider"
+                class="text-[10px] font-black block py-1.5 px-3 rounded-lg w-fit mx-auto uppercase tracking-wider"
                 :class="selectedShohibul.collected >= selectedShohibul.target 
                   ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' 
                   : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'"
@@ -223,7 +214,6 @@
             </div>
           </div>
 
-          <!-- Target Metrics -->
           <div class="space-y-4 bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 p-5 rounded-[1.5rem]">
             <h4 class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest flex items-center">
               <ActivityIcon class="w-3.5 h-3.5 mr-1.5" /> Perkembangan Dana
@@ -231,11 +221,11 @@
             <div class="space-y-3">
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Telah Terbayar</span>
-                <span class="font-black text-primary dark:text-primary-light">{{ store.formatRupiahFull(selectedShohibul.collected) }}</span>
+                <span class="font-black text-primary dark:text-primary-light">{{ formatRp(selectedShohibul.collected) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Target Qurban</span>
-                <span class="font-black text-gray-800 dark:text-white">{{ store.formatRupiahFull(selectedShohibul.target) }}</span>
+                <span class="font-black text-gray-800 dark:text-white">{{ formatRp(selectedShohibul.target) }}</span>
               </div>
               <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner mt-2">
                 <div 
@@ -246,12 +236,11 @@
               </div>
               <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-sm pt-3 border-t border-gray-200/50 dark:border-white/5 mt-2">
                 <span class="text-gray-500 dark:text-gray-400 font-bold">Kekurangan</span>
-                <span class="font-black text-secondary">{{ store.formatRupiahFull(selectedShohibul.target - selectedShohibul.collected) }}</span>
+                <span class="font-black text-secondary">{{ formatRp(selectedShohibul.target - selectedShohibul.collected) }}</span>
               </div>
             </div>
           </div>
 
-          <!-- Individual User Transactions Log -->
           <div class="space-y-3">
             <h4 class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest flex items-center">
               <HistoryIcon class="w-3.5 h-3.5 mr-1.5" /> Riwayat Setoran
@@ -278,7 +267,7 @@
                   </div>
                 </div>
                 <span class="text-sm font-black" :class="tx.status === 'pending' ? 'text-amber-700 dark:text-amber-400' : 'text-gray-800 dark:text-white'">
-                  {{ store.formatRupiah(tx.amount) }}
+                  {{ formatRp(tx.amount) }}
                 </span>
               </div>
             </div>
@@ -309,7 +298,6 @@
       </div>
     </div>
 
-    <!-- E-Wallet Receipt Modal (for Shohibul Detail) -->
     <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end receipt-backdrop" style="margin: 0; padding: 0;">
       <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
       
@@ -317,14 +305,13 @@
         <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
         
         <div v-if="selectedTx" class="flex flex-col items-center w-full">
-          <!-- Status Icon -->
           <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
             <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
             <ClockIcon v-else class="w-8 h-8" />
           </div>
           
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-sans">{{ store.formatRupiahFull(selectedTx.amount) }}</p>
+          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
 
           <div class="w-full bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6">
             <div class="flex justify-between items-center text-sm">
@@ -371,7 +358,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { UsersIcon, SearchIcon, InfoIcon, WalletIcon, XIcon, ActivityIcon, HistoryIcon, CheckCircleIcon, ClockIcon } from 'lucide-vue-next'
+import { UsersIcon, SearchIcon, InfoIcon, WalletIcon, XIcon, ActivityIcon, HistoryIcon, CheckCircleIcon, ClockIcon, MapPinIcon, PhoneIcon, ChevronRightIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const router = useRouter()
@@ -388,6 +375,12 @@ const filters = [
   { label: 'Kambing', value: 'kambing', icon: '🐐' },
   { label: 'Lunas', value: 'lunas', icon: '✓' }
 ]
+
+// Fungsi format Rupiah lokal
+const formatRp = (val) => {
+  if (!val) return 'Rp. 0'
+  return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
+}
 
 const filteredShohibuls = computed(() => {
   return store.shohibuls.filter(s => {

@@ -1,9 +1,7 @@
 <template>
   <div class="space-y-6 sm:space-y-8 pb-8" ref="containerRef">
     
-    <!-- HERO CARD -->
     <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-dark via-primary to-emerald-800 text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col min-h-[180px]">
-      <!-- Background Elements -->
       <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
       <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
       
@@ -18,7 +16,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white  drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
             Menabung Qurban
           </h2>
           <div class="flex items-center space-x-2 mt-2">
@@ -31,7 +29,6 @@
       </div>
     </div>
 
-    <!-- Main Form Mode Toggles (Centered) -->
     <div class="bg-gray-200/50 dark:bg-white/5 p-1.5 rounded-[1.2rem] flex tab-toggle w-full border border-gray-200/30 dark:border-white/5 relative shadow-inner">
       <button 
         @click="formMode = 'setor'"
@@ -47,19 +44,15 @@
       >
         Daftar Shohibul Baru
       </button>
-      <!-- Animated Indicator -->
       <div 
-        class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
-        :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-full'"
+        class="absolute top-1.5 bottom-1.5 w-[calc(50%-0.375rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm transition-transform duration-300 ease-out"
+        :class="formMode === 'setor' ? 'translate-x-0' : 'translate-x-[calc(100%+0.375rem)]'"
       ></div>
     </div>
 
-    <!-- Form Container (Centered on Desktop) -->
     <div class="w-full form-panels space-y-5">
       
-      <!-- MAIN FORM -->
       <div class="space-y-5">
-        <!-- Card 1: Select Shohibul OR Register -->
         <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-sm space-y-4 relative overflow-hidden">
           
           <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1">
@@ -67,10 +60,8 @@
             <span>Data Shohibul</span>
           </div>
           
-          <!-- SETOR MODE -->
           <transition mode="out-in" enter-active-class="transition duration-300 ease-out" enter-from-class="opacity-0 translate-x-4" enter-to-class="opacity-100 translate-x-0" leave-active-class="transition duration-200 ease-in" leave-from-class="opacity-100 translate-x-0" leave-to-class="opacity-0 -translate-x-4">
             <div v-if="formMode === 'setor'" class="space-y-4">
-              <!-- Custom Shohibul Selector Button -->
               <div 
                 @click="openShohibulModal"
                 class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] px-5 py-4 font-bold text-gray-800 dark:text-white transition-all hover:border-gray-300 dark:hover:border-white/20 cursor-pointer flex justify-between items-center group"
@@ -88,7 +79,6 @@
               </div>
             </div>
             
-            <!-- REGISTER MODE -->
             <div v-else class="space-y-3">
               <input 
                 v-model="registerForm.name" 
@@ -123,7 +113,7 @@
               <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mt-2">
                 <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                 <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
-                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-black">Rp 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
+                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-black">Rp. 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
                 </p>
               </div>
             </div>
@@ -143,7 +133,6 @@
             </button>
           </div>
 
-          <!-- 3x2 Grid for Predefined Nominal Options -->
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <button 
               v-for="preset in nominalPresets" 
@@ -156,11 +145,10 @@
                 : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-gray-300 dark:hover:border-white/20 font-bold'"
             >
               <span class="text-xs sm:text-sm font-extrabold">{{ preset.label }}</span>
-              <span class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500">Rp{{ preset.value.toLocaleString('id-ID') }}</span>
+              <span class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500">{{ formatRp(preset.value) }}</span>
             </button>
           </div>
 
-          <!-- Custom Option Toggle -->
           <div 
             @click="activateCustomAmount"
             class="border rounded-[1.2rem] p-4 cursor-pointer transition-all duration-300 select-none flex items-center justify-between"
@@ -174,7 +162,7 @@
               </div>
               <div>
                 <span class="text-xs sm:text-sm font-extrabold text-gray-800 dark:text-white block">Nominal Lain</span>
-                <span class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 font-semibold">Kelipatan Rp 50.000</span>
+                <span class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 font-semibold">Kelipatan Rp. 50.000</span>
               </div>
             </div>
             <div 
@@ -185,7 +173,6 @@
             </div>
           </div>
 
-          <!-- Custom Amount Input Field -->
           <transition 
             enter-active-class="transition duration-300 ease-out" 
             enter-from-class="transform -translate-y-4 opacity-0" 
@@ -196,12 +183,12 @@
           >
             <div v-if="isCustomAmountSelected" class="pt-2">
               <div class="relative">
-                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-sm font-bold transition-colors" :class="amountErrorMessage ? 'text-red-400' : 'text-gray-400'">Rp</span>
+                <span class="absolute left-5 top-1/2 -translate-y-1/2 text-sm font-bold transition-colors" :class="amountErrorMessage ? 'text-red-400' : 'text-gray-400'">Rp. </span>
                 <input 
                   v-model.number="form.amount" 
                   type="number" 
                   placeholder="Masukkan nominal..." 
-                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border rounded-[1.5rem] pl-12 pr-5 py-4 font-black focus:outline-none focus:ring-2 transition-all shadow-inner dark:text-white"
+                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border rounded-[1.5rem] pl-14 pr-5 py-4 font-black focus:outline-none focus:ring-2 transition-all shadow-inner dark:text-white"
                   :class="amountErrorMessage 
                     ? 'border-red-400 dark:border-red-500/50 focus:ring-red-500/50 focus:border-red-500 text-red-600 dark:text-red-400' 
                     : 'border-gray-200/50 dark:border-white/10 focus:ring-primary focus:border-transparent'"
@@ -223,11 +210,9 @@
             </div>
           </transition>
 
-          <!-- Payment Method -->
           <div class="space-y-3 pt-4 border-t border-gray-200/50 dark:border-white/5">
             <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block">Metode Pembayaran</label>
             <div class="grid grid-cols-2 gap-4">
-              <!-- QRIS Option -->
               <div 
                 @click="form.paymentMethod = 'qris'"
                 class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
@@ -243,7 +228,6 @@
                 </div>
               </div>
 
-              <!-- VA Option -->
               <div 
                 @click="form.paymentMethod = 'va'"
                 class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
@@ -252,7 +236,11 @@
                   : 'border-gray-200/50 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
               >
                 <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
-                <LandmarkIcon class="w-8 h-8 text-primary dark:text-primary-light" />
+                
+                <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center shadow-inner border border-orange-200">
+                  <span class="font-black text-orange-600 dark:text-orange-400 text-sm tracking-wider">BSI</span>
+                </div>
+                
                 <div>
                   <span class="text-xs font-black text-gray-800 dark:text-white block">Transfer Bank</span>
                   <span class="text-[9px] text-gray-400 font-semibold">Virtual Account</span>
@@ -261,7 +249,6 @@
             </div>
           </div>
 
-          <!-- Submit Button -->
           <div class="pt-4">
             <button 
               v-if="!isFormValid"
@@ -273,7 +260,7 @@
             <button 
               v-else
               @click="submitDeposit"
-              class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2  tracking-wide"
+              class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
             >
               <span>{{ formMode === 'register' ? 'Daftar & Lanjutkan Pembayaran' : 'Lanjutkan Pembayaran' }}</span>
               <ArrowRightIcon class="w-4 h-4 ml-1" />
@@ -284,7 +271,6 @@
       </div>
     </div>
 
-    <!-- CALCULATOR MODAL -->
     <transition
       enter-active-class="transition duration-300 ease-out"
       enter-from-class="opacity-0"
@@ -294,22 +280,19 @@
       leave-to-class="opacity-0"
     >
       <div v-if="isCalculatorModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-        <!-- Backdrop -->
         <div class="absolute inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm" @click="isCalculatorModalOpen = false"></div>
         
-        <!-- Modal Content -->
         <div class="bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl relative w-full max-w-md max-h-[90vh] overflow-y-auto z-10 transform transition-all space-y-6">
           <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
             <div class="flex items-center space-x-2">
               <CalculatorIcon class="w-5 h-5 text-secondary" />
-              <h3 class="text-base font-black text-gray-800 dark:text-white ">Simulasi Rencana Qurban</h3>
+              <h3 class="text-base font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
             </div>
             <button @click="isCalculatorModalOpen = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100 dark:bg-white/5 p-1.5 rounded-full transition-colors">
               <XIcon class="w-5 h-5" />
             </button>
           </div>
           
-          <!-- Target Type -->
           <div class="space-y-3">
             <label class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest block">Target Qurban</label>
             <div class="grid grid-cols-3 gap-3">
@@ -324,12 +307,11 @@
               >
                 <span class="text-2xl">{{ target.icon }}</span>
                 <span class="text-[10px] font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
-                <span class="text-[9px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ store.formatRupiah(target.price) }}</span>
+                <span class="text-[9px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ formatRp(target.price) }}</span>
               </button>
             </div>
           </div>
 
-          <!-- Months Duration Slider -->
           <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5">
             <div class="flex justify-between items-center text-xs">
               <label class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest block">Lama Menabung</label>
@@ -352,13 +334,12 @@
             </div>
           </div>
 
-          <!-- Monthly Result Banner -->
           <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.05] dark:to-white/[0.02] border border-gray-200/50 dark:border-white/10 p-5 rounded-[1.5rem] mt-2 relative overflow-hidden group">
             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
             
             <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Setoran</p>
             <div class="flex items-end space-x-2 relative z-10">
-              <span class="text-3xl font-black text-gray-800 dark:text-white font-sans tracking-tight">{{ store.formatRupiahFull(monthlyInstallment) }}</span>
+              <span class="text-3xl font-black text-gray-800 dark:text-white font-heading tracking-tight">{{ formatRp(monthlyInstallment) }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1.5">/ bulan</span>
             </div>
             
@@ -367,7 +348,7 @@
                 <InfoIcon class="w-4 h-4" />
               </div>
               <p class="text-[10px] text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-                Saran: Mulai menabung dari sekarang. Dengan rutin <strong class="text-gray-800 dark:text-gray-200">{{ store.formatRupiahFull(monthlyInstallment) }}</strong> per bulan, dana Qurban untuk <strong>{{ calc.targetName }}</strong> akan terkumpul tepat waktu sebelum Idul Adha.
+                Saran: Mulai menabung dari sekarang. Dengan rutin <strong class="text-gray-800 dark:text-gray-200">{{ formatRp(monthlyInstallment) }}</strong> per bulan, dana Qurban untuk <strong>{{ calc.targetName }}</strong> akan terkumpul tepat waktu sebelum Idul Adha.
               </p>
             </div>
             
@@ -383,15 +364,14 @@
       </div>
     </transition>
 
-    <!-- Shohibul Selection Modal -->
-      <div v-if="isShohibulModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="isShohibulModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeShohibulModal"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[85vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10">
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeShohibulModal"></div>
           
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-black text-gray-800 dark:text-white ">Pilih Shohibul Qurban</h3>
+            <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">Pilih Shohibul Qurban</h3>
             <button @click="closeShohibulModal" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
               <XIcon class="w-5 h-5" />
             </button>
@@ -441,8 +421,7 @@
         </div>
       </div>
 
-    <!-- Payment Modal -->
-      <div v-if="isPaymentModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="isPaymentModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closePaymentModal(false)"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] payment-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
@@ -452,16 +431,15 @@
             <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <ClockIcon class="w-8 h-8 text-primary" />
             </div>
-            <h3 class="text-xl font-black text-gray-800 dark:text-white ">Menunggu Pembayaran</h3>
+            <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum besok pukul 23:59 WIB</p>
           </div>
 
           <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] p-5 mb-6 text-center space-y-2">
             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Tagihan</p>
-            <p class="text-3xl font-black text-gray-800 dark:text-white">{{ store.formatRupiahFull(paymentDetails.amount) }}</p>
+            <p class="text-3xl font-black text-gray-800 dark:text-white">{{ formatRp(paymentDetails.amount) }}</p>
           </div>
 
-          <!-- VA Instructions -->
           <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
               <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
@@ -484,10 +462,8 @@
             </div>
           </div>
 
-          <!-- QRIS Instructions -->
           <div v-if="paymentDetails.paymentMethod === 'qris'" class="space-y-4 mb-8 text-center flex flex-col items-center">
             <div class="inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
-              <!-- Using standard SVG for QR Code dummy -->
               <QrCodeIcon class="w-40 h-40 text-gray-800" />
             </div>
             <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Scan QRIS ini menggunakan aplikasi M-Banking atau E-Wallet Anda (GoPay, OVO, Dana, LinkAja).</p>
@@ -564,13 +540,19 @@ const calc = ref({
   durationMonths: 10
 })
 
-// Data
+// Fungsi lokal agar angka memakai Rp. 100.000 
+const formatRp = (val) => {
+  if (!val) return 'Rp. 0'
+  return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
+}
+
+// Data (Revisi: Ganti nama paket menjadi angka langsung)
 const nominalPresets = [
-  { label: 'Paket Hemat', value: 50000 },
-  { label: 'Paket Ringan', value: 100000 },
-  { label: 'Paket Ideal', value: 250000 },
-  { label: 'Paket Berkah', value: 500000 },
-  { label: 'Paket Ekstra', value: 1000000 },
+  { label: '100 Ribu', value: 100000 },
+  { label: '300 Ribu', value: 300000 },
+  { label: '500 Ribu', value: 500000 },
+  { label: '1 Juta', value: 1000000 },
+  { label: '4 Juta', value: 4000000 },
   { label: 'Lunas 1 Slot', value: 3000000 }
 ]
 
@@ -596,11 +578,11 @@ const amountErrorMessage = computed(() => {
   const isNotMultiple = form.value.amount % 50000 !== 0
   
   if (isLessThanMin && isNotMultiple) {
-    return 'Nominal minimal Rp 50.000 dan harus kelipatan Rp 50.000'
+    return 'Nominal minimal Rp. 50.000 dan harus kelipatan Rp. 50.000'
   } else if (isLessThanMin) {
-    return 'Minimal setoran adalah Rp 50.000'
+    return 'Minimal setoran adalah Rp. 50.000'
   } else if (isNotMultiple) {
-    return 'Nominal harus kelipatan Rp 50.000'
+    return 'Nominal harus kelipatan Rp. 50.000'
   }
   
   return ''
@@ -739,11 +721,11 @@ const submitDeposit = () => {
     
     // Initial amount validation
     if (!form.value.amount || form.value.amount < 50000) {
-      alert('Pendaftaran baru mewajibkan setoran awal minimal Rp 50.000.')
+      alert('Pendaftaran baru mewajibkan setoran awal minimal Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      alert('Nominal setoran awal harus kelipatan Rp 50.000.')
+      alert('Nominal setoran awal harus kelipatan Rp. 50.000.')
       return
     }
   } else {
@@ -753,11 +735,11 @@ const submitDeposit = () => {
       return
     }
     if (!form.value.amount || form.value.amount < 50000) {
-      alert('Minimal setoran adalah Rp 50.000.')
+      alert('Minimal setoran adalah Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      alert('Nominal setoran harus kelipatan Rp 50.000.')
+      alert('Nominal setoran harus kelipatan Rp. 50.000.')
       return
     }
   }

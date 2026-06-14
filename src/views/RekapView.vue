@@ -1,9 +1,7 @@
 <template>
   <div class="space-y-6 sm:space-y-8 pb-8" ref="containerRef">
     
-    <!-- REPORT HERO CARD -->
     <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-dark via-primary to-teal-800 text-white p-6 sm:p-8 shadow-2xl hero-card flex flex-col min-h-[220px]">
-      <!-- Background Elements -->
       <div class="absolute right-[-10%] top-[-20%] w-64 h-64 rounded-full bg-white/5 border border-white/10 pointer-events-none"></div>
       <div class="absolute left-[-10%] bottom-[-30%] w-48 h-48 rounded-full bg-secondary/20 blur-3xl pointer-events-none"></div>
       
@@ -18,9 +16,9 @@
         </div>
         
         <div>
-          <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban 2025</p>
-          <h2 class="text-4xl sm:text-5xl font-black text-white font-sans drop-shadow-lg tracking-tight">
-            {{ store.formatRupiahFull(store.totalCollected) }}
+          <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban Terkumpul</p>
+          <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+            {{ formatRp(store.totalCollected) }}
           </h2>
           <div class="flex items-center space-x-2 mt-2.5">
             <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-2.5 py-1 rounded-full font-bold border border-secondary/20 backdrop-blur-sm shadow-sm flex items-center">
@@ -33,7 +31,6 @@
       </div>
     </div>
 
-    <!-- QUICK STATS (3 Columns) -->
     <div class="grid grid-cols-3 gap-3 sm:gap-4 quick-stats">
       <div class="bg-white dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] sm:rounded-3xl p-4 sm:p-5 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
         <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
@@ -44,7 +41,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Terkumpul</p>
-          <p class="text-sm sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans truncate">{{ store.formatRupiah(store.totalCollected) }}</p>
+          <p class="text-sm sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ formatRp(store.totalCollected) }}</p>
         </div>
       </div>
 
@@ -57,7 +54,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Lunas</p>
-          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
         </div>
       </div>
 
@@ -70,18 +67,37 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[9px] sm:text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1 truncate">Progress</p>
-          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-sans">{{ store.averageProgress }}%</p>
+          <p class="text-lg sm:text-2xl font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
         </div>
       </div>
     </div>
 
-    <!-- DUAL PANELS (Leaderboard & Progress) -->
+    <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm space-y-4">
+      <h4 class="text-sm font-bold text-gray-800 dark:text-white flex items-center border-b border-gray-100 dark:border-white/5 pb-3">
+        <FileTextIcon class="w-4 h-4 mr-2 text-primary" />
+        Rincian Detail Keuangan
+      </h4>
+      <div class="space-y-3">
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-gray-500 dark:text-gray-400 font-medium">Estimasi Target Keseluruhan</span>
+          <span class="font-black text-gray-800 dark:text-white">{{ formatRp(store.targetTotal) }}</span>
+        </div>
+        <div class="flex justify-between items-center text-sm">
+          <span class="text-gray-500 dark:text-gray-400 font-medium">Kekurangan Dana Qurban</span>
+          <span class="font-black text-amber-600 dark:text-amber-500">{{ formatRp(Math.max(0, store.targetTotal - store.totalCollected)) }}</span>
+        </div>
+        <div class="flex justify-between items-center text-sm border-t border-dashed border-gray-200 dark:border-white/10 pt-3 mt-2">
+          <span class="text-gray-500 dark:text-gray-400 font-medium">Estimasi Biaya Operasional (5%)</span>
+          <span class="font-black text-blue-600 dark:text-blue-400">{{ formatRp(store.totalCollected * 0.05) }}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 statistics-split">
       
-      <!-- Top Tabungan (Leaderboard) -->
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-4">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white  flex items-center">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
             <TrophyIcon class="w-4 h-4 mr-2 text-secondary" />
             Top Tabungan
           </h4>
@@ -99,7 +115,7 @@
               </div>
               <div class="flex-1 flex justify-between items-end">
                 <span class="text-xs font-bold text-gray-700 dark:text-gray-200 truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ top.name }}</span>
-                <span class="text-xs font-black text-gray-900 dark:text-white">{{ (top.amount / 1000000).toFixed(1) }} Jt</span>
+                <span class="text-xs font-black text-gray-900 dark:text-white">{{ formatRp(top.amount) }}</span>
               </div>
             </div>
             <div class="w-full h-2 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner ml-9" style="width: calc(100% - 2.25rem)">
@@ -113,17 +129,15 @@
         </div>
       </div>
  
-      <!-- Per Hewan Progress -->
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-5 sm:p-6 shadow-sm flex flex-col gap-6">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white  flex items-center">
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading flex items-center">
             <TargetIcon class="w-4 h-4 mr-2 text-primary dark:text-primary-light" />
             Target Hewan
           </h4>
         </div>
 
         <div class="space-y-6">
-          <!-- Sapi Progress -->
           <div class="space-y-3 p-4 rounded-[1.5rem] bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 transition-all hover:border-primary/30">
             <div class="flex justify-between items-center">
               <div class="flex items-center space-x-2">
@@ -147,7 +161,6 @@
             </div>
           </div>
 
-          <!-- Kambing Progress -->
           <div class="space-y-3 p-4 rounded-[1.5rem] bg-gray-50 dark:bg-white/[0.03] border border-gray-100 dark:border-white/5 transition-all hover:border-secondary/30">
             <div class="flex justify-between items-center">
               <div class="flex items-center space-x-2">
@@ -174,16 +187,14 @@
       </div>
     </div>
 
-    <!-- KELOMPOK SAPI (Responsive Horizontal Scroll on Mobile, Grid on Desktop) -->
     <div class="space-y-4 groups-widget">
       <div class="flex justify-between items-center px-1">
-        <h4 class="text-sm font-bold text-gray-800 dark:text-white ">Kelompok Sapi Qurban</h4>
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Kelompok Sapi Qurban</h4>
         <span class="px-3 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[10px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
       </div>
 
-      <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:overflow-visible">
+      <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 sm:gap-6 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:overflow-visible custom-scrollbar">
         
-        <!-- Sapi Groups (Dynamic) -->
         <div 
           v-for="(group, gIdx) in sapiGroups" 
           :key="group.name"
@@ -206,7 +217,7 @@
             <div 
               v-for="(member, idx) in group.members" 
               :key="member.id"
-              class="flex justify-between items-center text-xs py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
+              class="flex justify-between items-center text-xs py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors group/item"
             >
               <div class="flex items-center space-x-3">
                 <span class="w-5 h-5 rounded-md bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[9px] font-bold text-gray-500">{{ idx + 1 }}</span>
@@ -215,15 +226,19 @@
                   <span class="text-[9px] text-gray-400 uppercase font-semibold">{{ member.code }}</span>
                 </div>
               </div>
-              <span 
-                class="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider"
-                :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
-              >
-                {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
-              </span>
+              <div class="flex items-center gap-2">
+                <span 
+                  class="px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider"
+                  :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
+                >
+                  {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
+                </span>
+                <button @click="openMoveModal(member, group.name)" class="w-7 h-7 flex items-center justify-center bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light rounded-lg hover:bg-primary/20 transition-colors shadow-sm" title="Pindah Kelompok">
+                  <ArrowRightLeftIcon class="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
             
-            <!-- Empty Slots -->
             <div 
               v-for="i in Math.max(0, 7 - group.members.length)" 
               :key="'empty-'+gIdx+'-'+i" 
@@ -240,10 +255,9 @@
       </div>
     </div>
 
-    <!-- AKTIVITAS TERBARU (Consistent with Dashboard) -->
     <div class="space-y-4 recent-payments-list">
       <div class="flex justify-between items-center px-1">
-        <h4 class="text-sm font-bold text-gray-800 dark:text-white ">Aktivitas Terbaru</h4>
+        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Aktivitas Terbaru</h4>
       </div>
 
       <div class="bg-white dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-3 sm:p-4 shadow-sm">
@@ -270,12 +284,51 @@
               </div>
             </div>
             <div class="text-right">
-              <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ store.formatRupiah(tx.amount) }}</span>
+              <span class="block text-sm sm:text-base font-black text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
               <span class="inline-block px-2 py-0.5 mt-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded-md uppercase tracking-wider">
                 Setoran {{ tx.amount >= 1000000 ? 'Rutin' : 'Awal' }}
               </span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="moveModal.isOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+      <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeMoveModal"></div>
+      
+      <div class="bg-white dark:bg-gray-900 rounded-t-[2rem] p-6 max-h-[85vh] flex flex-col relative shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] move-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto">
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-700 rounded-full mx-auto -mt-2 mb-6 cursor-pointer" @click="closeMoveModal"></div>
+        
+        <div class="mb-6">
+          <h3 class="text-lg font-black text-gray-800 dark:text-white">Pindah Kelompok Sapi</h3>
+          <p class="text-xs text-gray-500 mt-1">Pilih kelompok baru untuk <strong class="text-primary dark:text-primary-light">{{ moveModal.member.name }}</strong> (Saat ini: {{ moveModal.currentGroup }})</p>
+        </div>
+
+        <div class="space-y-3 overflow-y-auto max-h-80 custom-scrollbar pr-2">
+          <button 
+            v-for="group in availableGroups" 
+            :key="group.name"
+            @click="confirmMove(group.name)"
+            class="w-full p-4 rounded-2xl border border-gray-200 dark:border-white/10 hover:border-primary dark:hover:border-primary hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors flex justify-between items-center text-left"
+          >
+            <div>
+              <p class="text-sm font-bold text-gray-800 dark:text-white">{{ group.name }}</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tersedia {{ 7 - group.count }} slot kosong</p>
+            </div>
+            <ArrowRightIcon class="w-5 h-5 text-primary dark:text-primary-light" />
+          </button>
+
+          <button 
+            @click="confirmMove('Kelompok Baru')"
+            class="w-full p-4 rounded-2xl border border-dashed border-primary/50 bg-primary/5 hover:bg-primary/10 transition-colors flex justify-between items-center text-left mt-4"
+          >
+            <div>
+              <p class="text-sm font-bold text-primary dark:text-primary-light">Buat Kelompok Baru</p>
+              <p class="text-xs text-primary/70 mt-1">Pindahkan ke kelompok yang baru dibuat</p>
+            </div>
+            <PlusIcon class="w-5 h-5 text-primary dark:text-primary-light" />
+          </button>
         </div>
       </div>
     </div>
@@ -287,11 +340,17 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon } from 'lucide-vue-next'
+import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon, ArrowRightLeftIcon, ArrowRightIcon, PlusIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
 let ctx
+
+// Fungsi lokal format Rp.
+const formatRp = (val) => {
+  if (!val) return 'Rp. 0'
+  return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
+}
 
 // Hardcoded top list from the image:
 const topSavers = [
@@ -318,6 +377,49 @@ const sapiGroups = computed(() => {
   
   return Object.values(groups).sort((a, b) => a.name.localeCompare(b.name))
 })
+
+// Logic untuk Pindah Kelompok (Move Group)
+const moveModal = ref({ isOpen: false, member: null, currentGroup: '' })
+
+const availableGroups = computed(() => {
+  return sapiGroups.value
+    .filter(g => g.name !== moveModal.value.currentGroup && g.members.length < 7)
+    .map(g => ({ name: g.name, count: g.members.length }))
+})
+
+const openMoveModal = (member, currentGroup) => {
+  moveModal.value = { isOpen: true, member, currentGroup }
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.move-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+    })
+  })
+}
+
+const closeMoveModal = () => {
+  gsap.to('.move-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    moveModal.value.isOpen = false
+    document.body.style.overflow = ''
+  }})
+}
+
+const confirmMove = (targetGroupName) => {
+  let newName = targetGroupName
+  if (targetGroupName === 'Kelompok Baru') {
+    newName = 'Sapi Kelompok ' + (sapiGroups.value.length + 1)
+  }
+  
+  const memberIndex = store.shohibuls.findIndex(m => m.id === moveModal.value.member.id)
+  if (memberIndex !== -1) {
+    store.shohibuls[memberIndex].animalGroup = newName
+    store.saveToCache() 
+    alert(`Berhasil! ${moveModal.value.member.name} dipindahkan ke ${newName}`)
+  }
+  closeMoveModal()
+}
 
 // Format date to local readable format
 const formatDate = (dateStr) => {
@@ -380,6 +482,7 @@ onUnmounted(() => {
 
 <style scoped>
 .custom-scrollbar::-webkit-scrollbar {
+  height: 4px;
   width: 4px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
