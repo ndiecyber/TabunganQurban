@@ -19,6 +19,19 @@
   --color-emerald-deep: #0F766E;
   --color-cream: #F3F4F6;
 
+  /* Custom grays shifted slightly darker for premium light mode definition */
+  --color-gray-100: #eef1f5;
+  --color-gray-200: #d8dbe0;
+  --color-gray-300: #b8bfc6;
+  --color-gray-400: #8e98a5;
+
+  /* Prominent shadows for better separation in light mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px -1px rgba(0, 0, 0, 0.12), 0 2px 6px -2px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 24px -3px rgba(0, 0, 0, 0.12), 0 6px 12px -4px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
   --font-family-heading: 'Plus Jakarta Sans', sans-serif;
   --font-family-body: 'Plus Jakarta Sans', sans-serif;
   --font-family-arabic: 'Plus Jakarta Sans', sans-serif;
