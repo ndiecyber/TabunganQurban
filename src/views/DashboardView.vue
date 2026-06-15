@@ -100,43 +100,34 @@
 
         </div>
 
-        <div class="order-2 grid grid-cols-3 gap-2 sm:gap-4 quick-stats">
-          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-              <UsersIcon class="w-32 h-32" />
-            </div>
-            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0 mb-1 sm:mb-0">
-              <UsersIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <div class="text-center sm:text-right w-full sm:w-auto">
+        <!-- UNIFIED QUICK STATS CARD -->
+        <div class="order-2 bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 quick-stats">
+          <div class="grid grid-cols-3 divide-x divide-gray-300 dark:divide-white/10">
+            <!-- Shohibul Stats -->
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light mb-1.5 group-hover:scale-110 transition-transform">
+                <UsersIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Shohibul</p>
-              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ Math.round(animatedStats.shohibuls) }}</p>
+              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.shohibuls) }}</p>
             </div>
-          </div>
 
-          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-              <CheckCircleIcon class="w-32 h-32" />
-            </div>
-            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0 mb-1 sm:mb-0">
-              <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <div class="text-center sm:text-right w-full sm:w-auto">
+            <!-- Lunas Stats -->
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-1.5 group-hover:scale-110 transition-transform">
+                <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Lunas</p>
-              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.lunas) }}</p>
+              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.lunas) }}</p>
             </div>
-          </div>
 
-          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-              <ClockIcon class="w-32 h-32" />
-            </div>
-            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mb-1 sm:mb-0">
-              <ClockIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <div class="text-center sm:text-right w-full sm:w-auto">
+            <!-- Belum Lunas Stats -->
+            <div class="flex flex-col items-center justify-center text-center px-1 group">
+              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-1.5 group-hover:scale-110 transition-transform">
+                <ClockIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Belum Lunas</p>
-              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.proses) }}</p>
+              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
             </div>
           </div>
         </div>
