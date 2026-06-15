@@ -33,16 +33,6 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <a 
-                href="https://masjidkassiti.id" 
-                class="p-2 rounded-xl transition cursor-pointer flex items-center justify-center bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm dark:bg-white/5 dark:border-[1px] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
-                aria-label="Kembali ke Web Utama"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-              </a>
-              
               <button 
                 @click="store.toggleTheme()" 
                 class="p-2 rounded-xl transition cursor-pointer"
@@ -58,6 +48,16 @@
                   <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
                 </svg>
               </button>
+
+              <a 
+                href="https://masjidkassiti.id" 
+                class="p-2 rounded-xl transition cursor-pointer flex items-center justify-center bg-white border-[2px] border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm dark:bg-white/5 dark:border-[1px] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
+                aria-label="Kembali ke Web Utama"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
