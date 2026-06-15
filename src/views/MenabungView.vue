@@ -35,7 +35,7 @@
         <div class="flex justify-between items-start">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
             <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
-            <span class="text-white/90 text-[10px] font-black tracking-[0.2em] uppercase">Pembayaran</span>
+            <span class="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase">Pembayaran</span>
           </div>
           <div class="w-11 h-11 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-xl border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-transform duration-500">
             <WalletIcon class="w-5 h-5 text-secondary drop-shadow-md" />
@@ -43,7 +43,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white font-heading drop-shadow-lg tracking-tight">
             Menabung Qurban
           </h2>
           <div class="flex items-center space-x-2 mt-4">
@@ -118,11 +118,11 @@
                    <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-primary/5 rounded-full blur-xl pointer-events-none"></div>
                    <div class="flex-1 border-r border-gray-200 dark:border-white/10 text-center pr-2 relative z-10">
                      <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Sudah Menabung</div>
-                     <div class="text-xs font-black text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected) }}</div>
+                     <div class="text-xs font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected) }}</div>
                    </div>
                    <div class="flex-1 text-center pl-2 relative z-10">
                      <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Kekurangan</div>
-                     <div class="text-xs font-black text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target - selectedShohibulData.collected) }}</div>
+                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target - selectedShohibulData.collected) }}</div>
                    </div>
                 </div>
               </transition>
@@ -170,7 +170,7 @@
               <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mt-2">
                 <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                 <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
-                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-black">Rp. 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
+                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-bold">Rp. 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
                 </p>
               </div>
             </div>
@@ -198,7 +198,7 @@
               @click="selectPreset(preset.value)"
               class="rounded-[1.2rem] p-3 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center justify-center space-y-1.5 group"
               :class="form.amount === preset.value && !isCustomAmountSelected
-                ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light font-black shadow-lg scale-[1.03]' 
+                ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary-light font-bold shadow-lg scale-[1.03]' 
                 : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 font-bold shadow-md hover:shadow-lg'"
             >
               <component :is="getPresetIcon(preset.value)" class="w-6 h-6 sm:w-7 sm:h-7 transition-transform duration-300 group-hover:scale-110" />
@@ -245,7 +245,7 @@
                   v-model.number="form.amount" 
                   type="number" 
                   placeholder="Masukkan nominal..." 
-                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border rounded-[1.5rem] pl-14 pr-5 py-4 font-black focus:outline-none focus:ring-2 transition-all shadow-inner dark:text-white"
+                  class="w-full bg-gray-50 dark:bg-white/[0.03] text-base border rounded-[1.5rem] pl-14 pr-5 py-4 font-bold focus:outline-none focus:ring-2 transition-all shadow-inner dark:text-white"
                   :class="amountErrorMessage 
                     ? 'border-red-400 dark:border-red-500/50 focus:ring-red-500/50 focus:border-red-500 text-red-600 dark:text-red-400' 
                     : 'border-gray-200/50 dark:border-white/10 focus:ring-primary focus:border-transparent'"
@@ -282,7 +282,7 @@
                   <QrCodeIcon class="w-7 h-7 text-primary dark:text-primary-light" />
                 </div>
                 <div>
-                  <span class="text-xs font-black text-gray-800 dark:text-white block">QRIS Masjid</span>
+                  <span class="text-xs font-bold text-gray-800 dark:text-white block">QRIS Masjid</span>
                   <span class="text-[9px] text-gray-400 font-semibold">Verifikasi Instan</span>
                 </div>
               </div>
@@ -303,11 +303,11 @@
                   <svg class="absolute top-2.5 right-1.5 w-3 h-3 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
                     <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
                   </svg>
-                  <span class="font-black text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+                  <span class="font-bold text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
                 </div>
                 
                 <div>
-                  <span class="text-xs font-black text-gray-800 dark:text-white block">Transfer Bank</span>
+                  <span class="text-xs font-bold text-gray-800 dark:text-white block">Transfer Bank</span>
                   <span class="text-[9px] text-gray-400 font-semibold">Virtual Account</span>
                 </div>
               </div>
@@ -318,14 +318,14 @@
             <button 
               v-if="!isFormValid"
               disabled
-              class="w-full py-4.5 text-sm font-black bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
+              class="w-full py-4.5 text-sm font-bold bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
             >
               <span>{{ validationMessage }}</span>
             </button>
             <button 
               v-else
               @click="submitDeposit"
-              class="w-full py-4.5 text-sm font-black bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
+              class="w-full py-4.5 text-sm font-bold bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
             >
               <span>{{ formMode === 'register' ? 'Daftar & Lanjutkan Pembayaran' : 'Lanjutkan Pembayaran' }}</span>
               <ArrowRightIcon class="w-4 h-4 ml-1" />
@@ -351,7 +351,7 @@
           <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
             <div class="flex items-center space-x-2">
               <CalculatorIcon class="w-5 h-5 text-secondary" />
-              <h3 class="text-base font-black text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
+              <h3 class="text-base font-bold text-gray-800 dark:text-white font-heading">Simulasi Rencana Qurban</h3>
             </div>
             <button @click="isCalculatorModalOpen = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 bg-gray-100 dark:bg-white/5 p-1.5 rounded-full transition-colors">
               <XIcon class="w-5 h-5" />
@@ -372,7 +372,7 @@
               >
                 <span class="text-4xl mb-1">{{ target.icon }}</span>
                 <span class="text-xs font-bold leading-tight text-gray-800 dark:text-gray-200">{{ target.label }}</span>
-                <span class="text-[10px] font-black" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ formatRp(target.price) }}</span>
+                <span class="text-[10px] font-bold" :class="calc.targetName === target.label ? 'text-secondary' : 'text-gray-400'">{{ formatRp(target.price) }}</span>
               </button>
             </div>
           </div>
@@ -380,7 +380,7 @@
           <div class="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5">
             <div class="flex justify-between items-center text-xs">
               <label class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest block">Lama Menabung</label>
-              <span class="font-black text-lg text-primary dark:text-primary-light bg-primary/10 px-3 py-0.5 rounded-lg">{{ calc.durationMonths }} Bulan</span>
+              <span class="font-bold text-lg text-primary dark:text-primary-light bg-primary/10 px-3 py-0.5 rounded-lg">{{ calc.durationMonths }} Bulan</span>
             </div>
             
             <div class="relative pt-2 pb-6 px-1">
@@ -404,7 +404,7 @@
             
             <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Setoran</p>
             <div class="flex items-end space-x-2 relative z-10">
-              <span class="text-3xl font-black text-gray-800 dark:text-white font-heading tracking-tight">{{ formatRp(monthlyInstallment) }}</span>
+              <span class="text-3xl font-bold text-gray-800 dark:text-white font-heading tracking-tight">{{ formatRp(monthlyInstallment) }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1.5">/ bulan</span>
             </div>
             
@@ -436,7 +436,7 @@
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeShohibulModal"></div>
           
           <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-black text-gray-800 dark:text-white font-heading">Pilih Shohibul Qurban</h3>
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white font-heading">Pilih Shohibul Qurban</h3>
             <button @click="closeShohibulModal" class="p-2 rounded-full bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-500 dark:text-gray-400">
               <XIcon class="w-5 h-5" />
             </button>
@@ -472,10 +472,10 @@
                 </div>
               </div>
               
-              <div v-if="s.collected >= s.target" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-black rounded uppercase tracking-wider">
+              <div v-if="s.collected >= s.target" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded uppercase tracking-wider">
                 Lunas
               </div>
-              <div v-else-if="getPendingTx(s.id)" class="px-2 py-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-black rounded uppercase tracking-wider flex items-center shadow-sm">
+              <div v-else-if="getPendingTx(s.id)" class="px-2 py-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-bold rounded uppercase tracking-wider flex items-center shadow-sm">
                 <ClockIcon class="w-3 h-3 mr-1" /> Pending
               </div>
               <div v-else-if="form.shohibulId === s.id" class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
@@ -505,13 +505,13 @@
             <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <ClockIcon class="w-8 h-8 text-primary" />
             </div>
-            <h3 class="text-xl font-black text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum besok pukul 23:59 WIB</p>
           </div>
 
           <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] p-5 mb-6 text-center space-y-2">
             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total Tagihan</p>
-            <p class="text-3xl font-black text-gray-800 dark:text-white">{{ formatRp(paymentDetails.amount) }}</p>
+            <p class="text-3xl font-bold text-gray-800 dark:text-white">{{ formatRp(paymentDetails.amount) }}</p>
           </div>
 
           <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
@@ -521,7 +521,7 @@
                 <svg class="absolute top-[6px] right-[4px] w-2 h-2 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
                   <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
                 </svg>
-                <span class="font-black text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+                <span class="font-bold text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
               </div>
               <div class="text-left">
                 <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
@@ -532,7 +532,7 @@
             <div class="bg-white dark:bg-white/[0.05] border border-gray-200/50 dark:border-white/10 rounded-xl p-4 flex justify-between items-center group mb-3">
               <div class="text-left">
                 <p class="text-[10px] font-bold text-gray-400 mb-1">Nomor VA</p>
-                <p class="text-lg sm:text-xl font-black tracking-wider text-gray-800 dark:text-white">{{ paymentDetails.vaNumber }}</p>
+                <p class="text-lg sm:text-xl font-bold tracking-wider text-gray-800 dark:text-white">{{ paymentDetails.vaNumber }}</p>
               </div>
               <button @click="navigator.clipboard.writeText(paymentDetails.vaNumber); alert('Nomor VA berhasil disalin!')" class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
                 <CopyIcon class="w-5 h-5" />
@@ -551,7 +551,7 @@
           <div class="mt-auto">
             <button 
               @click="confirmPayment"
-              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-[1.5rem] font-black transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2"
+              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-[1.5rem] font-bold transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2"
             >
               <CheckCircleIcon class="w-5 h-5" />
               <span>{{ paymentDetails.paymentMethod === 'va' ? 'Salin Nomor VA & Tutup' : 'Tutup & Kembali ke Beranda' }}</span>

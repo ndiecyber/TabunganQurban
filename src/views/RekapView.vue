@@ -35,7 +35,7 @@
         <div class="flex justify-between items-start">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
             <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
-            <span class="text-white/90 text-[10px] font-black tracking-[0.2em] uppercase">Laporan Keuangan</span>
+            <span class="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase">Laporan Keuangan</span>
           </div>
           <div class="w-11 h-11 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-xl border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-transform duration-500">
             <FileTextIcon class="w-5 h-5 text-secondary drop-shadow-md" />
@@ -44,7 +44,7 @@
         
         <div>
           <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban Terkumpul</p>
-          <h2 class="text-4xl sm:text-5xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-4xl sm:text-5xl font-bold text-white font-heading drop-shadow-lg tracking-tight">
             {{ formatRp(store.totalCollected) }}
           </h2>
           <div class="flex items-center space-x-2 mt-3">
@@ -68,7 +68,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Terkumpul</p>
-          <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ formatRp(store.totalCollected) }}</p>
+          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading truncate">{{ formatRp(store.totalCollected) }}</p>
         </div>
       </div>
 
@@ -81,7 +81,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Lunas</p>
-          <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
+          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         </div>
         <div class="text-center sm:text-right w-full sm:w-auto">
           <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Progress</p>
-          <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
+          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
         </div>
       </div>
     </div>
@@ -157,7 +157,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <span class="block text-xs font-black text-primary dark:text-primary-light">{{ store.sapiLunasCount }} / {{ store.sapiCount }}</span>
+                <span class="block text-xs font-bold text-primary dark:text-primary-light">{{ store.sapiLunasCount }} / {{ store.sapiCount }}</span>
                 <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
@@ -180,7 +180,7 @@
                 </div>
               </div>
               <div class="text-right">
-                <span class="block text-xs font-black text-secondary">{{ store.kambingLunasCount }} / {{ store.kambingCount }}</span>
+                <span class="block text-xs font-bold text-secondary">{{ store.kambingLunasCount }} / {{ store.kambingCount }}</span>
                 <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
@@ -210,11 +210,11 @@
           class="min-w-[85vw] sm:min-w-[320px] lg:min-w-0 snap-center bg-white dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/10 rounded-[1.5rem] p-4 shadow-sm space-y-3 shrink-0 transition-all"
         >
           <div class="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-white/5">
-            <span class="text-xs font-black text-gray-800 dark:text-white flex items-center">
+            <span class="text-xs font-bold text-gray-800 dark:text-white flex items-center">
               <span class="mr-1.5 text-sm">🐄</span> {{ group.name }}
             </span>
             <span 
-              class="px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider"
+              class="px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
               :class="gIdx % 2 === 0 ? 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
             >
               {{ group.members.length }} / 7 Slot
@@ -310,7 +310,7 @@
           </div>
           
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
+          <p class="text-3xl font-bold text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
 
           <div class="w-full bg-gray-50 dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6 shadow-sm">
             <div class="flex justify-between items-center text-sm">

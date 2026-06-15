@@ -35,7 +35,7 @@
         <div class="flex justify-between items-start">
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
             <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
-            <span class="text-white/90 text-[10px] font-black tracking-[0.2em] uppercase">Daftar Jamaah</span>
+            <span class="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase">Daftar Jamaah</span>
           </div>
           <div class="w-11 h-11 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-xl border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 transition-transform duration-500">
             <UsersIcon class="w-5 h-5 text-secondary drop-shadow-md" />
@@ -43,7 +43,7 @@
         </div>
         
         <div>
-          <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight">
+          <h2 class="text-3xl sm:text-4xl font-bold text-white font-heading drop-shadow-lg tracking-tight">
             Data Shohibul
           </h2>
           <div class="flex items-center space-x-3 mt-4">
@@ -132,7 +132,7 @@
         <div class="space-y-1.5 pt-1">
           <div class="flex justify-between items-end">
             <div class="flex items-center gap-1.5">
-              <p class="text-[13px] font-black text-gray-800 dark:text-white">
+              <p class="text-[13px] font-bold text-gray-800 dark:text-white">
                 {{ formatRp(shohibul.collected) }}
               </p>
               <span v-if="getPendingAmount(shohibul.id) > 0" class="text-[9px] font-bold text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/40 px-1.5 py-0.5 rounded-md flex items-center">
@@ -142,11 +142,11 @@
             <div class="text-right">
               <span 
                 v-if="shohibul.collected >= shohibul.target" 
-                class="inline-block px-1.5 py-0.5 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-black rounded uppercase tracking-wider"
+                class="inline-block px-1.5 py-0.5 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded uppercase tracking-wider"
               >
                 Lunas
               </span>
-              <span v-else class="text-[9px] font-black text-primary dark:text-primary-light">{{ getPercentage(shohibul) }}%</span>
+              <span v-else class="text-[9px] font-bold text-primary dark:text-primary-light">{{ getPercentage(shohibul) }}%</span>
             </div>
           </div>
           
@@ -202,7 +202,7 @@
           <div class="grid grid-cols-2 gap-4">
             <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2 shadow-sm">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Hewan Target</span>
-              <span class="text-base font-black text-gray-800 dark:text-white block flex items-center justify-center">
+              <span class="text-base font-bold text-gray-800 dark:text-white block flex items-center justify-center">
                 <span class="mr-1.5 text-xl">{{ selectedShohibul.type === 'sapi' ? '🐄' : '🐐' }}</span>
                 {{ selectedShohibul.type === 'sapi' ? 'Sapi' : 'Kambing' }}
               </span>
@@ -212,14 +212,14 @@
             <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2 shadow-sm">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status Tabungan</span>
               <span 
-                class="text-[10px] font-black block py-1.5 px-3 rounded-lg w-fit mx-auto uppercase tracking-wider"
+                class="text-[10px] font-bold block py-1.5 px-3 rounded-lg w-fit mx-auto uppercase tracking-wider"
                 :class="selectedShohibul.collected >= selectedShohibul.target 
                   ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' 
                   : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'"
               >
                 {{ selectedShohibul.collected >= selectedShohibul.target ? 'Terpenuhi (Lunas)' : 'Belum Lunas' }}
               </span>
-              <span class="text-[10px] font-black text-primary dark:text-primary-light block">{{ getPercentage(selectedShohibul) }}% Terkumpul</span>
+              <span class="text-[10px] font-bold text-primary dark:text-primary-light block">{{ getPercentage(selectedShohibul) }}% Terkumpul</span>
             </div>
           </div>
 
@@ -230,11 +230,11 @@
             <div class="space-y-3">
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Telah Terbayar</span>
-                <span class="font-black text-primary dark:text-primary-light">{{ formatRp(selectedShohibul.collected) }}</span>
+                <span class="font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibul.collected) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Target Qurban</span>
-                <span class="font-black text-gray-800 dark:text-white">{{ formatRp(selectedShohibul.target) }}</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ formatRp(selectedShohibul.target) }}</span>
               </div>
               <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden mt-2">
                 <div 
@@ -245,7 +245,7 @@
               </div>
               <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-sm pt-3 border-t border-gray-200/50 dark:border-white/5 mt-2">
                 <span class="text-gray-500 dark:text-gray-400 font-bold">Kekurangan</span>
-                <span class="font-black text-secondary">{{ formatRp(selectedShohibul.target - selectedShohibul.collected) }}</span>
+                <span class="font-bold text-secondary">{{ formatRp(selectedShohibul.target - selectedShohibul.collected) }}</span>
               </div>
             </div>
           </div>
@@ -290,7 +290,7 @@
             <button 
               v-if="selectedShohibul.collected < selectedShohibul.target"
               @click="goToDeposit(selectedShohibul.id)"
-              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-2xl font-black text-sm transition-all shadow-md shadow-primary/20 flex items-center justify-center space-x-2"
+              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-2xl font-bold text-sm transition-all shadow-md shadow-primary/20 flex items-center justify-center space-x-2"
             >
               <WalletIcon class="w-5 h-5" />
               <span>Tambah Setoran</span>
@@ -298,7 +298,7 @@
             <button 
               v-else
               disabled
-              class="w-full py-4 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-2xl font-black text-sm cursor-not-allowed flex items-center justify-center space-x-2 border border-green-200 dark:border-green-800/50"
+              class="w-full py-4 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-2xl font-bold text-sm cursor-not-allowed flex items-center justify-center space-x-2 border border-green-200 dark:border-green-800/50"
             >
               <CheckCircleIcon class="w-5 h-5" />
               <span>Tabungan Sudah Lunas</span>
@@ -320,7 +320,7 @@
           </div>
           
           <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
+          <p class="text-3xl font-bold text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
 
           <div class="w-full bg-gray-50 dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6 shadow-sm">
             <div class="flex justify-between items-center text-sm">

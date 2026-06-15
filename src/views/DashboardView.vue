@@ -49,7 +49,7 @@
                 <div class="text-right flex items-center gap-2 drop-shadow-md">
                   <CalendarIcon class="w-4 h-4 text-white opacity-90" /> 
                   <div class="flex flex-col text-left">
-                    <span class="text-white font-black text-[9px] uppercase tracking-wider block leading-tight">KALENDER HIJRIAH</span>
+                    <span class="text-white font-bold text-[9px] uppercase tracking-wider block leading-tight">KALENDER HIJRIAH</span>
                     <span class="text-teal-100 font-bold text-[7.5px] uppercase tracking-widest block leading-none">{{ currentHijriDate }}</span>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
               
               <div class="pt-1">
                 <p class="text-[10px] sm:text-[11px] text-teal-100/80 font-bold tracking-widest uppercase mb-0.5">Total Tabungan Qurban</p>
-                <h2 class="text-3xl sm:text-4xl font-black text-white font-heading drop-shadow-lg tracking-tight leading-none mb-2">
+                <h2 class="text-3xl sm:text-4xl font-bold text-white font-heading drop-shadow-lg tracking-tight leading-none mb-2">
                   {{ formatRp(Math.round(animatedStats.collected)) }}
                 </h2>
                 <div class="flex items-center space-x-2">
@@ -109,7 +109,7 @@
                 <UsersIcon class="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Shohibul</p>
-              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.shohibuls) }}</p>
+              <p class="text-sm sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.shohibuls) }}</p>
             </div>
 
             <!-- Lunas Stats -->
@@ -118,7 +118,7 @@
                 <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Lunas</p>
-              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.lunas) }}</p>
+              <p class="text-sm sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.lunas) }}</p>
             </div>
 
             <!-- Belum Lunas Stats -->
@@ -127,7 +127,7 @@
                 <ClockIcon class="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Belum Lunas</p>
-              <p class="text-sm sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
+              <p class="text-sm sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
             </div>
           </div>
         </div>
