@@ -255,7 +255,9 @@
                   : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
               >
                 <div v-if="form.paymentMethod === 'qris'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
-                <QrCodeIcon class="w-8 h-8 text-primary dark:text-primary-light" />
+                <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 dark:border-primary/30 shadow-sm shrink-0">
+                  <QrCodeIcon class="w-7 h-7 text-primary dark:text-primary-light" />
+                </div>
                 <div>
                   <span class="text-xs font-black text-gray-800 dark:text-white block">QRIS Masjid</span>
                   <span class="text-[9px] text-gray-400 font-semibold">Verifikasi Instan</span>
@@ -271,8 +273,14 @@
               >
                 <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
                 
-                <div class="w-16 h-16 bg-orange-50 dark:bg-orange-900/20 rounded-full flex items-center justify-center border border-orange-200 dark:border-orange-800 shadow-sm">
-                  <span class="font-black text-orange-500 dark:text-orange-400 text-xl tracking-wider">BSI</span>
+                <div class="relative w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                  <div class="absolute inset-1 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
+                  <div class="absolute inset-0 rounded-full border border-teal-500/10 dark:border-teal-400/10 -rotate-12 scale-110"></div>
+                  <!-- BSI Star -->
+                  <svg class="absolute top-2.5 right-1.5 w-3 h-3 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
+                    <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
+                  </svg>
+                  <span class="font-black text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
                 </div>
                 
                 <div>
@@ -475,8 +483,12 @@
 
           <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
-              <div class="w-10 h-10 bg-orange-50 dark:bg-orange-900/20 rounded-full flex items-center justify-center border border-orange-200 dark:border-orange-800 shrink-0">
-                <span class="font-black text-orange-500 dark:text-orange-400 text-sm tracking-wider">BSI</span>
+              <div class="relative w-10 h-10 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                <div class="absolute inset-0.5 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
+                <svg class="absolute top-[6px] right-[4px] w-2 h-2 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
+                  <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
+                </svg>
+                <span class="font-black text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
               </div>
               <div class="text-left">
                 <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
