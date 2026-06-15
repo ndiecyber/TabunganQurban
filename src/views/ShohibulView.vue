@@ -58,36 +58,38 @@
       </div>
     </div>
 
-    <div class="relative search-box mt-2">
-      <input 
-        v-model="searchQuery" 
-        type="text" 
-        placeholder="Cari nama atau kode shohibul..." 
-        class="w-full bg-white dark:bg-white/[0.02] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] pl-12 pr-4 py-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all font-medium"
-      />
-      <div class="absolute left-4 top-4 text-gray-400">
-        <SearchIcon class="w-5 h-5" />
+    <div class="flex flex-col space-y-3 mt-1">
+      <div class="relative search-box">
+        <input 
+          v-model="searchQuery" 
+          type="text" 
+          placeholder="Cari nama atau kode shohibul..." 
+          class="w-full bg-white dark:bg-white/[0.02] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] pl-12 pr-4 py-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all font-medium"
+        />
+        <div class="absolute left-4 top-4 text-gray-400">
+          <SearchIcon class="w-5 h-5" />
+        </div>
       </div>
-    </div>
 
-    <div class="flex space-x-2 overflow-x-auto pb-1 custom-scrollbar filter-scroll">
-      <button 
-        v-for="filter in filters" 
-        :key="filter.value"
-        @click="activeFilter = filter.value"
-        class="px-5 py-2 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap transition-all duration-300 cursor-pointer flex items-center space-x-2 border"
-        :class="activeFilter === filter.value 
-          ? 'bg-[#0f766e] text-white border-[#0f766e] shadow-md scale-[1.02]' 
-          : 'bg-white dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 border-gray-200/50 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
-      >
-        <component v-if="filter.lucide" :is="filter.lucide" class="w-3.5 h-3.5" />
-        <span v-else-if="filter.icon" class="text-xs sm:text-sm">{{ filter.icon }}</span>
-        <span>{{ filter.label }}</span>
-      </button>
-    </div>
+      <div class="flex space-x-2 overflow-x-auto pb-1 custom-scrollbar filter-scroll">
+        <button 
+          v-for="filter in filters" 
+          :key="filter.value"
+          @click="activeFilter = filter.value"
+          class="px-5 py-2 rounded-full text-[10px] sm:text-xs font-bold whitespace-nowrap transition-all duration-300 cursor-pointer flex items-center space-x-2 border"
+          :class="activeFilter === filter.value 
+            ? 'bg-[#0f766e] text-white border-[#0f766e] shadow-md scale-[1.02]' 
+            : 'bg-white dark:bg-white/[0.03] text-gray-500 dark:text-gray-400 border-gray-200/50 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/[0.05]'"
+        >
+          <component v-if="filter.lucide" :is="filter.lucide" class="w-3.5 h-3.5" />
+          <span v-else-if="filter.icon" class="text-xs sm:text-sm">{{ filter.icon }}</span>
+          <span>{{ filter.label }}</span>
+        </button>
+      </div>
 
-    <div class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 px-1 font-bold tracking-widest uppercase count-label mb-1">
-      Menampilkan {{ filteredShohibuls.length }} dari {{ store.shohibuls.length }} shohibul
+      <div class="text-[9px] sm:text-[10px] text-gray-400 dark:text-gray-500 px-1 font-bold tracking-widest uppercase count-label">
+        Menampilkan {{ filteredShohibuls.length }} dari {{ store.shohibuls.length }} shohibul
+      </div>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 shohibul-cards-container">
@@ -109,7 +111,8 @@
               <h3 class="text-sm font-extrabold text-gray-800 dark:text-white leading-tight mb-1">{{ shohibul.name }}</h3>
               <div class="text-[9px] text-gray-500 font-semibold space-y-0.5">
                  <p class="flex items-center text-gray-600 dark:text-gray-400">
-                   <HomeIcon class="w-2.5 h-2.5 mr-1" /> Rumah {{ shohibul.code }} - {{ shohibul.address || 'Alamat tidak diketahui' }}
+                   <HomeIcon class="w-2.5 h-2.5 mr-1 shrink-0" />
+                   <span class="truncate">{{ shohibul.address || 'Alamat tidak diketahui' }}</span>
                  </p>
                  <p class="flex items-center"><PhoneIcon class="w-2.5 h-2.5 mr-1" /> {{ shohibul.phone || '08XX-XXXX-XXXX' }}</p>
               </div>
@@ -184,7 +187,8 @@
                 </div>
                 <div class="text-xs text-gray-500 mt-1 font-medium space-y-0.5">
                   <p class="flex items-center text-gray-600 dark:text-gray-400">
-                    <HomeIcon class="w-3 h-3 mr-1" /> Rumah {{ selectedShohibul.code }} - {{ selectedShohibul.address || 'Belum ada alamat' }}
+                    <HomeIcon class="w-3 h-3 mr-1 shrink-0" />
+                    <span class="truncate">{{ selectedShohibul.address || 'Belum ada alamat' }}</span>
                   </p>
                   <p class="flex items-center"><PhoneIcon class="w-3 h-3 mr-1" /> {{ selectedShohibul.phone || '08XX-XXXX-XXXX' }}</p>
                 </div>
@@ -516,7 +520,7 @@ onMounted(() => {
     tl.from('.hero-card', { opacity: 0, y: -20, duration: 0.5 })
       .from('.search-box', { opacity: 0, y: 10, duration: 0.4 }, '-=0.3')
       .from('.shohibul-cards-container', { opacity: 0, y: 20, duration: 0.5 }, '-=0.1')
-  })
+  }, containerRef.value)
 })
 
 onUnmounted(() => {

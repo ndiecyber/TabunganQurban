@@ -97,7 +97,7 @@
                 <div class="flex items-center space-x-3 truncate">
                   <div v-if="selectedShohibulData" class="flex flex-col">
                     <span class="truncate font-extrabold">{{ selectedShohibulData.name }}</span>
-                    <span class="text-[10px] text-gray-500 font-semibold mt-0.5">Rumah {{ selectedShohibulData.code }} - {{ selectedShohibulData.address || 'Alamat tidak diketahui' }}</span>
+                    <span class="text-[10px] text-gray-500 font-semibold mt-0.5 truncate">{{ selectedShohibulData.address || 'Alamat tidak diketahui' }}</span>
                   </div>
                   <span v-else class="text-gray-400">— Pilih shohibul yang terdaftar —</span>
                 </div>
@@ -442,7 +442,7 @@
               <div>
                 <h4 class="text-sm font-extrabold text-gray-800 dark:text-white" :class="{'text-primary dark:text-primary-light': form.shohibulId === s.id}">{{ s.name }}</h4>
                 <div class="flex items-center space-x-2 mt-1">
-                  <span class="text-[10px] text-gray-500 font-semibold">Rumah {{ s.code }} - {{ s.address || 'Alamat tidak diketahui' }}</span>
+                  <span class="text-[10px] text-gray-500 font-semibold truncate">{{ s.address || 'Alamat tidak diketahui' }}</span>
                 </div>
               </div>
               <div v-if="form.shohibulId === s.id" class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
@@ -878,7 +878,7 @@ onMounted(() => {
     tl.from('.hero-card', { opacity: 0, y: -20, duration: 0.5 })
       .from('.tab-toggle', { opacity: 0, scale: 0.95, duration: 0.4 }, '-=0.3')
       .from('.form-panels > div', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5 }, '-=0.2')
-  })
+  }, containerRef.value)
 })
 
 onUnmounted(() => {

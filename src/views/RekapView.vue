@@ -196,7 +196,7 @@
       </div>
     </div>
 
-    <div class="space-y-2 groups-widget pt-1">
+    <div class="space-y-3 groups-widget mt-2">
       <div class="flex justify-between items-center px-1">
         <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Kelompok Sapi Qurban</h4>
         <span class="px-2.5 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[9px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
@@ -258,7 +258,7 @@
       </div>
     </div>
 
-    <div class="space-y-2 recent-payments-list pt-1">
+    <div class="space-y-3 recent-payments-list mt-2">
       <div class="flex justify-between items-center px-1">
         <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Aktivitas Terbaru</h4>
       </div>
@@ -266,7 +266,7 @@
       <div class="bg-white dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-sm">
         <div class="flex flex-col max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
           <template v-for="(tx, index) in store.transactions" :key="tx.id">
-            <div class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group">
+            <div @click="openReceiptModal(tx)" class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group">
               <div class="flex items-center space-x-3 sm:space-x-4">
                 <div 
                   class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
@@ -279,7 +279,7 @@
                   <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
                     <span>{{ formatDate(tx.date) }}</span>
                     <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
-                    <span class="text-secondary font-bold">Rumah {{ tx.code }}</span>
+                    <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).type) }}</span>
                   </div>
                 </div>
               </div>
@@ -296,6 +296,63 @@
       </div>
     </div>
 
+    <!-- Receipt Modal -->
+    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+      <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
+      
+      <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
+        <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
+        
+        <div v-if="selectedTx" class="flex flex-col items-center w-full">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
+            <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
+            <ClockIcon v-else class="w-8 h-8" />
+          </div>
+          
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
+          <p class="text-3xl font-black text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
+
+          <div class="w-full bg-gray-50 dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6 shadow-sm">
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
+              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.id }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Metode</span>
+              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.paymentMethod || 'Tunai/Transfer' }}</span>
+            </div>
+            <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Alamat</span>
+              <span class="font-bold text-gray-800 dark:text-white max-w-[60%] text-right truncate">{{ getTxShohibul(selectedTx).address || 'Tidak ada alamat' }}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Nomor HP</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ getMaskedPhone(getTxShohibul(selectedTx).phone) }}</span>
+            </div>
+          </div>
+
+          <div class="w-full space-y-3">
+            <button v-if="selectedTx.status === 'pending'" @click="simulateSuccess" class="w-full py-3.5 bg-primary hover:bg-primary-light text-white rounded-xl font-bold transition-colors shadow-lg shadow-primary/20 text-sm">
+              Simulasikan Pembayaran Berhasil
+            </button>
+            
+            <button @click="closeReceiptModal" class="w-full py-3.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors text-sm">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -303,7 +360,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon } from 'lucide-vue-next'
+import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon, ClockIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
@@ -378,6 +435,53 @@ const getAvatarStyle = (name) => {
   }
 }
 
+const getTxShohibul = (tx) => {
+  return store.shohibuls.find(s => s.id === tx.shohibulId) || {}
+}
+
+const getAnimalEmoji = (type) => {
+  if (type === 'sapi') return '🐄 Sapi'
+  if (type === 'kambing') return '🐐 Kambing'
+  return 'Hewan Lain'
+}
+
+const getMaskedPhone = (phone) => {
+  if (!phone) return '08XX-XXXX-XXXX'
+  if (phone.length <= 6) return phone
+  return phone.slice(0, 4) + '****' + phone.slice(-3)
+}
+
+const isReceiptModalOpen = ref(false)
+const selectedTx = ref(null)
+
+const openReceiptModal = (tx) => {
+  selectedTx.value = tx
+  isReceiptModalOpen.value = true
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.receipt-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+    })
+  })
+}
+
+const closeReceiptModal = () => {
+  gsap.to('.receipt-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    isReceiptModalOpen.value = false
+    document.body.style.overflow = ''
+    setTimeout(() => { selectedTx.value = null }, 300)
+  }})
+}
+
+const simulateSuccess = () => {
+  if (selectedTx.value && selectedTx.value.id) {
+    store.markTransactionSuccess(selectedTx.value.id)
+    alert('Simulasi: Status pembayaran berhasil diperbarui menjadi Sukses!')
+  }
+}
+
 onMounted(() => {
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -386,7 +490,7 @@ onMounted(() => {
       .from('.statistics-split > div', { opacity: 0, y: 20, stagger: 0.15, duration: 0.5 }, '-=0.3')
       .from('.groups-widget', { opacity: 0, y: 20, duration: 0.5 }, '-=0.3')
       .from('.recent-payments-list', { opacity: 0, y: 30, duration: 0.5 }, '-=0.2')
-  })
+  }, containerRef.value)
 })
 
 onUnmounted(() => {

@@ -38,7 +38,7 @@
             
             <div class="relative z-10 flex flex-col h-full space-y-4 sm:space-y-5">
               <div class="flex justify-between items-center">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm">
+                <div @click="openDisclaimerModal" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 backdrop-blur-md shadow-sm cursor-pointer hover:bg-white/20 transition-colors">
                   <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
                   <span class="text-white/90 text-[8px] sm:text-[9px] font-bold tracking-widest uppercase flex flex-col leading-tight">
                     <span>TARGET QURBAN</span>
@@ -61,12 +61,12 @@
                   {{ formatRp(Math.round(animatedStats.collected)) }}
                 </h2>
                 <div class="flex items-center space-x-2">
-                  <p class="text-[10px] sm:text-xs text-teal-200/90 font-semibold">Target: {{ formatRp(store.targetTotal) }}</p>
+                  <div @click="openDisclaimerModal" class="flex items-center text-[10px] sm:text-xs text-teal-200/90 font-semibold cursor-pointer hover:text-white transition-colors bg-black/10 px-2 py-0.5 rounded-full border border-teal-200/20 backdrop-blur-sm">
+                    <p>Target: {{ formatRp(store.targetTotal) }}</p>
+                    <InfoIcon class="w-3.5 h-3.5 ml-1.5 opacity-90" />
+                  </div>
                   <span class="text-[8px] bg-secondary/20 text-secondary-light px-1.5 py-0.5 rounded-full font-bold border border-secondary/20">{{ Math.round(animatedStats.percentage) }}% Tercapai</span>
                 </div>
-                <p class="text-[7.5px] sm:text-[8px] text-teal-100/60 italic mt-1.5 font-medium leading-snug">
-                  *Pencapaian target tidak bersifat mengikat dan mengikuti harga pasar tahun depan.
-                </p>
               </div>
 
               <div class="space-y-3 pt-1">
@@ -186,7 +186,7 @@
                     <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
                       <span>{{ formatDate(tx.date) }}</span>
                       <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
-                      <span class="text-secondary font-bold">Rumah {{ tx.code }}</span>
+                      <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).type) }}</span>
                     </div>
                   </div>
                 </div>
@@ -238,8 +238,12 @@
                 <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
-                <span class="text-gray-500 dark:text-gray-400 font-medium">Kode</span>
-                <span class="font-bold text-gray-800 dark:text-white">Rumah {{ selectedTx.code }}</span>
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Alamat</span>
+                <span class="font-bold text-gray-800 dark:text-white max-w-[60%] text-right truncate">{{ getTxShohibul(selectedTx).address || 'Tidak ada alamat' }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Nomor HP</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ getMaskedPhone(getTxShohibul(selectedTx).phone) }}</span>
               </div>
             </div>
 
@@ -255,7 +259,25 @@
           </div>
         </div>
       </div>
-
+      <!-- Disclaimer Modal -->
+      <div v-if="isDisclaimerModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center modal-backdrop p-4" style="margin: 0;">
+        <div class="absolute inset-0 cursor-pointer" @click="closeDisclaimerModal"></div>
+        
+        <div class="bg-white dark:bg-dark rounded-[2rem] p-6 max-w-xs w-full relative z-10 shadow-2xl disclaimer-modal-content border border-gray-200/50 dark:border-white/10">
+          <div class="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-500 flex items-center justify-center mb-4 mx-auto shadow-inner">
+            <InfoIcon class="w-6 h-6" />
+          </div>
+          
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white text-center mb-2 font-heading">Catatan Pelaksanaan</h3>
+          <p class="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 text-center mb-6 leading-relaxed font-medium">
+            Pencapaian target nominal (Rp) tidak bersifat mengikat dan tidak memaksa. Target yang belum tercapai akan dilanjutkan di tahun berikutnya. Nominal akhir akan selalu menyesuaikan dengan harga pasar hewan qurban pada tahun pelaksanaan.
+          </p>
+          
+          <button @click="closeDisclaimerModal" class="w-full py-3.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors text-sm shadow-sm">
+            Saya Mengerti
+          </button>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -263,7 +285,7 @@
 import { ref, reactive, onMounted, onUnmounted, watch, computed } from 'vue'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { UsersIcon, WalletIcon, CalculatorIcon, FileTextIcon, CheckCircleIcon, ClockIcon, CalendarIcon } from 'lucide-vue-next'
+import { UsersIcon, WalletIcon, CalculatorIcon, FileTextIcon, CheckCircleIcon, ClockIcon, CalendarIcon, InfoIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
 const containerRef = ref(null)
@@ -325,6 +347,22 @@ const getAvatarStyle = (name) => {
   }
 }
 
+const getTxShohibul = (tx) => {
+  return store.shohibuls.find(s => s.id === tx.shohibulId) || {}
+}
+
+const getAnimalEmoji = (type) => {
+  if (type === 'sapi') return '🐄 Sapi'
+  if (type === 'kambing') return '🐐 Kambing'
+  return 'Hewan Lain'
+}
+
+const getMaskedPhone = (phone) => {
+  if (!phone) return '08XX-XXXX-XXXX'
+  if (phone.length <= 6) return phone
+  return phone.slice(0, 4) + '****' + phone.slice(-3)
+}
+
 const animatedStats = reactive({
   shohibuls: 0,
   lunas: 0,
@@ -335,6 +373,27 @@ const animatedStats = reactive({
 
 const isReceiptModalOpen = ref(false)
 const selectedTx = ref(null)
+
+const isDisclaimerModalOpen = ref(false)
+
+const openDisclaimerModal = () => {
+  isDisclaimerModalOpen.value = true
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.disclaimer-modal-content', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.5)' })
+    })
+  })
+}
+
+const closeDisclaimerModal = () => {
+  gsap.to('.disclaimer-modal-content', { scale: 0.9, opacity: 0, duration: 0.2, ease: 'power2.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.2, onComplete: () => {
+    isDisclaimerModalOpen.value = false
+    document.body.style.overflow = ''
+  }})
+}
 
 const openReceiptModal = (tx) => {
   selectedTx.value = tx
@@ -393,7 +452,7 @@ onMounted(() => {
     tl.from('.hero-card', { opacity: 0, y: -20, duration: 0.6 })
       .from('.quick-actions > a', { opacity: 0, scale: 0.9, stagger: 0.08, duration: 0.4 }, '-=0.3')
       .from('.recent-payments-list', { opacity: 0, y: 30, duration: 0.5 }, '-=0.2')
-  })
+  }, containerRef.value)
 })
 
 onUnmounted(() => {

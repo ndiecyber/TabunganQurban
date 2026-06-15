@@ -64,7 +64,7 @@
 
       </div>
 
-      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-28">
+      <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
         <router-view v-slot="{ Component }">
           <transition name="fade-slide" mode="out-in">
             <component :is="Component" :key="route.path" />
@@ -77,7 +77,7 @@
       <footer class="hidden md:block border-t border-gray-300 dark:border-white/5 py-2 mt-0 text-center">
         <div class="max-w-7xl mx-auto px-4">
           <p class="text-[10px] sm:text-xs text-gray-400 dark:text-gray-600 font-medium tracking-wide">
-            © 2026 DKM Masjid Jami Kassiti — Tabungan Qurban
+            © 2026 DKM Masjid Jami Kassiti - Tabungan Qurban
           </p>
         </div>
       </footer>
