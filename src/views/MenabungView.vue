@@ -105,6 +105,27 @@
                   <ChevronDownIcon class="w-5 h-5" />
                 </div>
               </div>
+              
+              <transition
+                enter-active-class="transition duration-300 ease-out"
+                enter-from-class="opacity-0 -translate-y-2"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition duration-200 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 -translate-y-2"
+              >
+                <div v-if="selectedShohibulData" class="flex items-center bg-gray-50 dark:bg-white/[0.02] rounded-xl p-3 border-[1.5px] border-gray-200/80 dark:border-white/10 shadow-sm w-full relative overflow-hidden group">
+                   <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-primary/5 rounded-full blur-xl pointer-events-none"></div>
+                   <div class="flex-1 border-r border-gray-200 dark:border-white/10 text-center pr-2 relative z-10">
+                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Sudah Menabung</div>
+                     <div class="text-xs font-black text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected) }}</div>
+                   </div>
+                   <div class="flex-1 text-center pl-2 relative z-10">
+                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Kekurangan</div>
+                     <div class="text-xs font-black text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target - selectedShohibulData.collected) }}</div>
+                   </div>
+                </div>
+              </transition>
             </div>
             
             <div v-else class="space-y-3">
@@ -160,12 +181,12 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
               <CoinsIcon class="w-4 h-4 text-secondary" />
-              <span>Pilih Nominal Tabungan</span>
+              <span>Pilih Nominal Setoran</span>
             </div>
             
             <button type="button" @click.prevent="isCalculatorModalOpen = true" class="text-[10px] sm:text-xs font-bold text-primary dark:text-primary-light flex items-center bg-primary/10 px-2.5 py-1.5 rounded-lg hover:bg-primary/20 transition-colors shadow-sm">
               <CalculatorIcon class="w-3.5 h-3.5 mr-1.5" />
-              Simulasi Kalkulator
+              Kalkulator
             </button>
           </div>
 
@@ -681,17 +702,24 @@ const monthlyInstallment = computed(() => {
 })
 
 const amountErrorMessage = computed(() => {
-  if (!isCustomAmountSelected.value || !form.value.amount) return ''
+  if (!form.value.amount) return ''
   
-  const isLessThanMin = form.value.amount < 50000
-  const isNotMultiple = form.value.amount % 50000 !== 0
-  
-  if (isLessThanMin && isNotMultiple) {
-    return 'Nominal minimal Rp. 50.000 dan harus kelipatan Rp. 50.000'
-  } else if (isLessThanMin) {
-    return 'Minimal setoran adalah Rp. 50.000'
-  } else if (isNotMultiple) {
-    return 'Nominal harus kelipatan Rp. 50.000'
+  const isExceedingTarget = form.value.amount > targetLunas.value
+  if (isExceedingTarget) {
+    return `Nominal maksimal adalah ${formatRp(targetLunas.value)}`
+  }
+
+  if (isCustomAmountSelected.value) {
+    const isLessThanMin = form.value.amount < 50000
+    const isNotMultiple = form.value.amount % 50000 !== 0
+    
+    if (isLessThanMin && isNotMultiple) {
+      return 'Nominal minimal Rp. 50.000 dan harus kelipatan Rp. 50.000'
+    } else if (isLessThanMin) {
+      return 'Minimal setoran adalah Rp. 50.000'
+    } else if (isNotMultiple) {
+      return 'Nominal harus kelipatan Rp. 50.000'
+    }
   }
   
   return ''
@@ -701,7 +729,7 @@ const validationMessage = computed(() => {
   if (formMode.value === 'setor') {
     if (!form.value.shohibulId) return 'Pilih Shohibul Terlebih Dahulu'
     if (!form.value.amount) return 'Masukkan Nominal Setoran'
-    if (amountErrorMessage.value) return 'Perbaiki Nominal Setoran'
+    if (amountErrorMessage.value) return amountErrorMessage.value
     if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
     return ''
   } else {
@@ -709,7 +737,7 @@ const validationMessage = computed(() => {
     if (!registerForm.value.phone.trim()) return 'Masukkan Nomor HP'
     if (!registerForm.value.address.trim()) return 'Masukkan Alamat'
     if (!form.value.amount) return 'Masukkan Nominal Setoran'
-    if (amountErrorMessage.value) return 'Perbaiki Nominal Setoran'
+    if (amountErrorMessage.value) return amountErrorMessage.value
     if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
     return ''
   }
@@ -833,6 +861,11 @@ const confirmPayment = () => {
 }
 
 const submitDeposit = () => {
+  if (form.value.amount > targetLunas.value) {
+    alert(`Nominal maksimal adalah ${formatRp(targetLunas.value)}`)
+    return
+  }
+
   if (formMode.value === 'register') {
     if (!registerForm.value.name.trim() || !registerForm.value.address.trim() || !registerForm.value.phone.trim()) {
       alert('Mohon lengkapi Nama, Nomor HP, dan Alamat pendaftar.')
