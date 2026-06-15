@@ -10,7 +10,7 @@
         <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[2px] border-gray-400 dark:border-white/10 px-4 sm:px-6 lg:px-8 pt-3 pb-2 shadow-md transition-all duration-500">
           <div class="flex justify-between items-center max-w-7xl mx-auto">
             <div class="flex items-center group cursor-default">
-              <img src="/logo-qurban.png" alt="Logo Tabungan Qurban" class="h-[56px] w-[56px] object-contain drop-shadow-md dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-2 transition-transform hover:scale-105" />
+              <img src="/logo-qurban-transparent.png" alt="Logo Tabungan Qurban" class="h-[56px] w-[56px] object-contain drop-shadow-md dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-2 transition-transform hover:scale-105" />
               <div class="flex flex-col justify-center">
                 <h2 class="text-[19px] font-bold text-primary dark:text-primary-light font-heading leading-none tracking-tight drop-shadow-sm mb-1.5 transition-colors">Tabungan Qurban</h2>
                 <span class="text-[11px] font-extrabold text-gray-600 dark:text-gray-300 leading-none tracking-wide mb-1">DKM Masjid Jami Kassiti</span>
