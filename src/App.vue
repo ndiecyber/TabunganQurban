@@ -10,7 +10,22 @@
         <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[2px] border-gray-400 dark:border-white/10 px-4 sm:px-6 lg:px-8 pt-3 pb-2 shadow-md transition-all duration-500">
           <div class="flex justify-between items-center max-w-7xl mx-auto">
             <div class="flex items-center group cursor-default">
-              <img src="/logo-kassiti-icon.png" alt="Logo DKM Kassiti" class="h-[52px] w-[52px] rounded-full drop-shadow-md dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-2 object-contain border-2 border-white dark:border-dark-light bg-white" />
+              <svg viewBox="0 0 100 90" class="h-[52px] w-[52px] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <mask id="goat-mask-mobile">
+                    <rect x="0" y="0" width="100" height="100" fill="white" />
+                    <path d="M 38 60 C 38 60, 37 62, 36 62 L 37.5 60 C 37 58, 37 57, 38 56 C 39 55, 40 55.5, 41 56.5 C 42 53.5, 44 51.5, 47 50.5 C 45.5 53.5, 44 55.5, 42 56.8 C 42.5 58.5, 44.5 61, 46 62.5 Q 49 62.5, 52 62.5 C 53.5 62.5, 54.5 63.5, 54.5 65.5 C 55 64.5, 56 63.5, 56.5 62.5 C 56 63, 54.5 64.5, 54.5 65.5 L 54.5 74 H 52 L 52 69 L 50 74 H 48 L 48 69 Q 45 69, 42 69 L 42 74 H 40 L 40 69 L 39 74 H 37 L 37 68 C 37 66, 36 64, 35.5 62.5 C 35 61, 34 60, 34 58.5 Z" fill="black" transform="translate(1, -2) scale(1)"/>
+                  </mask>
+                </defs>
+                <path d="M 18 85 L 12 85 L 12 45 C 12 20, 25 15, 50 2 C 75 15, 88 20, 88 45 L 88 85 L 82 85" fill="none" stroke="currentColor" class="text-primary dark:text-emerald-400" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 24 60 L 24 80 L 30 80 L 30 70 L 34 70 L 34 80 L 66 80 L 66 70 L 70 70 L 70 80 L 76 80 L 76 60 C 76 45, 65 40, 50 35 C 35 40, 24 45, 24 60 Z" fill="currentColor" class="text-primary dark:text-emerald-400" mask="url(#goat-mask-mobile)"/>
+                <rect x="30" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="33" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="65" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <rect x="68" y="83" width="2" height="2" fill="currentColor" class="text-primary dark:text-emerald-400"/>
+                <path d="M 42 12 A 9 9 0 1 0 52 25 A 11 11 0 1 1 42 12 Z" fill="#FBBF24"/>
+                <path d="M 58 13 L 59 16.5 L 62.5 17 L 59.5 19.5 L 60.5 23 L 57.5 21 L 54.5 23 L 55.5 19.5 L 52.5 17 L 56 16.5 Z" fill="#FBBF24"/>
+              </svg>
               <div class="flex flex-col justify-center">
                 <h2 class="text-[19px] font-bold text-primary dark:text-primary-light font-heading leading-none tracking-tight drop-shadow-sm mb-1.5 transition-colors">Tabungan Qurban</h2>
                 <span class="text-[11px] font-extrabold text-gray-600 dark:text-gray-300 leading-none tracking-wide mb-1">DKM Masjid Jami Kassiti</span>
