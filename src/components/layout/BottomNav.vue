@@ -21,14 +21,14 @@
         </router-link>
       </div>
 
+      <button @click="openKalkulator" class="flex flex-col items-center gap-1.5 group pb-1 cursor-pointer">
+        <CalculatorIcon class="w-6 h-6 text-gray-400 group-[.is-active]:text-teal-600 transition-colors" :class="{ 'text-teal-600': isKalkulatorActive }" />
+        <span class="text-[9px] font-bold text-gray-500 group-[.is-active]:text-teal-600" :class="{ 'text-teal-600': isKalkulatorActive }">Kalkulator</span>
+      </button>
+
       <router-link to="/rekap" class="flex flex-col items-center gap-1.5 group pb-1" active-class="is-active">
         <FileTextIcon class="w-6 h-6 text-gray-400 group-[.is-active]:text-teal-600 transition-colors" />
         <span class="text-[9px] font-bold text-gray-500 group-[.is-active]:text-teal-600">Rekap</span>
-      </router-link>
-
-      <router-link to="/profil" class="flex flex-col items-center gap-1.5 group pb-1" active-class="is-active">
-        <UserIcon class="w-6 h-6 text-gray-400 group-[.is-active]:text-teal-600 transition-colors" />
-        <span class="text-[9px] font-bold text-gray-500 group-[.is-active]:text-teal-600">Profil</span>
       </router-link>
 
     </div>
@@ -36,5 +36,16 @@
 </template>
 
 <script setup>
-import { LayoutDashboardIcon, UsersIcon, WalletIcon, FileTextIcon, UserIcon } from 'lucide-vue-next'
+import { computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { LayoutDashboardIcon, UsersIcon, WalletIcon, FileTextIcon, CalculatorIcon } from 'lucide-vue-next'
+
+const router = useRouter()
+const route = useRoute()
+
+const isKalkulatorActive = computed(() => route.path === '/menabung' && route.query.modal === 'kalkulator')
+
+const openKalkulator = () => {
+  router.push({ path: '/menabung', query: { modal: 'kalkulator', t: Date.now() } })
+}
 </script>

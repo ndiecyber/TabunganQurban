@@ -26,6 +26,10 @@ const routes = [
     component: RekapView
   },
   {
+    path: '/kalkulator',
+    redirect: '/menabung'
+  },
+  {
     path: '/:pathMatch(.*)*',
     redirect: '/'
   }

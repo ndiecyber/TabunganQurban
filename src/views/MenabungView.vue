@@ -548,6 +548,23 @@ const isCalculatorModalOpen = ref(false)
 const isPaymentModalOpen = ref(false)
 const shohibulSearchQuery = ref('')
 
+// Watch query params to open modal
+watch(() => route.query, (newQuery) => {
+  if (newQuery.modal === 'kalkulator') {
+    isCalculatorModalOpen.value = true
+  }
+}, { immediate: true, deep: true })
+
+// Clear query when modal is closed
+watch(isCalculatorModalOpen, (newVal) => {
+  if (!newVal && route.query.modal === 'kalkulator') {
+    const newQuery = { ...route.query }
+    delete newQuery.modal
+    delete newQuery.t
+    router.replace({ path: route.path, query: newQuery })
+  }
+})
+
 const paymentDetails = ref({
   amount: 0,
   paymentMethod: '',
