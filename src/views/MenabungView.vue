@@ -753,11 +753,33 @@ const selectedShohibulData = computed(() => {
 })
 
 const filteredShohibulList = computed(() => {
-  if (!shohibulSearchQuery.value) return store.shohibuls
-  const q = shohibulSearchQuery.value.toLowerCase()
-  return store.shohibuls.filter(s => 
-    s.name.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
-  )
+  let list = store.shohibuls
+  
+  if (shohibulSearchQuery.value) {
+    const q = shohibulSearchQuery.value.toLowerCase()
+    list = list.filter(s => 
+      s.name.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
+    )
+  }
+  
+  const getSortScore = (s) => {
+    const isPending = store.transactions.some(tx => tx.shohibulId === s.id && tx.status === 'pending')
+    if (isPending) return 1
+    const isLunas = s.collected >= s.target
+    if (!isLunas) return 2
+    return 3
+  }
+  
+  return [...list].sort((a, b) => {
+    const scoreA = getSortScore(a)
+    const scoreB = getSortScore(b)
+    
+    if (scoreA !== scoreB) {
+      return scoreA - scoreB
+    }
+    
+    return a.name.localeCompare(b.name)
+  })
 })
 
 // Methods
