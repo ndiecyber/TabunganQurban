@@ -55,44 +55,37 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-2.5 sm:gap-4 quick-stats">
-      <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-          <WalletIcon class="w-32 h-32" />
+    <!-- UNIFIED QUICK STATS CARD -->
+    <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-3.5 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 quick-stats">
+      <div class="grid grid-cols-3 divide-x divide-gray-300 dark:divide-white/10">
+        
+        <!-- Terkumpul Stats -->
+        <div class="flex flex-col items-center justify-center text-center px-1 group overflow-hidden">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light mb-1.5 group-hover:scale-110 transition-transform shrink-0">
+            <WalletIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+          </div>
+          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate w-full">Terkumpul</p>
+          <p class="text-[10px] sm:text-sm font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5 truncate w-full" :title="formatRp(store.totalCollected)">{{ formatRp(store.totalCollected) }}</p>
         </div>
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0 mb-1 sm:mb-0">
-          <WalletIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-        </div>
-        <div class="text-center sm:text-right w-full sm:w-auto">
-          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Terkumpul</p>
-          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading truncate">{{ formatRp(store.totalCollected) }}</p>
-        </div>
-      </div>
 
-      <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-          <CheckCircleIcon class="w-32 h-32" />
+        <!-- Lunas Stats -->
+        <div class="flex flex-col items-center justify-center text-center px-1 group overflow-hidden">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-1.5 group-hover:scale-110 transition-transform shrink-0">
+            <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+          </div>
+          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate w-full">Lunas</p>
+          <p class="text-[11px] sm:text-sm font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5 truncate w-full">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
         </div>
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0 mb-1 sm:mb-0">
-          <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-        </div>
-        <div class="text-center sm:text-right w-full sm:w-auto">
-          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Lunas</p>
-          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading">{{ store.totalLunas }} / {{ store.shohibuls.length }}</p>
-        </div>
-      </div>
 
-      <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-        <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
-          <PieChartIcon class="w-32 h-32" />
+        <!-- Progress Stats -->
+        <div class="flex flex-col items-center justify-center text-center px-1 group overflow-hidden">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-1.5 group-hover:scale-110 transition-transform shrink-0">
+            <PieChartIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+          </div>
+          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate w-full">Progress</p>
+          <p class="text-[11px] sm:text-sm font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5 truncate w-full">{{ store.averageProgress }}%</p>
         </div>
-        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mb-1 sm:mb-0">
-          <PieChartIcon class="w-4 h-4 sm:w-5 sm:h-5" />
-        </div>
-        <div class="text-center sm:text-right w-full sm:w-auto">
-          <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Progress</p>
-          <p class="text-xs sm:text-lg font-bold text-gray-800 dark:text-white leading-none font-heading">{{ store.averageProgress }}%</p>
-        </div>
+
       </div>
     </div>
 
