@@ -529,37 +529,32 @@
               </div>
             </div>
             
-            <div class="bg-white dark:bg-white/[0.05] border border-gray-200/50 dark:border-white/10 rounded-xl p-4 flex justify-between items-center group">
+            <div class="bg-white dark:bg-white/[0.05] border border-gray-200/50 dark:border-white/10 rounded-xl p-4 flex justify-between items-center group mb-3">
               <div class="text-left">
                 <p class="text-[10px] font-bold text-gray-400 mb-1">Nomor VA</p>
                 <p class="text-lg sm:text-xl font-black tracking-wider text-gray-800 dark:text-white">{{ paymentDetails.vaNumber }}</p>
               </div>
-              <button class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
+              <button @click="navigator.clipboard.writeText(paymentDetails.vaNumber); alert('Nomor VA berhasil disalin!')" class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
                 <CopyIcon class="w-5 h-5" />
               </button>
             </div>
+            <p class="text-xs font-bold text-gray-600 dark:text-gray-300 text-center">Silakan salin (copy) nomor Virtual Account di atas untuk melakukan pembayaran melalui m-Banking.</p>
           </div>
 
           <div v-if="paymentDetails.paymentMethod === 'qris'" class="space-y-4 mb-8 text-center flex flex-col items-center">
             <div class="inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
               <QrCodeIcon class="w-40 h-40 text-gray-800" />
             </div>
-            <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Scan QRIS ini menggunakan aplikasi M-Banking atau E-Wallet Anda (GoPay, OVO, Dana, LinkAja).</p>
+            <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Silakan ambil tangkapan layar (screenshot) kode QRIS di atas untuk dibayar menggunakan aplikasi m-Banking atau E-Wallet Anda.</p>
           </div>
 
-          <div class="space-y-3 mt-auto">
+          <div class="mt-auto">
             <button 
               @click="confirmPayment"
               class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-[1.5rem] font-black transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2"
             >
               <CheckCircleIcon class="w-5 h-5" />
-              <span>Simpan Instruksi Pembayaran</span>
-            </button>
-            <button 
-              @click="closePaymentModal(true)"
-              class="w-full py-4 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 rounded-[1.5rem] font-bold transition-colors text-sm"
-            >
-              Bayar Nanti
+              <span>{{ paymentDetails.paymentMethod === 'va' ? 'Salin Nomor VA & Tutup' : 'Tutup & Kembali ke Beranda' }}</span>
             </button>
           </div>
         </div>
@@ -878,7 +873,11 @@ const closePaymentModal = (redirectToDashboard = false) => {
 }
 
 const confirmPayment = () => {
-  alert('Instruksi/Kode bayar berhasil disimpan ke galeri perangkat Anda.')
+  if (paymentDetails.value.paymentMethod === 'va') {
+    navigator.clipboard.writeText(paymentDetails.value.vaNumber)
+      .then(() => alert('Nomor VA berhasil disalin!'))
+      .catch(() => {})
+  }
   closePaymentModal(true)
 }
 
@@ -988,6 +987,17 @@ watch(() => route.query.shohibulId, (newId) => {
 }, { immediate: true })
 
 onMounted(() => {
+  if (route.query.shohibulId) {
+    const s = store.shohibuls.find(x => x.id === route.query.shohibulId)
+    if (s) {
+      formMode.value = 'setor'
+      handleShohibulSelection(s)
+      const q = { ...route.query }
+      delete q.shohibulId
+      router.replace({ path: route.path, query: q })
+    }
+  }
+
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     

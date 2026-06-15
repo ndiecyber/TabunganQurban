@@ -341,8 +341,8 @@
           </div>
 
           <div class="w-full space-y-3">
-            <button v-if="selectedTx.status === 'pending'" @click="simulateSuccess" class="w-full py-3.5 bg-primary hover:bg-primary-light text-white rounded-xl font-bold transition-colors shadow-lg shadow-primary/20 text-sm">
-              Simulasikan Pembayaran Berhasil
+            <button v-if="selectedTx.status === 'pending'" @click="continuePayment" class="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-amber-500/20 text-sm">
+              Lanjutkan Proses Pembayaran
             </button>
             
             <button @click="closeReceiptModal" class="w-full py-3.5 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors text-sm">
@@ -358,11 +358,13 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
 import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon, ClockIcon } from 'lucide-vue-next'
 
 const store = useQurbanStore()
+const router = useRouter()
 const containerRef = ref(null)
 let ctx
 
@@ -479,10 +481,11 @@ const closeReceiptModal = () => {
   }})
 }
 
-const simulateSuccess = () => {
-  if (selectedTx.value && selectedTx.value.id) {
-    store.markTransactionSuccess(selectedTx.value.id)
-    alert('Simulasi: Status pembayaran berhasil diperbarui menjadi Sukses!')
+const continuePayment = () => {
+  if (selectedTx.value && selectedTx.value.shohibulId) {
+    const shohibulId = selectedTx.value.shohibulId
+    closeReceiptModal()
+    router.push({ path: '/menabung', query: { shohibulId: shohibulId } })
   }
 }
 
