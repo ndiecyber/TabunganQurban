@@ -16,10 +16,7 @@
             <div class="absolute -right-16 -top-16 w-64 h-64 border border-white/20 rounded-full bg-gradient-to-br from-white/10 to-transparent backdrop-blur-sm pointer-events-none transform rotate-45"></div>
             <div class="absolute -left-20 -bottom-20 w-80 h-80 border border-white/10 rounded-full bg-gradient-to-tr from-white/5 to-transparent backdrop-blur-md pointer-events-none"></div>
             
-            <div class="absolute top-8 left-1/4 w-1.5 h-1.5 bg-amber-300 rounded-full animate-ping pointer-events-none" style="animation-duration: 3s"></div>
-            <div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-teal-300 rounded-full animate-pulse pointer-events-none" style="animation-duration: 4s"></div>
-            <div class="absolute top-[40%] left-6 text-white/20 text-xs animate-bounce pointer-events-none" style="animation-duration: 5s">✦</div>
-            <div class="absolute top-1/4 right-12 text-amber-400/30 text-lg animate-pulse pointer-events-none" style="animation-duration: 6s">✧</div>
+
 
             <div class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/[0.07] to-white/0 opacity-60 pointer-events-none transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out"></div>
 
