@@ -129,18 +129,20 @@
               
               <div class="grid grid-cols-2 gap-3 pt-1">
                 <div 
-                  @click="registerForm.type = 'sapi'" 
-                  class="rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
-                  :class="registerForm.type === 'sapi' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
-                >
-                  <span class="text-lg mr-1 block sm:inline">🐄</span> Sapi
-                </div>
-                <div 
                   @click="registerForm.type = 'kambing'" 
-                  class="rounded-xl p-3 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none"
+                  class="rounded-xl p-2.5 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none flex flex-col items-center justify-center"
                   :class="registerForm.type === 'kambing' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
                 >
-                  <span class="text-lg mr-1 block sm:inline">🐐</span> Kambing
+                  <div><span class="text-lg mr-1">🐐</span> Kambing</div>
+                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'kambing' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">Rp. 2.500.000</div>
+                </div>
+                <div 
+                  @click="registerForm.type = 'sapi'" 
+                  class="rounded-xl p-2.5 text-center cursor-pointer transition-all duration-300 font-bold text-sm select-none flex flex-col items-center justify-center"
+                  :class="registerForm.type === 'sapi' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
+                >
+                  <div><span class="text-lg mr-1">🐄</span> Sapi</div>
+                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'sapi' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">Rp. 3.000.000</div>
                 </div>
               </div>
               
@@ -564,6 +566,8 @@ const shohibulSearchQuery = ref('')
 watch(() => route.query, (newQuery) => {
   if (newQuery.modal === 'kalkulator') {
     isCalculatorModalOpen.value = true
+  } else {
+    isCalculatorModalOpen.value = false
   }
 }, { immediate: true, deep: true })
 
@@ -609,22 +613,49 @@ const formatRp = (val) => {
   return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
 }
 
-const nominalPresets = [
-  { label: '100 Ribu', value: 100000 },
-  { label: '300 Ribu', value: 300000 },
-  { label: '500 Ribu', value: 500000 },
-  { label: '1 Juta', value: 1000000 },
-  { label: '4 Juta', value: 4000000 },
-  { label: 'Lunas 1 Slot', value: 3000000 }
-]
+const targetLunas = computed(() => {
+  if (formMode.value === 'register') {
+    return registerForm.value.type === 'sapi' ? 3000000 : 2500000
+  } else if (formMode.value === 'setor' && form.value.shohibulId) {
+    const shohibul = store.shohibuls.find(s => s.id === form.value.shohibulId)
+    if (shohibul) {
+      const remaining = shohibul.target - shohibul.collected
+      return remaining > 0 ? remaining : shohibul.target
+    }
+  }
+  return 3000000
+})
+
+const nominalPresets = computed(() => {
+  const presets = [
+    { value: 100000 },
+    { value: 300000 },
+    { value: 500000 },
+    { value: 1000000 },
+    { value: 2000000 },
+    { value: targetLunas.value }
+  ]
+  
+  const uniquePresets = []
+  presets.forEach(p => {
+    if (!uniquePresets.find(u => u.value === p.value)) {
+      uniquePresets.push(p)
+    }
+  })
+
+  if (uniquePresets.length < 6 && !uniquePresets.find(u => u.value === 1500000)) {
+    uniquePresets.push({ value: 1500000 })
+  }
+  
+  return uniquePresets.sort((a, b) => a.value - b.value)
+})
 
 const getPresetIcon = (value) => {
-  if (value === 100000) return CoinsIcon
-  if (value === 300000) return CoinsIcon
-  if (value === 500000) return WalletIcon
+  if (value === targetLunas.value) return CheckCircleIcon
+  if (value === 100000 || value === 300000) return CoinsIcon
+  if (value === 500000 || value === 1500000) return WalletIcon
   if (value === 1000000) return CreditCardIcon
-  if (value === 3000000) return CheckCircleIcon // Lunas
-  if (value === 4000000) return LandmarkIcon
+  if (value === 2000000) return LandmarkIcon
   return CoinsIcon
 }
 
