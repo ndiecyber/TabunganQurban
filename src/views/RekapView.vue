@@ -123,7 +123,7 @@
                 ></div>
               </div>
             </div>
-            <div v-if="index !== topSavers.length - 1" class="h-[1px] mx-8 bg-gray-100 dark:bg-white/5 mt-2 mb-1"></div>
+            <div v-if="index !== topSavers.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-8 mt-2 mb-1"></div>
           </template>
         </div>
       </div>

@@ -167,7 +167,7 @@
                 </div>
               </div>
               
-              <div v-if="index !== store.transactions.slice(0, 5).length - 1" class="h-[1px] mx-3 bg-gray-200 dark:bg-white/5 my-0.5"></div>
+              <div v-if="index !== store.transactions.slice(0, 5).length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-4 my-1"></div>
             </template>
           </div>
         </div>
