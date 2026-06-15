@@ -323,7 +323,7 @@
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div v-if="isCalculatorModalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <div v-if="isCalculatorModalOpen" class="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
         <div class="absolute inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm" @click="isCalculatorModalOpen = false"></div>
         
         <div class="bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl relative w-full max-w-md max-h-[90vh] overflow-y-auto z-10 transform transition-all space-y-6">
@@ -408,7 +408,7 @@
       </div>
     </transition>
 
-    <div v-if="isShohibulModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="isShohibulModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeShohibulModal"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[85vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10">
@@ -437,9 +437,12 @@
             <div 
               v-for="s in filteredShohibulList" 
               :key="s.id"
-              @click="selectShohibul(s.id)"
-              class="p-4 rounded-[1.2rem] transition-all duration-200 cursor-pointer flex justify-between items-center"
-              :class="form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm hover:shadow-md'"
+              @click="handleShohibulSelection(s)"
+              class="p-4 rounded-[1.2rem] transition-all duration-200 flex justify-between items-center"
+              :class="[
+                s.collected >= s.target ? 'opacity-60 cursor-not-allowed bg-gray-50 dark:bg-white/5 border-[2px] border-gray-200 dark:border-white/10' : 'cursor-pointer hover:shadow-md',
+                form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : (s.collected < s.target ? 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm' : '')
+              ]"
             >
               <div>
                 <h4 class="text-sm font-extrabold text-gray-800 dark:text-white" :class="{'text-primary dark:text-primary-light': form.shohibulId === s.id}">{{ s.name }}</h4>
@@ -447,7 +450,14 @@
                   <span class="text-[10px] text-gray-500 font-semibold truncate">{{ s.address || 'Alamat tidak diketahui' }}</span>
                 </div>
               </div>
-              <div v-if="form.shohibulId === s.id" class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
+              
+              <div v-if="s.collected >= s.target" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-black rounded uppercase tracking-wider">
+                Lunas
+              </div>
+              <div v-else-if="getPendingTx(s.id)" class="px-2 py-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-black rounded uppercase tracking-wider flex items-center shadow-sm">
+                <ClockIcon class="w-3 h-3 mr-1" /> Pending
+              </div>
+              <div v-else-if="form.shohibulId === s.id" class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center">
                 <CheckIcon class="w-3.5 h-3.5" />
               </div>
             </div>
@@ -464,7 +474,7 @@
         </div>
       </div>
 
-    <div v-if="isPaymentModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="isPaymentModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closePaymentModal(false)"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] payment-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
@@ -718,7 +728,7 @@ const filteredShohibulList = computed(() => {
   if (!shohibulSearchQuery.value) return store.shohibuls
   const q = shohibulSearchQuery.value.toLowerCase()
   return store.shohibuls.filter(s => 
-    s.name.toLowerCase().includes(q) || s.code.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
+    s.name.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
   )
 })
 
@@ -745,6 +755,27 @@ const closeShohibulModal = () => {
 const selectShohibul = (id) => {
   form.value.shohibulId = id
   closeShohibulModal()
+}
+
+const getPendingTx = (id) => {
+  return store.transactions.find(tx => tx.shohibulId === id && tx.status === 'pending')
+}
+
+const handleShohibulSelection = (s) => {
+  if (s.collected >= s.target) return
+  
+  const pendingTx = getPendingTx(s.id)
+  if (pendingTx) {
+    closeShohibulModal()
+    paymentDetails.value = {
+      amount: pendingTx.amount,
+      paymentMethod: pendingTx.paymentMethod,
+      vaNumber: '900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()
+    }
+    openPaymentModal()
+  } else {
+    selectShohibul(s.id)
+  }
 }
 
 const selectPreset = (amount) => {
@@ -858,7 +889,6 @@ const submitDeposit = () => {
         id: 'tx-' + Math.random().toString(36).substr(2, 9),
         shohibulId: form.value.shohibulId,
         name: selectedShohibulData.value.name,
-        code: selectedShohibulData.value.code,
         amount: form.value.amount,
         date: new Date().toISOString(),
         paymentMethod: form.value.paymentMethod,

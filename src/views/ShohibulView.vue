@@ -217,7 +217,7 @@
                   ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' 
                   : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'"
               >
-                {{ selectedShohibul.collected >= selectedShohibul.target ? 'Terpenuhi (Lunas)' : 'Dalam Proses' }}
+                {{ selectedShohibul.collected >= selectedShohibul.target ? 'Terpenuhi (Lunas)' : 'Belum Lunas' }}
               </span>
               <span class="text-[10px] font-black text-primary dark:text-primary-light block">{{ getPercentage(selectedShohibul) }}% Terkumpul</span>
             </div>
@@ -340,10 +340,6 @@
               <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
               <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
             </div>
-            <div class="flex justify-between items-center text-sm">
-              <span class="text-gray-500 dark:text-gray-400 font-medium">Kode Hewan</span>
-              <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.code }}</span>
-            </div>
           </div>
 
           <div class="w-full space-y-3">
@@ -383,6 +379,7 @@ const filters = [
   { label: 'Sapi', value: 'sapi', icon: '🐄' },
   { label: 'Kambing', value: 'kambing', icon: '🐐' },
   { label: 'Pending', value: 'pending', lucide: ClockIcon },
+  { label: 'Belum Lunas', value: 'belum_lunas', lucide: ActivityIcon },
   { label: 'Lunas', value: 'lunas', lucide: CheckCircleIcon }
 ]
 
@@ -393,13 +390,14 @@ const formatRp = (val) => {
 
 const filteredShohibuls = computed(() => {
   return store.shohibuls.filter(s => {
-    const matchesSearch = s.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-                          s.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+    const matchesSearch = searchQuery.value === '' || 
+                          s.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
                           s.address.toLowerCase().includes(searchQuery.value.toLowerCase())
     
     let matchesFilter = true
     if (activeFilter.value === 'sapi') matchesFilter = s.type === 'sapi'
     if (activeFilter.value === 'kambing') matchesFilter = s.type === 'kambing'
+    if (activeFilter.value === 'belum_lunas') matchesFilter = s.collected < s.target
     if (activeFilter.value === 'lunas') matchesFilter = s.collected >= s.target
     if (activeFilter.value === 'pending') matchesFilter = getPendingAmount(s.id) > 0
     

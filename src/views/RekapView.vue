@@ -129,7 +129,7 @@
                 <div 
                   class="h-full rounded-full transition-all duration-1000 ease-out" 
                   :class="index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-[0_0_8px_rgba(234,179,8,0.5)]' : 'bg-gradient-to-r from-primary to-primary-light'"
-                  :style="{ width: (top.amount / 12000000) * 100 + '%' }"
+                  :style="{ width: (top.target > 0 ? (top.amount / top.target) * 100 : 0) + '%' }"
                 ></div>
               </div>
             </div>
@@ -153,12 +153,12 @@
                 <div class="w-7 h-7 rounded-lg bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center text-sm">🐄</div>
                 <div>
                   <span class="block text-xs font-bold text-gray-800 dark:text-white">Sapi Qurban</span>
-                  <span class="block text-[9px] text-gray-500 dark:text-gray-400">Target: {{ store.sapiCount }} Ekor</span>
+                  <span class="block text-[9px] text-gray-500 dark:text-gray-400">Target: {{ Math.ceil(store.sapiCount / 7) }} Ekor ({{ store.sapiCount }} Shohibul)</span>
                 </div>
               </div>
               <div class="text-right">
                 <span class="block text-xs font-black text-primary dark:text-primary-light">{{ store.sapiLunasCount }} / {{ store.sapiCount }}</span>
-                <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Terdanai</span>
+                <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
             <div class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
@@ -181,7 +181,7 @@
               </div>
               <div class="text-right">
                 <span class="block text-xs font-black text-secondary">{{ store.kambingLunasCount }} / {{ store.kambingCount }}</span>
-                <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Terdanai</span>
+                <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
             <div class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
@@ -231,14 +231,14 @@
                 <span class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[8px] font-bold text-gray-500">{{ idx + 1 }}</span>
                 <div class="flex flex-col">
                   <span class="font-bold text-gray-800 dark:text-gray-200">{{ member.name }}</span>
-                  <span class="text-[8px] text-gray-400 uppercase font-semibold">Rumah {{ member.code }}</span>
+                  <span class="text-[8px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected) }} / {{ formatRp(member.target) }}</span>
                 </div>
               </div>
               <span 
                 class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
                 :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
               >
-                {{ member.collected >= member.target ? 'Lunas' : 'Proses' }}
+                {{ member.collected >= member.target ? 'Lunas' : 'Belum Lunas' }}
               </span>
               </div>
             
@@ -371,13 +371,17 @@ const formatRp = (val) => {
   return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
 }
 
-const topSavers = [
-  { name: 'Pak Tono', amount: 12000000 },
-  { name: 'H. Budi', amount: 10500000 },
-  { name: 'Dewi Anggraini', amount: 8000000 },
-  { name: 'Hendra Kusuma', amount: 5000000 },
-  { name: 'Hj. Siti', amount: 3500000 }
-]
+const topSavers = computed(() => {
+  return [...store.shohibuls]
+    .filter(s => s.collected > 0)
+    .sort((a, b) => b.collected - a.collected)
+    .slice(0, 5)
+    .map(s => ({
+      name: s.name,
+      amount: s.collected,
+      target: s.target
+    }))
+})
 
 const sapiGroups = computed(() => {
   const groups = {}

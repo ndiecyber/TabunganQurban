@@ -7,7 +7,7 @@
       
 
       <div class="sticky top-0 z-40">
-        <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[1.5px] border-gray-300 dark:border-white/5 px-4 pt-3 pb-2 shadow-sm transition-all duration-500">
+        <div class="bg-white/95 dark:bg-dark/95 backdrop-blur-xl border-b-[1.5px] border-gray-300 dark:border-white/5 px-4 sm:px-6 lg:px-8 pt-3 pb-2 shadow-sm transition-all duration-500">
           <div class="flex justify-between items-center max-w-7xl mx-auto">
             <div class="flex items-center group cursor-default">
               <svg viewBox="0 0 100 90" class="h-[52px] w-[52px] drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(16,185,129,0.4)] mr-1.5" fill="none" xmlns="http://www.w3.org/2000/svg">

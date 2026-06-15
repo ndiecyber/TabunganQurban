@@ -63,257 +63,108 @@ export const useQurbanStore = defineStore('qurban', {
 
     loadMockData() {
       this.shohibuls = [
-        {
-          id: 'shohibul-01',
-          name: 'Budi Santoso',
-          address: 'Rumah A01 - Perumahan Arjamukti',
-          code: 'A01',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok A',
-          target: 3000000,
-          collected: 3000000, // Lunas
-          lastPaymentMonth: 'Juni 2025'
-        },
-        {
-          id: 'shohibul-02',
-          name: 'Rina Tanjung',
-          address: 'Perumahan Arjamukti - C04',
-          code: 'C04',
-          type: 'kambing',
-          animalGroup: 'Kambing Mandiri',
-          target: 3000000,
-          collected: 3000000, // Lunas
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-03',
-          name: 'Hendra Kusuma',
-          address: 'Perumahan Arjamukti - B02',
-          code: 'B02',
-          type: 'kambing',
-          animalGroup: 'Kambing Mandiri',
-          target: 2500000,
-          collected: 2500000, // Lunas
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-04',
-          name: 'Pak Tono',
-          address: 'Kavling Hijau - C01',
-          code: 'C01',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok A',
-          target: 21000000,
-          collected: 15000000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-05',
-          name: 'Ahmad Fauzi',
-          address: 'Kavling Hijau - A05',
-          code: 'A05',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok A',
-          target: 3000000,
-          collected: 2000000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-06',
-          name: 'H. Budi Santoso (Kambing)',
-          address: 'Rumah A01 - Perumahan Arjamukti',
-          code: 'A01',
-          type: 'kambing',
-          animalGroup: 'Kambing Mandiri',
-          target: 3000000,
-          collected: 2000000,
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-07',
-          name: 'Bu Aminah',
-          address: 'Perumahan Arjamukti - D12',
-          code: 'D12',
-          type: 'kambing',
-          animalGroup: 'Kambing Mandiri',
-          target: 3000000,
-          collected: 1500000,
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-08',
-          name: 'Siti Rahma',
-          address: 'Jl. Masjid Jami No. 10',
-          code: 'SM10',
-          type: 'kambing',
-          animalGroup: 'Kambing Mandiri',
-          target: 3000000,
-          collected: 1500000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-09',
-          name: 'Bambang Hermawan',
-          address: 'Perumahan Arjamukti - A12',
-          code: 'A12',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok B',
-          target: 3000000,
-          collected: 2000000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-10',
-          name: 'Joko Susilo',
-          address: 'Jl. Melati No. 4',
-          code: 'JM04',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok B',
-          target: 3000000,
-          collected: 1200000,
-          lastPaymentMonth: 'Maret 2025'
-        },
-        {
-          id: 'shohibul-11',
-          name: 'H. Syamsudin',
-          address: 'Kavling Hijau - B09',
-          code: 'B09',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok B',
-          target: 3000000,
-          collected: 2000000,
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-12',
-          name: 'Pak Yusuf Kusnadi',
-          address: 'Perumahan Arjamukti - B15',
-          code: 'B15',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok B',
-          target: 33500000,
-          collected: 20000000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-13',
-          name: 'Ibu Ningsih',
-          address: 'Jl. Pemuda No 12',
-          code: 'P12',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok C',
-          target: 3000000,
-          collected: 3000000,
-          lastPaymentMonth: 'Mei 2025'
-        },
-        {
-          id: 'shohibul-14',
-          name: 'Pak Rudi Hermawan',
-          address: 'Kavling Hijau - A02',
-          code: 'A02',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok C',
-          target: 3000000,
-          collected: 1000000,
-          lastPaymentMonth: 'April 2025'
-        },
-        {
-          id: 'shohibul-15',
-          name: 'Keluarga Bpk. Santoso',
-          address: 'Perumahan Arjamukti - C10',
-          code: 'C10',
-          type: 'sapi',
-          animalGroup: 'Sapi Kelompok D',
-          target: 3000000,
-          collected: 0,
-          lastPaymentMonth: 'Belum Ada'
-        }
+        // Sapi Kelompok A (Lunas Semua)
+        { id: 'shohibul-01', name: 'Bpk. Ahmad Nasa\'i', address: 'Perumahan Arjamukti Blok C1.32', code: 'C1.32', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-02', name: 'Bpk. M Ainur Rofiq', address: 'Perumahan Arjamukti Blok D5.10', code: 'D5.10', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-03', name: 'Bpk. Randi Rizal', address: 'Perumahan Arjamukti Blok B6.04', code: 'B6.04', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-04', name: 'Bpk. Irvan Ruchiat', address: 'Perumahan Arjamukti Blok D2.16', code: 'D2.16', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-05', name: 'Bpk. Redi Sasriandi', address: 'Perumahan Arjamukti Blok D2.07', code: 'D2.07', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-06', name: 'Bpk. Tedi Ruhyadi', address: 'Perumahan Arjamukti Blok B7.05', code: 'B7.05', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-10', name: 'Ibu Santi Ratnasari', address: 'Perumahan Arjamukti Blok C3.06', code: 'C3.06', type: 'sapi', animalGroup: 'Sapi Kelompok A', target: 3000000, collected: 3000000, lastPaymentMonth: 'Mei 2026' },
+        
+        // Sapi Kelompok B (Proses)
+        { id: 'shohibul-11', name: 'Bpk. Bambang Setiawan', address: 'Perumahan Arjamukti Blok D6.04', code: 'D6.04', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 3000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-13', name: 'Ibu Aah Mugniah', address: 'Perumahan Arjamukti Blok B4.19', code: 'B4.19', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 2500000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-14', name: 'Ibu Umi Nasiroh', address: 'Perumahan Arjamukti Blok C3.20', code: 'C3.20', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 1500000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-15', name: 'Bpk. Abdul Rohim Gumilar', address: 'Perumahan Arjamukti Blok C4.10', code: 'C4.10', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 1000000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-16', name: 'Ibu Rina Susilawati', address: 'Perumahan Arjamukti Blok B1.17', code: 'B1.17', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 500000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-17', name: 'Bpk. Iwan Ridwan', address: 'Perumahan Arjamukti Blok C4.11', code: 'C4.11', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 3000000, lastPaymentMonth: 'Mei 2026' },
+        { id: 'shohibul-18', name: 'Bpk. Dede Muharam', address: 'Perumahan Arjamukti Blok D1.11', code: 'D1.11', type: 'sapi', animalGroup: 'Sapi Kelompok B', target: 3000000, collected: 2000000, lastPaymentMonth: 'Juni 2026' },
+        
+        // Sapi Kelompok C (Baru Mulai / Masih Kosong)
+        { id: 'shohibul-19', name: 'Bpk. M Rasyid', address: 'Perumahan Arjamukti Blok D2.14', code: 'D2.14', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 3000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-20', name: 'Bpk. Dede Maulana Yusuf', address: 'Perumahan Arjamukti Blok D2.34', code: 'D2.34', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 1500000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-21', name: 'Bpk. Enar', address: 'Perumahan Arjamukti Blok B5.09', code: 'B5.09', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 1000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-22', name: 'Bpk. Suhendi', address: 'Perumahan Arjamukti Blok B4.01', code: 'B4.01', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 500000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-23', name: 'Bpk. Ojo Sukarjo', address: 'Perumahan Arjamukti Blok B1.16', code: 'B1.16', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 100000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-07', name: 'Bpk. Usman', address: 'Perumahan Arjamukti Blok D4.02', code: 'D4.02', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 0, lastPaymentMonth: '-' },
+        { id: 'shohibul-08', name: 'Bpk. Deni Halimansyah', address: 'Perumahan Arjamukti Blok C5.06', code: 'C5.06', type: 'sapi', animalGroup: 'Sapi Kelompok C', target: 3000000, collected: 0, lastPaymentMonth: '-' },
+
+        // Kambing Mandiri
+        { id: 'shohibul-24', name: 'Ibu Via Safarina', address: 'Perumahan Arjamukti Blok C2.03', code: 'C2.03', type: 'kambing', animalGroup: 'Kambing Mandiri', target: 2500000, collected: 2500000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-25', name: 'Ibu Eulis Kodariah', address: 'Perumahan Arjamukti Blok D2.16', code: 'D2.16', type: 'kambing', animalGroup: 'Kambing Mandiri', target: 2500000, collected: 1000000, lastPaymentMonth: 'Juni 2026' },
+        { id: 'shohibul-09', name: 'Bpk. Ali M Abduh', address: 'Perumahan Arjamukti Blok D4.27', code: 'D4.27', type: 'kambing', animalGroup: 'Kambing Mandiri', target: 2500000, collected: 0, lastPaymentMonth: '-' },
+        { id: 'shohibul-12', name: 'Bpk. M Arif Taufiq A', address: 'Perumahan Arjamukti Blok C1.34', code: 'C1.34', type: 'kambing', animalGroup: 'Kambing Mandiri', target: 2500000, collected: 0, lastPaymentMonth: '-' }
       ]
  
-      this.transactions = [
+      const simulatedTransactions = []
+      let txIdCounter = 1
+      
+      this.shohibuls.forEach(shohibul => {
+        if (shohibul.collected > 0) {
+          let remaining = shohibul.collected
+          let daysAgo = Math.floor(Math.random() * 5) + 1 // Transaksi terakhir dalam 1-5 hari terakhir
+          
+          while (remaining > 0) {
+            let amount = remaining
+            
+            // Pecah nominal agar lebih realistis (cicilan)
+            if (remaining >= 1000000 && Math.random() > 0.4) {
+              amount = 1000000
+            } else if (remaining >= 500000 && Math.random() > 0.3) {
+              amount = 500000
+            }
+            
+            simulatedTransactions.push({
+              id: `tx-${txIdCounter++}`,
+              shohibulId: shohibul.id,
+              name: shohibul.name,
+              code: shohibul.code,
+              date: new Date(Date.now() - 1000 * 60 * 60 * 24 * daysAgo).toISOString(),
+              amount: amount,
+              status: 'success'
+            })
+            
+            remaining -= amount
+            daysAgo += Math.floor(Math.random() * 15) + 15 // Jarak antar cicilan 15-30 hari
+          }
+        }
+      })
+      
+      // Add 3 dummy pending transactions
+      simulatedTransactions.push(
         {
-          id: 'tx-1',
-          shohibulId: 'shohibul-02',
-          name: 'Rina Tanjung',
-          code: 'C04',
-          date: '2026-05-22',
+          id: `tx-${txIdCounter++}`,
+          shohibulId: 'shohibul-07',
+          name: 'Bpk. Usman',
+          date: new Date().toISOString(),
           amount: 500000,
-          status: 'success'
+          status: 'pending',
+          paymentMethod: 'qris'
         },
         {
-          id: 'tx-2',
-          shohibulId: 'shohibul-03',
-          name: 'Hendra Kusuma',
-          code: 'B02',
-          date: '2026-05-12',
+          id: `tx-${txIdCounter++}`,
+          shohibulId: 'shohibul-08',
+          name: 'Bpk. Deni Halimansyah',
+          date: new Date().toISOString(),
           amount: 1000000,
-          status: 'success'
+          status: 'pending',
+          paymentMethod: 'va'
         },
         {
-          id: 'tx-3',
-          shohibulId: 'shohibul-01',
-          name: 'Budi Santoso',
-          code: 'A01',
-          date: '2026-05-05',
-          amount: 2000000,
-          status: 'success'
-        },
-        {
-          id: 'tx-4',
-          shohibulId: 'shohibul-02',
-          name: 'Rina Tanjung',
-          code: 'C04',
-          date: '2026-04-22',
-          amount: 500000,
-          status: 'success'
-        },
-        {
-          id: 'tx-5',
-          shohibulId: 'shohibul-04',
-          name: 'Pak Tono',
-          code: 'C01',
-          date: '2026-04-03',
-          amount: 3000000,
-          status: 'success'
-        },
-        {
-          id: 'tx-6',
-          shohibulId: 'shohibul-04',
-          name: 'Pak Tono',
-          code: 'C01',
-          date: '2026-03-03',
-          amount: 3000000,
-          status: 'success'
-        },
-        {
-          id: 'tx-7',
-          shohibulId: 'shohibul-04',
-          name: 'Pak Tono',
-          code: 'C01',
-          date: '2026-02-03',
-          amount: 3000000,
-          status: 'success'
-        },
-        {
-          id: 'tx-8',
-          shohibulId: 'shohibul-04',
-          name: 'Pak Tono',
-          code: 'C01',
-          date: '2026-01-03',
-          amount: 3000000,
-          status: 'success'
-        },
-        {
-          id: 'tx-9',
-          shohibulId: 'shohibul-01',
-          name: 'Budi Santoso',
-          code: 'A01',
-          date: '2026-04-07',
-          amount: 2500000,
-          status: 'success'
+          id: `tx-${txIdCounter++}`,
+          shohibulId: 'shohibul-09',
+          name: 'Bpk. Ali M Abduh',
+          date: new Date().toISOString(),
+          amount: 250000,
+          status: 'pending',
+          paymentMethod: 'qris'
         }
-      ]
- 
+      )
+      
+      // Urutkan transaksi dari yang terbaru ke yang terlama
+      this.transactions = simulatedTransactions.sort((a, b) => new Date(b.date) - new Date(a.date))
+
       this.saveToCache()
     },
 
@@ -411,18 +262,42 @@ export const useQurbanStore = defineStore('qurban', {
       
       const newId = 'shohibul-' + Math.random().toString(36).substr(2, 9)
       
-      // Generate code based on type (e.g. S-XYZ or K-XYZ)
-      const prefix = payload.type === 'sapi' ? 'S' : 'K'
-      const codeSuffix = Math.floor(100 + Math.random() * 900).toString()
-      const code = `${prefix}${codeSuffix}`
-      
+      let assignedGroup = payload.animalGroup;
+      if (!assignedGroup) {
+        if (payload.type === 'sapi') {
+          const groupCounts = {};
+          this.shohibuls.forEach(member => {
+            if (member.type === 'sapi' && member.animalGroup && member.animalGroup.startsWith('Sapi Kelompok ')) {
+              groupCounts[member.animalGroup] = (groupCounts[member.animalGroup] || 0) + 1;
+            }
+          });
+          
+          const sortedGroups = Object.keys(groupCounts).sort();
+          const availableGroup = sortedGroups.find(key => groupCounts[key] < 7);
+          
+          if (availableGroup) {
+            assignedGroup = availableGroup;
+          } else {
+            if (sortedGroups.length === 0) {
+              assignedGroup = 'Sapi Kelompok A';
+            } else {
+              const lastGroup = sortedGroups[sortedGroups.length - 1];
+              const lastChar = lastGroup.slice(-1);
+              const nextChar = String.fromCharCode(lastChar.charCodeAt(0) + 1);
+              assignedGroup = `Sapi Kelompok ${nextChar}`;
+            }
+          }
+        } else {
+          assignedGroup = 'Kambing Mandiri';
+        }
+      }
+
       const newShohibul = {
         id: newId,
         name: payload.name,
         address: payload.address,
-        code: code,
         type: payload.type,
-        animalGroup: payload.animalGroup || (payload.type === 'sapi' ? 'Sapi Kelompok (Pending)' : 'Kambing Mandiri'),
+        animalGroup: assignedGroup,
         target: payload.target,
         collected: 0,
         lastPaymentMonth: '-'
@@ -435,7 +310,6 @@ export const useQurbanStore = defineStore('qurban', {
         id: 'tx-' + Math.random().toString(36).substr(2, 9),
         shohibulId: newId,
         name: newShohibul.name,
-        code: newShohibul.code,
         amount: payload.initialAmount,
         date: new Date().toISOString(),
         paymentMethod: payload.paymentMethod,

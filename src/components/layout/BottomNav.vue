@@ -12,12 +12,15 @@
         <span class="text-[9px] font-bold text-gray-500 group-[.is-active]:text-teal-600">Shohibul</span>
       </router-link>
 
-      <div class="flex justify-center relative z-10 -mt-6">
+      <div class="flex justify-center relative z-10 -mt-7">
         <router-link to="/menabung" class="flex flex-col items-center group" active-class="is-active">
-          <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-lg shadow-teal-600/30 group-hover:bg-teal-700 border-4 border-white dark:border-gray-900 mb-1">
-            <WalletIcon class="w-5 h-5" />
+          <div class="relative flex items-center justify-center mb-1">
+             <!-- Main Button -->
+             <div class="relative w-14 h-14 rounded-full bg-gradient-to-tr from-primary to-[#2dd4bf] text-white flex items-center justify-center shadow-[0_8px_16px_rgba(13,148,136,0.4)] group-hover:shadow-[0_12px_24px_rgba(13,148,136,0.6)] group-hover:-translate-y-1 group-active:translate-y-0 group-active:scale-95 border-4 border-white dark:border-gray-900 transition-all duration-300 z-10">
+               <WalletIcon class="w-6 h-6 group-hover:animate-bounce" />
+             </div>
           </div>
-          <span class="text-[9px] font-bold text-teal-600">Tabung</span>
+          <span class="text-[10px] font-extrabold text-primary dark:text-primary-light transition-all group-hover:scale-105">Tabung</span>
         </router-link>
       </div>
 

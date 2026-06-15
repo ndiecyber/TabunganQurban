@@ -79,7 +79,7 @@
                   </div>
                   <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-teal-100/80 font-semibold px-0.5">
                     <div class="flex space-x-3">
-                      <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ store.sapiCount }} Sapi</span>
+                      <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ Math.ceil(store.sapiCount / 7) }} Sapi</span>
                       <span class="flex items-center"><span class="mr-1 opacity-80">🐐</span> {{ store.kambingCount }} Kambing</span>
                     </div>
                     <span>{{ (store.targetTotal / 1000000).toFixed(1) }} Juta</span>
@@ -154,7 +154,7 @@
                 <ClockIcon class="w-4 h-4" />
               </div>
               <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
-              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Proses</p>
+              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Belum Lunas</p>
             </div>
           </div>
         </div>
