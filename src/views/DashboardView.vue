@@ -98,63 +98,45 @@
             </div>
           </div>
 
-          <div class="h-px w-full bg-gray-300 dark:bg-white/10"></div>
+        </div>
 
-          <div class="py-5 px-3 sm:px-6 flex justify-around items-start w-full quick-actions bg-white dark:bg-transparent">
-            <router-link to="/menabung" class="flex flex-col items-center group cursor-pointer flex-1">
-              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[2px] border-gray-300 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] shadow-md dark:shadow-none group-hover:bg-primary/10 dark:group-hover:bg-primary/10 flex items-center justify-center text-primary dark:text-primary-light transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 mb-2">
-                <WalletIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
-              </div>
-              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-primary dark:group-hover:text-primary-light leading-tight">Setor</span>
-            </router-link>
-
-            <router-link to="/shohibul" class="flex flex-col items-center group cursor-pointer flex-1">
-              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[2px] border-gray-300 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] shadow-md dark:shadow-none group-hover:bg-secondary/10 dark:group-hover:bg-secondary/10 flex items-center justify-center text-secondary transition-all duration-300 group-hover:-translate-y-1 group-hover:border-secondary/40 mb-2">
-                <UsersIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
-              </div>
-              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-secondary leading-tight">Shohibul</span>
-            </router-link>
-
-            <router-link to="/menabung?mode=kalkulator" class="flex flex-col items-center group cursor-pointer flex-1">
-              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[2px] border-gray-300 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] shadow-md dark:shadow-none group-hover:bg-emerald-500/10 dark:group-hover:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-emerald-500/40 mb-2">
-                <CalculatorIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
-              </div>
-              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-emerald-600 dark:group-hover:text-emerald-400 leading-tight">Hitung</span>
-            </router-link>
-
-            <router-link to="/rekap" class="flex flex-col items-center group cursor-pointer flex-1">
-              <div class="w-[56px] h-[56px] sm:w-[64px] sm:h-[64px] rounded-[18px] border-[2px] border-gray-300 dark:border-white/10 bg-slate-50 dark:bg-white/[0.02] shadow-md dark:shadow-none group-hover:bg-blue-500/10 dark:group-hover:bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-blue-500/40 mb-2">
-                <FileTextIcon class="w-6 h-6 sm:w-7 sm:h-7" stroke-width="2.2" />
-              </div>
-              <span class="text-[11px] sm:text-xs font-bold text-gray-700 dark:text-gray-300 text-center transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400 leading-tight">Laporan</span>
-            </router-link>
+        <div class="order-2 grid grid-cols-3 gap-2 sm:gap-4 quick-stats">
+          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+              <UsersIcon class="w-32 h-32" />
+            </div>
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light shrink-0 mb-1 sm:mb-0">
+              <UsersIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div class="text-center sm:text-right w-full sm:w-auto">
+              <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Shohibul</p>
+              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading truncate">{{ Math.round(animatedStats.shohibuls) }}</p>
+            </div>
           </div>
 
-          <div class="h-px w-full bg-gray-300 dark:bg-white/10"></div>
-
-          <div class="p-4 sm:p-5 grid grid-cols-3 divide-x divide-gray-300 dark:divide-white/10 quick-stats bg-gray-50 dark:bg-transparent">
-            <div class="flex flex-col items-center justify-center text-center px-1 group">
-              <div class="w-7 h-7 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary dark:text-primary-light mb-1.5 group-hover:scale-110 transition-transform">
-                <UsersIcon class="w-4 h-4" />
-              </div>
-              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.shohibuls) }}</p>
-              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Shohibul</p>
+          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+              <CheckCircleIcon class="w-32 h-32" />
             </div>
-
-            <div class="flex flex-col items-center justify-center text-center px-1 group">
-              <div class="w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 mb-1.5 group-hover:scale-110 transition-transform">
-                <CheckCircleIcon class="w-4 h-4" />
-              </div>
-              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.lunas) }}</p>
-              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Lunas</p>
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0 mb-1 sm:mb-0">
+              <CheckCircleIcon class="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
+            <div class="text-center sm:text-right w-full sm:w-auto">
+              <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Lunas</p>
+              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.lunas) }}</p>
+            </div>
+          </div>
 
-            <div class="flex flex-col items-center justify-center text-center px-1 group">
-              <div class="w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-1.5 group-hover:scale-110 transition-transform">
-                <ClockIcon class="w-4 h-4" />
-              </div>
-              <p class="text-[15px] sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading mb-0.5">{{ Math.round(animatedStats.proses) }}</p>
-              <p class="text-[9px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Belum Lunas</p>
+          <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] sm:rounded-2xl p-3 sm:p-4 flex flex-col items-center sm:items-start sm:flex-row sm:justify-between shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden group">
+            <div class="absolute right-[-10px] top-[-10px] opacity-[0.03] dark:opacity-5 group-hover:scale-110 transition-transform duration-500 pointer-events-none hidden sm:block">
+              <ClockIcon class="w-32 h-32" />
+            </div>
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0 mb-1 sm:mb-0">
+              <ClockIcon class="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div class="text-center sm:text-right w-full sm:w-auto">
+              <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate">Belum Lunas</p>
+              <p class="text-xs sm:text-lg font-black text-gray-800 dark:text-white leading-none font-heading">{{ Math.round(animatedStats.proses) }}</p>
             </div>
           </div>
         </div>
@@ -169,7 +151,7 @@
 
         <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-md">
           <div class="flex flex-col">
-            <template v-for="(tx, index) in store.transactions.slice(0, 4)" :key="tx.id">
+            <template v-for="(tx, index) in store.transactions.slice(0, 5)" :key="tx.id">
               <div 
                 @click="openReceiptModal(tx)"
                 class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group"
@@ -197,7 +179,7 @@
                 </div>
               </div>
               
-              <div v-if="index !== store.transactions.slice(0, 4).length - 1" class="h-[1px] mx-3 bg-gray-200 dark:bg-white/5 my-0.5"></div>
+              <div v-if="index !== store.transactions.slice(0, 5).length - 1" class="h-[1px] mx-3 bg-gray-200 dark:bg-white/5 my-0.5"></div>
             </template>
           </div>
         </div>
