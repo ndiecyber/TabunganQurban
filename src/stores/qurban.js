@@ -258,7 +258,6 @@ export const useQurbanStore = defineStore('qurban', {
     },
 
     registerNewShohibul(payload) {
-      // payload: { name, address, type, animalGroup (optional), target, initialAmount, paymentMethod }
       
       const newId = 'shohibul-' + Math.random().toString(36).substr(2, 9)
       

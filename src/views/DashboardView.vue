@@ -204,7 +204,7 @@
       </div>
     </div>
 
-    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
@@ -260,7 +260,7 @@
         </div>
       </div>
       <!-- Disclaimer Modal -->
-      <div v-if="isDisclaimerModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center modal-backdrop p-4" style="margin: 0;">
+      <div v-if="isDisclaimerModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center modal-backdrop p-4" style="margin: 0;">
         <div class="absolute inset-0 cursor-pointer" @click="closeDisclaimerModal"></div>
         
         <div class="bg-white dark:bg-dark rounded-[2rem] p-6 max-w-xs w-full relative z-10 shadow-2xl disclaimer-modal-content border border-gray-200/50 dark:border-white/10">
