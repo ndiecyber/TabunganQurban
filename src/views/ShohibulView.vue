@@ -111,7 +111,9 @@
                    <HomeIcon class="w-2.5 h-2.5 mr-1 shrink-0" />
                    <span class="truncate">{{ shohibul.address || 'Alamat tidak diketahui' }}</span>
                  </p>
-                 <p class="flex items-center"><PhoneIcon class="w-2.5 h-2.5 mr-1" /> {{ shohibul.phone || '08XX-XXXX-XXXX' }}</p>
+                 <p class="flex items-center cursor-pointer hover:text-gray-800 dark:hover:text-gray-200 transition-colors w-fit" @click.stop="togglePhoneReveal(shohibul.id, $event)">
+                   <PhoneIcon class="w-2.5 h-2.5 mr-1" /> {{ getDisplayPhone(shohibul) }}
+                 </p>
               </div>
             </div>
           </div>
@@ -187,7 +189,9 @@
                     <HomeIcon class="w-3 h-3 mr-1 shrink-0" />
                     <span class="truncate">{{ selectedShohibul.address || 'Belum ada alamat' }}</span>
                   </p>
-                  <p class="flex items-center"><PhoneIcon class="w-3 h-3 mr-1" /> {{ selectedShohibul.phone || '08XX-XXXX-XXXX' }}</p>
+                  <p class="flex items-center cursor-pointer hover:text-gray-800 dark:hover:text-gray-200 transition-colors w-fit" @click="togglePhoneReveal(selectedShohibul.id, $event)">
+                    <PhoneIcon class="w-3 h-3 mr-1" /> {{ getDisplayPhone(selectedShohibul) }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -401,6 +405,27 @@ const filteredShohibuls = computed(() => {
     return matchesSearch && matchesFilter
   })
 })
+
+const revealedPhones = ref(new Set())
+
+const togglePhoneReveal = (id, event) => {
+  if (event) event.stopPropagation()
+  if (revealedPhones.value.has(id)) {
+    revealedPhones.value.delete(id)
+  } else {
+    revealedPhones.value.add(id)
+  }
+}
+
+const getDisplayPhone = (shohibul) => {
+  const phone = shohibul.phone
+  if (!phone) return '08XX-XXXX-XXXX'
+  if (revealedPhones.value.has(shohibul.id)) return phone
+  
+  const cleaned = phone.replace(/[^0-9]/g, '')
+  if (cleaned.length < 8) return '08XX-••••-XXXX'
+  return cleaned.substring(0, 4) + ' •••• ' + cleaned.substring(cleaned.length - 3)
+}
 
 const getPercentage = (shohibul) => {
   if (shohibul.target === 0) return 0

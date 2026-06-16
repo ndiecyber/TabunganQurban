@@ -65,8 +65,8 @@ export const useQurbanStore = defineStore('qurban', {
 
   actions: {
     initializeStore() {
-      const cachedShohibuls = localStorage.getItem('qurban_shohibuls_v4.1')
-      const cachedTransactions = localStorage.getItem('qurban_transactions_v4.1')
+      const cachedShohibuls = localStorage.getItem('qurban_shohibuls_v5')
+      const cachedTransactions = localStorage.getItem('qurban_transactions_v5')
 
       if (cachedShohibuls && cachedTransactions) {
         this.shohibuls = JSON.parse(cachedShohibuls)

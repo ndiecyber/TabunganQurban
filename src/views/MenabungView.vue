@@ -135,7 +135,7 @@
               <input 
                 v-model="registerForm.phone" 
                 type="tel" 
-                placeholder="Nomor HP / WhatsApp" 
+                placeholder="Nomor WhatsApp" 
                 class="w-full bg-gray-50 dark:bg-white/[0.03] text-sm border-[2px] border-gray-300 dark:border-white/10 rounded-[1.2rem] px-5 py-3.5 font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:text-white transition-all shadow-sm"
               />
               <input 
@@ -726,7 +726,7 @@ const validationMessage = computed(() => {
     return ''
   } else {
     if (!registerForm.value.name.trim()) return 'Masukkan Nama Shohibul'
-    if (!registerForm.value.phone.trim()) return 'Masukkan Nomor HP'
+    if (!registerForm.value.phone.trim()) return 'Masukkan Nomor Whatsapp'
     if (!registerForm.value.address.trim()) return 'Masukkan Alamat'
     if (!form.value.amount) return 'Masukkan Nominal Setoran'
     if (amountErrorMessage.value) return amountErrorMessage.value
@@ -886,7 +886,7 @@ const submitDeposit = () => {
 
   if (formMode.value === 'register') {
     if (!registerForm.value.name.trim() || !registerForm.value.address.trim() || !registerForm.value.phone.trim()) {
-      alert('Mohon lengkapi Nama, Nomor HP, dan Alamat pendaftar.')
+      alert('Mohon lengkapi Nama, Nomor Whatsapp, dan Alamat pendaftar.')
       return
     }
     

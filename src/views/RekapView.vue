@@ -325,7 +325,7 @@
               <span class="font-bold text-gray-800 dark:text-white max-w-[60%] text-right truncate">{{ getTxShohibul(selectedTx).address || 'Tidak ada alamat' }}</span>
             </div>
             <div class="flex justify-between items-center text-sm">
-              <span class="text-gray-500 dark:text-gray-400 font-medium">Nomor HP</span>
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Nomor Whatsapp</span>
               <span class="font-bold text-gray-800 dark:text-white">{{ getMaskedPhone(getTxShohibul(selectedTx).phone) }}</span>
             </div>
           </div>
