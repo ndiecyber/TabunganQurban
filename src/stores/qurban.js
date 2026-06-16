@@ -8,12 +8,23 @@ export const useQurbanStore = defineStore('qurban', {
       sapi: 4000000,
       kambing: 3500000
     },
-    targetTotal: 106000000,
     currentShohibulId: 'shohibul-01', // Logged in user: Budi Santoso
     isDarkMode: false
   }),
 
   getters: {
+    targetTotal(state) {
+      const sapiCount = state.shohibuls.filter(item => item.type === 'sapi').length
+      const kambingCount = state.shohibuls.filter(item => item.type === 'kambing').length
+
+      const sapiAnimals = Math.ceil(sapiCount / 7)
+      const kambingAnimals = kambingCount
+
+      const sapiTarget = sapiAnimals * (7 * state.animalPrices.sapi)
+      const kambingTarget = kambingAnimals * state.animalPrices.kambing
+
+      return sapiTarget + kambingTarget
+    },
     totalCollected(state) {
       return state.shohibuls.reduce((sum, item) => sum + item.collected, 0)
     },
@@ -54,8 +65,8 @@ export const useQurbanStore = defineStore('qurban', {
 
   actions: {
     initializeStore() {
-      const cachedShohibuls = localStorage.getItem('qurban_shohibuls_v4')
-      const cachedTransactions = localStorage.getItem('qurban_transactions_v4')
+      const cachedShohibuls = localStorage.getItem('qurban_shohibuls_v4.1')
+      const cachedTransactions = localStorage.getItem('qurban_transactions_v4.1')
 
       if (cachedShohibuls && cachedTransactions) {
         this.shohibuls = JSON.parse(cachedShohibuls)
@@ -186,8 +197,6 @@ export const useQurbanStore = defineStore('qurban', {
         ...shohibulData
       }
       this.shohibuls.push(newShohibul)
-
-      this.targetTotal += shohibulData.target
 
       this.saveToCache()
       return newShohibul
