@@ -167,7 +167,7 @@
     <div v-if="selectedShohibul" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeDetails"></div>
         
-        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 sm:p-8 max-h-[90%] overflow-y-auto space-y-6 relative border-[2px] border-b-0 border-gray-300 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10 custom-scrollbar">
+        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-5 sm:p-6 max-h-[90%] overflow-y-auto space-y-4 relative border-[2px] border-b-0 border-gray-300 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] details-modal-content w-full max-w-2xl mx-auto z-10 custom-scrollbar">
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 sm:-mt-4 mb-4 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeDetails"></div>
           
           <div class="flex justify-between items-start">
@@ -182,7 +182,7 @@
                 <div class="flex items-center space-x-2">
                   <h3 class="text-xl font-bold text-gray-800 dark:text-white font-heading">{{ selectedShohibul.name }}</h3>
                 </div>
-                <div class="text-xs text-gray-500 mt-1 font-medium space-y-0.5">
+                <div class="text-[11px] text-gray-500 mt-0.5 font-medium space-y-0">
                   <p class="flex items-center text-gray-600 dark:text-gray-400">
                     <HomeIcon class="w-3 h-3 mr-1 shrink-0" />
                     <span class="truncate">{{ selectedShohibul.address || 'Belum ada alamat' }}</span>
@@ -196,8 +196,8 @@
             </button>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2 shadow-sm">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-3 rounded-2xl text-center space-y-1.5 shadow-sm">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Hewan Target</span>
               <span class="text-base font-bold text-gray-800 dark:text-white block flex items-center justify-center">
                 <span class="mr-1.5 text-xl">{{ selectedShohibul.type === 'sapi' ? '🐄' : '🐐' }}</span>
@@ -206,7 +206,7 @@
               <span class="text-[9px] text-gray-400 font-semibold block bg-white dark:bg-black/20 py-1 rounded-md mx-4 border border-gray-100 dark:border-white/5">{{ selectedShohibul.animalGroup }}</span>
             </div>
             
-            <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-4 rounded-[1.5rem] text-center space-y-2 shadow-sm">
+            <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-3 rounded-2xl text-center space-y-1.5 shadow-sm">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Status Tabungan</span>
               <span 
                 class="text-[10px] font-bold block py-1.5 px-3 rounded-lg w-fit mx-auto uppercase tracking-wider"
@@ -214,22 +214,22 @@
                   ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400' 
                   : 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400'"
               >
-                {{ selectedShohibul.collected >= selectedShohibul.target ? 'Terpenuhi (Lunas)' : 'Belum Lunas' }}
+                {{ selectedShohibul.collected >= selectedShohibul.target ? 'Lunas' : 'Belum Lunas' }}
               </span>
               <span class="text-[10px] font-bold text-primary dark:text-primary-light block">{{ getPercentage(selectedShohibul) }}% Terkumpul</span>
             </div>
           </div>
 
-          <div class="space-y-4 bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-5 rounded-[1.5rem] shadow-sm">
+          <div class="space-y-2 bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-3 rounded-2xl shadow-sm">
             <h4 class="text-[10px] font-bold text-gray-600 dark:text-gray-400 uppercase tracking-widest flex items-center">
               <ActivityIcon class="w-3.5 h-3.5 mr-1.5" /> Perkembangan Dana
             </h4>
-            <div class="space-y-3">
-              <div class="flex justify-between items-center text-sm">
+            <div class="space-y-2">
+              <div class="flex justify-between items-center text-xs">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Telah Terbayar</span>
                 <span class="font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibul.collected) }}</span>
               </div>
-              <div class="flex justify-between items-center text-sm">
+              <div class="flex justify-between items-center text-xs">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Target Qurban</span>
                 <span class="font-bold text-gray-800 dark:text-white">{{ formatRp(selectedShohibul.target) }}</span>
               </div>
@@ -240,14 +240,14 @@
                   :style="{ width: getPercentage(selectedShohibul) + '%' }"
                 ></div>
               </div>
-              <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-sm pt-3 border-t border-gray-200/50 dark:border-white/5 mt-2">
+              <div v-if="selectedShohibul.target - selectedShohibul.collected > 0" class="flex justify-between items-center text-xs pt-3 border-t border-gray-200/50 dark:border-white/5 mt-2">
                 <span class="text-gray-500 dark:text-gray-400 font-bold">Kekurangan</span>
                 <span class="font-bold text-secondary">{{ formatRp(selectedShohibul.target - selectedShohibul.collected) }}</span>
               </div>
             </div>
           </div>
 
-          <div class="space-y-3">
+          <div class="space-y-2">
             <h4 class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest flex items-center">
               <HistoryIcon class="w-3.5 h-3.5 mr-1.5" /> Riwayat Setoran
             </h4>
@@ -257,7 +257,7 @@
                 v-for="tx in memberTransactions" 
                 :key="tx.id"
                 @click="openReceiptModal(tx)"
-                class="bg-white dark:bg-white/[0.02] border-[1.5px] p-3.5 rounded-[1.5rem] flex justify-between items-center shadow-sm transition-colors cursor-pointer"
+                class="bg-white dark:bg-white/[0.02] border-[1.5px] p-2.5 rounded-2xl flex justify-between items-center shadow-sm transition-colors cursor-pointer"
                 :class="tx.status === 'pending' ? 'border-amber-300 dark:border-amber-900/50' : 'border-gray-200 dark:border-white/5 hover:border-gray-300'"
               >
                 <div class="flex items-center space-x-3">
@@ -278,16 +278,16 @@
               </div>
             </div>
             
-            <div v-else class="text-center py-8 bg-gray-50 dark:bg-white/[0.02] rounded-[1.5rem] border border-dashed border-gray-200 dark:border-white/5">
+            <div v-else class="text-center py-6 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-dashed border-gray-200 dark:border-white/5">
               <p class="text-xs text-gray-400 font-semibold">Belum ada riwayat setoran.</p>
             </div>
           </div>
           
-          <div class="pt-4 border-t border-gray-200/50 dark:border-white/10 pb-4">
+          <div class="pt-3 border-t border-gray-200/50 dark:border-white/10 pb-2">
             <button 
               v-if="selectedShohibul.collected < selectedShohibul.target"
               @click="goToDeposit(selectedShohibul.id)"
-              class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-2xl font-bold text-sm transition-all shadow-md shadow-primary/20 flex items-center justify-center space-x-2"
+              class="w-full py-3 bg-primary hover:bg-primary-light text-white rounded-xl font-bold text-sm transition-all shadow-md shadow-primary/20 flex items-center justify-center space-x-2"
             >
               <WalletIcon class="w-5 h-5" />
               <span>Tambah Setoran</span>
@@ -295,7 +295,7 @@
             <button 
               v-else
               disabled
-              class="w-full py-4 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-2xl font-bold text-sm cursor-not-allowed flex items-center justify-center space-x-2 border border-green-200 dark:border-green-800/50"
+              class="w-full py-3 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-xl font-bold text-sm cursor-not-allowed flex items-center justify-center space-x-2 border border-green-200 dark:border-green-800/50"
             >
               <CheckCircleIcon class="w-5 h-5" />
               <span>Tabungan Sudah Lunas</span>

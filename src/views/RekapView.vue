@@ -42,7 +42,7 @@
         <div>
           <p class="text-xs sm:text-sm text-teal-100/70 font-semibold tracking-wide uppercase mb-1">Total Kas Qurban Terkumpul</p>
           <h2 class="text-4xl sm:text-5xl font-bold text-white font-heading drop-shadow-lg tracking-tight">
-            {{ formatRp(store.totalCollected) }}
+            {{ formatRp(store.totalCollected) }},-
           </h2>
           <div class="flex items-center space-x-2 mt-3">
             <span class="text-[10px] sm:text-xs bg-secondary/20 text-secondary-light px-3 py-1.5 rounded-full font-extrabold border border-secondary/30 backdrop-blur-md shadow-sm flex items-center">
@@ -188,7 +188,7 @@
 
     <div class="space-y-3 groups-widget mt-2">
       <div class="flex justify-between items-center px-1">
-        <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Kelompok Sapi Qurban</h4>
+        <h4 class="text-base font-bold text-gray-800 dark:text-white font-heading">Daftar Sapi Qurban</h4>
         <span class="px-2.5 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[9px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
       </div>
 
@@ -200,8 +200,8 @@
           class="min-w-[85vw] sm:min-w-[320px] lg:min-w-0 snap-center bg-white dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/10 rounded-[1.5rem] p-4 shadow-sm space-y-3 shrink-0 transition-all"
         >
           <div class="flex justify-between items-center pb-2 border-b border-gray-100 dark:border-white/5">
-            <span class="text-xs font-bold text-gray-800 dark:text-white flex items-center">
-              <span class="mr-1.5 text-sm">🐄</span> {{ group.name }}
+            <span class="text-sm font-bold text-gray-800 dark:text-white flex items-center">
+              <span class="mr-1.5 text-base">🐄</span> {{ group.name }}
             </span>
             <span 
               class="px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
@@ -215,17 +215,17 @@
             <div 
               v-for="(member, idx) in group.members" 
               :key="member.id"
-              class="flex justify-between items-center text-xs py-1.5 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
+              class="flex justify-between items-center text-sm py-2 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/[0.03] transition-colors"
             >
               <div class="flex items-center space-x-2.5">
                 <span class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[8px] font-bold text-gray-500">{{ idx + 1 }}</span>
                 <div class="flex flex-col">
                   <span class="font-bold text-gray-800 dark:text-gray-200">{{ member.name }}</span>
-                  <span class="text-[8px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected) }} / {{ formatRp(member.target) }}</span>
+                  <span class="text-[10px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected) }} / {{ formatRp(member.target) }}</span>
                 </div>
               </div>
               <span 
-                class="px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wider"
+                class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
                 :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
               >
                 {{ member.collected >= member.target ? 'Lunas' : 'Belum Lunas' }}
@@ -235,13 +235,13 @@
             <div 
               v-for="i in Math.max(0, 7 - group.members.length)" 
               :key="'empty-'+gIdx+'-'+i" 
-              class="flex justify-between items-center text-xs py-1.5 px-2 rounded-lg border border-dashed border-gray-200 dark:border-white/10 text-gray-400 dark:text-gray-500"
+              class="flex justify-between items-center text-sm py-2 px-2 rounded-lg border border-dashed border-gray-200 dark:border-white/10 text-gray-400 dark:text-gray-500"
             >
               <div class="flex items-center space-x-2.5">
                 <span class="w-4 h-4 rounded border border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center text-[8px] font-bold">{{ group.members.length + i }}</span>
-                <span class="italic font-medium text-[10px]">Slot Kosong</span>
+                <span class="italic font-medium text-xs">Slot Kosong</span>
               </div>
-              <span class="text-[8px] font-bold uppercase bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-400">Tersedia</span>
+              <span class="text-[9px] font-bold uppercase bg-gray-50 dark:bg-gray-800 px-1.5 py-0.5 rounded text-gray-400">Tersedia</span>
             </div>
           </div>
         </div>

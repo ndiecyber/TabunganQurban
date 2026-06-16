@@ -626,7 +626,7 @@ const registerForm = ref({
 
 const calc = ref({
   targetValue: store.animalPrices.sapi,
-  targetName: 'Sapi Kelompok',
+  targetName: 'Sapi Share',
   targetType: 'sapi',
   durationMonths: 10
 })
@@ -685,7 +685,7 @@ const getPresetIcon = (value) => {
 // Revisi: Hapus 4 Opsi tidak relevan, sisa Kambing & Sapi Kelompok
 const calcTargets = computed(() => [
   { label: 'Kambing', price: store.animalPrices.kambing, type: 'kambing', icon: '🐐' },
-  { label: 'Sapi Kelompok', price: store.animalPrices.sapi, type: 'sapi', icon: '🐄👥' }
+  { label: 'Sapi Share', price: store.animalPrices.sapi, type: 'sapi', icon: '🐄👥' }
 ])
 
 const monthlyInstallment = computed(() => {

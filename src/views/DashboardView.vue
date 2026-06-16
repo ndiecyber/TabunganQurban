@@ -55,7 +55,7 @@
               <div class="pt-1">
                 <p class="text-[10px] sm:text-[11px] text-teal-100/80 font-bold tracking-widest uppercase mb-0.5">Total Tabungan Qurban</p>
                 <h2 class="text-3xl sm:text-4xl font-bold text-white font-heading drop-shadow-lg tracking-tight leading-none mb-2">
-                  {{ formatRp(Math.round(animatedStats.collected)) }}
+                  {{ formatRp(Math.round(animatedStats.collected)) }},-
                 </h2>
                 <div class="flex items-center space-x-2">
                   <div @click="openDisclaimerModal" class="flex items-center text-[10px] sm:text-xs text-teal-200/90 font-semibold cursor-pointer hover:text-white transition-colors bg-black/10 px-2 py-0.5 rounded-full border border-teal-200/20 backdrop-blur-sm">
