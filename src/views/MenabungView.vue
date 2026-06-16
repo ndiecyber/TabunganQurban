@@ -152,7 +152,7 @@
                   :class="registerForm.type === 'kambing' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
                 >
                   <div><span class="text-lg mr-1">🐐</span> Kambing</div>
-                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'kambing' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">Rp. 2.500.000</div>
+                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'kambing' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">{{ formatRp(store.animalPrices.kambing) }}</div>
                 </div>
                 <div 
                   @click="registerForm.type = 'sapi'" 
@@ -160,7 +160,7 @@
                   :class="registerForm.type === 'sapi' ? 'border-[2px] border-primary bg-primary/10 text-primary dark:text-primary-light shadow-md' : 'border-[2px] border-gray-300 dark:border-white/10 text-gray-500 hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/5 shadow-sm hover:shadow-md'"
                 >
                   <div><span class="text-lg mr-1">🐄</span> Sapi</div>
-                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'sapi' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">Rp. 3.000.000</div>
+                  <div class="text-[10px] font-bold opacity-80 mt-0.5" :class="registerForm.type === 'sapi' ? 'text-primary dark:text-primary-light' : 'text-gray-400'">{{ formatRp(store.animalPrices.sapi) }}</div>
                 </div>
               </div>
               
@@ -625,7 +625,7 @@ const registerForm = ref({
 })
 
 const calc = ref({
-  targetValue: 3000000,
+  targetValue: store.animalPrices.sapi,
   targetName: 'Sapi Kelompok',
   targetType: 'sapi',
   durationMonths: 10
@@ -638,7 +638,7 @@ const formatRp = (val) => {
 
 const targetLunas = computed(() => {
   if (formMode.value === 'register') {
-    return registerForm.value.type === 'sapi' ? 3000000 : 2500000
+    return registerForm.value.type === 'sapi' ? store.animalPrices.sapi : store.animalPrices.kambing
   } else if (formMode.value === 'setor' && form.value.shohibulId) {
     const shohibul = store.shohibuls.find(s => s.id === form.value.shohibulId)
     if (shohibul) {
@@ -646,7 +646,7 @@ const targetLunas = computed(() => {
       return remaining > 0 ? remaining : shohibul.target
     }
   }
-  return 3000000
+  return store.animalPrices.sapi
 })
 
 const nominalPresets = computed(() => {
@@ -683,10 +683,10 @@ const getPresetIcon = (value) => {
 }
 
 // Revisi: Hapus 4 Opsi tidak relevan, sisa Kambing & Sapi Kelompok
-const calcTargets = [
-  { label: 'Kambing', price: 2500000, type: 'kambing', icon: '🐐' },
-  { label: 'Sapi Kelompok', price: 3000000, type: 'sapi', icon: '🐄👥' }
-]
+const calcTargets = computed(() => [
+  { label: 'Kambing', price: store.animalPrices.kambing, type: 'kambing', icon: '🐐' },
+  { label: 'Sapi Kelompok', price: store.animalPrices.sapi, type: 'sapi', icon: '🐄👥' }
+])
 
 const monthlyInstallment = computed(() => {
   const exactAmount = calc.value.targetValue / calc.value.durationMonths
@@ -931,7 +931,7 @@ const submitDeposit = () => {
         phone: registerForm.value.phone.trim(), // Revisi: Simpan No HP
         address: registerForm.value.address.trim(),
         type: registerForm.value.type,
-        target: registerForm.value.type === 'sapi' ? 3000000 : 2500000,
+        target: registerForm.value.type === 'sapi' ? store.animalPrices.sapi : store.animalPrices.kambing,
         initialAmount: form.value.amount,
         paymentMethod: form.value.paymentMethod
       })
