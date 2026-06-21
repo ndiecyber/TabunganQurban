@@ -851,7 +851,7 @@ const handleShohibulSelection = (s) => {
   if (pendingTx) {
     closeShohibulModal()
     paymentDetails.value = {
-      amount: pendingTx.amount,
+      amount: pendingTx.total_payment || pendingTx.amount,
       paymentMethod: pendingTx.payment_method,
       vaNumber: pendingTx.order_id, // Placeholder if no saved payment number
       paymentNumber: pendingTx.payment_number || '',
