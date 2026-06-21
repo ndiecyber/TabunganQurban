@@ -1,6 +1,23 @@
 <template>
   <div class="space-y-4 sm:space-y-5 pb-2" ref="containerRef">
-    
+    <StaleBanner :visible="store.isFromCache" @refresh="store.fetchDashboard()" />
+
+    <!-- Loading state -->
+    <template v-if="store.loading.dashboard && !store.dashboardStats">
+      <LoadingSkeleton variant="hero" />
+      <LoadingSkeleton variant="stats" />
+      <div class="bg-white dark:bg-white/[0.03] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-md">
+        <LoadingSkeleton variant="row" :count="5" />
+      </div>
+    </template>
+
+    <!-- Error state -->
+    <template v-else-if="store.error.dashboard && !store.dashboardStats">
+      <RetryError :message="store.error.dashboard" @retry="store.fetchDashboard()" />
+    </template>
+
+    <!-- Data loaded -->
+    <template v-else>
     <div class="flex flex-col gap-3 sm:gap-4">
         
         <div class="order-1 bg-white dark:bg-white/[0.03] border-2 border-gray-300 dark:border-white/10 rounded-[2rem] sm:rounded-[2.5rem] shadow-lg overflow-hidden flex flex-col relative z-10">
@@ -39,7 +56,7 @@
                   <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_rgba(217,119,6,0.8)]"></span>
                   <span class="text-white/90 text-[8px] sm:text-[9px] font-bold tracking-widest uppercase flex flex-col leading-tight">
                     <span>TARGET QURBAN</span>
-                    <span>2026 (1447 H)</span>
+                    <span>{{ store.activePeriod?.name || 'Periode Aktif' }}</span>
                   </span>
                 </div>
                 
@@ -71,12 +88,12 @@
                   <div class="w-full h-1.5 bg-black/30 rounded-full overflow-hidden backdrop-blur-sm">
                     <div 
                       class="h-full bg-gradient-to-r from-secondary to-amber-300 rounded-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(217,119,6,0.6)]"
-                      :style="{ width: Math.round(animatedStats.percentage) + '%' }"
+                      :style="{ width: Math.min(100, Math.round(animatedStats.percentage)) + '%' }"
                     ></div>
                   </div>
                   <div class="flex justify-between items-center text-[9px] sm:text-[10px] text-teal-100/80 font-semibold px-0.5">
                     <div class="flex space-x-3">
-                      <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ Math.ceil(store.sapiCount / 7) }} Sapi</span>
+                      <span class="flex items-center"><span class="mr-1 opacity-80">🐄</span> {{ store.sapiGroups }} Sapi</span>
                       <span class="flex items-center"><span class="mr-1 opacity-80">🐐</span> {{ store.kambingCount }} Kambing</span>
                     </div>
                     <span>{{ (store.targetTotal / 1000000).toFixed(1) }} Juta</span>
@@ -139,57 +156,73 @@
 
         <div class="bg-white dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-md">
           <div class="flex flex-col">
-            <template v-for="(tx, index) in store.transactions.slice(0, 5)" :key="tx.id">
-              <div 
-                @click="openReceiptModal(tx)"
-                class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group"
-              >
-                <div class="flex items-center space-x-3">
-                  <div 
-                    class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
-                    :style="getAvatarStyle(tx.name)"
-                  >
-                    {{ getInitials(tx.name) }}
-                  </div>
-                  <div class="flex flex-col justify-center">
-                    <h5 class="text-xs font-extrabold text-gray-800 dark:text-white leading-none mb-1 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
-                    <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
-                      <span>{{ formatDate(tx.date) }}</span>
-                      <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
-                      <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).type) }}</span>
+            <template v-if="store.recentTransactions.length > 0">
+              <template v-for="(tx, index) in store.recentTransactions" :key="tx.id">
+                <div 
+                  @click="openReceiptModal(tx)"
+                  class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group"
+                >
+                  <div class="flex items-center space-x-3">
+                    <div 
+                      class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
+                      :style="getAvatarStyle(getTxShohibul(tx).name)"
+                    >
+                      {{ getInitials(getTxShohibul(tx).name) }}
+                    </div>
+                    <div class="flex flex-col justify-center">
+                      <h5 class="text-xs font-extrabold text-gray-800 dark:text-white leading-none mb-1 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ getTxShohibul(tx).name }}</h5>
+                      <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
+                        <span>{{ formatDate(tx.completed_at || tx.created_at) }}</span>
+                        <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
+                        <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).target_type) }}</span>
+                      </div>
                     </div>
                   </div>
+                  <div class="text-right">
+                    <span class="block text-sm font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
+                    <span class="inline-block px-2 py-0.5 mt-1 text-[8px] font-bold rounded-md uppercase tracking-widest border" :class="getStatusBadgeClass(tx.status)">
+                      {{ getStatusLabel(tx.status) }}
+                    </span>
+                  </div>
                 </div>
-                <div class="text-right">
-                  <span class="block text-sm font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
-                  <span v-if="tx.status === 'success'" class="inline-block px-2 py-0.5 mt-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-green-200/50 dark:border-green-800/30">Sukses</span>
-                  <span v-else class="inline-block px-2 py-0.5 mt-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-amber-200/50 dark:border-amber-800/30">Pending</span>
-                </div>
-              </div>
-              
-              <div v-if="index !== store.transactions.slice(0, 5).length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-4 my-1"></div>
+                
+                <div v-if="index !== store.recentTransactions.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-4 my-1"></div>
+              </template>
             </template>
+            <div v-else class="text-center py-6 text-gray-400 dark:text-gray-500">
+              <HistoryIcon class="w-8 h-8 mx-auto mb-2 opacity-30" />
+              <p class="text-xs font-bold">Belum ada setoran terbaru</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <!-- Receipt Modal -->
+    <transition @enter="onReceiptEnter" @leave="onReceiptLeave" :css="false">
+      <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end receipt-backdrop" style="margin: 0; padding: 0;">
         <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
         
         <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
           <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
           
           <div v-if="selectedTx" class="flex flex-col items-center w-full">
-            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
-              <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
-              <ClockIcon v-else class="w-8 h-8" />
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="getStatusIconClass(selectedTx.status)">
+              <CheckCircleIcon v-if="selectedTx.status === 'success' || selectedTx.status === 'settlement'" class="w-8 h-8" />
+              <ClockIcon v-else-if="selectedTx.status === 'pending'" class="w-8 h-8" />
+              <XCircleIcon v-else class="w-8 h-8" />
             </div>
             
-            <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-            <p class="text-3xl font-extrabold text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
+            <h3 class="text-lg font-bold" :class="getStatusTextClass(selectedTx.status)">{{ getStatusModalTitle(selectedTx.status) }}</h3>
+            <p class="text-3xl font-extrabold mt-1 mb-6 font-heading" :class="[getStatusTextClass(selectedTx.status), ['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(selectedTx.status) ? 'line-through opacity-70' : '']">{{ formatRp(selectedTx.amount) }}</p>
 
             <div class="w-full bg-gray-50 dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6 shadow-sm">
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Status</span>
+                <span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-widest border" :class="getStatusBadgeClass(selectedTx.status)">
+                  {{ getStatusLabel(selectedTx.status) }}
+                </span>
+              </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
                 <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
@@ -200,12 +233,12 @@
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Metode</span>
-                <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.paymentMethod || 'Tunai/Transfer' }}</span>
+                <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.payment_method || 'Tunai/Transfer' }}</span>
               </div>
               <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
-                <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ getTxShohibul(selectedTx).name }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Alamat</span>
@@ -229,6 +262,7 @@
           </div>
         </div>
       </div>
+    </transition>
       <!-- Disclaimer Modal -->
       <div v-if="isDisclaimerModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center modal-backdrop p-4" style="margin: 0;">
         <div class="absolute inset-0 cursor-pointer" @click="closeDisclaimerModal"></div>
@@ -248,15 +282,19 @@
           </button>
         </div>
       </div>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch, computed, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { UsersIcon, WalletIcon, CalculatorIcon, FileTextIcon, CheckCircleIcon, ClockIcon, CalendarIcon, InfoIcon } from 'lucide-vue-next'
+import { UsersIcon, WalletIcon, CalculatorIcon, FileTextIcon, CheckCircleIcon, ClockIcon, CalendarIcon, InfoIcon, HistoryIcon, XCircleIcon } from 'lucide-vue-next'
+import LoadingSkeleton from '@/components/ui/LoadingSkeleton.vue'
+import RetryError from '@/components/ui/RetryError.vue'
+import StaleBanner from '@/components/ui/StaleBanner.vue'
 
 const store = useQurbanStore()
 const router = useRouter()
@@ -320,7 +358,8 @@ const getAvatarStyle = (name) => {
 }
 
 const getTxShohibul = (tx) => {
-  return store.shohibuls.find(s => s.id === tx.shohibulId) || {}
+  const shohibulId = tx.shohibul_id || tx.shohibul?.id
+  return store.shohibuls.find(s => s.id === shohibulId) || tx.shohibul || {}
 }
 
 const getAnimalEmoji = (type) => {
@@ -333,6 +372,41 @@ const getMaskedPhone = (phone) => {
   if (!phone) return '08XX-XXXX-XXXX'
   if (phone.length <= 6) return phone
   return phone.slice(0, 4) + '****' + phone.slice(-3)
+}
+
+const getStatusLabel = (status) => {
+  if (status === 'success' || status === 'settlement') return 'Sukses'
+  if (status === 'pending') return 'Pending'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Batal'
+  return status
+}
+
+const getStatusBadgeClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-green-200/50 dark:border-green-800/30'
+  if (status === 'pending') return 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-800/30'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border-red-200/50 dark:border-red-800/30'
+  return 'bg-gray-50 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400 border-gray-200/50 dark:border-gray-800/30'
+}
+
+const getStatusTextClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'text-green-600 dark:text-green-400'
+  if (status === 'pending') return 'text-amber-600 dark:text-amber-400'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'text-red-600 dark:text-red-400'
+  return 'text-gray-800 dark:text-white'
+}
+
+const getStatusIconClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'bg-green-100 dark:bg-green-900/30 text-green-500'
+  if (status === 'pending') return 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'bg-red-100 dark:bg-red-900/30 text-red-500'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500'
+}
+
+const getStatusModalTitle = (status) => {
+  if (status === 'success' || status === 'settlement') return 'Pembayaran Berhasil'
+  if (status === 'pending') return 'Menunggu Pembayaran'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Pembayaran Dibatalkan'
+  return 'Status Transaksi'
 }
 
 const animatedStats = reactive({
@@ -351,11 +425,9 @@ const isDisclaimerModalOpen = ref(false)
 const openDisclaimerModal = () => {
   isDisclaimerModalOpen.value = true
   document.body.style.overflow = 'hidden'
-  import('vue').then(({ nextTick }) => {
-    nextTick(() => {
-      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
-      gsap.fromTo('.disclaimer-modal-content', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.5)' })
-    })
+  nextTick(() => {
+    gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+    gsap.fromTo('.disclaimer-modal-content', { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: 'back.out(1.5)' })
   })
 }
 
@@ -371,26 +443,31 @@ const openReceiptModal = (tx) => {
   selectedTx.value = tx
   isReceiptModalOpen.value = true
   document.body.style.overflow = 'hidden'
-  import('vue').then(({ nextTick }) => {
-    nextTick(() => {
-      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
-      gsap.fromTo('.receipt-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
-    })
-  })
 }
 
 const closeReceiptModal = () => {
-  gsap.to('.receipt-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
-  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
-    isReceiptModalOpen.value = false
-    setTimeout(() => { selectedTx.value = null }, 300)
-    document.body.style.overflow = ''
+  isReceiptModalOpen.value = false
+  document.body.style.overflow = ''
+}
+
+const onReceiptEnter = (el, done) => {
+  const content = el.querySelector('.receipt-modal-content')
+  gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3 })
+  gsap.fromTo(content, { yPercent: 100 }, { yPercent: 0, duration: 0.4, ease: 'power3.out', onComplete: done })
+}
+
+const onReceiptLeave = (el, done) => {
+  const content = el.querySelector('.receipt-modal-content')
+  gsap.to(content, { yPercent: 100, duration: 0.3, ease: 'power3.in' })
+  gsap.to(el, { opacity: 0, duration: 0.3, onComplete: () => {
+    done()
+    if (!isReceiptModalOpen.value) selectedTx.value = null
   }})
 }
 
 const continuePayment = () => {
-  if (selectedTx.value && selectedTx.value.shohibulId) {
-    const shohibulId = selectedTx.value.shohibulId
+  if (selectedTx.value && (selectedTx.value.shohibul_id || selectedTx.value.shohibulId)) {
+    const shohibulId = selectedTx.value.shohibul_id || selectedTx.value.shohibulId
     closeReceiptModal()
     router.push({ path: '/menabung', query: { shohibulId: shohibulId } })
   }
@@ -398,7 +475,7 @@ const continuePayment = () => {
 
 watch(() => store.totalCollected, (newVal) => {
   gsap.to(animatedStats, {
-    shohibuls: store.shohibuls.length,
+    shohibuls: store.totalShohibul,
     lunas: store.totalLunas,
     proses: store.totalProses,
     collected: newVal,
@@ -408,9 +485,9 @@ watch(() => store.totalCollected, (newVal) => {
   })
 })
 
-onMounted(() => {
+const animateStats = () => {
   gsap.to(animatedStats, {
-    shohibuls: store.shohibuls.length,
+    shohibuls: store.totalShohibul,
     lunas: store.totalLunas,
     proses: store.totalProses,
     collected: store.totalCollected,
@@ -418,6 +495,20 @@ onMounted(() => {
     duration: 1.8,
     ease: 'power3.out'
   })
+}
+
+// Watch for dashboardStats to be loaded (async)
+watch(() => store.dashboardStats, (newStats) => {
+  if (newStats) {
+    animateStats()
+  }
+})
+
+onMounted(async () => {
+  // If data was already loaded by initializeStore, animate immediately
+  if (store.dashboardStats) {
+    animateStats()
+  }
 
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })

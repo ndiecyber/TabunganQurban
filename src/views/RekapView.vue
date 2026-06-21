@@ -1,6 +1,21 @@
 <template>
   <div class="space-y-3 sm:space-y-4 pb-2" ref="containerRef">
-    
+    <StaleBanner :visible="store.isFromCache" @refresh="store.fetchDashboard()" />
+
+    <!-- Loading state -->
+    <template v-if="store.loading.dashboard && !store.dashboardStats">
+      <LoadingSkeleton variant="hero" />
+      <LoadingSkeleton variant="stats" />
+      <LoadingSkeleton variant="card" :count="2" />
+    </template>
+
+    <!-- Error state -->
+    <template v-else-if="store.error.dashboard && !store.dashboardStats">
+      <RetryError :message="store.error.dashboard" @retry="store.fetchDashboard()" />
+    </template>
+
+    <!-- Data loaded -->
+    <template v-else>
     <div class="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#022c22] via-[#064e3b] to-[#0f766e] text-white p-6 sm:p-8 shadow-[0_15px_40px_-10px_rgba(2,44,34,0.7)] border border-white/10 hero-card flex flex-col min-h-[220px] group">
       <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-60"></div>
       
@@ -83,7 +98,7 @@
             <PieChartIcon class="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <p class="text-[8px] sm:text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-0.5 truncate w-full">Progress</p>
-          <p class="text-[11px] sm:text-sm font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5 truncate w-full">{{ store.averageProgress }}%</p>
+          <p class="text-[11px] sm:text-sm font-bold text-gray-800 dark:text-white leading-none font-heading mb-0.5 truncate w-full">{{ averageProgress }}%</p>
         </div>
 
       </div>
@@ -100,31 +115,37 @@
         </div>
         
         <div class="space-y-3">
-          <template v-for="(top, index) in topSavers" :key="top.name">
-            <div class="group">
-              <div class="flex items-center space-x-3 mb-1.5">
-                <div class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 shadow-sm"
-                     :class="index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-yellow-500/50' : 
-                             index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white shadow-gray-500/50' :
-                             index === 2 ? 'bg-gradient-to-br from-orange-300 to-orange-700 text-white shadow-orange-500/50' :
-                             'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700'">
-                  {{ index + 1 }}
+          <template v-if="topSavers.length > 0">
+            <template v-for="(top, index) in topSavers" :key="top.name">
+              <div class="group">
+                <div class="flex items-center space-x-3 mb-1.5">
+                  <div class="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 shadow-sm"
+                       :class="index === 0 ? 'bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-yellow-500/50' : 
+                               index === 1 ? 'bg-gradient-to-br from-gray-300 to-gray-500 text-white shadow-gray-500/50' :
+                               index === 2 ? 'bg-gradient-to-br from-orange-300 to-orange-700 text-white shadow-orange-500/50' :
+                               'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-700'">
+                    {{ index + 1 }}
+                  </div>
+                  <div class="flex-1 flex justify-between items-end">
+                    <span class="text-xs font-bold text-gray-700 dark:text-gray-200 truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ top.name }}</span>
+                    <span class="text-xs font-bold text-gray-900 dark:text-white">{{ formatRp(top.amount) }}</span>
+                  </div>
                 </div>
-                <div class="flex-1 flex justify-between items-end">
-                  <span class="text-xs font-bold text-gray-700 dark:text-gray-200 truncate group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ top.name }}</span>
-                  <span class="text-xs font-bold text-gray-900 dark:text-white">{{ formatRp(top.amount) }}</span>
+                <div class="w-full h-1.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner ml-8" style="width: calc(100% - 2rem)">
+                  <div 
+                    class="h-full rounded-full transition-all duration-1000 ease-out" 
+                    :class="index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-[0_0_8px_rgba(234,179,8,0.5)]' : 'bg-gradient-to-r from-primary to-primary-light'"
+                    :style="{ width: (top.target > 0 ? (top.amount / top.target) * 100 : 0) + '%' }"
+                  ></div>
                 </div>
               </div>
-              <div class="w-full h-1.5 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner ml-8" style="width: calc(100% - 2rem)">
-                <div 
-                  class="h-full rounded-full transition-all duration-1000 ease-out" 
-                  :class="index === 0 ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-[0_0_8px_rgba(234,179,8,0.5)]' : 'bg-gradient-to-r from-primary to-primary-light'"
-                  :style="{ width: (top.target > 0 ? (top.amount / top.target) * 100 : 0) + '%' }"
-                ></div>
-              </div>
-            </div>
-            <div v-if="index !== topSavers.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-8 mt-2 mb-1"></div>
+              <div v-if="index !== topSavers.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-8 mt-2 mb-1"></div>
+            </template>
           </template>
+          <div v-else class="text-center py-6 text-gray-400 dark:text-gray-500">
+            <TrophyIcon class="w-8 h-8 mx-auto mb-2 opacity-30" />
+            <p class="text-xs font-bold">Belum ada data tabungan</p>
+          </div>
         </div>
       </div>
  
@@ -147,15 +168,15 @@
                 </div>
               </div>
               <div class="text-right">
-                <span class="block text-xs font-bold text-primary dark:text-primary-light">{{ store.sapiLunasCount }} / {{ store.sapiCount }}</span>
+                <span class="block text-xs font-bold text-primary dark:text-primary-light">{{ sapiLunasCount }} / {{ store.sapiCount }}</span>
                 <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
             <div class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
               <div 
                 class="h-full rounded-full transition-all duration-1000 ease-out"
-                :class="store.sapiLunasCount > 0 ? 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-transparent'" 
-                :style="{ width: (store.sapiCount > 0 ? (store.sapiLunasCount / store.sapiCount) * 100 : 0) + '%' }"
+                :class="sapiLunasCount > 0 ? 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-transparent'" 
+                :style="{ width: (store.sapiCount > 0 ? (sapiLunasCount / store.sapiCount) * 100 : 0) + '%' }"
               ></div>
             </div>
           </div>
@@ -170,15 +191,15 @@
                 </div>
               </div>
               <div class="text-right">
-                <span class="block text-xs font-bold text-secondary">{{ store.kambingLunasCount }} / {{ store.kambingCount }}</span>
+                <span class="block text-xs font-bold text-secondary">{{ kambingLunasCount }} / {{ store.kambingCount }}</span>
                 <span class="block text-[8px] font-bold text-gray-400 uppercase tracking-wider">Slot Lunas</span>
               </div>
             </div>
             <div class="w-full h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
               <div 
                 class="h-full rounded-full transition-all duration-1000 ease-out" 
-                :class="store.kambingLunasCount > 0 ? 'bg-gradient-to-r from-amber-500 to-yellow-400 shadow-[0_0_8px_rgba(245,158,11,0.4)]' : 'bg-transparent'"
-                :style="{ width: (store.kambingCount > 0 ? (store.kambingLunasCount / store.kambingCount) * 100 : 0) + '%' }"
+                :class="kambingLunasCount > 0 ? 'bg-gradient-to-r from-amber-500 to-yellow-400 shadow-[0_0_8px_rgba(245,158,11,0.4)]' : 'bg-transparent'"
+                :style="{ width: (store.kambingCount > 0 ? (kambingLunasCount / store.kambingCount) * 100 : 0) + '%' }"
               ></div>
             </div>
           </div>
@@ -192,7 +213,7 @@
         <span class="px-2.5 py-1 bg-primary/10 dark:bg-white/5 text-primary dark:text-primary-light text-[9px] font-bold rounded-full">1 Slot = 1/7 Sapi</span>
       </div>
 
-      <div class="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:overflow-visible custom-scrollbar">
+      <div v-if="sapiGroups.length > 0" class="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-2 lg:overflow-visible custom-scrollbar">
         
         <div 
           v-for="(group, gIdx) in sapiGroups" 
@@ -221,14 +242,14 @@
                 <span class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[8px] font-bold text-gray-500">{{ idx + 1 }}</span>
                 <div class="flex flex-col">
                   <span class="font-bold text-gray-800 dark:text-gray-200">{{ member.name }}</span>
-                  <span class="text-[10px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected) }} / {{ formatRp(member.target) }}</span>
+                  <span class="text-[10px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected_amount) }} / {{ formatRp(member.target_amount) }}</span>
                 </div>
               </div>
               <span 
                 class="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
-                :class="member.collected >= member.target ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
+                :class="member.is_lunas ? 'bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400' : 'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400'"
               >
-                {{ member.collected >= member.target ? 'Lunas' : 'Belum Lunas' }}
+                {{ member.is_lunas ? 'Lunas' : 'Belum Lunas' }}
               </span>
               </div>
             
@@ -246,6 +267,10 @@
           </div>
         </div>
       </div>
+      <div v-else class="bg-white dark:bg-white/[0.02] border-[1.5px] border-dashed border-gray-200 dark:border-white/10 rounded-[1.5rem] p-6 text-center text-gray-400 dark:text-gray-500 shadow-sm">
+        <span class="text-4xl block mb-2 opacity-50">🐄</span>
+        <p class="text-sm font-bold">Belum ada daftar sapi qurban</p>
+      </div>
     </div>
 
     <div class="space-y-3 recent-payments-list mt-2">
@@ -255,57 +280,72 @@
 
       <div class="bg-white dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-sm">
         <div class="flex flex-col max-h-[350px] overflow-y-auto pr-1 custom-scrollbar">
-          <template v-for="(tx, index) in store.transactions" :key="tx.id">
-            <div @click="openReceiptModal(tx)" class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group">
-              <div class="flex items-center space-x-3 sm:space-x-4">
-                <div 
-                  class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
-                  :style="getAvatarStyle(tx.name)"
-                >
-                  {{ getInitials(tx.name) }}
-                </div>
-                <div class="flex flex-col justify-center">
-                  <h5 class="text-xs font-extrabold text-gray-800 dark:text-white leading-none mb-1 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ tx.name }}</h5>
-                  <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
-                    <span>{{ formatDate(tx.date) }}</span>
-                    <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
-                    <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).type) }}</span>
+          <template v-if="store.transactions.length > 0">
+            <template v-for="(tx, index) in store.transactions" :key="tx.id">
+              <div @click="openReceiptModal(tx)" class="flex justify-between items-center py-2.5 px-3 rounded-[1rem] hover:bg-gray-50 dark:hover:bg-white/[0.04] transition-all duration-300 cursor-pointer group">
+                <div class="flex items-center space-x-3 sm:space-x-4">
+                  <div 
+                    class="w-10 h-10 rounded-[1rem] flex items-center justify-center font-bold text-xs shrink-0 shadow-inner text-white"
+                    :style="getAvatarStyle(getTxShohibul(tx).name)"
+                  >
+                    {{ getInitials(getTxShohibul(tx).name) }}
+                  </div>
+                  <div class="flex flex-col justify-center">
+                    <h5 class="text-xs font-extrabold text-gray-800 dark:text-white leading-none mb-1 group-hover:text-primary dark:group-hover:text-primary-light transition-colors">{{ getTxShohibul(tx).name }}</h5>
+                    <div class="flex items-center text-[9px] font-semibold text-gray-500 dark:text-gray-400">
+                      <span>{{ formatDate(tx.completed_at || tx.created_at) }}</span>
+                      <span class="mx-1 text-gray-300 dark:text-gray-600">•</span>
+                      <span class="text-secondary font-bold">{{ getAnimalEmoji(getTxShohibul(tx).target_type) }}</span>
+                    </div>
                   </div>
                 </div>
+                <div class="text-right">
+                  <span class="block text-sm sm:text-[15px] font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
+                  <span class="inline-block px-2 py-0.5 mt-1 text-[8px] font-bold rounded-md uppercase tracking-widest border" :class="getStatusBadgeClass(tx.status)">
+                    {{ getStatusLabel(tx.status) }}
+                  </span>
+                </div>
               </div>
-              <div class="text-right">
-                <span class="block text-sm sm:text-[15px] font-bold text-gray-800 dark:text-white">{{ formatRp(tx.amount) }}</span>
-                <span v-if="tx.status === 'success'" class="inline-block px-2 py-0.5 mt-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-green-200/50 dark:border-green-800/30">Sukses</span>
-                <span v-else class="inline-block px-2 py-0.5 mt-1 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-[8px] font-bold rounded-md uppercase tracking-widest border border-amber-200/50 dark:border-amber-800/30">Pending</span>
-              </div>
-            </div>
-            
-            <div v-if="index !== store.transactions.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-4 my-1"></div>
+              
+              <div v-if="index !== store.transactions.length - 1" class="border-b border-dashed border-gray-200 dark:border-white/10 mx-4 my-1"></div>
+            </template>
           </template>
+          <div v-else class="text-center py-8 text-gray-400 dark:text-gray-500">
+            <HistoryIcon class="w-8 h-8 mx-auto mb-2 opacity-30" />
+            <p class="text-xs font-bold">Belum ada aktivitas terbaru</p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Receipt Modal -->
-    <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+    <transition @enter="onReceiptEnter" @leave="onReceiptLeave" :css="false">
+      <div v-if="isReceiptModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[70] flex flex-col justify-end receipt-backdrop" style="margin: 0; padding: 0;">
       <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeReceiptModal"></div>
       
       <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] receipt-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
         <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeReceiptModal"></div>
         
         <div v-if="selectedTx" class="flex flex-col items-center w-full">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="selectedTx.status === 'success' ? 'bg-green-100 dark:bg-green-900/30 text-green-500' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'">
-            <CheckCircleIcon v-if="selectedTx.status === 'success'" class="w-8 h-8" />
-            <ClockIcon v-else class="w-8 h-8" />
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-4" :class="getStatusIconClass(selectedTx.status)">
+            <CheckCircleIcon v-if="selectedTx.status === 'success' || selectedTx.status === 'settlement'" class="w-8 h-8" />
+            <ClockIcon v-else-if="selectedTx.status === 'pending'" class="w-8 h-8" />
+            <XCircleIcon v-else class="w-8 h-8" />
           </div>
           
-          <h3 class="text-lg font-bold text-gray-800 dark:text-white">{{ selectedTx.status === 'success' ? 'Pembayaran Berhasil' : 'Menunggu Pembayaran' }}</h3>
-          <p class="text-3xl font-bold text-gray-800 dark:text-white mt-1 mb-6 font-heading">{{ formatRp(selectedTx.amount) }}</p>
+          <h3 class="text-lg font-bold" :class="getStatusTextClass(selectedTx.status)">{{ getStatusModalTitle(selectedTx.status) }}</h3>
+          <p class="text-3xl font-extrabold mt-1 mb-6 font-heading" :class="[getStatusTextClass(selectedTx.status), ['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(selectedTx.status) ? 'line-through opacity-70' : '']">{{ formatRp(selectedTx.amount) }}</p>
 
           <div class="w-full bg-gray-50 dark:bg-white/[0.02] border-[2px] border-gray-300 dark:border-white/10 rounded-2xl p-4 space-y-4 mb-6 shadow-sm">
             <div class="flex justify-between items-center text-sm">
+              <span class="text-gray-500 dark:text-gray-400 font-medium">Status</span>
+              <span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-widest border" :class="getStatusBadgeClass(selectedTx.status)">
+                {{ getStatusLabel(selectedTx.status) }}
+              </span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
-              <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.completed_at || selectedTx.created_at) }}</span>
             </div>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
@@ -313,12 +353,12 @@
             </div>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500 dark:text-gray-400 font-medium">Metode</span>
-              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.paymentMethod || 'Tunai/Transfer' }}</span>
+              <span class="font-bold text-gray-800 dark:text-white uppercase">{{ selectedTx.payment_method || 'Tunai/Transfer' }}</span>
             </div>
             <div class="h-px w-full bg-gray-200 dark:bg-white/10 my-2"></div>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
-              <span class="font-bold text-gray-800 dark:text-white">{{ selectedTx.name }}</span>
+              <span class="font-bold text-gray-800 dark:text-white">{{ getTxShohibul(selectedTx).name }}</span>
             </div>
             <div class="flex justify-between items-center text-sm">
               <span class="text-gray-500 dark:text-gray-400 font-medium">Alamat</span>
@@ -342,16 +382,22 @@
         </div>
       </div>
     </div>
+    </transition>
+    </template>
 
+    <BottomNav />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import gsap from 'gsap'
-import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon, ClockIcon } from 'lucide-vue-next'
+import { FileTextIcon, TrendingUpIcon, WalletIcon, CheckCircleIcon, PieChartIcon, TrophyIcon, TargetIcon, ClockIcon, HistoryIcon, XCircleIcon } from 'lucide-vue-next'
+import LoadingSkeleton from '@/components/ui/LoadingSkeleton.vue'
+import RetryError from '@/components/ui/RetryError.vue'
+import StaleBanner from '@/components/ui/StaleBanner.vue'
 
 const store = useQurbanStore()
 const router = useRouter()
@@ -363,29 +409,43 @@ const formatRp = (val) => {
   return 'Rp. ' + new Intl.NumberFormat('id-ID').format(val)
 }
 
+const sapiLunasCount = computed(() => store.shohibuls.filter(s => s.target_type === 'sapi' && s.is_lunas).length)
+const kambingLunasCount = computed(() => store.shohibuls.filter(s => s.target_type === 'kambing' && s.is_lunas).length)
+
+const averageProgress = computed(() => {
+  if (store.shohibuls.length === 0) return 0
+  const totalPct = store.shohibuls.reduce((sum, s) => {
+    const target = Number(s.target_amount) || 0
+    if (target === 0) return sum
+    return sum + (Number(s.collected_amount) / target)
+  }, 0)
+  return Math.round((totalPct / store.shohibuls.length) * 100)
+})
+
 const topSavers = computed(() => {
   return [...store.shohibuls]
-    .filter(s => s.collected > 0)
-    .sort((a, b) => b.collected - a.collected)
+    .filter(s => Number(s.collected_amount) > 0)
+    .sort((a, b) => Number(b.collected_amount) - Number(a.collected_amount))
     .slice(0, 5)
     .map(s => ({
       name: s.name,
-      amount: s.collected,
-      target: s.target
+      amount: Number(s.collected_amount),
+      target: Number(s.target_amount)
     }))
 })
 
 const sapiGroups = computed(() => {
   const groups = {}
   store.shohibuls.forEach(member => {
-    if (member.type === 'sapi' && member.animalGroup && member.animalGroup !== 'Belum Ditentukan') {
-      if (!groups[member.animalGroup]) {
-        groups[member.animalGroup] = {
-           name: member.animalGroup,
+    if (member.target_type === 'sapi' && member.animal_group && member.animal_group.name !== 'Belum Ditentukan') {
+      const gName = member.animal_group.name
+      if (!groups[gName]) {
+        groups[gName] = {
+           name: gName,
            members: []
         }
       }
-      groups[member.animalGroup].members.push(member)
+      groups[gName].members.push(member)
     }
   })
   
@@ -432,7 +492,9 @@ const getAvatarStyle = (name) => {
 }
 
 const getTxShohibul = (tx) => {
-  return store.shohibuls.find(s => s.id === tx.shohibulId) || {}
+  const shohibulId = tx.shohibul_id || tx.shohibul?.id
+  const shohibulFromStore = store.shohibuls.find(s => s.id === shohibulId)
+  return shohibulFromStore || tx.shohibul || {}
 }
 
 const getAnimalEmoji = (type) => {
@@ -447,6 +509,41 @@ const getMaskedPhone = (phone) => {
   return phone.slice(0, 4) + '****' + phone.slice(-3)
 }
 
+const getStatusLabel = (status) => {
+  if (status === 'success' || status === 'settlement') return 'Sukses'
+  if (status === 'pending') return 'Pending'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Batal'
+  return status
+}
+
+const getStatusBadgeClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 border-green-200/50 dark:border-green-800/30'
+  if (status === 'pending') return 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border-amber-200/50 dark:border-amber-800/30'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border-red-200/50 dark:border-red-800/30'
+  return 'bg-gray-50 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400 border-gray-200/50 dark:border-gray-800/30'
+}
+
+const getStatusTextClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'text-green-600 dark:text-green-400'
+  if (status === 'pending') return 'text-amber-600 dark:text-amber-400'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'text-red-600 dark:text-red-400'
+  return 'text-gray-800 dark:text-white'
+}
+
+const getStatusIconClass = (status) => {
+  if (status === 'success' || status === 'settlement') return 'bg-green-100 dark:bg-green-900/30 text-green-500'
+  if (status === 'pending') return 'bg-amber-100 dark:bg-amber-900/30 text-amber-500'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'bg-red-100 dark:bg-red-900/30 text-red-500'
+  return 'bg-gray-100 dark:bg-gray-800 text-gray-500'
+}
+
+const getStatusModalTitle = (status) => {
+  if (status === 'success' || status === 'settlement') return 'Pembayaran Berhasil'
+  if (status === 'pending') return 'Menunggu Pembayaran'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Pembayaran Dibatalkan'
+  return 'Status Transaksi'
+}
+
 const isReceiptModalOpen = ref(false)
 const selectedTx = ref(null)
 
@@ -454,32 +551,41 @@ const openReceiptModal = (tx) => {
   selectedTx.value = tx
   isReceiptModalOpen.value = true
   document.body.style.overflow = 'hidden'
-  import('vue').then(({ nextTick }) => {
-    nextTick(() => {
-      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
-      gsap.fromTo('.receipt-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
-    })
-  })
 }
 
 const closeReceiptModal = () => {
-  gsap.to('.receipt-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
-  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
-    isReceiptModalOpen.value = false
-    document.body.style.overflow = ''
-    setTimeout(() => { selectedTx.value = null }, 300)
+  isReceiptModalOpen.value = false
+  document.body.style.overflow = ''
+}
+
+const onReceiptEnter = (el, done) => {
+  const content = el.querySelector('.receipt-modal-content')
+  gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.3 })
+  gsap.fromTo(content, { yPercent: 100 }, { yPercent: 0, duration: 0.4, ease: 'power3.out', onComplete: done })
+}
+
+const onReceiptLeave = (el, done) => {
+  const content = el.querySelector('.receipt-modal-content')
+  gsap.to(content, { yPercent: 100, duration: 0.3, ease: 'power3.in' })
+  gsap.to(el, { opacity: 0, duration: 0.3, onComplete: () => {
+    done()
+    if (!isReceiptModalOpen.value) selectedTx.value = null
   }})
 }
 
 const continuePayment = () => {
-  if (selectedTx.value && selectedTx.value.shohibulId) {
-    const shohibulId = selectedTx.value.shohibulId
+  if (selectedTx.value && (selectedTx.value.shohibul_id || selectedTx.value.shohibulId)) {
+    const shohibulId = selectedTx.value.shohibul_id || selectedTx.value.shohibulId
     closeReceiptModal()
     router.push({ path: '/menabung', query: { shohibulId: shohibulId } })
   }
 }
 
 onMounted(() => {
+  // Ensure data is loaded
+  if (store.shohibuls.length === 0) store.fetchShohibuls()
+  if (store.transactions.length === 0) store.fetchTransactions()
+
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     

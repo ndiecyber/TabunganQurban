@@ -115,11 +115,11 @@
                    <div class="absolute -left-4 -bottom-4 w-16 h-16 bg-primary/5 rounded-full blur-xl pointer-events-none"></div>
                    <div class="flex-1 border-r border-gray-200 dark:border-white/10 text-center pr-2 relative z-10">
                      <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Sudah Menabung</div>
-                     <div class="text-xs font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected) }}</div>
+                     <div class="text-xs font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected_amount) }}</div>
                    </div>
                    <div class="flex-1 text-center pl-2 relative z-10">
                      <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Kekurangan</div>
-                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target - selectedShohibulData.collected) }}</div>
+                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target_amount - selectedShohibulData.collected_amount) }}</div>
                    </div>
                 </div>
               </transition>
@@ -296,11 +296,8 @@
                 <div class="relative w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
                   <div class="absolute inset-1 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
                   <div class="absolute inset-0 rounded-full border border-teal-500/10 dark:border-teal-400/10 -rotate-12 scale-110"></div>
-                  <!-- BSI Star -->
-                  <svg class="absolute top-2.5 right-1.5 w-3 h-3 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
-                    <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
-                  </svg>
-                  <span class="font-bold text-teal-600 dark:text-teal-400 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+                  <!-- BRI Logo -->
+                  <span class="font-extrabold text-blue-800 dark:text-blue-500 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif; font-style: italic;">BRI</span>
                 </div>
                 
                 <div>
@@ -458,8 +455,8 @@
               @click="handleShohibulSelection(s)"
               class="p-4 rounded-[1.2rem] transition-all duration-200 flex justify-between items-center"
               :class="[
-                s.collected >= s.target ? 'opacity-60 cursor-not-allowed bg-gray-50 dark:bg-white/5 border-[2px] border-gray-200 dark:border-white/10' : 'cursor-pointer hover:shadow-md',
-                form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : (s.collected < s.target ? 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm' : '')
+                s.is_lunas ? 'opacity-60 cursor-not-allowed bg-gray-50 dark:bg-white/5 border-[2px] border-gray-200 dark:border-white/10' : 'cursor-pointer hover:shadow-md',
+                form.shohibulId === s.id ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md scale-[1.01]' : (!s.is_lunas ? 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 hover:border-primary/50 dark:hover:bg-white/[0.05] shadow-sm' : '')
               ]"
             >
               <div>
@@ -469,7 +466,7 @@
                 </div>
               </div>
               
-              <div v-if="s.collected >= s.target" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded uppercase tracking-wider">
+              <div v-if="s.is_lunas" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded uppercase tracking-wider">
                 Lunas
               </div>
               <div v-else-if="getPendingTx(s.id)" class="px-2 py-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-bold rounded uppercase tracking-wider flex items-center shadow-sm">
@@ -503,7 +500,7 @@
               <ClockIcon class="w-8 h-8 text-primary" />
             </div>
             <h3 class="text-xl font-bold text-gray-800 dark:text-white font-heading">Menunggu Pembayaran</h3>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum besok pukul 23:59 WIB</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Selesaikan pembayaran sebelum {{ paymentDetails.expiredAt ? formatDateTime(paymentDetails.expiredAt) : 'besok pukul 23:59 WIB' }}</p>
           </div>
 
           <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] p-5 mb-6 text-center space-y-2">
@@ -515,13 +512,11 @@
             <div class="flex items-center space-x-3 mb-2">
               <div class="relative w-10 h-10 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
                 <div class="absolute inset-0.5 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
-                <svg class="absolute top-[6px] right-[4px] w-2 h-2 text-[#f59e0b] fill-current -rotate-12" viewBox="0 0 24 24">
-                  <path d="M12 2l2.4 7.4h7.6l-6 4.6 2.3 7.4-6.3-4.6-6.3 4.6 2.3-7.4-6-4.6h7.6z"/>
-                </svg>
-                <span class="font-bold text-teal-600 dark:text-teal-400 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif;">BSI</span>
+                <!-- BRI Logo -->
+                <span class="font-extrabold text-blue-800 dark:text-blue-500 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif; font-style: italic;">BRI</span>
               </div>
               <div class="text-left">
-                <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Syariah Indonesia (BSI)</p>
+                <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Rakyat Indonesia (BRI)</p>
                 <p class="text-[10px] text-gray-500">Virtual Account</p>
               </div>
             </div>
@@ -531,7 +526,7 @@
                 <p class="text-[10px] font-bold text-gray-400 mb-1">Nomor VA</p>
                 <p class="text-lg sm:text-xl font-bold tracking-wider text-gray-800 dark:text-white">{{ paymentDetails.vaNumber }}</p>
               </div>
-              <button @click="navigator.clipboard.writeText(paymentDetails.vaNumber); alert('Nomor VA berhasil disalin!')" class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
+              <button @click="navigator.clipboard.writeText(paymentDetails.vaNumber); toast.success('Nomor VA berhasil disalin!')" class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
                 <CopyIcon class="w-5 h-5" />
               </button>
             </div>
@@ -539,8 +534,19 @@
           </div>
 
           <div v-if="paymentDetails.paymentMethod === 'qris'" class="space-y-4 mb-8 text-center flex flex-col items-center">
-            <div class="inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
-              <QrCodeIcon class="w-40 h-40 text-gray-800" />
+            <div class="relative inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
+              <QrcodeVue 
+                v-if="paymentDetails.paymentNumber"
+                :value="paymentDetails.paymentNumber" 
+                :size="250" 
+                level="H" 
+              />
+              <div v-if="paymentDetails.paymentNumber" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="bg-white w-[90px] h-[90px] rounded-2xl flex items-center justify-center overflow-hidden border-4 border-white shadow-sm">
+                  <img src="/favicon-green-outline.png" alt="Logo" class="w-[95px] h-[95px] max-w-none" />
+                </div>
+              </div>
+              <QrCodeIcon v-else class="w-40 h-40 text-gray-800" />
             </div>
             <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Silakan ambil tangkapan layar (screenshot) kode QRIS di atas untuk dibayar menggunakan aplikasi m-Banking atau E-Wallet Anda.</p>
           </div>
@@ -564,6 +570,8 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
+import { useToast } from '@/composables/useToast'
+import QrcodeVue from 'qrcode.vue'
 import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
@@ -572,6 +580,7 @@ import {
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
+const toast = useToast()
 const route = useRoute()
 const router = useRouter()
 const containerRef = ref(null)
@@ -607,7 +616,9 @@ watch(isCalculatorModalOpen, (newVal) => {
 const paymentDetails = ref({
   amount: 0,
   paymentMethod: '',
-  vaNumber: ''
+  vaNumber: '',
+  paymentNumber: '',
+  expiredAt: ''
 })
 
 const form = ref({
@@ -642,12 +653,24 @@ const targetLunas = computed(() => {
   } else if (formMode.value === 'setor' && form.value.shohibulId) {
     const shohibul = store.shohibuls.find(s => s.id === form.value.shohibulId)
     if (shohibul) {
-      const remaining = shohibul.target - shohibul.collected
-      return remaining > 0 ? remaining : shohibul.target
+      const remaining = Number(shohibul.target_amount) - Number(shohibul.collected_amount)
+      return remaining > 0 ? remaining : Number(shohibul.target_amount)
     }
   }
   return store.animalPrices.sapi
 })
+
+const formatDateTime = (dateStr) => {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return new Intl.DateTimeFormat('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(date) + ' WIB';
+}
 
 const nominalPresets = computed(() => {
   const presets = [
@@ -740,7 +763,6 @@ const isFormValid = computed(() => {
 })
 
 const selectedShohibulData = computed(() => {
-  if (!form.value.shohibulId) return null
   return store.shohibuls.find(s => s.id === form.value.shohibulId)
 })
 
@@ -750,16 +772,16 @@ const filteredShohibulList = computed(() => {
   if (shohibulSearchQuery.value) {
     const q = shohibulSearchQuery.value.toLowerCase()
     list = list.filter(s => 
-      s.name.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)
+      s.name.toLowerCase().includes(q) || 
+      (s.address && s.address.toLowerCase().includes(q))
     )
   }
   
   const getSortScore = (s) => {
-    const isPending = store.transactions.some(tx => tx.shohibulId === s.id && tx.status === 'pending')
+    const isPending = store.transactions.some(tx => tx.shohibul_id === s.id && tx.status === 'pending')
     if (isPending) return 1
-    const isLunas = s.collected >= s.target
-    if (!isLunas) return 2
-    return 3
+    if (s.is_lunas) return 3
+    return 2
   }
   
   return [...list].sort((a, b) => {
@@ -799,20 +821,41 @@ const selectShohibul = (id) => {
   closeShohibulModal()
 }
 
+const pendingTransactionsMap = computed(() => {
+  const map = {}
+  if (store.transactions) {
+    store.transactions.forEach(tx => {
+      if (tx.status === 'pending') {
+        map[tx.shohibul_id || tx.shohibulId] = tx
+      }
+    })
+  }
+  if (store.recentTransactions) {
+    store.recentTransactions.forEach(tx => {
+      if (tx.status === 'pending') {
+        map[tx.shohibul_id || tx.shohibulId] = tx
+      }
+    })
+  }
+  return map
+})
+
 const getPendingTx = (id) => {
-  return store.transactions.find(tx => tx.shohibulId === id && tx.status === 'pending')
+  return pendingTransactionsMap.value[id]
 }
 
 const handleShohibulSelection = (s) => {
-  if (s.collected >= s.target) return
+  if (s.is_lunas) return
   
   const pendingTx = getPendingTx(s.id)
   if (pendingTx) {
     closeShohibulModal()
     paymentDetails.value = {
       amount: pendingTx.amount,
-      paymentMethod: pendingTx.paymentMethod,
-      vaNumber: '900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()
+      paymentMethod: pendingTx.payment_method,
+      vaNumber: pendingTx.order_id, // Placeholder if no saved payment number
+      paymentNumber: pendingTx.payment_number || '',
+      expiredAt: pendingTx.expired_at || ''
     }
     openPaymentModal()
   } else {
@@ -827,7 +870,7 @@ const selectPreset = (amount) => {
 
 const activateCustomAmount = () => {
   isCustomAmountSelected.value = true
-  if (nominalPresets.some(p => p.value === form.value.amount)) {
+  if (nominalPresets.value.some(p => p.value === form.value.amount)) {
     form.value.amount = null
   }
 }
@@ -872,7 +915,7 @@ const closePaymentModal = (redirectToDashboard = false) => {
 const confirmPayment = () => {
   if (paymentDetails.value.paymentMethod === 'va') {
     navigator.clipboard.writeText(paymentDetails.value.vaNumber)
-      .then(() => alert('Nomor VA berhasil disalin!'))
+      .then(() => toast.success('Nomor VA berhasil disalin!'))
       .catch(() => {})
   }
   closePaymentModal(true)
@@ -880,43 +923,43 @@ const confirmPayment = () => {
 
 const submitDeposit = () => {
   if (form.value.amount > targetLunas.value) {
-    alert(`Nominal maksimal adalah ${formatRp(targetLunas.value)}`)
+    toast.error(`Nominal maksimal adalah ${formatRp(targetLunas.value)}`)
     return
   }
 
   if (formMode.value === 'register') {
     if (!registerForm.value.name.trim() || !registerForm.value.address.trim() || !registerForm.value.phone.trim()) {
-      alert('Mohon lengkapi Nama, Nomor Whatsapp, dan Alamat pendaftar.')
+      toast.warning('Mohon lengkapi Nama, Nomor Whatsapp, dan Alamat pendaftar.')
       return
     }
     
     const isDuplicate = store.shohibuls.find(s => s.name.toLowerCase() === registerForm.value.name.trim().toLowerCase())
     if (isDuplicate) {
-      alert('Pemberitahuan: Nama Anda sudah terdaftar. Kami akan mengalihkan Anda ke formulir Setoran.')
+      toast.success('Pemberitahuan: Nama Anda sudah terdaftar. Kami akan mengalihkan Anda ke formulir Setoran.')
       formMode.value = 'setor'
       form.value.shohibulId = isDuplicate.id
       return
     }
     
     if (!form.value.amount || form.value.amount < 50000) {
-      alert('Pendaftaran baru mewajibkan setoran awal minimal Rp. 50.000.')
+      toast.warning('Pendaftaran baru mewajibkan setoran awal minimal Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      alert('Nominal setoran awal harus kelipatan Rp. 50.000.')
+      toast.warning('Nominal setoran awal harus kelipatan Rp. 50.000.')
       return
     }
   } else {
     if (!form.value.shohibulId) {
-      alert('Mohon pilih shohibul terlebih dahulu.')
+      toast.warning('Mohon pilih shohibul terlebih dahulu.')
       return
     }
     if (!form.value.amount || form.value.amount < 50000) {
-      alert('Minimal setoran adalah Rp. 50.000.')
+      toast.warning('Minimal setoran adalah Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      alert('Nominal setoran harus kelipatan Rp. 50.000.')
+      toast.warning('Nominal setoran harus kelipatan Rp. 50.000.')
       return
     }
   }
@@ -924,47 +967,56 @@ const submitDeposit = () => {
   const btn = event.currentTarget
   gsap.to(btn, { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1 })
 
-  setTimeout(() => {
-    if (formMode.value === 'register') {
-      store.registerNewShohibul({
-        name: registerForm.value.name.trim(),
-        phone: registerForm.value.phone.trim(), // Revisi: Simpan No HP
-        address: registerForm.value.address.trim(),
-        type: registerForm.value.type,
-        target: registerForm.value.type === 'sapi' ? store.animalPrices.sapi : store.animalPrices.kambing,
-        initialAmount: form.value.amount,
-        paymentMethod: form.value.paymentMethod
-      })
-    } else {
-      store.transactions.unshift({
-        id: 'tx-' + Math.random().toString(36).substr(2, 9),
-        shohibulId: form.value.shohibulId,
-        name: selectedShohibulData.value.name,
-        amount: form.value.amount,
-        date: new Date().toISOString(),
+  setTimeout(async () => {
+    store.loading.deposit = true
+    try {
+      let result;
+      if (formMode.value === 'register') {
+        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? 'bri_va' : form.value.paymentMethod;
+        const payload = {
+          name: registerForm.value.name.trim(),
+          phone: registerForm.value.phone.trim(), 
+          address: registerForm.value.address.trim(),
+          target_type: registerForm.value.type,
+          initial_amount: form.value.amount,
+          payment_method: mappedPaymentMethod
+        }
+        result = await store.registerShohibul(payload)
+      } else {
+        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? 'bri_va' : form.value.paymentMethod;
+        const payload = {
+          shohibul_id: form.value.shohibulId,
+          amount: form.value.amount,
+          payment_method: mappedPaymentMethod
+        }
+        result = await store.createDeposit(payload)
+      }
+
+      const paymentData = result?.payment || {};
+
+      paymentDetails.value = {
+        amount: paymentData.total_payment || form.value.amount,
         paymentMethod: form.value.paymentMethod,
-        status: 'pending'
-      })
+        vaNumber: paymentData.payment_number || ('900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()),
+        paymentNumber: paymentData.payment_number || '',
+        expiredAt: paymentData.expired_at || ''
+      }
       
-      store.saveToCache()
+      openPaymentModal()
+      
+      form.value.amount = null
+      form.value.shohibulId = ''
+      registerForm.value.name = ''
+      registerForm.value.phone = ''
+      registerForm.value.address = ''
+      isCustomAmountSelected.value = false
+      formMode.value = 'setor'
+      
+    } catch (err) {
+      toast.error('Gagal memproses pembayaran: ' + err.message)
+    } finally {
+      store.loading.deposit = false
     }
-    
-    paymentDetails.value = {
-      amount: form.value.amount,
-      paymentMethod: form.value.paymentMethod,
-      vaNumber: '900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()
-    }
-    
-    openPaymentModal()
-    
-    form.value.amount = null
-    form.value.shohibulId = ''
-    registerForm.value.name = ''
-    registerForm.value.phone = ''
-    registerForm.value.address = ''
-    isCustomAmountSelected.value = false
-    formMode.value = 'setor'
-    
   }, 400)
 }
 
@@ -976,16 +1028,27 @@ watch(() => route.query.mode, (newMode) => {
   }
 }, { immediate: true })
 
-watch(() => route.query.shohibulId, (newId) => {
-  if (newId && store.shohibuls.some(s => s.id === newId)) {
-    form.value.shohibulId = newId
-    formMode.value = 'setor'
+watch(() => route.query.shohibulId, async (newId) => {
+  if (newId) {
+    if (store.shohibuls.length === 0) {
+      await store.fetchShohibuls()
+    }
+    if (store.shohibuls.some(s => s.id === Number(newId))) {
+      form.value.shohibulId = Number(newId)
+      formMode.value = 'setor'
+    }
   }
 }, { immediate: true })
 
-onMounted(() => {
-  if (route.query.shohibulId) {
-    const s = store.shohibuls.find(x => x.id === route.query.shohibulId)
+onMounted(async () => {
+  if (store.shohibuls.length === 0) {
+    await store.fetchShohibuls()
+  }
+
+  const queryShohibulId = route.query.shohibulId
+
+  if (queryShohibulId) {
+    const s = store.shohibuls.find(x => x.id === Number(queryShohibulId))
     if (s) {
       formMode.value = 'setor'
       handleShohibulSelection(s)
@@ -993,6 +1056,24 @@ onMounted(() => {
       delete q.shohibulId
       router.replace({ path: route.path, query: q })
     }
+  }
+
+  // Ensure dashboard stats are loaded to get recentTransactions
+  if (!store.dashboardStats) {
+    store.fetchDashboard()
+  }
+
+  // Fetch transactions in background if not loaded
+  if (store.transactions.length === 0) {
+    store.fetchTransactions().then(() => {
+      // Re-trigger pending check if it wasn't found in recentTransactions
+      if (queryShohibulId) {
+        const s = store.shohibuls.find(x => x.id === Number(queryShohibulId))
+        if (s && getPendingTx(s.id) && !paymentDetails.value.amount) {
+          handleShohibulSelection(s)
+        }
+      }
+    })
   }
 
   ctx = gsap.context(() => {
