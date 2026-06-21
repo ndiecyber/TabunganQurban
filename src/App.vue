@@ -49,6 +49,31 @@
 
       </div>
 
+      <transition name="fade-slide">
+        <div v-if="showDisclaimer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 z-30 relative w-full">
+          <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-500/30 rounded-2xl p-4 shadow-sm flex items-start sm:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+              <div class="mt-0.5 shrink-0 bg-amber-100 dark:bg-amber-500/20 p-2 rounded-full text-amber-600 dark:text-amber-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-amber-800 dark:text-amber-300">Tahap Development (Uji Coba)</h3>
+                <p class="text-[11px] sm:text-xs text-amber-700 dark:text-amber-400/90 mt-1 leading-relaxed">
+                  Aplikasi ini masih dalam tahap pengembangan. Seluruh data yang digunakan merupakan data testing. Fitur pembayaran riil belum dapat dilakukan.
+                </p>
+              </div>
+            </div>
+            <button @click="showDisclaimer = false" class="shrink-0 p-1.5 text-amber-500 hover:bg-amber-100 dark:hover:bg-amber-500/20 rounded-lg transition-colors" aria-label="Tutup pemberitahuan">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </transition>
+
       <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20">
         <router-view v-slot="{ Component }">
           <transition name="fade-slide" mode="out-in">
@@ -67,6 +92,8 @@
         </div>
       </footer>
     </div>
+
+    <ToastNotification />
   </div>
 </template>
 
@@ -75,11 +102,13 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
 import BottomNav from '@/components/layout/BottomNav.vue' // Import komponen BottomNav
+import ToastNotification from '@/components/ui/ToastNotification.vue'
 
 
 
 const route = useRoute()
 const store = useQurbanStore()
+const showDisclaimer = ref(import.meta.env.VITE_SHOW_DEV_DISCLAIMER === 'true')
 const errorMsg = ref("")
 window.addEventListener("error", (e) => errorMsg.value += e.message + " | ")
 window.addEventListener("unhandledrejection", (e) => errorMsg.value += e.reason + " | ")
