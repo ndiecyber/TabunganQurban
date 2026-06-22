@@ -293,11 +293,8 @@
               >
                 <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
                 
-                <div class="relative w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
-                  <div class="absolute inset-1 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
-                  <div class="absolute inset-0 rounded-full border border-teal-500/10 dark:border-teal-400/10 -rotate-12 scale-110"></div>
-                  <!-- BRI Logo -->
-                  <span class="font-extrabold text-blue-800 dark:text-blue-500 text-[19px] tracking-tighter pr-1 leading-none" style="font-family: Arial, sans-serif; font-style: italic;">BRI</span>
+                <div class="w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                  <LandmarkIcon class="w-7 h-7 text-teal-600 dark:text-teal-400" />
                 </div>
                 
                 <div>
@@ -306,6 +303,34 @@
                 </div>
               </div>
             </div>
+
+            <!-- Pilihan Bank -->
+            <transition 
+              enter-active-class="transition duration-300 ease-out" 
+              enter-from-class="transform -translate-y-2 opacity-0" 
+              enter-to-class="transform translate-y-0 opacity-100" 
+              leave-active-class="transition duration-200 ease-in" 
+              leave-from-class="transform translate-y-0 opacity-100" 
+              leave-to-class="transform -translate-y-2 opacity-0"
+            >
+              <div v-if="form.paymentMethod === 'va'" class="mt-4 pt-3 border-t border-gray-200/50 dark:border-white/5">
+                <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-3">Pilih Bank</label>
+                <div class="grid grid-cols-3 gap-2">
+                  <div 
+                    v-for="bank in supportedBanks" 
+                    :key="bank.code"
+                    @click="form.bankCode = bank.code"
+                    class="border rounded-xl p-2.5 text-center cursor-pointer transition-all flex flex-col items-center justify-center space-y-2"
+                    :class="form.bankCode === bank.code ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' : 'border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-primary/50 dark:hover:border-primary/50'"
+                  >
+                    <div class="h-8 flex items-center justify-center">
+                      <img v-if="!imageErrors[bank.code]" :src="bank.logo" :alt="bank.short" class="max-h-full max-w-full object-contain filter dark:brightness-110" @error="imageErrors[bank.code] = true" />
+                      <span v-else class="font-extrabold text-sm" :class="bank.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ bank.short }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </transition>
           </div>
 
           <div class="pt-4">
@@ -508,15 +533,14 @@
             <p class="text-3xl font-bold text-gray-800 dark:text-white">{{ formatRp(paymentDetails.amount) }}</p>
           </div>
 
-          <div v-if="paymentDetails.paymentMethod === 'va'" class="space-y-4 mb-8">
+          <div v-if="paymentDetails.paymentMethod && paymentDetails.paymentMethod.endsWith('_va')" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
-              <div class="relative w-10 h-10 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
-                <div class="absolute inset-0.5 rounded-full border border-teal-500/10 dark:border-teal-400/10 scale-105"></div>
-                <!-- BRI Logo -->
-                <span class="font-extrabold text-blue-800 dark:text-blue-500 text-[13px] tracking-tighter pr-0.5 leading-none" style="font-family: Arial, sans-serif; font-style: italic;">BRI</span>
+              <div class="relative w-12 h-12 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0 overflow-hidden p-2">
+                <img v-if="selectedBankDetails && !imageErrors[selectedBankDetails.code]" :src="selectedBankDetails.logo" :alt="selectedBankDetails.short" class="w-full h-full object-contain" @error="imageErrors[selectedBankDetails.code] = true" />
+                <span v-else class="font-extrabold text-sm tracking-tighter" :class="selectedBankDetails?.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ selectedBankDetails?.short }}</span>
               </div>
               <div class="text-left">
-                <p class="font-bold text-sm text-gray-800 dark:text-white">Bank Rakyat Indonesia (BRI)</p>
+                <p class="font-bold text-sm text-gray-800 dark:text-white">{{ selectedBankDetails?.name }}</p>
                 <p class="text-[10px] text-gray-500">Virtual Account</p>
               </div>
             </div>
@@ -551,17 +575,57 @@
             <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Silakan ambil tangkapan layar (screenshot) kode QRIS di atas untuk dibayar menggunakan aplikasi m-Banking atau E-Wallet Anda.</p>
           </div>
 
-          <div class="mt-auto">
+          <!-- Hubungi Admin in Payment Modal -->
+          <div class="mt-4 pt-4 border-t border-gray-100 dark:border-white/10 flex justify-center">
+            <a 
+              v-if="settingsStore.adminWhatsappLink"
+              :href="settingsStore.adminWhatsappLink" 
+              target="_blank" 
+              class="inline-flex items-center space-x-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors"
+            >
+              <MessageCircle class="w-4 h-4" />
+              <span>Butuh Bantuan? Hubungi Admin</span>
+            </a>
+          </div>
+
+          <div class="mt-auto pt-6">
             <button 
               @click="confirmPayment"
               class="w-full py-4 bg-primary hover:bg-primary-light text-white rounded-[1.5rem] font-bold transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2"
             >
               <CheckCircleIcon class="w-5 h-5" />
-              <span>{{ paymentDetails.paymentMethod === 'va' ? 'Salin Nomor VA & Tutup' : 'Tutup & Kembali ke Beranda' }}</span>
+              <span>{{ paymentDetails.paymentMethod && paymentDetails.paymentMethod.endsWith('_va') ? 'Salin Nomor VA & Tutup' : 'Tutup & Kembali ke Beranda' }}</span>
             </button>
           </div>
         </div>
       </div>
+
+    <!-- Floating WhatsApp Button -->
+    <Transition
+      appear
+      enter-active-class="transition-all duration-200 ease-out delay-300"
+      enter-from-class="opacity-0 translate-y-8 scale-50"
+      enter-to-class="opacity-100 translate-y-0 scale-100"
+      leave-active-class="transition-all duration-200 ease-in"
+      leave-from-class="opacity-100 translate-y-0 scale-100"
+      leave-to-class="opacity-0 translate-y-8 scale-50"
+    >
+      <a 
+        v-if="settingsStore.adminWhatsappLink"
+        :href="settingsStore.adminWhatsappLink"
+        target="_blank"
+        class="fixed bottom-24 right-6 z-40 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-emerald-500/30"
+        title="Hubungi Admin (WhatsApp)"
+      >
+        <MessageCircle class="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+        
+        <!-- Tooltip -->
+        <div class="absolute right-full mr-4 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none hidden sm:block">
+          Hubungi Admin
+          <div class="absolute right-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+        </div>
+      </a>
+    </Transition>
 
   </div>
 </template>
@@ -570,16 +634,18 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useQurbanStore } from '@/stores/qurban'
+import { useSettingsStore } from '@/stores/settings.js'
 import { useToast } from '@/composables/useToast'
 import QrcodeVue from 'qrcode.vue'
 import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
   Edit3Icon, CheckIcon, QrCodeIcon, LandmarkIcon, ArrowRightIcon,
-  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon, CreditCardIcon
+  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon, CreditCardIcon, MessageCircle
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
+const settingsStore = useSettingsStore()
 const toast = useToast()
 const route = useRoute()
 const router = useRouter()
@@ -593,6 +659,7 @@ const isShohibulModalOpen = ref(false)
 const isCalculatorModalOpen = ref(false)
 const isPaymentModalOpen = ref(false)
 const shohibulSearchQuery = ref('')
+const imageErrors = ref({})
 
 // Watch query params to open modal
 watch(() => route.query, (newQuery) => {
@@ -624,7 +691,26 @@ const paymentDetails = ref({
 const form = ref({
   shohibulId: '',
   amount: null,
-  paymentMethod: 'qris'
+  paymentMethod: 'qris',
+  bankCode: ''
+})
+
+const supportedBanks = ref([
+  { code: 'bri', name: 'Bank Rakyat Indonesia (BRI)', short: 'BRI', color: 'text-blue-800 dark:text-blue-500', logo: 'https://cdn.cdnlogo.com/logos/b/61/bank-bri.svg' },
+  { code: 'bni', name: 'Bank Negara Indonesia (BNI)', short: 'BNI', color: 'text-orange-600 dark:text-orange-400', logo: 'https://cdn.cdnlogo.com/logos/b/51/bni.svg' },
+  { code: 'cimb_niaga', name: 'CIMB Niaga', short: 'CIMB', color: 'text-red-700 dark:text-red-500', logo: 'https://cdn.cdnlogo.com/logos/c/47/cimb-niaga.svg' },
+  { code: 'permata', name: 'Bank Permata', short: 'Permata', color: 'text-green-600 dark:text-green-500', logo: 'https://cdn.cdnlogo.com/logos/p/94/permata-bank.svg' },
+  { code: 'maybank', name: 'Maybank', short: 'Maybank', color: 'text-yellow-500 dark:text-yellow-400', logo: 'https://cdn.cdnlogo.com/logos/m/92/maybank.svg' },
+  { code: 'sampoerna', name: 'Bank Sahabat Sampoerna', short: 'Sampoerna', color: 'text-red-600 dark:text-red-500', logo: '' },
+  { code: 'bnc', name: 'Bank Neo Commerce (BNC)', short: 'BNC', color: 'text-yellow-400 dark:text-yellow-300', logo: '' },
+  { code: 'artha_graha', name: 'Bank Artha Graha', short: 'Artha Graha', color: 'text-blue-900 dark:text-blue-700', logo: '' },
+  { code: 'atm_bersama', name: 'ATM Bersama', short: 'ATM Bersama', color: 'text-blue-600 dark:text-blue-400', logo: 'https://cdn.cdnlogo.com/logos/a/37/atm-bersama.svg' }
+])
+
+const selectedBankDetails = computed(() => {
+  if (!paymentDetails.value.paymentMethod || !paymentDetails.value.paymentMethod.endsWith('_va')) return null;
+  const code = paymentDetails.value.paymentMethod.replace('_va', '');
+  return supportedBanks.value.find(b => b.code === code) || supportedBanks.value[0];
 })
 
 // Revisi: Tambah form phone
@@ -741,20 +827,22 @@ const amountErrorMessage = computed(() => {
 })
 
 const validationMessage = computed(() => {
-  if (formMode.value === 'setor') {
-    if (!form.value.shohibulId) return 'Pilih Shohibul Terlebih Dahulu'
+  const commonValidation = () => {
     if (!form.value.amount) return 'Masukkan Nominal Setoran'
     if (amountErrorMessage.value) return amountErrorMessage.value
     if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
+    if (form.value.paymentMethod === 'va' && !form.value.bankCode) return 'Pilih Bank untuk Virtual Account'
     return ''
+  }
+
+  if (formMode.value === 'setor') {
+    if (!form.value.shohibulId) return 'Pilih Shohibul Terlebih Dahulu'
+    return commonValidation()
   } else {
     if (!registerForm.value.name.trim()) return 'Masukkan Nama Shohibul'
     if (!registerForm.value.phone.trim()) return 'Masukkan Nomor Whatsapp'
     if (!registerForm.value.address.trim()) return 'Masukkan Alamat'
-    if (!form.value.amount) return 'Masukkan Nominal Setoran'
-    if (amountErrorMessage.value) return amountErrorMessage.value
-    if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
-    return ''
+    return commonValidation()
   }
 })
 
@@ -972,7 +1060,7 @@ const submitDeposit = () => {
     try {
       let result;
       if (formMode.value === 'register') {
-        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? 'bri_va' : form.value.paymentMethod;
+        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? `${form.value.bankCode}_va` : form.value.paymentMethod;
         const payload = {
           name: registerForm.value.name.trim(),
           phone: registerForm.value.phone.trim(), 
@@ -983,7 +1071,7 @@ const submitDeposit = () => {
         }
         result = await store.registerShohibul(payload)
       } else {
-        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? 'bri_va' : form.value.paymentMethod;
+        const mappedPaymentMethod = form.value.paymentMethod === 'va' ? `${form.value.bankCode}_va` : form.value.paymentMethod;
         const payload = {
           shohibul_id: form.value.shohibulId,
           amount: form.value.amount,
@@ -996,7 +1084,7 @@ const submitDeposit = () => {
 
       paymentDetails.value = {
         amount: paymentData.total_payment || form.value.amount,
-        paymentMethod: form.value.paymentMethod,
+        paymentMethod: form.value.paymentMethod === 'va' ? `${form.value.bankCode}_va` : form.value.paymentMethod,
         vaNumber: paymentData.payment_number || ('900' + Math.floor(1000000000 + Math.random() * 9000000000).toString()),
         paymentNumber: paymentData.payment_number || '',
         expiredAt: paymentData.expired_at || ''
@@ -1006,6 +1094,7 @@ const submitDeposit = () => {
       
       form.value.amount = null
       form.value.shohibulId = ''
+      form.value.bankCode = ''
       registerForm.value.name = ''
       registerForm.value.phone = ''
       registerForm.value.address = ''
@@ -1075,6 +1164,9 @@ onMounted(async () => {
       }
     })
   }
+
+  // Fetch settings for WhatsApp link
+  settingsStore.fetchSettings()
 
   ctx = gsap.context(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
