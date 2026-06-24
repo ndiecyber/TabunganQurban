@@ -11,6 +11,8 @@ export const useSettingsStore = defineStore('settings', {
 
   getters: {
     adminWhatsapp: (state) => {
+      if (!state.settings) return null;
+      
       if (state.settings.whatsapp && state.settings.whatsapp.length > 0) {
         return state.settings.whatsapp[0].number
       }
