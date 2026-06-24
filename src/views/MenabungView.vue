@@ -321,10 +321,10 @@
                     :key="bank.code"
                     @click="form.bankCode = bank.code"
                     class="border rounded-xl p-2.5 text-center cursor-pointer transition-all flex flex-col items-center justify-center space-y-2"
-                    :class="form.bankCode === bank.code ? 'border-primary bg-primary/5 dark:bg-primary/10 shadow-sm' : 'border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:border-primary/50 dark:hover:border-primary/50'"
+                    :class="form.bankCode === bank.code ? 'border-primary bg-primary/5 dark:bg-white shadow-sm ring-1 ring-primary/50' : 'border-gray-200 bg-white dark:bg-white hover:border-primary/50 dark:hover:border-primary/50'"
                   >
-                    <div class="h-8 flex items-center justify-center">
-                      <img v-if="!imageErrors[bank.code]" :src="bank.logo" :alt="bank.short" class="max-h-full max-w-full object-contain filter dark:brightness-110" @error="imageErrors[bank.code] = true" />
+                    <div class="h-12 w-full flex items-center justify-center transition-all">
+                      <img v-if="!imageErrors[bank.code]" :src="bank.logo" :alt="bank.short" class="w-full h-full object-contain" @error="imageErrors[bank.code] = true" />
                       <span v-else class="font-extrabold text-sm" :class="bank.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ bank.short }}</span>
                     </div>
                   </div>
@@ -535,9 +535,9 @@
 
           <div v-if="paymentDetails.paymentMethod && paymentDetails.paymentMethod.endsWith('_va')" class="space-y-4 mb-8">
             <div class="flex items-center space-x-3 mb-2">
-              <div class="relative w-12 h-12 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0 overflow-hidden p-2">
+              <div class="relative w-12 h-12 bg-white dark:bg-white rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 shrink-0 overflow-hidden p-2">
                 <img v-if="selectedBankDetails && !imageErrors[selectedBankDetails.code]" :src="selectedBankDetails.logo" :alt="selectedBankDetails.short" class="w-full h-full object-contain" @error="imageErrors[selectedBankDetails.code] = true" />
-                <span v-else class="font-extrabold text-sm tracking-tighter" :class="selectedBankDetails?.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ selectedBankDetails?.short }}</span>
+                <span v-else class="font-extrabold text-sm" :class="selectedBankDetails?.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ selectedBankDetails?.short }}</span>
               </div>
               <div class="text-left">
                 <p class="font-bold text-sm text-gray-800 dark:text-white">{{ selectedBankDetails?.name }}</p>
@@ -696,15 +696,15 @@ const form = ref({
 })
 
 const supportedBanks = ref([
-  { code: 'bri', name: 'Bank Rakyat Indonesia (BRI)', short: 'BRI', color: 'text-blue-800 dark:text-blue-500', logo: 'https://cdn.cdnlogo.com/logos/b/61/bank-bri.svg' },
-  { code: 'bni', name: 'Bank Negara Indonesia (BNI)', short: 'BNI', color: 'text-orange-600 dark:text-orange-400', logo: 'https://cdn.cdnlogo.com/logos/b/51/bni.svg' },
-  { code: 'cimb_niaga', name: 'CIMB Niaga', short: 'CIMB', color: 'text-red-700 dark:text-red-500', logo: 'https://cdn.cdnlogo.com/logos/c/47/cimb-niaga.svg' },
-  { code: 'permata', name: 'Bank Permata', short: 'Permata', color: 'text-green-600 dark:text-green-500', logo: 'https://cdn.cdnlogo.com/logos/p/94/permata-bank.svg' },
-  { code: 'maybank', name: 'Maybank', short: 'Maybank', color: 'text-yellow-500 dark:text-yellow-400', logo: 'https://cdn.cdnlogo.com/logos/m/92/maybank.svg' },
-  { code: 'sampoerna', name: 'Bank Sahabat Sampoerna', short: 'Sampoerna', color: 'text-red-600 dark:text-red-500', logo: '' },
-  { code: 'bnc', name: 'Bank Neo Commerce (BNC)', short: 'BNC', color: 'text-yellow-400 dark:text-yellow-300', logo: '' },
-  { code: 'artha_graha', name: 'Bank Artha Graha', short: 'Artha Graha', color: 'text-blue-900 dark:text-blue-700', logo: '' },
-  { code: 'atm_bersama', name: 'ATM Bersama', short: 'ATM Bersama', color: 'text-blue-600 dark:text-blue-400', logo: 'https://cdn.cdnlogo.com/logos/a/37/atm-bersama.svg' }
+  { code: 'bri', name: 'Bank Rakyat Indonesia (BRI)', short: 'BRI', color: 'text-blue-800 dark:text-blue-500', logo: '/banks/bri.svg?v=3' },
+  { code: 'bni', name: 'Bank Negara Indonesia (BNI)', short: 'BNI', color: 'text-orange-600 dark:text-orange-400', logo: '/banks/bni.svg?v=3' },
+  { code: 'cimb_niaga', name: 'CIMB Niaga', short: 'CIMB', color: 'text-red-700 dark:text-red-500', logo: '/banks/cimb_niaga.svg?v=3' },
+  { code: 'permata', name: 'Bank Permata', short: 'Permata', color: 'text-green-600 dark:text-green-500', logo: '/banks/permata.svg?v=3' },
+  { code: 'maybank', name: 'Maybank', short: 'Maybank', color: 'text-yellow-500 dark:text-yellow-400', logo: '/banks/maybank.svg?v=3' },
+  { code: 'sampoerna', name: 'Bank Sahabat Sampoerna', short: 'Sampoerna', color: 'text-red-600 dark:text-red-500', logo: '/banks/sampoerna.svg?v=4' },
+  { code: 'bnc', name: 'Bank Neo Commerce (BNC)', short: 'BNC', color: 'text-yellow-400 dark:text-yellow-300', logo: '/banks/bnc.svg?v=3' },
+  { code: 'artha_graha', name: 'Bank Artha Graha', short: 'Artha Graha', color: 'text-blue-900 dark:text-blue-700', logo: '/banks/artha_graha.svg?v=3' },
+  { code: 'atm_bersama', name: 'ATM Bersama', short: 'ATM Bersama', color: 'text-blue-600 dark:text-blue-400', logo: '/banks/atm_bersama.svg?v=3' }
 ])
 
 const selectedBankDetails = computed(() => {
