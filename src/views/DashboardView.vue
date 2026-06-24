@@ -225,7 +225,7 @@
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
-                <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.completed_at || selectedTx.created_at) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
@@ -323,7 +323,9 @@ const formatRp = (val) => {
 
 // Format date
 const formatDate = (dateStr) => {
+  if (!dateStr) return '-'
   const date = new Date(dateStr)
+  if (isNaN(date.getTime())) return '-'
   return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 

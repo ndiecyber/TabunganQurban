@@ -286,7 +286,7 @@
                     <span class="text-xs font-bold block" :class="getStatusTextClass(tx.status)">
                       {{ getStatusLabel(tx.status) }}
                     </span>
-                    <span class="text-[9px] text-gray-400 dark:text-gray-500 font-semibold">{{ formatDate(tx.date) }}</span>
+                    <span class="text-[9px] text-gray-400 dark:text-gray-500 font-semibold">{{ formatDate(tx.completed_at || tx.created_at) }}</span>
                   </div>
                 </div>
                 <span class="text-sm font-bold" :class="getStatusTextClass(tx.status)">
@@ -348,7 +348,7 @@
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Tanggal</span>
-                <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.date) }}</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ formatDate(selectedTx.completed_at || selectedTx.created_at) }}</span>
               </div>
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">ID Transaksi</span>
@@ -362,6 +362,14 @@
               <div class="flex justify-between items-center text-sm">
                 <span class="text-gray-500 dark:text-gray-400 font-medium">Nama Shohibul</span>
                 <span class="font-bold text-gray-800 dark:text-white">{{ getTxShohibul(selectedTx).name }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Alamat</span>
+                <span class="font-bold text-gray-800 dark:text-white max-w-[60%] text-right truncate">{{ getTxShohibul(selectedTx).address || 'Tidak ada alamat' }}</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-gray-500 dark:text-gray-400 font-medium">Nomor WhatsApp</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ getMaskedPhone(getTxShohibul(selectedTx).phone) }}</span>
               </div>
             </div>
 
@@ -454,6 +462,12 @@ const getDisplayPhone = (shohibul) => {
   return cleaned.substring(0, 4) + ' •••• ' + cleaned.substring(cleaned.length - 3)
 }
 
+const getMaskedPhone = (phone) => {
+  if (!phone) return '08XX-XXXX-XXXX'
+  if (phone.length <= 6) return phone
+  return phone.slice(0, 4) + '****' + phone.slice(-3)
+}
+
 const getPercentage = (shohibul) => {
   const target = Number(shohibul.target_amount) || 0
   if (target === 0) return 0
@@ -481,7 +495,9 @@ const getPendingAmount = (shohibul) => {
 }
 
 const formatDate = (dateStr) => {
+  if (!dateStr) return '-'
   const date = new Date(dateStr)
+  if (isNaN(date.getTime())) return '-'
   return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
@@ -509,9 +525,9 @@ const getAvatarStyle = (name) => {
 }
 
 const getStatusLabel = (status) => {
-  if (status === 'success' || status === 'settlement') return 'Setoran Masuk'
-  if (status === 'pending') return 'Menunggu Pembayaran'
-  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Dibatalkan'
+  if (status === 'success' || status === 'settlement') return 'Sukses'
+  if (status === 'pending') return 'Pending'
+  if (['cancelled', 'expire', 'expired', 'failed', 'deny'].includes(status)) return 'Batal'
   return status
 }
 
