@@ -242,7 +242,7 @@
                 <span class="w-4 h-4 rounded bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-[8px] font-bold text-gray-500">{{ idx + 1 }}</span>
                 <div class="flex flex-col">
                   <span class="font-bold text-gray-800 dark:text-gray-200">{{ member.name }}</span>
-                  <span class="text-[10px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected_amount) }} / {{ formatRp(member.target_amount) }}</span>
+                  <span class="text-[10px] text-gray-500 dark:text-gray-400 font-semibold mt-0.5">{{ formatRp(member.collected_amount) }} / {{ Number(member.target_amount) > 0 ? formatRp(member.target_amount) : 'Belum Ditentukan' }}</span>
                 </div>
               </div>
               <span 

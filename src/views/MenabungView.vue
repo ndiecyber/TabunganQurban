@@ -118,8 +118,8 @@
                      <div class="text-xs font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected_amount) }}</div>
                    </div>
                    <div class="flex-1 text-center pl-2 relative z-10">
-                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Kekurangan</div>
-                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target_amount - selectedShohibulData.collected_amount) }}</div>
+                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">{{ Number(selectedShohibulData.target_amount) > 0 ? 'Kekurangan' : 'Kelebihan' }}</div>
+                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ Number(selectedShohibulData.target_amount) > 0 ? formatRp(Math.max(0, selectedShohibulData.target_amount - selectedShohibulData.collected_amount)) : formatRp(selectedShohibulData.collected_amount) }}</div>
                    </div>
                 </div>
               </transition>
@@ -739,8 +739,10 @@ const targetLunas = computed(() => {
   } else if (formMode.value === 'setor' && form.value.shohibulId) {
     const shohibul = store.shohibuls.find(s => s.id === form.value.shohibulId)
     if (shohibul) {
-      const remaining = Number(shohibul.target_amount) - Number(shohibul.collected_amount)
-      return remaining > 0 ? remaining : Number(shohibul.target_amount)
+      const target = Number(shohibul.target_amount) || 0
+      if (target === 0) return 0 // Jika belum memilih target, tidak ada sisa tagihan untuk dilunasi
+      const remaining = target - Number(shohibul.collected_amount)
+      return remaining > 0 ? remaining : target
     }
   }
   return store.animalPrices.sapi
