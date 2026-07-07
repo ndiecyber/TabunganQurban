@@ -7,6 +7,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://qurban.masjidkassiti.id
 
     steps:
     - name: Checkout code
