@@ -28,6 +28,11 @@ jobs:
     - name: Set lowercase repository name
       run: echo "REPO=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
+    - name: Generate .env for Vite Build
+      run: |
+        echo "VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}" > .env
+        echo "VITE_SHOW_DEV_DISCLAIMER=${{ secrets.VITE_SHOW_DEV_DISCLAIMER }}" >> .env
+
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@v5
