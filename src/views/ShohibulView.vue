@@ -307,7 +307,7 @@
               class="w-full py-3 bg-primary hover:bg-primary-light text-white rounded-xl font-bold text-sm transition-all shadow-md shadow-primary/20 flex items-center justify-center space-x-2"
             >
               <WalletIcon class="w-5 h-5" />
-              <span>Tambah Setoran</span>
+              <span>Tambah Menabung</span>
             </button>
             <button 
               v-else
