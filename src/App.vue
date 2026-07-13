@@ -108,7 +108,7 @@ import ToastNotification from '@/components/ui/ToastNotification.vue'
 
 const route = useRoute()
 const store = useQurbanStore()
-const showDisclaimer = ref(import.meta.env.VITE_SHOW_DEV_DISCLAIMER === 'true')
+const showDisclaimer = ref(false)
 const errorMsg = ref("")
 window.addEventListener("error", (e) => errorMsg.value += e.message + " | ")
 window.addEventListener("unhandledrejection", (e) => errorMsg.value += e.reason + " | ")
