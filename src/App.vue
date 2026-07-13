@@ -61,7 +61,7 @@
               <div>
                 <h3 class="text-sm font-bold text-amber-800 dark:text-amber-300">Tahap Development (Uji Coba)</h3>
                 <p class="text-[11px] sm:text-xs text-amber-700 dark:text-amber-400/90 mt-1 leading-relaxed">
-                  Aplikasi ini masih dalam tahap pengembangan. Seluruh data yang digunakan merupakan data testing. Fitur pembayaran riil belum dapat dilakukan.
+                  Aplikasi ini masih dalam tahap pengembangan. Fitur pembayaran riil belum dapat dilakukan.
                 </p>
               </div>
             </div>
