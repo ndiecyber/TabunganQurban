@@ -59,7 +59,7 @@
         class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
         :class="formMode === 'setor' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Tabungan Shohibul
+        Setor Tabungan
       </button>
       <button 
         @click="formMode = 'register'"
