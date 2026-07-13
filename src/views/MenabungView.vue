@@ -59,7 +59,7 @@
         class="flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all duration-300 cursor-pointer relative z-10"
         :class="formMode === 'setor' ? 'text-primary dark:text-primary-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'"
       >
-        Setoran Shohibul
+        Tabungan Shohibul
       </button>
       <button 
         @click="formMode = 'register'"
@@ -167,7 +167,7 @@
               <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mt-2">
                 <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                 <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
-                  Pendaftaran baru mewajibkan setoran awal minimal <strong class="font-bold">Rp. 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
+                  Pendaftaran baru mewajibkan menabung awal minimal <strong class="font-bold">Rp. 50.000</strong> untuk mengamankan (booking) slot hewan qurban Anda.
                 </p>
               </div>
             </div>
@@ -178,7 +178,7 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
               <CoinsIcon class="w-4 h-4 text-secondary" />
-              <span>Pilih Nominal Setoran</span>
+              <span>Pilih Nominal Menabung</span>
             </div>
             
             <button type="button" @click.prevent="isCalculatorModalOpen = true" class="text-[10px] sm:text-xs font-bold text-primary dark:text-primary-light flex items-center bg-primary/10 px-2.5 py-1.5 rounded-lg hover:bg-primary/20 transition-colors shadow-sm">
@@ -419,7 +419,7 @@
           <div class="bg-gray-50 dark:bg-white/[0.03] border-[1.5px] border-gray-300 dark:border-white/10 p-5 rounded-[1.5rem] mt-2 relative overflow-hidden group shadow-md">
             <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none group-hover:scale-150 transition-transform duration-700"></div>
             
-            <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Setoran</p>
+            <p class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-1 relative z-10">Rekomendasi Menabung</p>
             <div class="flex items-end space-x-2 relative z-10">
               <span class="text-3xl font-bold text-gray-800 dark:text-white font-heading tracking-tight">{{ formatRp(monthlyInstallment) }}</span>
               <span class="text-xs text-gray-500 dark:text-gray-400 font-bold mb-1.5">/ bulan</span>
@@ -817,7 +817,7 @@ const amountErrorMessage = computed(() => {
     if (isLessThanMin && isNotMultiple) {
       return 'Nominal minimal Rp. 50.000 dan harus kelipatan Rp. 50.000'
     } else if (isLessThanMin) {
-      return 'Minimal setoran adalah Rp. 50.000'
+      return 'Minimal menabung adalah Rp. 50.000'
     } else if (isNotMultiple) {
       return 'Nominal harus kelipatan Rp. 50.000'
     }
@@ -828,7 +828,7 @@ const amountErrorMessage = computed(() => {
 
 const validationMessage = computed(() => {
   const commonValidation = () => {
-    if (!form.value.amount) return 'Masukkan Nominal Setoran'
+    if (!form.value.amount) return 'Masukkan Nominal Menabung'
     if (amountErrorMessage.value) return amountErrorMessage.value
     if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
     if (form.value.paymentMethod === 'va' && !form.value.bankCode) return 'Pilih Bank untuk Virtual Account'
@@ -1023,18 +1023,18 @@ const submitDeposit = () => {
     
     const isDuplicate = store.shohibuls.find(s => s.name.toLowerCase() === registerForm.value.name.trim().toLowerCase())
     if (isDuplicate) {
-      toast.success('Pemberitahuan: Nama Anda sudah terdaftar. Kami akan mengalihkan Anda ke formulir Setoran.')
+      toast.success('Pemberitahuan: Nama Anda sudah terdaftar. Kami akan mengalihkan Anda ke formulir Menabung.')
       formMode.value = 'setor'
       form.value.shohibulId = isDuplicate.id
       return
     }
     
     if (!form.value.amount || form.value.amount < 50000) {
-      toast.warning('Pendaftaran baru mewajibkan setoran awal minimal Rp. 50.000.')
+      toast.warning('Pendaftaran baru mewajibkan menabung awal minimal Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      toast.warning('Nominal setoran awal harus kelipatan Rp. 50.000.')
+      toast.warning('Nominal menabung awal harus kelipatan Rp. 50.000.')
       return
     }
   } else {
@@ -1043,11 +1043,11 @@ const submitDeposit = () => {
       return
     }
     if (!form.value.amount || form.value.amount < 50000) {
-      toast.warning('Minimal setoran adalah Rp. 50.000.')
+      toast.warning('Minimal menabung adalah Rp. 50.000.')
       return
     }
     if (form.value.amount % 50000 !== 0) {
-      toast.warning('Nominal setoran harus kelipatan Rp. 50.000.')
+      toast.warning('Nominal menabung harus kelipatan Rp. 50.000.')
       return
     }
   }

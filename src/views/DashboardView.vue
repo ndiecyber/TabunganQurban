@@ -148,7 +148,7 @@
 
       <div class="order-3 sm:order-4 space-y-2 recent-payments-list sm:pt-2">
         <div class="flex justify-between items-center px-1">
-          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Setoran Terbaru</h4>
+          <h4 class="text-sm font-bold text-gray-800 dark:text-white font-heading">Tabungan Terbaru</h4>
           <router-link to="/shohibul" class="text-[10px] font-bold text-primary dark:text-primary-light hover:bg-primary/15 transition-colors bg-primary/10 dark:bg-white/5 px-3 py-1.5 rounded-full">
             Lihat Semua
           </router-link>
@@ -191,7 +191,7 @@
             </template>
             <div v-else class="text-center py-6 text-gray-400 dark:text-gray-500">
               <HistoryIcon class="w-8 h-8 mx-auto mb-2 opacity-30" />
-              <p class="text-xs font-bold">Belum ada setoran terbaru</p>
+              <p class="text-xs font-bold">Belum ada tabungan terbaru</p>
             </div>
           </div>
         </div>

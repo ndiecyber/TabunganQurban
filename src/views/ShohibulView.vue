@@ -265,7 +265,7 @@
 
           <div class="space-y-2">
             <h4 class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest flex items-center">
-              <HistoryIcon class="w-3.5 h-3.5 mr-1.5" /> Riwayat Tabungan
+              <HistoryIcon class="w-3.5 h-3.5 mr-1.5" /> Riwayat Menabung
             </h4>
             
             <div v-if="memberTransactions.length > 0" class="space-y-2 max-h-[250px] overflow-y-auto pr-1 custom-scrollbar">
@@ -296,7 +296,7 @@
             </div>
             
             <div v-else class="text-center py-6 bg-gray-50 dark:bg-white/[0.02] rounded-2xl border border-dashed border-gray-200 dark:border-white/5">
-              <p class="text-xs text-gray-400 font-semibold">Belum ada riwayat tabungan.</p>
+              <p class="text-xs text-gray-400 font-semibold">Belum ada riwayat menabung.</p>
             </div>
           </div>
           
