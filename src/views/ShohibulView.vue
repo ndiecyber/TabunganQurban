@@ -134,7 +134,7 @@
               Detail
             </button>
             <span class="text-[10px] font-bold text-gray-400 flex items-center">
-              <span class="text-sm mr-1">{{ shohibul.target_type === 'sapi' ? '🐄' : '🐐' }}</span> {{ shohibul.target_type === 'sapi' ? 'Sapi' : 'Kambing' }}
+              <span class="text-sm mr-1">{{ !shohibul.target_type ? '❓' : (shohibul.target_type === 'sapi' ? '🐄' : '🐐') }}</span> {{ !shohibul.target_type ? 'Belum Memilih' : (shohibul.target_type === 'sapi' ? 'Sapi' : 'Kambing') }}
             </span>
           </div>
         </div>
@@ -216,8 +216,8 @@
             <div class="bg-gray-50 dark:bg-white/[0.02] border-[1.5px] border-gray-200 dark:border-white/5 p-3 rounded-2xl text-center space-y-1.5 shadow-sm">
               <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Hewan Target</span>
               <span class="text-base font-bold text-gray-800 dark:text-white block flex items-center justify-center">
-                <span class="mr-1.5 text-xl">{{ selectedShohibul.target_type === 'sapi' ? '🐄' : '🐐' }}</span>
-                {{ selectedShohibul.target_type === 'sapi' ? 'Sapi' : 'Kambing' }}
+                <span class="mr-1.5 text-xl">{{ !selectedShohibul.target_type ? '❓' : (selectedShohibul.target_type === 'sapi' ? '🐄' : '🐐') }}</span>
+                {{ !selectedShohibul.target_type ? 'Belum Memilih' : (selectedShohibul.target_type === 'sapi' ? 'Sapi' : 'Kambing') }}
               </span>
               <span class="text-[9px] text-gray-400 font-semibold block bg-white dark:bg-black/20 py-1 rounded-md mx-4 border border-gray-100 dark:border-white/5">{{ selectedShohibul.animal_group?.name || '-' }}</span>
             </div>
@@ -247,7 +247,7 @@
               </div>
               <div class="flex justify-between items-center text-xs">
                 <span class="text-gray-500 dark:text-gray-400 font-semibold">Target Qurban</span>
-                <span class="font-bold text-gray-800 dark:text-white">{{ formatRp(selectedShohibul.target_amount) }}</span>
+                <span class="font-bold text-gray-800 dark:text-white">{{ Number(selectedShohibul.target_amount) > 0 ? formatRp(selectedShohibul.target_amount) : 'Belum Ditentukan' }}</span>
               </div>
               <div class="w-full h-1.5 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden mt-2">
                 <div 

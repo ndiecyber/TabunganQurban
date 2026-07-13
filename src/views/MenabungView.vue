@@ -118,8 +118,8 @@
                      <div class="text-xs font-bold text-primary dark:text-primary-light">{{ formatRp(selectedShohibulData.collected_amount) }}</div>
                    </div>
                    <div class="flex-1 text-center pl-2 relative z-10">
-                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">Kekurangan</div>
-                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ formatRp(selectedShohibulData.target_amount - selectedShohibulData.collected_amount) }}</div>
+                     <div class="text-[9px] text-gray-400 uppercase tracking-widest font-bold mb-1">{{ Number(selectedShohibulData.target_amount) > 0 ? 'Kekurangan' : 'Kelebihan' }}</div>
+                     <div class="text-xs font-bold text-amber-600 dark:text-amber-400">{{ Number(selectedShohibulData.target_amount) > 0 ? formatRp(Math.max(0, selectedShohibulData.target_amount - selectedShohibulData.collected_amount)) : formatRp(selectedShohibulData.collected_amount) }}</div>
                    </div>
                 </div>
               </transition>
@@ -333,21 +333,19 @@
             </transition>
           </div>
 
-          <div class="pt-4">
+          <div class="pt-4 space-y-3">
+            <div class="flex items-start space-x-2 bg-blue-50 dark:bg-blue-900/20 p-3.5 rounded-xl border border-blue-200/50 dark:border-blue-800/30">
+              <InfoIcon class="w-5 h-5 text-blue-600 dark:text-blue-500 shrink-0 mt-0.5" />
+              <p class="text-xs leading-relaxed text-blue-700 dark:text-blue-400 font-medium">
+                Mohon maaf, fitur <strong>pembayaran mandiri</strong> saat ini belum dapat dilakukan. Silakan hubungi pengurus atau Admin DKM untuk mendaftar atau melakukan pembayaran secara langsung.
+              </p>
+            </div>
+            
             <button 
-              v-if="!isFormValid"
               disabled
               class="w-full py-4.5 text-sm font-bold bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
             >
-              <span>{{ validationMessage }}</span>
-            </button>
-            <button 
-              v-else
-              @click="submitDeposit"
-              class="w-full py-4.5 text-sm font-bold bg-primary hover:bg-primary-light text-white rounded-[1.5rem] transition-all shadow-lg shadow-primary/30 flex items-center justify-center space-x-2 font-heading tracking-wide"
-            >
-              <span>{{ formMode === 'register' ? 'Daftar & Lanjutkan Pembayaran' : 'Lanjutkan Pembayaran' }}</span>
-              <ArrowRightIcon class="w-4 h-4 ml-1" />
+              <span>Pembayaran Mandiri Belum Tersedia</span>
             </button>
           </div>
 
@@ -739,8 +737,10 @@ const targetLunas = computed(() => {
   } else if (formMode.value === 'setor' && form.value.shohibulId) {
     const shohibul = store.shohibuls.find(s => s.id === form.value.shohibulId)
     if (shohibul) {
-      const remaining = Number(shohibul.target_amount) - Number(shohibul.collected_amount)
-      return remaining > 0 ? remaining : Number(shohibul.target_amount)
+      const target = Number(shohibul.target_amount) || 0
+      if (target === 0) return 0 // Jika belum memilih target, tidak ada sisa tagihan untuk dilunasi
+      const remaining = target - Number(shohibul.collected_amount)
+      return remaining > 0 ? remaining : target
     }
   }
   return store.animalPrices.sapi
