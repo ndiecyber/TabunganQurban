@@ -13,6 +13,7 @@ export const useQurbanStore = defineStore('qurban', {
   state: () => ({
     // Data from API
     period: null,
+    paymentConfig: null,
     dashboardStats: null,
     shohibuls: [],
     transactions: [],
@@ -86,6 +87,8 @@ export const useQurbanStore = defineStore('qurban', {
 
     // Pending count
     pendingTransactions: (state) => state.dashboardStats?.pending_transactions ?? 0,
+
+    isManualPaymentMode: (state) => state.paymentConfig?.mode === 'manual',
 
     // Backward-compatible alias
     targetTotal() {
@@ -191,12 +194,19 @@ export const useQurbanStore = defineStore('qurban', {
       this.loading.period = true
       try {
         const response = await qurbanApi.fetchActivePeriod()
-        this.period = response.data
-        this.saveToCache(CACHE_KEYS.period, response.data)
+        // Handle both old format (direct period) and new format (period + payment)
+        if (response.data?.period) {
+          this.period = response.data.period
+          this.paymentConfig = response.data.payment || null
+        } else {
+          this.period = response.data
+        }
+        this.saveToCache(CACHE_KEYS.period, { period: this.period, payment: this.paymentConfig })
       } catch (err) {
         const cached = this.loadFromCache(CACHE_KEYS.period)
         if (cached) {
-          this.period = cached
+          this.period = cached.period || cached
+          this.paymentConfig = cached.payment || null
         }
       } finally {
         this.loading.period = false
@@ -238,6 +248,34 @@ export const useQurbanStore = defineStore('qurban', {
       try {
         const response = await qurbanApi.createDeposit(payload)
         // Refresh data after successful deposit
+        this.fetchDashboard()
+        this.fetchShohibuls()
+        return response.data
+      } catch (err) {
+        throw err
+      } finally {
+        this.loading.deposit = false
+      }
+    },
+
+    async createManualDeposit(formData) {
+      this.loading.deposit = true
+      try {
+        const response = await qurbanApi.createManualDeposit(formData)
+        this.fetchDashboard()
+        this.fetchShohibuls()
+        return response.data
+      } catch (err) {
+        throw err
+      } finally {
+        this.loading.deposit = false
+      }
+    },
+
+    async registerShohibulManual(formData) {
+      this.loading.deposit = true
+      try {
+        const response = await qurbanApi.registerShohibulManual(formData)
         this.fetchDashboard()
         this.fetchShohibuls()
         return response.data

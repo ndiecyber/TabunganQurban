@@ -265,88 +265,154 @@
           </transition>
 
           <div class="space-y-3 pt-4 border-t border-gray-200/50 dark:border-white/5">
-            <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block">Metode Pembayaran</label>
-            <div class="grid grid-cols-2 gap-4">
-              <div 
-                @click="form.paymentMethod = 'qris'"
-                class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
-                :class="form.paymentMethod === 'qris' 
-                  ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
-                  : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
-              >
-                <div v-if="form.paymentMethod === 'qris'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
-                <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 dark:border-primary/30 shadow-sm shrink-0">
-                  <QrCodeIcon class="w-7 h-7 text-primary dark:text-primary-light" />
+            <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block font-heading">Metode Pembayaran</label>
+            
+            <!-- Manual Mode: QRIS + Transfer BSI -->
+            <template v-if="store.isManualPaymentMode">
+              <div class="grid grid-cols-2 gap-4">
+                <div 
+                  @click="form.paymentMethod = 'qris'"
+                  class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
+                  :class="form.paymentMethod === 'qris' 
+                    ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                    : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
+                >
+                  <div v-if="form.paymentMethod === 'qris'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
+                  <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 dark:border-primary/30 shadow-sm shrink-0">
+                    <QrCodeIcon class="w-7 h-7 text-primary dark:text-primary-light" />
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-gray-800 dark:text-white block">QRIS Masjid</span>
+                    <span class="text-[9px] text-gray-400 font-semibold">Scan & Bayar</span>
+                  </div>
                 </div>
-                <div>
-                  <span class="text-xs font-bold text-gray-800 dark:text-white block">QRIS Masjid</span>
-                  <span class="text-[9px] text-gray-400 font-semibold">Verifikasi Instan</span>
-                </div>
-              </div>
 
-              <div 
-                @click="form.paymentMethod = 'va'"
-                class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
-                :class="form.paymentMethod === 'va' 
-                  ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
-                  : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
-              >
-                <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
-                
-                <div class="w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
-                  <LandmarkIcon class="w-7 h-7 text-teal-600 dark:text-teal-400" />
-                </div>
-                
-                <div>
-                  <span class="text-xs font-bold text-gray-800 dark:text-white block">Transfer Bank</span>
-                  <span class="text-[9px] text-gray-400 font-semibold">Virtual Account</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pilihan Bank -->
-            <transition 
-              enter-active-class="transition duration-300 ease-out" 
-              enter-from-class="transform -translate-y-2 opacity-0" 
-              enter-to-class="transform translate-y-0 opacity-100" 
-              leave-active-class="transition duration-200 ease-in" 
-              leave-from-class="transform translate-y-0 opacity-100" 
-              leave-to-class="transform -translate-y-2 opacity-0"
-            >
-              <div v-if="form.paymentMethod === 'va'" class="mt-4 pt-3 border-t border-gray-200/50 dark:border-white/5">
-                <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-3">Pilih Bank</label>
-                <div class="grid grid-cols-3 gap-2">
-                  <div 
-                    v-for="bank in supportedBanks" 
-                    :key="bank.code"
-                    @click="form.bankCode = bank.code"
-                    class="border rounded-xl p-2.5 text-center cursor-pointer transition-all flex flex-col items-center justify-center space-y-2"
-                    :class="form.bankCode === bank.code ? 'border-primary bg-primary/5 dark:bg-white shadow-sm ring-1 ring-primary/50' : 'border-gray-200 bg-white dark:bg-white hover:border-primary/50 dark:hover:border-primary/50'"
-                  >
-                    <div class="h-12 w-full flex items-center justify-center transition-all">
-                      <img v-if="!imageErrors[bank.code]" :src="bank.logo" :alt="bank.short" class="w-full h-full object-contain" @error="imageErrors[bank.code] = true" />
-                      <span v-else class="font-extrabold text-sm" :class="bank.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ bank.short }}</span>
-                    </div>
+                <div 
+                  @click="form.paymentMethod = 'transfer_bsi'"
+                  class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
+                  :class="form.paymentMethod === 'transfer_bsi' 
+                    ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                    : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
+                >
+                  <div v-if="form.paymentMethod === 'transfer_bsi'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
+                  <div class="w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                    <LandmarkIcon class="w-7 h-7 text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-gray-800 dark:text-white block">Transfer BSI</span>
+                    <span class="text-[9px] text-gray-400 font-semibold">Rekening Masjid</span>
                   </div>
                 </div>
               </div>
-            </transition>
+            </template>
+
+            <!-- Gateway Mode: QRIS + VA Banks (existing) -->
+            <template v-else>
+              <div class="grid grid-cols-2 gap-4">
+                <div 
+                  @click="form.paymentMethod = 'qris'"
+                  class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
+                  :class="form.paymentMethod === 'qris' 
+                    ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                    : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
+                >
+                  <div v-if="form.paymentMethod === 'qris'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
+                  <div class="w-14 h-14 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center border border-primary/20 dark:border-primary/30 shadow-sm shrink-0">
+                    <QrCodeIcon class="w-7 h-7 text-primary dark:text-primary-light" />
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-gray-800 dark:text-white block">QRIS Masjid</span>
+                    <span class="text-[9px] text-gray-400 font-semibold">Verifikasi Instan</span>
+                  </div>
+                </div>
+
+                <div 
+                  @click="form.paymentMethod = 'va'"
+                  class="border rounded-[1.2rem] p-4 text-center cursor-pointer transition-all duration-300 select-none flex flex-col items-center space-y-2 relative overflow-hidden group"
+                  :class="form.paymentMethod === 'va' 
+                    ? 'border-[2px] border-primary bg-primary/10 dark:bg-primary/20 shadow-md' 
+                    : 'border-[2px] border-gray-300 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-gray-50 dark:hover:bg-white/[0.05] hover:border-primary/50 shadow-sm hover:shadow-md'"
+                >
+                  <div v-if="form.paymentMethod === 'va'" class="absolute -right-4 -top-4 w-12 h-12 bg-primary/20 rounded-full blur-xl pointer-events-none"></div>
+                  <div class="w-14 h-14 bg-white dark:bg-dark/50 rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 dark:border-teal-400/20 shrink-0">
+                    <LandmarkIcon class="w-7 h-7 text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-gray-800 dark:text-white block">Transfer Bank</span>
+                    <span class="text-[9px] text-gray-400 font-semibold">Virtual Account</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pilihan Bank -->
+              <transition 
+                enter-active-class="transition duration-300 ease-out" 
+                enter-from-class="transform -translate-y-2 opacity-0" 
+                enter-to-class="transform translate-y-0 opacity-100" 
+                leave-active-class="transition duration-200 ease-in" 
+                leave-from-class="transform translate-y-0 opacity-100" 
+                leave-to-class="transform -translate-y-2 opacity-0"
+              >
+                <div v-if="form.paymentMethod === 'va'" class="mt-4 pt-3 border-t border-gray-200/50 dark:border-white/5">
+                  <label class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest block mb-3 font-heading">Pilih Bank</label>
+                  <div class="grid grid-cols-3 gap-2">
+                    <div 
+                      v-for="bank in supportedBanks" 
+                      :key="bank.code"
+                      @click="form.bankCode = bank.code"
+                      class="border rounded-xl p-2.5 text-center cursor-pointer transition-all flex flex-col items-center justify-center space-y-2"
+                      :class="form.bankCode === bank.code ? 'border-primary bg-primary/5 dark:bg-white shadow-sm ring-1 ring-primary/50' : 'border-gray-200 bg-white dark:bg-white hover:border-primary/50 dark:hover:border-primary/50'"
+                    >
+                      <div class="h-12 w-full flex items-center justify-center transition-all">
+                        <img v-if="!imageErrors[bank.code]" :src="bank.logo" :alt="bank.short" class="w-full h-full object-contain" @error="imageErrors[bank.code] = true" />
+                        <span v-else class="font-extrabold text-sm" :class="bank.color" style="font-family: Arial, sans-serif; font-style: italic;">{{ bank.short }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </template>
           </div>
 
           <div class="pt-4 space-y-3">
-            <div class="flex items-start space-x-2 bg-blue-50 dark:bg-blue-900/20 p-3.5 rounded-xl border border-blue-200/50 dark:border-blue-800/30">
-              <InfoIcon class="w-5 h-5 text-blue-600 dark:text-blue-500 shrink-0 mt-0.5" />
-              <p class="text-xs leading-relaxed text-blue-700 dark:text-blue-400 font-medium">
-                Mohon maaf, fitur <strong>pembayaran mandiri</strong> saat ini belum dapat dilakukan. Silakan hubungi pengurus atau Admin DKM untuk mendaftar atau melakukan pembayaran secara langsung.
-              </p>
-            </div>
-            
-            <button 
-              disabled
-              class="w-full py-4.5 text-sm font-bold bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
-            >
-              <span>Pembayaran Mandiri Belum Tersedia</span>
-            </button>
+            <!-- Manual mode: active submit -->
+            <template v-if="store.isManualPaymentMode">
+              <div class="flex items-start space-x-2 bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-200/50 dark:border-emerald-800/30">
+                <InfoIcon class="w-4 h-4 text-emerald-600 dark:text-emerald-500 shrink-0 mt-0.5" />
+                <p class="text-[10px] leading-relaxed text-emerald-700 dark:text-emerald-400 font-semibold">
+                  Nominal yang anda masukkan di atas adalah <strong>nominal murni</strong> yang anda ingin tabung, <strong>tidak termasuk biaya admin</strong> yang anda harus bayar.
+                </p>
+              </div>
+              
+              <button 
+                @click="openManualInstructionModal"
+                :disabled="!isFormValid || store.loading.deposit"
+                class="w-full py-4.5 text-sm font-bold rounded-[1.5rem] flex items-center justify-center space-x-2 transition-all border border-transparent"
+                :class="isFormValid && !store.loading.deposit 
+                  ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer' 
+                  : 'bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 cursor-not-allowed'"
+              >
+                <ArrowRightIcon class="w-4 h-4" />
+                <span>{{ !isFormValid ? validationMessage : 'Lanjutkan Pembayaran' }}</span>
+              </button>
+            </template>
+
+            <!-- Gateway mode: disabled -->
+            <template v-else>
+              <div class="flex items-start space-x-2 bg-blue-50 dark:bg-blue-900/20 p-3.5 rounded-xl border border-blue-200/50 dark:border-blue-800/30">
+                <InfoIcon class="w-5 h-5 text-blue-600 dark:text-blue-500 shrink-0 mt-0.5" />
+                <p class="text-xs leading-relaxed text-blue-700 dark:text-blue-400 font-medium">
+                  Mohon maaf, fitur <strong>pembayaran mandiri</strong> saat ini belum dapat dilakukan. Silakan hubungi pengurus atau Admin DKM untuk mendaftar atau melakukan pembayaran secara langsung.
+                </p>
+              </div>
+              
+              <button 
+                disabled
+                class="w-full py-4.5 text-sm font-bold bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 rounded-[1.5rem] cursor-not-allowed flex items-center justify-center space-x-2 transition-all border border-transparent"
+              >
+                <span>Pembayaran Mandiri Belum Tersedia</span>
+              </button>
+            </template>
           </div>
 
         </div>
@@ -364,7 +430,7 @@
       <div v-if="isCalculatorModalOpen" class="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6">
         <div class="absolute inset-0 bg-gray-900/40 dark:bg-black/60 backdrop-blur-sm" @click="isCalculatorModalOpen = false"></div>
         
-        <div class="bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl relative w-full max-w-md max-h-[90vh] overflow-y-auto z-10 transform transition-all space-y-6">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl relative w-full max-w-md max-h-[90vh] overflow-y-auto custom-scrollbar z-10 transform transition-all space-y-6">
           <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-white/5">
             <div class="flex items-center space-x-2">
               <CalculatorIcon class="w-5 h-5 text-secondary" />
@@ -492,6 +558,9 @@
               <div v-if="s.is_lunas" class="px-2 py-1 bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-[9px] font-bold rounded uppercase tracking-wider">
                 Lunas
               </div>
+              <div v-else-if="getWaitingTx(s.id)" class="px-2 py-1 bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 text-[9px] font-bold rounded uppercase tracking-wider flex items-center shadow-sm">
+                <ClockIcon class="w-3 h-3 mr-1" /> Menunggu Verifikasi
+              </div>
               <div v-else-if="getPendingTx(s.id)" class="px-2 py-1 bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 text-[9px] font-bold rounded uppercase tracking-wider flex items-center shadow-sm">
                 <ClockIcon class="w-3 h-3 mr-1" /> Pending
               </div>
@@ -598,6 +667,146 @@
         </div>
       </div>
 
+    <!-- Manual Payment Instruction Modal -->
+    <div v-if="isManualInstructionModalOpen" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex flex-col justify-end modal-backdrop" style="margin: 0; padding: 0;">
+        <div class="flex-1 w-full h-full absolute inset-0 cursor-pointer" @click="closeManualInstructionModal"></div>
+        
+        <div class="bg-white dark:bg-dark rounded-t-[2rem] p-6 max-h-[90vh] flex flex-col relative border-t border-gray-200/50 dark:border-white/10 shadow-2xl pb-[calc(20px+env(safe-area-inset-bottom,0px))] manual-modal-content w-full max-w-lg mx-auto z-10 overflow-y-auto custom-scrollbar">
+          <div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto -mt-2 mb-6 cursor-pointer hover:bg-gray-400 transition-colors" @click="closeManualInstructionModal"></div>
+          
+          <!-- Header -->
+          <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+              <component :is="form.paymentMethod === 'qris' ? QrCodeIcon : LandmarkIcon" class="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 dark:text-white font-heading">Instruksi Pembayaran</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Lakukan pembayaran, lalu upload bukti transfer</p>
+          </div>
+
+          <!-- Amount -->
+          <div class="bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/10 rounded-[1.5rem] p-5 mb-5 text-center space-y-2">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Total yang Harus Dibayar</p>
+            <p class="text-3xl font-bold text-gray-800 dark:text-white">{{ formatRp(form.amount) }}</p>
+            <p class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              Nominal ini belum termasuk biaya admin yang harus<br> anda bayar di platform e-wallet/bank anda.
+            </p>
+          </div>
+
+          <!-- QRIS Instructions -->
+          <div v-if="form.paymentMethod === 'qris'" class="space-y-4 mb-6 text-center flex flex-col items-center">
+            <div class="relative inline-block p-4 bg-white rounded-2xl shadow-sm border border-gray-200/50 mb-2">
+              <QrcodeVue 
+                v-if="store.paymentConfig?.qris_string"
+                :value="store.paymentConfig.qris_string" 
+                :size="250" 
+                level="H" 
+              />
+              <div v-if="store.paymentConfig?.qris_string" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="bg-white w-[90px] h-[90px] rounded-2xl flex items-center justify-center overflow-hidden border-4 border-white shadow-sm">
+                  <img src="/favicon-green-outline.png" alt="Logo" class="w-[95px] h-[95px] max-w-none" />
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <p class="text-sm font-bold text-gray-800 dark:text-white">{{ store.paymentConfig?.qris_name }}</p>
+              <p v-if="store.paymentConfig?.qris_nmid" class="text-[10px] text-gray-400 font-semibold mt-0.5">NMID: {{ store.paymentConfig.qris_nmid }}</p>
+            </div>
+            <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Scan QR code di atas menggunakan aplikasi m-Banking atau E-Wallet Anda. Lalu lampirkan bukti pembayaran di bawah</p>
+          </div>
+
+          <!-- Transfer BSI Instructions -->
+          <div v-if="form.paymentMethod === 'transfer_bsi'" class="space-y-4 mb-6">
+            <div class="flex items-center space-x-3 mb-2">
+              <div class="relative w-12 h-12 bg-white dark:bg-white rounded-full flex items-center justify-center shadow-sm border border-teal-500/20 shrink-0 overflow-hidden p-2">
+                <LandmarkIcon class="w-6 h-6 text-teal-600 font-bold" />
+              </div>
+              <div class="text-left">
+                <p class="font-bold text-sm text-gray-800 dark:text-white">{{ store.paymentConfig?.bank_name }}</p>
+                <p class="text-[10px] text-gray-500 font-semibold">Transfer Bank</p>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-white/[0.05] border border-gray-200/50 dark:border-white/10 rounded-xl p-4 flex justify-between items-center group mb-3">
+              <div class="text-left">
+                <p class="text-[10px] font-bold text-gray-400 mb-1">Nomor Rekening</p>
+                <p class="text-lg sm:text-xl font-bold tracking-wider text-gray-800 dark:text-white">{{ formatBankAccount(store.paymentConfig?.bank_account) }}</p>
+              </div>
+              <button @click="navigator.clipboard.writeText(store.paymentConfig?.bank_account).then(() => toast.success('Nomor rekening berhasil disalin!'))" class="p-2.5 bg-gray-100 dark:bg-white/10 rounded-xl text-primary hover:bg-primary hover:text-white transition-colors group-hover:shadow-md">
+                <CopyIcon class="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div class="bg-gray-50 dark:bg-white/[0.03] rounded-xl p-3 border border-gray-200/50 dark:border-white/10">
+              <p class="text-[10px] font-bold text-gray-400 mb-0.5">Atas Nama</p>
+              <p class="text-sm font-bold text-gray-800 dark:text-white">{{ store.paymentConfig?.bank_holder }}</p>
+            </div>
+            
+            <p class="text-xs font-bold text-gray-600 dark:text-gray-300 text-center">Transfer ke rekening yang tertera di atas. Lalu lampirkan bukti transfer di bawah.</p>
+          </div>
+
+          <!-- Upload Payment Proof -->
+          <div class="space-y-3 mb-6">
+            <label class="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest block">Upload Bukti Pembayaran</label>
+            
+            <div 
+              @click="$refs.proofInput.click()"
+              @dragover.prevent
+              @drop.prevent="handleProofDrop"
+              class="border-2 border-dashed rounded-[1.5rem] p-6 text-center cursor-pointer transition-all duration-300 hover:border-primary/50"
+              :class="proofFile 
+                ? 'border-primary bg-primary/5 dark:bg-primary/10' 
+                : 'border-gray-300 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] hover:bg-gray-100 dark:hover:bg-white/[0.04]'"
+            >
+              <input 
+                ref="proofInput"
+                type="file" 
+                accept="image/*" 
+                class="hidden" 
+                @change="handleProofSelect"
+              />
+              
+              <div v-if="proofPreview" class="space-y-3 overflow-hidden w-full">
+                <img :src="proofPreview" alt="Preview bukti" class="max-h-48 mx-auto rounded-xl shadow-sm border border-gray-200 dark:border-white/10" />
+                <p class="text-xs font-bold text-primary dark:text-primary-light truncate px-2 w-full">{{ proofFile.name }}</p>
+                <p class="text-[10px] text-gray-400">Klik untuk mengganti foto</p>
+              </div>
+              
+              <div v-else class="space-y-2">
+                <UploadIcon class="w-8 h-8 text-gray-400 mx-auto" />
+                <p class="text-xs font-bold text-gray-600 dark:text-gray-300">Klik atau seret foto bukti pembayaran</p>
+                <p class="text-[10px] text-gray-400">JPG, PNG • Maks 5MB</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mb-5">
+            <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+            <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
+              Pastikan nominal transfer <strong>tepat {{ formatRp(form.amount) }}</strong> agar proses verifikasi lebih cepat.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-auto">
+            <button 
+              @click="submitManualPayment"
+              :disabled="!proofFile || isSubmitting"
+              class="w-full py-4 rounded-[1.5rem] font-bold transition-all flex items-center justify-center space-x-2"
+              :class="proofFile && !isSubmitting 
+                ? 'bg-gradient-to-r from-primary to-teal-600 text-white shadow-lg shadow-primary/30 hover:shadow-xl' 
+                : 'bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-600 cursor-not-allowed'"
+            >
+              <span v-if="isSubmitting" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+              <template v-else>
+                <CheckCircleIcon class="w-5 h-5" />
+                <span>{{ proofFile ? 'Kirim Bukti Pembayaran' : 'Upload bukti terlebih dahulu' }}</span>
+              </template>
+            </button>
+          </div>
+        </div>
+      </div>
+
     <!-- Floating WhatsApp Button -->
     <Transition
       appear
@@ -639,7 +848,7 @@ import gsap from 'gsap'
 import { 
   WalletIcon, ZapIcon, UserIcon, ChevronDownIcon, CoinsIcon, 
   Edit3Icon, CheckIcon, QrCodeIcon, LandmarkIcon, ArrowRightIcon,
-  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon, CreditCardIcon, MessageCircle
+  CalculatorIcon, InfoIcon, CopyIcon, XIcon, SearchIcon, AlertCircleIcon, CheckCircleIcon, ClockIcon, CreditCardIcon, MessageCircle, UploadIcon
 } from 'lucide-vue-next'
 
 const store = useQurbanStore()
@@ -656,8 +865,13 @@ const isCustomAmountSelected = ref(false)
 const isShohibulModalOpen = ref(false)
 const isCalculatorModalOpen = ref(false)
 const isPaymentModalOpen = ref(false)
+const isManualInstructionModalOpen = ref(false)
 const shohibulSearchQuery = ref('')
 const imageErrors = ref({})
+
+const proofFile = ref(null)
+const proofPreview = ref(null)
+const isSubmitting = ref(false)
 
 // Watch query params to open modal
 watch(() => route.query, (newQuery) => {
@@ -831,7 +1045,7 @@ const validationMessage = computed(() => {
     if (!form.value.amount) return 'Masukkan Nominal Menabung'
     if (amountErrorMessage.value) return amountErrorMessage.value
     if (!form.value.paymentMethod) return 'Pilih Metode Pembayaran'
-    if (form.value.paymentMethod === 'va' && !form.value.bankCode) return 'Pilih Bank untuk Virtual Account'
+    if (!store.isManualPaymentMode && form.value.paymentMethod === 'va' && !form.value.bankCode) return 'Pilih Bank untuk Virtual Account'
     return ''
   }
 
@@ -911,20 +1125,31 @@ const selectShohibul = (id) => {
 
 const pendingTransactionsMap = computed(() => {
   const map = {}
-  if (store.transactions) {
-    store.transactions.forEach(tx => {
-      if (tx.status === 'pending') {
+  const process = (txs) => {
+    if (!txs) return
+    txs.forEach(tx => {
+      if (tx.status === 'pending' && !tx.payment_proof_path) {
         map[tx.shohibul_id || tx.shohibulId] = tx
       }
     })
   }
-  if (store.recentTransactions) {
-    store.recentTransactions.forEach(tx => {
-      if (tx.status === 'pending') {
+  process(store.transactions)
+  process(store.recentTransactions)
+  return map
+})
+
+const waitingConfirmationMap = computed(() => {
+  const map = {}
+  const process = (txs) => {
+    if (!txs) return
+    txs.forEach(tx => {
+      if (tx.status === 'pending' && tx.payment_proof_path) {
         map[tx.shohibul_id || tx.shohibulId] = tx
       }
     })
   }
+  process(store.transactions)
+  process(store.recentTransactions)
   return map
 })
 
@@ -932,8 +1157,18 @@ const getPendingTx = (id) => {
   return pendingTransactionsMap.value[id]
 }
 
+const getWaitingTx = (id) => {
+  return waitingConfirmationMap.value[id]
+}
+
 const handleShohibulSelection = (s) => {
   if (s.is_lunas) return
+
+  const waitingTx = getWaitingTx(s.id)
+  if (waitingTx) {
+    toast.info('Setoran Anda sebelumnya sedang menunggu verifikasi admin.')
+    return
+  }
   
   const pendingTx = getPendingTx(s.id)
   if (pendingTx) {
@@ -1109,6 +1344,124 @@ const submitDeposit = () => {
   }, 400)
 }
 
+// Manual payment flow methods
+const openManualInstructionModal = () => {
+  if (!isFormValid.value) {
+    toast.warning(validationMessage.value)
+    return
+  }
+  proofFile.value = null
+  proofPreview.value = null
+  isManualInstructionModalOpen.value = true
+  document.body.style.overflow = 'hidden'
+  import('vue').then(({ nextTick }) => {
+    nextTick(() => {
+      gsap.fromTo('.modal-backdrop', { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo('.manual-modal-content', { y: '100%' }, { y: '0%', duration: 0.4, ease: 'power3.out' })
+    })
+  })
+}
+
+const closeManualInstructionModal = () => {
+  gsap.to('.manual-modal-content', { y: '100%', duration: 0.3, ease: 'power3.in' })
+  gsap.to('.modal-backdrop', { opacity: 0, duration: 0.3, onComplete: () => {
+    isManualInstructionModalOpen.value = false
+    document.body.style.overflow = ''
+  }})
+}
+
+const handleProofSelect = (event) => {
+  const file = event.target.files[0]
+  if (!file) return
+  
+  if (file.size > 5 * 1024 * 1024) {
+    toast.error('Ukuran file maksimal 5MB')
+    return
+  }
+  
+  if (!file.type.startsWith('image/')) {
+    toast.error('File harus berupa gambar (JPG, PNG)')
+    return
+  }
+  
+  proofFile.value = file
+  proofPreview.value = URL.createObjectURL(file)
+}
+
+const handleProofDrop = (event) => {
+  const file = event.dataTransfer.files[0]
+  if (file && file.type.startsWith('image/')) {
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('Ukuran file maksimal 5MB')
+      return
+    }
+    proofFile.value = file
+    proofPreview.value = URL.createObjectURL(file)
+  }
+}
+
+const submitManualPayment = async () => {
+  if (!proofFile.value || isSubmitting.value) return
+  
+  isSubmitting.value = true
+  
+  try {
+    const formData = new FormData()
+    formData.append('payment_proof', proofFile.value)
+    formData.append('amount', form.value.amount)
+    formData.append('payment_method', form.value.paymentMethod)
+    
+    let result
+    if (formMode.value === 'register') {
+      formData.append('name', registerForm.value.name.trim())
+      formData.append('phone', registerForm.value.phone.trim())
+      formData.append('address', registerForm.value.address.trim())
+      formData.append('target_type', registerForm.value.type)
+      formData.append('initial_amount', form.value.amount)
+      result = await store.registerShohibulManual(formData)
+    } else {
+      formData.append('shohibul_id', form.value.shohibulId)
+      result = await store.createManualDeposit(formData)
+    }
+    
+    toast.success('Bukti pembayaran terkirim! Menunggu konfirmasi admin.')
+    
+    // Close modal and reset
+    isManualInstructionModalOpen.value = false
+    document.body.style.overflow = ''
+    proofFile.value = null
+    proofPreview.value = null
+    form.value.amount = null
+    form.value.shohibulId = ''
+    registerForm.value.name = ''
+    registerForm.value.phone = ''
+    registerForm.value.address = ''
+    isCustomAmountSelected.value = false
+    formMode.value = 'setor'
+    
+    router.push({ name: 'dashboard' })
+  } catch (err) {
+    toast.error('Gagal mengirim bukti pembayaran: ' + err.message)
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const formatBankAccount = (account) => {
+  if (!account) return ''
+  const str = account.toString().replace(/\D/g, '')
+  if (str.length === 10) {
+    return str.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3')
+  }
+  return str.replace(/(.{4})/g, '$1 ').trim()
+}
+
+watch(() => store.paymentConfig, (config) => {
+  if (config?.mode === 'manual') {
+    form.value.paymentMethod = 'qris'
+  }
+}, { immediate: true })
+
 watch(() => route.query.mode, (newMode) => {
   if (newMode === 'register') {
     formMode.value = 'register'
@@ -1207,5 +1560,21 @@ input[type=range]::-webkit-slider-thumb {
 }
 .dark input[type=range]::-webkit-slider-thumb {
   border-color: #1f2937;
+}
+
+/* Custom Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 10px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
 }
 </style>

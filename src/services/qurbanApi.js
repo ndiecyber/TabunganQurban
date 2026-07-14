@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from './api.js'
+import { apiGet, apiPost, apiPostFormData } from './api.js'
 
 // Dashboard
 export function fetchDashboardStats() {
@@ -27,6 +27,10 @@ export function registerShohibul(payload) {
   return apiPost('/qurban/shohibuls/register', payload)
 }
 
+export function registerShohibulManual(formData) {
+  return apiPostFormData('/qurban/shohibuls/register', formData)
+}
+
 // Transactions
 export function fetchTransactions(filters = {}) {
   return apiGet('/qurban/transactions', filters)
@@ -34,6 +38,10 @@ export function fetchTransactions(filters = {}) {
 
 export function createDeposit(payload) {
   return apiPost('/qurban/transactions/deposit', payload)
+}
+
+export function createManualDeposit(formData) {
+  return apiPostFormData('/qurban/transactions/deposit', formData)
 }
 
 // Animal Groups

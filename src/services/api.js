@@ -38,8 +38,14 @@ async function request(endpoint, options = {}) {
     const data = await response.json()
 
     if (!response.ok) {
+      let errorMessage = data.message || `Request failed with status ${response.status}`
+      
+      if (response.status === 422 && data.errors) {
+        errorMessage = Object.values(data.errors)[0][0] || errorMessage
+      }
+      
       throw new ApiError(
-        data.message || `Request failed with status ${response.status}`,
+        errorMessage,
         response.status,
         data.errors || null
       )
@@ -66,6 +72,51 @@ export async function apiPost(endpoint, body = {}) {
     method: 'POST',
     body: JSON.stringify(body),
   })
+}
+
+export async function apiPostFormData(endpoint, formData) {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 30000) // 30s timeout for file uploads
+
+  const url = new URL(`${BASE_URL}${endpoint}`)
+
+  try {
+    const response = await fetch(url.toString(), {
+      method: 'POST',
+      body: formData,
+      signal: controller.signal,
+      headers: {
+        'Accept': 'application/json',
+        // Do NOT set Content-Type header so browser can set it automatically with boundaries
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      let errorMessage = data.message || `Request failed with status ${response.status}`
+      
+      if (response.status === 422 && data.errors) {
+        errorMessage = Object.values(data.errors)[0][0] || errorMessage
+      }
+      
+      throw new ApiError(
+        errorMessage,
+        response.status,
+        data.errors || null
+      )
+    }
+
+    return data
+  } catch (error) {
+    if (error instanceof ApiError) throw error
+    if (error.name === 'AbortError') {
+      throw new ApiError('Koneksi timeout. Periksa jaringan Anda.', 0)
+    }
+    throw new ApiError('Tidak dapat terhubung ke server.', 0)
+  } finally {
+    clearTimeout(timeoutId)
+  }
 }
 
 export { ApiError }
