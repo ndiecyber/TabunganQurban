@@ -38,8 +38,14 @@ async function request(endpoint, options = {}) {
     const data = await response.json()
 
     if (!response.ok) {
+      let errorMessage = data.message || `Request failed with status ${response.status}`
+      
+      if (response.status === 422 && data.errors) {
+        errorMessage = Object.values(data.errors)[0][0] || errorMessage
+      }
+      
       throw new ApiError(
-        data.message || `Request failed with status ${response.status}`,
+        errorMessage,
         response.status,
         data.errors || null
       )
@@ -88,8 +94,14 @@ export async function apiPostFormData(endpoint, formData) {
     const data = await response.json()
 
     if (!response.ok) {
+      let errorMessage = data.message || `Request failed with status ${response.status}`
+      
+      if (response.status === 422 && data.errors) {
+        errorMessage = Object.values(data.errors)[0][0] || errorMessage
+      }
+      
       throw new ApiError(
-        data.message || `Request failed with status ${response.status}`,
+        errorMessage,
         response.status,
         data.errors || null
       )
