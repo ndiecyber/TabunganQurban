@@ -783,7 +783,7 @@
           <div class="flex items-start space-x-2 bg-amber-50 dark:bg-amber-900/20 p-3 rounded-xl border border-amber-200/50 dark:border-amber-800/30 mb-5">
             <InfoIcon class="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
             <p class="text-[10px] leading-relaxed text-amber-700 dark:text-amber-400 font-semibold">
-              Pastikan nominal transfer <strong>tepat {{ formatRp(form.amount) }}</strong> dengan biaya admin (jika ada) agar proses verifikasi lebih cepat.
+              Pastikan nominal yang dipilih sesuai dengan yang ada di bukti transfer agar proses verifikasi lebih cepat.
             </p>
           </div>
 
