@@ -567,12 +567,16 @@ const getStatusBadgeClass = (status) => {
 
 const memberTransactions = computed(() => {
   if (!selectedShohibul.value) return []
+  
+  let txs = []
   if (selectedShohibul.value.transactions) {
-    return selectedShohibul.value.transactions
+    txs = selectedShohibul.value.transactions
+  } else {
+    txs = store.transactions.filter(tx => tx.shohibul_id === selectedShohibul.value.id || tx.shohibulId === selectedShohibul.value.id)
   }
   
-  return store.transactions
-    .filter(tx => tx.shohibul_id === selectedShohibul.value.id || tx.shohibulId === selectedShohibul.value.id)
+  return txs
+    .filter(tx => ['success', 'settlement', 'pending'].includes(tx.status))
     .sort((a, b) => new Date(b.created_at || b.date) - new Date(a.created_at || a.date))
 })
 
