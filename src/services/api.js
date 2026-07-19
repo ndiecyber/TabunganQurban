@@ -35,7 +35,17 @@ async function request(endpoint, options = {}) {
       },
     })
 
-    const data = await response.json()
+    let data;
+    try {
+      data = await response.json()
+    } catch (parseError) {
+      if (!response.ok) {
+        if (response.status === 413) throw new ApiError('Ukuran file terlalu besar (melebihi limit server).', response.status)
+        if (response.status >= 500) throw new ApiError(`Server mengalami gangguan (Error ${response.status}).`, response.status)
+        throw new ApiError(`Request gagal dengan status ${response.status}`, response.status)
+      }
+      throw new ApiError('Format respons dari server tidak valid.', response.status || 0)
+    }
 
     if (!response.ok) {
       let errorMessage = data.message || `Request failed with status ${response.status}`
@@ -53,11 +63,12 @@ async function request(endpoint, options = {}) {
 
     return data
   } catch (error) {
+    console.error('API Error:', error)
     if (error instanceof ApiError) throw error
     if (error.name === 'AbortError') {
       throw new ApiError('Koneksi timeout. Periksa jaringan Anda.', 0)
     }
-    throw new ApiError('Tidak dapat terhubung ke server.', 0)
+    throw new ApiError('Tidak dapat terhubung ke server. Pastikan koneksi internet stabil.', 0)
   } finally {
     clearTimeout(timeoutId)
   }
@@ -91,7 +102,17 @@ export async function apiPostFormData(endpoint, formData) {
       },
     })
 
-    const data = await response.json()
+    let data;
+    try {
+      data = await response.json()
+    } catch (parseError) {
+      if (!response.ok) {
+        if (response.status === 413) throw new ApiError('Ukuran file gambar terlalu besar (melebihi limit server).', response.status)
+        if (response.status >= 500) throw new ApiError(`Gagal memproses gambar (Error ${response.status}). Mungkin ukuran resolusi terlalu besar.`, response.status)
+        throw new ApiError(`Upload gagal dengan status ${response.status}`, response.status)
+      }
+      throw new ApiError('Format respons dari server tidak valid.', response.status || 0)
+    }
 
     if (!response.ok) {
       let errorMessage = data.message || `Request failed with status ${response.status}`
@@ -109,11 +130,12 @@ export async function apiPostFormData(endpoint, formData) {
 
     return data
   } catch (error) {
+    console.error('API Error (Upload):', error)
     if (error instanceof ApiError) throw error
     if (error.name === 'AbortError') {
-      throw new ApiError('Koneksi timeout. Periksa jaringan Anda.', 0)
+      throw new ApiError('Upload timeout. Gambar mungkin terlalu besar atau koneksi lambat.', 0)
     }
-    throw new ApiError('Tidak dapat terhubung ke server.', 0)
+    throw new ApiError('Tidak dapat terhubung ke server saat upload.', 0)
   } finally {
     clearTimeout(timeoutId)
   }
